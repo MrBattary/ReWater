@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ReWater</string>
+
+    <!--Texts-->
+    <string name="global_placeholder">PLACEHOLDER</string>
+
+    <!--Descriptions-->
+    <string name="back_button_description">Back to the previous screen</string>
+    <string name="positive_button_description">OK or Save</string>
+    <string name="add_button_description">Add new item</string>
+    <string name="remove_button_description">Remove this item</string>
 </resources>
