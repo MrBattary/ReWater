@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">ReWater</string>
 
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <!--Navigation bar-->
+    <string name="navigation_title_home">Home</string>
+    <string name="navigation_title_networks">Networks</string>
+    <string name="navigation_title_devices">Devices</string>
+    <string name="navigation_title_profile">Profile</string>
+    <string name="navigation_title_settings">Settings</string>
 
     <!--Texts-->
     <string name="global_placeholder">PLACEHOLDER</string>
