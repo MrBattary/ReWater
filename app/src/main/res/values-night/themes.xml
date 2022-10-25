@@ -1,16 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.ReWater" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" >@color/background_primary</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/background_primary</item>
+        <item name="colorPrimaryVariant">@color/background_secondary</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/text_secondary</item>
+        <item name="colorSecondaryVariant">@color/text_primary</item>
+        <item name="colorOnSecondary">@color/background_tertiary</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/text_primary</item>
+        <!-- Bottom navigation bar. -->
+        <item name="bottomNavigationStyle">@style/BottomNavigationViewStyle</item>
     </style>
 </resources>
