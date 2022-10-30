@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.devices;
+package michael.linker.rewater.ui.screen.devices;
 
 import androidx.lifecycle.ViewModelProvider;
 

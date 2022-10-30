@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.profile;
+package michael.linker.rewater.ui.screen.profile;
 
 import androidx.lifecycle.ViewModel;
 

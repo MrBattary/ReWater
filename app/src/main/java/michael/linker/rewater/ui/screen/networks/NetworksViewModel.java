@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.networks;
+package michael.linker.rewater.ui.screen.networks;
 
 import androidx.lifecycle.ViewModel;
 

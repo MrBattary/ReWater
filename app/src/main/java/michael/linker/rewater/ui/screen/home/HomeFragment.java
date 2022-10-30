@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.home;
+package michael.linker.rewater.ui.screen.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

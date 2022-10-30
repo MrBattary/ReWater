@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.home;
+package michael.linker.rewater.ui.screen.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
