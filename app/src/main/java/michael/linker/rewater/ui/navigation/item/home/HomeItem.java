@@ -10,10 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.type.Status;
+import michael.linker.rewater.constant.Status;
 import michael.linker.rewater.ui.navigation.NavigationFaultException;
-import michael.linker.rewater.application.provider.DimensionsProvider;
-import michael.linker.rewater.application.provider.DrawablesProvider;
+import michael.linker.rewater.assist.provider.DimensionsProvider;
+import michael.linker.rewater.assist.provider.DrawablesProvider;
 
 public class HomeItem implements IHomeItem {
     private final Map<Status, VectorDrawable> statusIcons;

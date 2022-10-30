@@ -1,6 +1,6 @@
 package michael.linker.rewater.ui.navigation;
 
-import michael.linker.rewater.type.Status;
+import michael.linker.rewater.constant.Status;
 
 public interface INavigation {
     Status getSummaryStatusFromHomeItem();

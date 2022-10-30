@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.databinding.ActivityMainBinding;
-import michael.linker.rewater.type.Status;
+import michael.linker.rewater.constant.Status;
 import michael.linker.rewater.ui.navigation.item.home.HomeItem;
 import michael.linker.rewater.ui.navigation.item.home.IHomeItem;
 
