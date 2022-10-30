@@ -2,7 +2,7 @@ package michael.linker.rewater.assist.comparator;
 
 import java.util.Map;
 
-import michael.linker.rewater.model.status.StatusModel;
+import michael.linker.rewater.model.status.DetailedStatusModel;
 import michael.linker.rewater.constant.Status;
 
 public class StatusComparator {
@@ -24,9 +24,9 @@ public class StatusComparator {
         return STATUS_WEIGHT_MAP.get(first) > STATUS_WEIGHT_MAP.get(second);
     }
 
-    public static Status getWorstStatus(final StatusModel statusModel) {
+    public static Status getWorstStatus(final DetailedStatusModel detailedStatusModel) {
         Status worstStatus = Status.OK;
-        for (Status currentStatus : statusModel.toList()) {
+        for (Status currentStatus : detailedStatusModel.toList()) {
             if (isFirstWorseThanSecond(currentStatus, worstStatus)) {
                 worstStatus = currentStatus;
             }

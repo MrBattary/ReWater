@@ -6,11 +6,11 @@ import java.util.List;
 
 import michael.linker.rewater.constant.Status;
 
-public class StatusModel {
+public class DetailedStatusModel {
     private final Status water;
     private final Status energy;
 
-    public StatusModel(final Status water, final Status energy) {
+    public DetailedStatusModel(final Status water, final Status energy) {
         this.water = water;
         this.energy = energy;
     }

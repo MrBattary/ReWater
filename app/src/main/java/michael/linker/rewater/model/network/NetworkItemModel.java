@@ -1,18 +1,18 @@
 package michael.linker.rewater.model.network;
 
-import michael.linker.rewater.model.status.StatusModel;
+import michael.linker.rewater.model.status.DetailedStatusModel;
 
 public class NetworkItemModel {
     private final String id;
     private final String heading;
     private final String description;
-    private final StatusModel status;
+    private final DetailedStatusModel status;
 
     public NetworkItemModel(
             final String id,
             final String heading,
             final String description,
-            final StatusModel status) {
+            final DetailedStatusModel status) {
         this.id = id;
         this.heading = heading;
         this.description = description;
@@ -31,7 +31,7 @@ public class NetworkItemModel {
         return description;
     }
 
-    public StatusModel getStatus() {
+    public DetailedStatusModel getStatus() {
         return status;
     }
 }
