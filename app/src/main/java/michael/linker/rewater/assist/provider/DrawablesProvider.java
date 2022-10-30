@@ -1,4 +1,4 @@
-package michael.linker.rewater.service.provider;
+package michael.linker.rewater.assist.provider;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -6,7 +6,7 @@ import android.graphics.drawable.VectorDrawable;
 
 import androidx.core.content.res.ResourcesCompat;
 
-import michael.linker.rewater.service.App;
+import michael.linker.rewater.assist.App;
 
 public class DrawablesProvider {
     private static final Resources RESOURCES = App.getRes();

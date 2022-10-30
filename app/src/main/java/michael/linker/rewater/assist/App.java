@@ -1,4 +1,4 @@
-package michael.linker.rewater.service;
+package michael.linker.rewater.assist;
 
 import android.app.Application;
 import android.content.res.Resources;

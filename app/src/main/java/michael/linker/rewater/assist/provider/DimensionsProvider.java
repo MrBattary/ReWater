@@ -1,9 +1,9 @@
-package michael.linker.rewater.service.provider;
+package michael.linker.rewater.assist.provider;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
-import michael.linker.rewater.service.App;
+import michael.linker.rewater.assist.App;
 
 public class DimensionsProvider {
     private static final Resources RESOURCES = App.getRes();
