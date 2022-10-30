@@ -1,4 +1,4 @@
-package michael.linker.rewater.type;
+package michael.linker.rewater.constant;
 
 public enum Status {
     OK,
