@@ -1,4 +1,4 @@
-package michael.linker.rewater.application;
+package michael.linker.rewater.service;
 
 import android.app.Application;
 import android.content.res.Resources;
@@ -7,18 +7,18 @@ import android.content.res.Resources;
  * Application singleton for the access purpose
  */
 public class App extends Application {
-    private static App mInstance;
+    private static App app;
     private static Resources res;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mInstance = this;
+        app = this;
         res = getResources();
     }
 
     public static App getInstance() {
-        return mInstance;
+        return app;
     }
 
     public static Resources getRes() {

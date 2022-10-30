@@ -28,6 +28,22 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+
+                            /* Layouts */
+                            'src/main/res/layouts/activity',
+                            'src/main/res/layouts/common',
+                            'src/main/res/layouts/view',
+                            'src/main/res/layouts/fragment',
+                            /* General folder */
+                            'src/main/res'
+                    ]
+        }
+    }
 }
 
 dependencies {

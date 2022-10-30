@@ -1,12 +1,12 @@
-package michael.linker.rewater.application.provider;
+package michael.linker.rewater.service.provider;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
-import michael.linker.rewater.application.App;
+import michael.linker.rewater.service.App;
 
 public class DimensionsProvider {
-    private static final Resources resources = App.getRes();
+    private static final Resources RESOURCES = App.getRes();
 
     /**
      * Retrieve a dimensional for a particular resource ID.
@@ -16,7 +16,7 @@ public class DimensionsProvider {
      * @return resource value
      */
     public static int getDp(final int id) {
-        return (int) resources.getDimension(id);
+        return (int) RESOURCES.getDimension(id);
     }
 
     /**
@@ -27,7 +27,7 @@ public class DimensionsProvider {
      * @return resource value
      */
     public static int getDpExtracted(final int id) {
-        return (int) (resources.getDimension(id) / resources.getDisplayMetrics().density);
+        return (int) (RESOURCES.getDimension(id) / RESOURCES.getDisplayMetrics().density);
     }
 
     /**
@@ -36,6 +36,6 @@ public class DimensionsProvider {
      * @return display metrics
      */
     public static DisplayMetrics getDisplayMetrics() {
-        return resources.getDisplayMetrics();
+        return RESOURCES.getDisplayMetrics();
     }
 }

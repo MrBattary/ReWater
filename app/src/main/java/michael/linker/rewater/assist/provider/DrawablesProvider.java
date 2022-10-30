@@ -1,4 +1,4 @@
-package michael.linker.rewater.application.provider;
+package michael.linker.rewater.service.provider;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -6,11 +6,11 @@ import android.graphics.drawable.VectorDrawable;
 
 import androidx.core.content.res.ResourcesCompat;
 
-import michael.linker.rewater.application.App;
+import michael.linker.rewater.service.App;
 
 public class DrawablesProvider {
-    private static final Resources resources = App.getRes();
-    private static final Resources.Theme theme = App.getInstance().getTheme();
+    private static final Resources RESOURCES = App.getRes();
+    private static final Resources.Theme THEME = App.getInstance().getTheme();
 
     /**
      * Retrieve a drawable for a particular resource ID.
@@ -19,7 +19,7 @@ public class DrawablesProvider {
      * @return drawable
      */
     public static Drawable getDrawable(final int id) {
-        return ResourcesCompat.getDrawable(resources, id, theme);
+        return ResourcesCompat.getDrawable(RESOURCES, id, THEME);
     }
 
     /**
@@ -29,6 +29,6 @@ public class DrawablesProvider {
      * @return vector drawable
      */
     public static VectorDrawable getVectorDrawable(final int id) {
-        return (VectorDrawable) ResourcesCompat.getDrawable(resources, id, theme);
+        return (VectorDrawable) ResourcesCompat.getDrawable(RESOURCES, id, THEME);
     }
 }
