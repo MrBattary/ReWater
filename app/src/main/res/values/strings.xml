@@ -9,11 +9,21 @@
     <string name="navigation_title_settings">Settings</string>
 
     <!--Texts-->
-    <string name="global_placeholder">PLACEHOLDER</string>
+    <string name="global_short_placeholder">Lorem ipsum vivamus.</string>
+    <string name="global_medium_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.</string>
+
+    <!--Buttons-->
+    <string name="button_settings">Settings</string>
 
     <!--Descriptions-->
-    <string name="back_button_description">Back to the previous screen</string>
-    <string name="positive_button_description">OK or Save</string>
-    <string name="add_button_description">Add new item</string>
-    <string name="remove_button_description">Remove this item</string>
+    <string name="description_back_button">Back to the previous screen</string>
+    <string name="description_positive_button">OK or Save</string>
+    <string name="description_add_button">Add new item</string>
+    <string name="description_remove_button">Remove this item</string>
+    <string name="description_overall_status">Overall status</string>
+    <string name="description_water_status">Water status</string>
+    <string name="description_battery_status">Battery status</string>
+    <string name="description_expand_or_loose_card_button">Expand or loose card</string>
+    <string name="description_expand_card_button">Expand card</string>
+    <string name="description_loose_card_button">Loose card</string>
 </resources>
