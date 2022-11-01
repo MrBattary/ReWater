@@ -1,9 +1,10 @@
-package michael.linker.rewater.ui.view;
+package michael.linker.rewater.ui.view.status;
 
 import android.view.View;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.model.status.DetailedStatusModel;
+import michael.linker.rewater.ui.view.IView;
 
 public class CombinedStatusView implements IView {
     private final View mView;

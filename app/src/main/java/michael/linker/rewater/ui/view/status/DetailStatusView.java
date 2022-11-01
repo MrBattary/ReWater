@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.view;
+package michael.linker.rewater.ui.view.status;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.VectorDrawable;
@@ -13,6 +13,7 @@ import michael.linker.rewater.model.status.DetailedStatusModel;
 import michael.linker.rewater.assist.provider.ColorProvider;
 import michael.linker.rewater.assist.provider.DrawablesProvider;
 import michael.linker.rewater.constant.Status;
+import michael.linker.rewater.ui.view.IView;
 
 public class DetailStatusView implements IView {
     private final View mView;

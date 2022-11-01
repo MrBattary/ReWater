@@ -9,8 +9,8 @@
     <string name="navigation_title_settings">Settings</string>
 
     <!--Texts-->
-    <string name="global_short_placeholder">Lorem ipsum vivamus.</string>
-    <string name="global_medium_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.</string>
+    <string name="global_short_placeholder">!Lorem ipsum vivamus.!</string>
+    <string name="global_medium_placeholder">!Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.!</string>
 
     <!--Buttons-->
     <string name="button_settings">Settings</string>

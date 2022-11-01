@@ -11,6 +11,7 @@ import michael.linker.rewater.R;
 import michael.linker.rewater.model.network.NetworkItemModel;
 import michael.linker.rewater.assist.provider.DrawablesProvider;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
+import michael.linker.rewater.ui.view.status.CombinedStatusView;
 
 public class NetworksCardView implements IView {
     private final CardView mCardView;
@@ -43,6 +44,7 @@ public class NetworksCardView implements IView {
         mData = dataModel;
         mHeading.setText(dataModel.getHeading());
         mDescription.setText(dataModel.getDescription());
+        this.setGoneIfNoTextInTextView(mDescription);
         mCombinedStatusView.setStatus(dataModel.getStatus());
     }
 
@@ -94,7 +96,15 @@ public class NetworksCardView implements IView {
         mCombinedStatusView.displayDetailed();
         mSettingsButton.setVisibility(View.VISIBLE);
         mDescription.setVisibility(View.VISIBLE);
+        this.setGoneIfNoTextInTextView(mDescription);
         mHiddenContent.setVisibility(View.VISIBLE);
+    }
+
+    private void setGoneIfNoTextInTextView(final TextView textView) {
+        final CharSequence text = textView.getText();
+        if (text == null || text.equals("")) {
+            textView.setVisibility(View.GONE);
+        }
     }
 
     @Override
