@@ -8,8 +8,10 @@
     <dimen name="card_vertical_margin">10dp</dimen>
     <dimen name="card_content_horizontal_margin">20dp</dimen>
     <dimen name="card_content_vertical_margin">10dp</dimen>
-
     <dimen name="card_corner_radius">20dp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="fab_margin">20dp</dimen>
 
     <!-- Custom dimensions. -->
     <dimen name="navigation_icon_size">26dp</dimen>

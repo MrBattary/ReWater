@@ -13,4 +13,16 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
         app:layoutManager="LinearLayoutManager" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/networks_add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/description_networks_add_fab"
+        android:backgroundTint="@color/background_tertiary"
+        app:backgroundTint="@color/background_tertiary"
+        app:tint="@color/positive_color"
+        android:src="@drawable/ic_add" />
 </FrameLayout>
