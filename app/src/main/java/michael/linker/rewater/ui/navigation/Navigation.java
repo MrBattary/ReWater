@@ -14,14 +14,16 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.databinding.ActivityMainBinding;
 import michael.linker.rewater.constant.Status;
+import michael.linker.rewater.databinding.ActivityMainBinding;
 import michael.linker.rewater.ui.navigation.item.home.HomeItem;
 import michael.linker.rewater.ui.navigation.item.home.IHomeItem;
 
 public class Navigation implements INavigation {
     private static final int HOME_ITEM_POSITION_IN_MENU = 2;
-    private IHomeItem homeItem;
+    private AppBarConfiguration mAppBarConfiguration;
+    private NavController mNavController;
+    private IHomeItem mHomeItem;
 
     public Navigation(final AppCompatActivity activity) throws NavigationFaultException {
         this.initNavigation(activity);
@@ -30,12 +32,22 @@ public class Navigation implements INavigation {
 
     @Override
     public Status getSummaryStatusFromHomeItem() {
-        return homeItem.getSummaryStatus();
+        return mHomeItem.getSummaryStatus();
     }
 
     @Override
     public void setSummaryStatusForHomeItem(Status status) throws NavigationFaultException {
-        homeItem.setSummaryStatus(status);
+        mHomeItem.setSummaryStatus(status);
+    }
+
+    @Override
+    public AppBarConfiguration getAppBarConfiguration() {
+        return mAppBarConfiguration;
+    }
+
+    @Override
+    public NavController getNavController() {
+        return mNavController;
     }
 
     private void initNavigation(final AppCompatActivity activity) throws NavigationFaultException {
@@ -43,9 +55,10 @@ public class Navigation implements INavigation {
         BottomNavigationView bottomNavigationView = activity.findViewById(R.id.navigation_view);
 
         AppBarConfiguration appBarConfiguration = buildAppBarConfiguration();
-        NavController navController = getNavController(activity);
-        NavigationUI.setupActionBarWithNavController(activity, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        mNavController = findNavController(activity);
+        mAppBarConfiguration = new AppBarConfiguration.Builder(mNavController.getGraph()).build();
+        NavigationUI.setupActionBarWithNavController(activity, mNavController, appBarConfiguration);
+        NavigationUI.setupWithNavController(bottomNavigationView, mNavController);
     }
 
     private void initHomeNavigationView(final AppCompatActivity activity) {
@@ -54,7 +67,7 @@ public class Navigation implements INavigation {
         final Menu menu = bottomNavigationView.getMenu();
         final MenuItem menuItem = menu.getItem(HOME_ITEM_POSITION_IN_MENU);
         final View navigationBarItemView = bottomNavigationView.findViewById(menuItem.getItemId());
-        homeItem = new HomeItem(navigationBarItemView);
+        mHomeItem = new HomeItem(navigationBarItemView);
     }
 
     private void bindMainActivity(final AppCompatActivity activity) {
@@ -73,7 +86,7 @@ public class Navigation implements INavigation {
                 R.id.navigation_settings).build();
     }
 
-    private NavController getNavController(final AppCompatActivity activity)
+    private NavController findNavController(final AppCompatActivity activity)
             throws NavigationFaultException {
         Fragment fragment = activity.getSupportFragmentManager().findFragmentById(
                 R.id.navigation_host_fragment);
