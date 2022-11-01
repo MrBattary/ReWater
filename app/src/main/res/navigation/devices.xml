@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_navigation_devices"
+    app:startDestination="@id/navigation_devices">
+
+    <fragment
+        android:id="@+id/navigation_devices"
+        android:name="michael.linker.rewater.ui.screen.devices.DevicesFragment"
+        android:label="@string/navigation_title_devices"
+        tools:layout="@layout/fragment_devices" />
+</navigation>

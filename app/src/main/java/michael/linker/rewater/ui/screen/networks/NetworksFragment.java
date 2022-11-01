@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.config.DataConfiguration;
@@ -57,5 +60,10 @@ public class NetworksFragment extends Fragment {
         recyclerView.setAdapter(
                 new NetworksItemAdapter(getContext(), networksData.getNetworks(),
                         transition));
+
+        final FloatingActionButton addFab = activity.findViewById(R.id.networks_add_fab);
+        addFab.setOnClickListener(buttonView -> {
+            Navigation.findNavController(view).navigate(R.id.navigation_action_networks_to_networks_add);
+        });
     }
 }

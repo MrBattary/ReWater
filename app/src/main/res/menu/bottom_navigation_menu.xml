@@ -3,32 +3,31 @@
 
 
     <item
-        android:id="@+id/navigation_networks"
+        android:id="@+id/root_navigation_networks"
         android:icon="@drawable/ic_networks"
         android:iconTint="@color/text_primary"
         android:title="@string/navigation_title_networks" />
 
     <item
-        android:id="@+id/navigation_devices"
+        android:id="@+id/root_navigation_devices"
         android:icon="@drawable/ic_devices"
         android:iconTint="@color/text_primary"
         android:title="@string/navigation_title_devices" />
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/root_navigation_home"
         android:title="@null" />
 
     <item
-        android:id="@+id/navigation_profile"
+        android:id="@+id/root_navigation_profile"
         android:icon="@drawable/ic_user"
         android:iconTint="@color/text_primary"
         android:title="@string/navigation_title_profile" />
 
     <item
-        android:id="@+id/navigation_settings"
+        android:id="@+id/root_navigation_settings"
         android:icon="@drawable/ic_settings"
         android:iconTint="@color/text_primary"
         android:title="@string/navigation_title_settings" />
-
 
 </menu>

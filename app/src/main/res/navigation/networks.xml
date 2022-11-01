@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_navigation_networks"
+    app:startDestination="@id/navigation_networks">
+
+    <fragment
+        android:id="@+id/navigation_networks"
+        android:name="michael.linker.rewater.ui.screen.networks.NetworksFragment"
+        android:label="@string/navigation_title_networks"
+        tools:layout="@layout/fragment_networks">
+        <action
+            android:id="@+id/navigation_action_networks_to_networks_add"
+            app:destination="@id/navigation_networks_add"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_networks_add"
+        android:name="michael.linker.rewater.ui.screen.networks.AddNetworkFragment"
+        android:label="Create new network"
+        tools:layout="@layout/fragment_add_network" />
+</navigation>
