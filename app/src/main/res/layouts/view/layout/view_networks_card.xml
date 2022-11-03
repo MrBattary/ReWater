@@ -37,6 +37,7 @@
 
                 <ImageButton
                     android:id="@+id/networks_card_expand_or_loose_button"
+                    style="@style/RoundButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -87,11 +88,12 @@
 
                 <Button
                     android:id="@+id/networks_card_settings_button"
-                    style="?android:attr/borderlessButtonStyle"
+                    style="@style/LeftBottomCornerRoundButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/networks_card_description"
                     android:layout_alignParentStart="true"
+                    android:layout_below="@id/networks_card_description"
+                    android:layout_marginBottom="@dimen/card_bottom_button_negative_margin"
                     android:backgroundTint="@color/background_secondary"
                     android:paddingHorizontal="@dimen/card_horizontal_spacing"
                     android:paddingVertical="@dimen/card_vertical_spacing"

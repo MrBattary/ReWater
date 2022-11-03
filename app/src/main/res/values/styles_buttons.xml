@@ -13,8 +13,18 @@
         <item name="cornerRadius">@dimen/button_corner_radius</item>
     </style>
 
-    <style name="BorderlessButtonParentStyle" parent="Widget.Material3.Button">
-        <item name="android:textColor">@color/text_secondary</item>
-        <item name="android:textSize">@dimen/font_size_medium</item>
+    <style name="RoundButtonStyle" parent="Widget.Material3.Button.IconButton">
+    </style>
+    
+    <style name="LeftBottomCornerRoundButton" parent="ButtonParentStyle">
+        <item name="shapeAppearanceOverlay">@style/LeftBottomCornerRoundButtonShapeAppearance</item>
+    </style>
+
+    <style name="LeftBottomCornerRoundButtonShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">@dimen/card_corner_radius</item>
     </style>
 </resources>
