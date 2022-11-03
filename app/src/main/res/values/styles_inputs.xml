@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Input layouts styles. -->
+    <style name="TextInputLayoutParentStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="hintTextColor">@color/text_secondary</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <!-- The param 'counterMaxLength' is required! -->
+    <style name="TextInputCounterLayoutStyle" parent="TextInputLayoutParentStyle">
+        <item name="counterEnabled">true</item>
+        <item name="counterTextColor">@color/text_secondary</item>
+        <item name="counterOverflowTextColor">@color/negative_color</item>
+    </style>
+
+    <!-- The param 'counterMaxLength' is required! -->
+    <style name="TextInputCounterAndErrorLayoutStyle" parent="TextInputCounterLayoutStyle">
+        <item name="errorEnabled">true</item>
+        <item name="errorTextColor">@color/negative_color</item>
+    </style>
+
+    <style name="TextInputErrorLayoutStyle" parent="TextInputLayoutParentStyle">
+        <item name="errorEnabled">true</item>
+        <item name="errorTextColor">@color/negative_color</item>
+    </style>
+
+
+    <!-- Input styles. -->
+    <style name="EditTextViewParentStyle" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/ic_input_round_corner</item>
+        <item name="android:backgroundTint">@color/background_secondary</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textCursorDrawable">@drawable/ic_input_cursor_light</item>
+    </style>
+
+    <!-- The param 'android:maxLength' is required! -->
+    <style name="EditTextLimitedViewStyle" parent="EditTextViewParentStyle">
+    </style>
+
+    <!-- The params 'minLines' and 'maxLines' are required! -->
+    <style name="EditTextMultilineLimitedViewStyle" parent="EditTextLimitedViewStyle">
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:gravity">top|start</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollHorizontally">false</item>
+    </style>
+
+    <style name="EditTextNormalLimitedViewStyle" parent="EditTextLimitedViewStyle">
+        <item name="android:inputType">text</item>
+    </style>
+</resources>

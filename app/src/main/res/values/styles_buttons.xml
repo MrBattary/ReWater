@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ButtonParentStyle" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RegularButtonStyle" parent="ButtonParentStyle">
+        <item name="android:backgroundTint">@color/background_secondary</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+    </style>
+
+    <style name="BorderlessButtonParentStyle" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+</resources>
