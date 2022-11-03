@@ -1,14 +1,14 @@
 package michael.linker.rewater.config;
 
-import michael.linker.rewater.data.NetworksData;
+import michael.linker.rewater.data.networks.NetworksLocalData;
 
 public class DataConfiguration {
-    private static NetworksData networksData;
+    private static NetworksLocalData sNetworksLocalData;
 
-    public NetworksData getNetworksData() {
-        if (networksData == null) {
-            networksData = new NetworksData();
+    public NetworksLocalData getNetworksData() {
+        if (sNetworksLocalData == null) {
+            sNetworksLocalData = new NetworksLocalData();
         }
-        return networksData;
+        return sNetworksLocalData;
     }
 }

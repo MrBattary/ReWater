@@ -1,4 +1,4 @@
-package michael.linker.rewater.data;
+package michael.linker.rewater.data.networks;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,10 +9,10 @@ import michael.linker.rewater.model.network.NetworkItemModel;
 import michael.linker.rewater.model.network.NetworksModel;
 import michael.linker.rewater.model.status.DetailedStatusModel;
 
-public class NetworksData {
+public class NetworksLocalData implements INetworksData {
     private final List<NetworkItemModel> mNetworkItemModels;
 
-    public NetworksData() {
+    public NetworksLocalData() {
         mNetworkItemModels = new LinkedList<>();
         this.addNetwork(new NetworkItemModel(null, "First network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at dignissim ligula."
@@ -34,10 +34,12 @@ public class NetworksData {
                 new DetailedStatusModel(Status.DEFECT, Status.OK)));
     }
 
+    @Override
     public NetworksModel getNetworks() {
         return new NetworksModel(mNetworkItemModels);
     }
 
+    @Override
     public void addNetwork(final NetworkItemModel model) {
         mNetworkItemModels.add(
                 new NetworkItemModel(UUID.randomUUID().toString(), model.getHeading(),

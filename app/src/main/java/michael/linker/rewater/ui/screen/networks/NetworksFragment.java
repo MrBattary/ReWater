@@ -17,7 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.NetworksData;
+import michael.linker.rewater.data.networks.NetworksLocalData;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 import michael.linker.rewater.ui.view.adapter.NetworksItemAdapter;
 
@@ -43,7 +43,7 @@ public class NetworksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final NetworksData networksData = dataConfiguration.getNetworksData();
+        final NetworksLocalData networksLocalData = dataConfiguration.getNetworksData();
 
         Activity activity = getActivity();
         OrderedTransition transition = new OrderedTransition();
@@ -58,7 +58,7 @@ public class NetworksFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(
-                new NetworksItemAdapter(getContext(), networksData.getNetworks(),
+                new NetworksItemAdapter(getContext(), networksLocalData.getNetworks(),
                         transition));
 
         final FloatingActionButton addFab = activity.findViewById(R.id.networks_add_fab);
