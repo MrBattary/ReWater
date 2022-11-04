@@ -1,5 +1,6 @@
 package michael.linker.rewater.model.network;
 
+import michael.linker.rewater.constant.Status;
 import michael.linker.rewater.model.status.DetailedStatusModel;
 
 public class NetworkItemModel {
@@ -7,6 +8,15 @@ public class NetworkItemModel {
     private final String heading;
     private final String description;
     private final DetailedStatusModel status;
+
+    public NetworkItemModel(
+            final String heading,
+            final String description) {
+        this.id = null;
+        this.heading = heading;
+        this.description = description;
+        this.status = new DetailedStatusModel(Status.UNDEFINED, Status.UNDEFINED);
+    }
 
     public NetworkItemModel(
             final String id,

@@ -2,12 +2,7 @@ package michael.linker.rewater.assist.provider;
 
 import android.content.res.Resources;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import michael.linker.rewater.R;
 import michael.linker.rewater.assist.App;
-import michael.linker.rewater.constant.Status;
 
 public class ColorProvider {
     private static final Resources RESOURCES = App.getRes();
@@ -21,13 +16,5 @@ public class ColorProvider {
      */
     public static int getColor(final int id) {
         return RESOURCES.getColor(id, THEME);
-    }
-
-    public static Map<Status, Integer> getStatusColorMap() {
-        Map<Status, Integer> initMap = new HashMap<>();
-        initMap.put(Status.OK, ColorProvider.getColor(R.color.positive_color));
-        initMap.put(Status.WARNING, ColorProvider.getColor(R.color.warning_color));
-        initMap.put(Status.DEFECT, ColorProvider.getColor(R.color.negative_color));
-        return initMap;
     }
 }

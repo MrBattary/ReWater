@@ -5,7 +5,7 @@ import michael.linker.rewater.data.networks.NetworksLocalData;
 public class DataConfiguration {
     private static NetworksLocalData sNetworksLocalData;
 
-    public NetworksLocalData getNetworksData() {
+    public static NetworksLocalData getNetworksData() {
         if (sNetworksLocalData == null) {
             sNetworksLocalData = new NetworksLocalData();
         }
