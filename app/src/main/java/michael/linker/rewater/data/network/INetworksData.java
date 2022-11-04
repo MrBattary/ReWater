@@ -18,4 +18,19 @@ public interface INetworksData {
      * @param model new network model, ID can be null.
      */
     void addNetwork(NetworkModel model);
+
+    /**
+     * Update an existing network.
+     *
+     * @param id ID of the network to be updated
+     * @param model model with data for update
+     */
+    void updateNetwork(String id, NetworkModel model);
+
+    /**
+     * Remove an existing network.
+     *
+     * @param id ID of the network to be removed
+     */
+    void removeNetwork(String id);
 }

@@ -28,10 +28,10 @@ import michael.linker.rewater.ui.view.primitive.input.TextInputView;
 
 public class AddNetworkFragment extends Fragment {
     private static final String TAG = "AddNetworkFragment";
-    private AddNetworkViewModel mViewModel;
     private ITextInputView mHeadingInput, mDescriptionInput;
     private MaterialButton mCreateButton, mCancelButton;
     private INetworksData mNetworksData;
+    private AddNetworkViewModel mViewModel;
 
     public static AddNetworkFragment newInstance() {
         return new AddNetworkFragment();

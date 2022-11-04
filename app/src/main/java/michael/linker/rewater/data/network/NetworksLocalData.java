@@ -46,4 +46,28 @@ public class NetworksLocalData implements INetworksData {
                         model.getDescription(),
                         model.getStatus()));
     }
+
+    @Override
+    public void updateNetwork(final String id, final NetworkModel model) {
+        for (int i = 0; i < mNetworkModels.size(); i++) {
+            if (id.equals(mNetworkModels.get(i).getId())) {
+                mNetworkModels.set(i, new NetworkModel(
+                        id,
+                        model.getHeading(),
+                        model.getDescription(),
+                        model.getStatus()));
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void removeNetwork(final String id) {
+        for (int i = 0; i < mNetworkModels.size(); i++) {
+            if (id.equals(mNetworkModels.get(i).getId())) {
+                mNetworkModels.remove(i);
+                return;
+            }
+        }
+    }
 }
