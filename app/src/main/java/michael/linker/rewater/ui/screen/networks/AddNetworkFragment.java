@@ -80,20 +80,17 @@ public class AddNetworkFragment extends Fragment {
     }
 
     private void initButtons(@NonNull final View view) {
-        final int actionUpId = R.id.navigation_action_networks_add_to_networks;
-
         mCreateButton.setOnClickListener(l -> {
             try {
                 final String heading = mHeadingInput.getText();
                 final String description = mDescriptionInput.getText();
                 mNetworksData.addNetwork(new NetworkModel(heading, description));
-                Navigation.findNavController(view).navigate(actionUpId);
+                Navigation.findNavController(view).navigateUp();
             } catch (InputNotAllowedException e) {
                 Log.w(TAG, e.getMessage());
             }
         });
 
-        mCancelButton.setOnClickListener(l -> Navigation.findNavController(view).navigate(
-                actionUpId));
+        mCancelButton.setOnClickListener(l -> Navigation.findNavController(view).navigateUp());
     }
 }

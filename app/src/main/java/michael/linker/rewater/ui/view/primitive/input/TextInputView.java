@@ -1,21 +1,22 @@
 package michael.linker.rewater.ui.view.primitive.input;
 
+import android.text.Editable;
 import android.view.View;
-import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
 public class TextInputView implements ITextInputView {
     private final TextInputLayout mTextInputLayout;
-    private final EditText mTextInput;
+    private final TextInputEditText mTextInput;
     private List<String> mBlacklist;
     private String mBlacklistErrorMsg;
     private Integer mMaxLimit, mMinLimit;
     private String mMaxLimitErrorMsg, mMinLimitErrorMsg;
 
-    public TextInputView(final TextInputLayout textInputLayout, final EditText textInput) {
+    public TextInputView(final TextInputLayout textInputLayout, final TextInputEditText textInput) {
         mTextInputLayout = textInputLayout;
         mTextInput = textInput;
         mBlacklist = null;
@@ -30,7 +31,13 @@ public class TextInputView implements ITextInputView {
 
     @Override
     public String getText() throws InputNotAllowedException {
-        final String text = mTextInput.getText().toString();
+        final Editable editable = mTextInput.getText();
+        final String text;
+        if (editable != null) {
+            text = editable.toString();
+        } else {
+            text = "";
+        }
         if (mMinLimit != null && text.length() < mMinLimit) {
             mTextInputLayout.setError(mMinLimitErrorMsg);
             throw new InputNotAllowedException("The text size is less than the allowed value!");

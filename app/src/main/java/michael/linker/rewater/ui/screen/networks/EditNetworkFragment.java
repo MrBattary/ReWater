@@ -89,11 +89,9 @@ public class EditNetworkFragment extends Fragment {
     }
 
     private void initButtons(@NonNull final View view, final NetworkModel networkModel) {
-        final int actionUpId = R.id.navigation_action_networks_edit_to_networks;
-
         mDeleteButton.setOnClickListener(l -> {
             mNetworksData.removeNetwork(networkModel.getId());
-            Navigation.findNavController(view).navigate(actionUpId);
+            Navigation.findNavController(view).navigateUp();
         });
 
         mSaveButton.setOnClickListener(l -> {
@@ -101,14 +99,18 @@ public class EditNetworkFragment extends Fragment {
                 final String heading = mHeadingInput.getText();
                 final String description = mDescriptionInput.getText();
                 mNetworksData.updateNetwork(
-                        networkModel.getId(), new NetworkModel(heading, description));
-                Navigation.findNavController(view).navigate(actionUpId);
+                        networkModel.getId(),
+                        new NetworkModel(
+                                networkModel.getId(),
+                                heading,
+                                description,
+                                networkModel.getStatus()));
+                Navigation.findNavController(view).navigateUp();
             } catch (InputNotAllowedException e) {
                 Log.w(TAG, e.getMessage());
             }
         });
 
-        mCancelButton.setOnClickListener(l -> Navigation.findNavController(view).navigate(
-                actionUpId));
+        mCancelButton.setOnClickListener(l -> Navigation.findNavController(view).navigateUp());
     }
 }

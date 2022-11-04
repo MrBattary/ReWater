@@ -65,7 +65,7 @@
         android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
         app:counterMaxLength="@integer/input_max_limit_description">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_network_description_input"
             style="@style/EditTextMultilineLimitedViewStyle"
             android:layout_width="match_parent"
@@ -86,7 +86,7 @@
         android:layout_alignParentTop="true"
         app:counterMaxLength="@integer/input_max_limit_header">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_network_heading_input"
             style="@style/EditTextNormalLimitedViewStyle"
             android:layout_width="match_parent"
