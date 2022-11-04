@@ -17,6 +17,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/navigation_action_networks_to_networks_edit"
+            app:destination="@id/navigation_networks_edit"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -26,6 +33,20 @@
         tools:layout="@layout/fragment_add_network" >
         <action
             android:id="@+id/navigation_action_networks_add_to_networks"
+            app:destination="@id/navigation_networks"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_networks_edit"
+        android:name="michael.linker.rewater.ui.screen.networks.EditNetworkFragment"
+        android:label="Edit network"
+        tools:layout="@layout/fragment_edit_network">
+        <action
+            android:id="@+id/navigation_action_networks_edit_to_networks"
             app:destination="@id/navigation_networks"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"

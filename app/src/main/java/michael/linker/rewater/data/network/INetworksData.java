@@ -1,6 +1,6 @@
 package michael.linker.rewater.data.networks;
 
-import michael.linker.rewater.model.network.NetworkItemModel;
+import michael.linker.rewater.model.network.NetworkModel;
 import michael.linker.rewater.model.network.NetworksModel;
 
 public interface INetworksData {
@@ -17,5 +17,5 @@ public interface INetworksData {
      *
      * @param model new network model, ID can be null.
      */
-    void addNetwork(NetworkItemModel model);
+    void addNetwork(NetworkModel model);
 }

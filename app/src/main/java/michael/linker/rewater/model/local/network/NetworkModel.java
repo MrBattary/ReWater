@@ -3,13 +3,13 @@ package michael.linker.rewater.model.network;
 import michael.linker.rewater.constant.Status;
 import michael.linker.rewater.model.status.DetailedStatusModel;
 
-public class NetworkItemModel {
+public class NetworkModel {
     private final String id;
     private final String heading;
     private final String description;
     private final DetailedStatusModel status;
 
-    public NetworkItemModel(
+    public NetworkModel(
             final String heading,
             final String description) {
         this.id = null;
@@ -18,7 +18,7 @@ public class NetworkItemModel {
         this.status = new DetailedStatusModel(Status.UNDEFINED, Status.UNDEFINED);
     }
 
-    public NetworkItemModel(
+    public NetworkModel(
             final String id,
             final String heading,
             final String description,

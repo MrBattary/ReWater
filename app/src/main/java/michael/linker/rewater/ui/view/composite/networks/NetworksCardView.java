@@ -6,10 +6,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.model.network.NetworkItemModel;
 import michael.linker.rewater.assist.provider.DrawablesProvider;
+import michael.linker.rewater.model.network.NetworkModel;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 import michael.linker.rewater.ui.view.status.CombinedStatusView;
 
@@ -22,7 +23,7 @@ public class NetworksCardView implements IView {
     private final Button mSettingsButton;
     private final View mHiddenContent;
     private final OrderedTransition mTransition;
-    private NetworkItemModel mData;
+    private NetworkModel mData;
 
     public NetworksCardView(final View view, final OrderedTransition transition) {
         mCardView = view.findViewById(R.id.networks_card);
@@ -40,7 +41,7 @@ public class NetworksCardView implements IView {
         this.initButtonsLogic();
     }
 
-    public void setData(final NetworkItemModel dataModel) {
+    public void setData(final NetworkModel dataModel) {
         mData = dataModel;
         mHeading.setText(dataModel.getHeading());
         mDescription.setText(dataModel.getDescription());
@@ -66,7 +67,8 @@ public class NetworksCardView implements IView {
     }
 
     private void initSettingsButtonLogic() {
-        // TODO (Battary): Add logic
+        mSettingsButton.setOnClickListener(l -> Navigation.findNavController(mCardView).navigate(
+                R.id.navigation_action_networks_to_networks_edit));
     }
 
     private void initTransitionTargets() {

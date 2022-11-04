@@ -3,13 +3,13 @@ package michael.linker.rewater.model.network;
 import java.util.List;
 
 public class NetworksModel {
-    private final List<NetworkItemModel> mNetworkModelList;
+    private final List<NetworkModel> mNetworkModelList;
 
-    public NetworksModel(List<NetworkItemModel> networkModelList) {
+    public NetworksModel(List<NetworkModel> networkModelList) {
         mNetworkModelList = networkModelList;
     }
 
-    public List<NetworkItemModel> getNetworkModelList() {
+    public List<NetworkModel> getNetworkModelList() {
         return mNetworkModelList;
     }
 }
