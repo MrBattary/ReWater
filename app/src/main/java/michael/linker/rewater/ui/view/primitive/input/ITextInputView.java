@@ -12,6 +12,12 @@ public interface ITextInputView extends IInputView {
     String getText() throws InputNotAllowedException;
 
     /**
+     * Set text in the text input.
+     * @param text text.
+     */
+    void setText(final String text);
+
+    /**
      * Set blacklist rule.
      * If the text is equal to any text from the blacklist, an error will be returned when
      * receiving the text.

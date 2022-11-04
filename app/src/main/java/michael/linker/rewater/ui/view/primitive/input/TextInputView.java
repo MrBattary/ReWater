@@ -52,6 +52,11 @@ public class TextInputView implements ITextInputView {
     }
 
     @Override
+    public void setText(final String text) {
+        mTextInput.setText(text);
+    }
+
+    @Override
     public void setBlacklist(final List<String> blacklist, final String errorMsg) {
         mBlacklist = blacklist;
         mBlacklistErrorMsg = errorMsg;
