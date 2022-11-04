@@ -25,10 +25,6 @@ public class NetworksFragment extends Fragment {
     private DataConfiguration dataConfiguration;
     private NetworksViewModel mViewModel;
 
-    public NetworksFragment() {
-        dataConfiguration = new DataConfiguration();
-    }
-
     public static NetworksFragment newInstance() {
         return new NetworksFragment();
     }

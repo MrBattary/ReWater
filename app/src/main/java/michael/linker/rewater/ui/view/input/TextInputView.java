@@ -12,14 +12,15 @@ public class TextInputView implements ITextInputView {
     private final EditText mTextInput;
     private List<String> mBlacklist;
     private String mBlacklistErrorMsg;
-    private Integer mLimit;
-    private String mLimitErrorMsg;
+    private Integer mMaxLimit, mMinLimit;
+    private String mMaxLimitErrorMsg, mMinLimitErrorMsg;
 
     public TextInputView(final TextInputLayout textInputLayout, final EditText textInput) {
         mTextInputLayout = textInputLayout;
         mTextInput = textInput;
         mBlacklist = null;
-        mLimit = null;
+        mMaxLimit = null;
+        mMinLimit = null;
     }
 
     @Override
@@ -30,9 +31,13 @@ public class TextInputView implements ITextInputView {
     @Override
     public String getText() throws InputNotAllowedException {
         final String text = mTextInput.getText().toString();
-        if (mLimit != null && text.length() > mLimit) {
-            mTextInputLayout.setError(mLimitErrorMsg);
-            throw new InputNotAllowedException("The size of the string exceeds the allowed value!");
+        if (mMinLimit != null && text.length() < mMinLimit) {
+            mTextInputLayout.setError(mMinLimitErrorMsg);
+            throw new InputNotAllowedException("The text size is less than the allowed value!");
+        }
+        if (mMaxLimit != null && text.length() > mMaxLimit) {
+            mTextInputLayout.setError(mMaxLimitErrorMsg);
+            throw new InputNotAllowedException("The text size is more than the allowed value!");
         }
         if (mBlacklist != null && mBlacklist.size() > 0) {
             for (String blacklistText : mBlacklist) {
@@ -53,8 +58,14 @@ public class TextInputView implements ITextInputView {
     }
 
     @Override
-    public void setLimit(final int limit, final String errorMsg) {
-        mLimit = limit;
-        mLimitErrorMsg = errorMsg;
+    public void setMaxLimit(final int limit, final String errorMsg) {
+        mMaxLimit = limit;
+        mMaxLimitErrorMsg = errorMsg;
+    }
+
+    @Override
+    public void setMinLimit(int limit, String errorMsg) {
+        mMinLimit = limit;
+        mMinLimitErrorMsg = errorMsg;
     }
 }

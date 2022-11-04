@@ -11,6 +11,10 @@
     <!-- Inputs. -->
     <string name="input_hint_heading">Heading</string>
     <string name="input_hint_description">Description</string>
+    <string name="input_error_heading_taken">The name is already taken!</string>
+    <string name="input_error_heading_overflow">The name is too long!</string>
+    <string name="input_error_heading_lack">The name is too short!</string>
+    <string name="input_error_description_overflow">The description is too long!</string>
 
     <!-- Texts. -->
     <string name="global_short_placeholder">!Lorem ipsum vivamus.!</string>
@@ -21,7 +25,6 @@
     <string name="button_create">Create</string>
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
-
 
     <!-- Descriptions. -->
     <string name="description_back_button">Back to the previous screen</string>

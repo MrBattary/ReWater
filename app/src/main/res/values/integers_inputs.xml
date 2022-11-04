@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="input_limit_header">50</integer>
-    <integer name="input_limit_description">200</integer>
+    <integer name="input_max_limit_header">50</integer>
+    <integer name="input_min_limit_header">4</integer>
+    <integer name="input_max_limit_description">200</integer>
 </resources>

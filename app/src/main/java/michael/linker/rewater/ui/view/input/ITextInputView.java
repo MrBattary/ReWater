@@ -22,12 +22,22 @@ public interface ITextInputView extends IInputView {
     void setBlacklist(List<String> blacklist, final String errorMsg);
 
     /**
-     * Set limit rule.
+     * Set max limit rule.
      * If the text length is more than provided limit, an error will be returned when
      * receiving the text.
      *
      * @param limit max length of the input text
      * @param errorMsg message to display if an error occurs
      */
-    void setLimit(final int limit, final String errorMsg);
+    void setMaxLimit(final int limit, final String errorMsg);
+
+    /**
+     * Set min limit rule.
+     * If the text length is less than provided limit, an error will be returned when
+     * receiving the text.
+     *
+     * @param limit min length of the input text
+     * @param errorMsg message to display if an error occurs
+     */
+    void setMinLimit(final int limit, final String errorMsg);
 }
