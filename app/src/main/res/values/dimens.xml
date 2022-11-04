@@ -22,6 +22,7 @@
     <dimen name="fab_margin">18dp</dimen>
     <dimen name="recycler_view_padding_for_bottom_fab">80dp</dimen>
     <dimen name="button_corner_radius">10dp</dimen>
+    <dimen name="button_stroke_width">2dp</dimen>
 
     <!-- Navigation dimensions. -->
     <dimen name="navigation_icon_size">26dp</dimen>

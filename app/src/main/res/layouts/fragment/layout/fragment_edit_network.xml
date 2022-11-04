@@ -1,12 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/networks_edit_network"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
+    android:paddingVertical="@dimen/fragment_content_vertical_spacing"
     tools:context=".ui.screen.networks.EditNetworkFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/edit_network_controls"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Edit network" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_network_description"
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/edit_network_delete_button"
+            style="@style/OutlinedButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_delete"
+            app:icon="@drawable/ic_remove"
+            app:iconTint="@color/negative_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/negative_color" />
+
+        <Button
+            android:id="@+id/edit_network_save_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+            android:text="@string/button_save"
+            app:icon="@drawable/ic_positive"
+            app:iconTint="@color/positive_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_network_delete_button" />
+
+        <Button
+            android:id="@+id/edit_network_cancel_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_cancel"
+            app:icon="@drawable/ic_cancel"
+            app:iconTint="@color/negative_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_network_description"
+        style="@style/TextInputCounterLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/edit_network_heading"
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+        app:counterMaxLength="@integer/input_max_limit_description">
+
+        <EditText
+            android:id="@+id/edit_network_description_input"
+            style="@style/EditTextMultilineLimitedViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_hint_description"
+            android:importantForAutofill="no"
+            android:maxLines="6"
+            android:minLines="3" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_network_heading"
+        style="@style/TextInputCounterAndErrorLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:counterMaxLength="@integer/input_max_limit_header">
+
+        <EditText
+            android:id="@+id/edit_network_heading_input"
+            style="@style/EditTextNormalLimitedViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_hint_heading"
+            android:importantForAutofill="no"
+            android:maxLength="@integer/input_max_limit_header" />
+    </com.google.android.material.textfield.TextInputLayout>
 </RelativeLayout>

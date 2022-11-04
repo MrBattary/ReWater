@@ -6,11 +6,17 @@
         <item name="android:textSize">@dimen/font_size_small</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
+        <item name="iconGravity">textStart</item>
     </style>
 
     <style name="RegularButtonStyle" parent="ButtonParentStyle">
         <item name="android:backgroundTint">@color/background_secondary</item>
         <item name="cornerRadius">@dimen/button_corner_radius</item>
+    </style>
+
+    <!-- The param 'strokeColor' is required! -->
+    <style name="OutlinedButtonStyle" parent="RegularButtonStyle">
+        <item name="strokeWidth">@dimen/button_stroke_width</item>
     </style>
 
     <style name="RoundButtonStyle" parent="Widget.Material3.Button.IconButton">
