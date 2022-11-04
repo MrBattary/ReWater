@@ -1,6 +1,5 @@
 package michael.linker.rewater.ui.screen.networks;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +16,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.networks.NetworksLocalData;
+import michael.linker.rewater.data.network.NetworksLocalData;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
-import michael.linker.rewater.ui.view.adapter.NetworksItemAdapter;
+import michael.linker.rewater.ui.view.composite.networks.adapter.NetworksItemAdapter;
 
 public class NetworksFragment extends Fragment {
-    private DataConfiguration dataConfiguration;
     private NetworksViewModel mViewModel;
 
     public static NetworksFragment newInstance() {
@@ -39,17 +37,16 @@ public class NetworksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final NetworksLocalData networksLocalData = dataConfiguration.getNetworksData();
+        final NetworksLocalData networksLocalData = DataConfiguration.getNetworksData();
 
-        Activity activity = getActivity();
         OrderedTransition transition = new OrderedTransition();
         transition.setDuration(150);
 
-        RecyclerView recyclerView = activity.findViewById(R.id.networks_recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.networks_recycler_view);
         transition.setRootView(recyclerView);
-        transition.addChangeBoundsTarget(activity.findViewById(R.id.networks_recycler_view));
+        transition.addChangeBoundsTarget(view.findViewById(R.id.networks_recycler_view));
         transition.addChangeBoundsTarget(
-                activity.findViewById(R.id.networks_recycler_view_wrapper));
+                view.findViewById(R.id.networks_recycler_view_wrapper));
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -57,9 +54,10 @@ public class NetworksFragment extends Fragment {
                 new NetworksItemAdapter(getContext(), networksLocalData.getNetworks(),
                         transition));
 
-        final FloatingActionButton addFab = activity.findViewById(R.id.networks_add_fab);
-        addFab.setOnClickListener(buttonView -> {
-            Navigation.findNavController(view).navigate(R.id.navigation_action_networks_to_networks_add);
-        });
+        final FloatingActionButton addFab = view.findViewById(R.id.networks_add_fab);
+        addFab.setOnClickListener(buttonView ->
+                Navigation.findNavController(view).navigate(
+                        R.id.navigation_action_networks_to_networks_add)
+        );
     }
 }

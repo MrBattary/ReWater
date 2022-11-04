@@ -1,5 +1,6 @@
-package michael.linker.rewater.ui.view;
+package michael.linker.rewater.ui.view.composite.networks;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -10,9 +11,11 @@ import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.assist.provider.DrawablesProvider;
-import michael.linker.rewater.model.network.NetworkModel;
+import michael.linker.rewater.model.local.network.NetworkModel;
+import michael.linker.rewater.model.local.network.NetworkModelBundle;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
-import michael.linker.rewater.ui.view.status.CombinedStatusView;
+import michael.linker.rewater.ui.view.IView;
+import michael.linker.rewater.ui.view.primitive.status.CombinedStatusView;
 
 public class NetworksCardView implements IView {
     private final CardView mCardView;
@@ -67,8 +70,11 @@ public class NetworksCardView implements IView {
     }
 
     private void initSettingsButtonLogic() {
-        mSettingsButton.setOnClickListener(l -> Navigation.findNavController(mCardView).navigate(
-                R.id.navigation_action_networks_to_networks_edit));
+        mSettingsButton.setOnClickListener(l -> {
+            final Bundle bundle = new NetworkModelBundle().pack(mData);
+            Navigation.findNavController(mCardView).navigate(
+                    R.id.navigation_action_networks_to_networks_edit, bundle);
+        });
     }
 
     private void initTransitionTargets() {

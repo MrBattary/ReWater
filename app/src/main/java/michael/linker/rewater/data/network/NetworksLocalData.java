@@ -1,13 +1,13 @@
-package michael.linker.rewater.data.networks;
+package michael.linker.rewater.data.network;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 import michael.linker.rewater.constant.Status;
-import michael.linker.rewater.model.network.NetworkModel;
-import michael.linker.rewater.model.network.NetworksModel;
-import michael.linker.rewater.model.status.DetailedStatusModel;
+import michael.linker.rewater.model.local.network.NetworkModel;
+import michael.linker.rewater.model.local.network.NetworksModel;
+import michael.linker.rewater.model.local.status.DetailedStatusModel;
 
 public class NetworksLocalData implements INetworksData {
     private final List<NetworkModel> mNetworkModels;

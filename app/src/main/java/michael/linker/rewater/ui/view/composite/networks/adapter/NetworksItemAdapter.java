@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.view.adapter;
+package michael.linker.rewater.ui.view.composite.networks.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.model.network.NetworksModel;
+import michael.linker.rewater.model.local.network.NetworksModel;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
-import michael.linker.rewater.ui.view.NetworksCardView;
+import michael.linker.rewater.ui.view.composite.networks.NetworksCardView;
 
 public class NetworksItemAdapter extends
         RecyclerView.Adapter<NetworksItemAdapter.NetworksItemViewHolder> {

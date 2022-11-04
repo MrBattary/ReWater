@@ -1,7 +1,7 @@
-package michael.linker.rewater.data.networks;
+package michael.linker.rewater.data.network;
 
-import michael.linker.rewater.model.network.NetworkModel;
-import michael.linker.rewater.model.network.NetworksModel;
+import michael.linker.rewater.model.local.network.NetworkModel;
+import michael.linker.rewater.model.local.network.NetworksModel;
 
 public interface INetworksData {
     /**

@@ -3,7 +3,7 @@ package michael.linker.rewater.assist.comparator;
 import java.util.Map;
 import java.util.Objects;
 
-import michael.linker.rewater.model.status.DetailedStatusModel;
+import michael.linker.rewater.model.local.status.DetailedStatusModel;
 import michael.linker.rewater.constant.Status;
 
 public class StatusComparator {

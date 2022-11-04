@@ -1,7 +1,7 @@
-package michael.linker.rewater.model.network;
+package michael.linker.rewater.model.local.network;
 
 import michael.linker.rewater.constant.Status;
-import michael.linker.rewater.model.status.DetailedStatusModel;
+import michael.linker.rewater.model.local.status.DetailedStatusModel;
 
 public class NetworkModel {
     private final String id;

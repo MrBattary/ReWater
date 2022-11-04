@@ -1,6 +1,6 @@
 package michael.linker.rewater.config;
 
-import michael.linker.rewater.data.networks.NetworksLocalData;
+import michael.linker.rewater.data.network.NetworksLocalData;
 
 public class DataConfiguration {
     private static NetworksLocalData sNetworksLocalData;

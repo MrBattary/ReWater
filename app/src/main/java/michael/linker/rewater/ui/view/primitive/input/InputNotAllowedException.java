@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.view.input;
+package michael.linker.rewater.ui.view.primitive.input;
 
 public class InputNotAllowedException extends RuntimeException {
     public InputNotAllowedException(String message) {

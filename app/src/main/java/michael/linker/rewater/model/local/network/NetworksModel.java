@@ -1,4 +1,4 @@
-package michael.linker.rewater.model.network;
+package michael.linker.rewater.model.local.network;
 
 import java.util.List;
 
