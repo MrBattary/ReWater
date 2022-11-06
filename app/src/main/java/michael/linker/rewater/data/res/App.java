@@ -6,7 +6,7 @@ import android.content.res.Resources;
 /**
  * Application singleton for the access purpose
  */
-class App extends Application {
+public class App extends Application {
     private static App app;
     private static Resources res;
 
