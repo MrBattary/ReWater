@@ -18,13 +18,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.res.App;
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.network.INetworksData;
+import michael.linker.rewater.data.res.IntegersProvider;
+import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.model.local.network.NetworkModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.AddNetworkViewModel;
-import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
+import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
 
 public class AddNetworkFragment extends Fragment {
@@ -70,14 +71,14 @@ public class AddNetworkFragment extends Fragment {
                 .map(NetworkModel::getHeading)
                 .collect(Collectors.toList());
         mHeadingInput.setBlacklist(alreadyTakenNetworksNames,
-                App.getRes().getString(R.string.input_error_heading_taken));
-        mHeadingInput.setMaxLimit(App.getRes().getInteger(R.integer.input_max_limit_header),
-                App.getRes().getString(R.string.input_error_heading_overflow));
-        mHeadingInput.setMinLimit(App.getRes().getInteger(R.integer.input_min_limit_header),
-                App.getRes().getString(R.string.input_error_heading_lack));
+                StringsProvider.getString(R.string.input_error_heading_taken));
+        mHeadingInput.setMaxLimit(IntegersProvider.getInteger(R.integer.input_max_limit_header),
+                StringsProvider.getString(R.string.input_error_heading_overflow));
+        mHeadingInput.setMinLimit(IntegersProvider.getInteger(R.integer.input_min_limit_header),
+                StringsProvider.getString(R.string.input_error_heading_lack));
         mDescriptionInput.setMaxLimit(
-                App.getRes().getInteger(R.integer.input_max_limit_description),
-                App.getRes().getString(R.string.input_error_description_overflow));
+                IntegersProvider.getInteger(R.integer.input_max_limit_description),
+                StringsProvider.getString(R.string.input_error_description_overflow));
     }
 
     private void initButtons(@NonNull final View view) {

@@ -2,7 +2,7 @@ package michael.linker.rewater.data.res;
 
 import android.content.res.Resources;
 
-public class ColorProvider {
+public class ColorsProvider {
     private static final Resources RESOURCES = App.getRes();
     private static final Resources.Theme THEME = App.getInstance().getTheme();
 

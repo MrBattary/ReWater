@@ -19,14 +19,15 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.res.App;
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.network.INetworksData;
+import michael.linker.rewater.data.res.IntegersProvider;
+import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.model.local.network.NetworkModel;
 import michael.linker.rewater.model.local.network.NetworkModelBundle;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.EditNetworkViewModel;
-import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
+import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
 
 public class EditNetworkFragment extends Fragment {
@@ -77,14 +78,14 @@ public class EditNetworkFragment extends Fragment {
                 .filter(heading -> !Objects.equals(heading, networkModel.getHeading()))
                 .collect(Collectors.toList());
         mHeadingInput.setBlacklist(alreadyTakenNetworksNames,
-                App.getRes().getString(R.string.input_error_heading_taken));
-        mHeadingInput.setMaxLimit(App.getRes().getInteger(R.integer.input_max_limit_header),
-                App.getRes().getString(R.string.input_error_heading_overflow));
-        mHeadingInput.setMinLimit(App.getRes().getInteger(R.integer.input_min_limit_header),
-                App.getRes().getString(R.string.input_error_heading_lack));
+                StringsProvider.getString(R.string.input_error_heading_taken));
+        mHeadingInput.setMaxLimit(IntegersProvider.getInteger(R.integer.input_max_limit_header),
+                StringsProvider.getString(R.string.input_error_heading_overflow));
+        mHeadingInput.setMinLimit(IntegersProvider.getInteger(R.integer.input_min_limit_header),
+                StringsProvider.getString(R.string.input_error_heading_lack));
         mDescriptionInput.setMaxLimit(
-                App.getRes().getInteger(R.integer.input_max_limit_description),
-                App.getRes().getString(R.string.input_error_description_overflow));
+                IntegersProvider.getInteger(R.integer.input_max_limit_description),
+                StringsProvider.getString(R.string.input_error_description_overflow));
         mHeadingInput.setText(networkModel.getHeading());
         mDescriptionInput.setText(networkModel.getDescription());
     }

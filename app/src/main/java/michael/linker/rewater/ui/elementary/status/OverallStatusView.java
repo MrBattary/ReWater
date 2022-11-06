@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.Status;
-import michael.linker.rewater.data.res.StatusColorProvider;
+import michael.linker.rewater.data.res.StatusColorsProvider;
 import michael.linker.rewater.model.local.status.DetailedStatusModel;
 import michael.linker.rewater.ui.IView;
 
@@ -22,7 +22,7 @@ public class OverallStatusView implements IView {
     public void setStatus(final DetailedStatusModel detailedStatusModel) {
         final Status worstStatus = Status.getWorstStatus(detailedStatusModel.toList());
         mImageView.setImageTintList(
-                ColorStateList.valueOf(StatusColorProvider.getColorForStatus(worstStatus)));
+                ColorStateList.valueOf(StatusColorsProvider.getColorForStatus(worstStatus)));
     }
 
     @Override

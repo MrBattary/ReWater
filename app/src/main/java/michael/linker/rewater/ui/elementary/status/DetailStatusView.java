@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.res.StatusColorProvider;
+import michael.linker.rewater.data.res.StatusColorsProvider;
 import michael.linker.rewater.data.res.StatusDrawablesProvider;
 import michael.linker.rewater.model.local.status.DetailedStatusModel;
 import michael.linker.rewater.ui.IView;
@@ -25,7 +25,7 @@ public class DetailStatusView implements IView {
 
     public void setStatus(final DetailedStatusModel detailedStatusModel) {
         waterStatusIcon.setImageTintList(ColorStateList.valueOf(
-                StatusColorProvider.getColorForStatus(detailedStatusModel.getWater())));
+                StatusColorsProvider.getColorForStatus(detailedStatusModel.getWater())));
         energyStatusIcon.setImageDrawable(
                 StatusDrawablesProvider.getIconForEnergyStatus(detailedStatusModel.getEnergy()));
     }
