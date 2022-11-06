@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="michael.linker.rewater.ui.screen.settings.SettingsFragment"
+        android:name="michael.linker.rewater.ui.advanced.settings.view.SettingsFragment"
         android:label="@string/navigation_title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

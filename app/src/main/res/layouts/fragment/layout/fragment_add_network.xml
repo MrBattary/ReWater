@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
     android:paddingVertical="@dimen/fragment_content_vertical_spacing"
-    tools:context=".ui.screen.networks.AddNetworkFragment">
+    tools:context=".ui.advanced.networks.view.AddNetworkFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_network_controls"

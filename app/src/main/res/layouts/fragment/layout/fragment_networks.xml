@@ -5,7 +5,7 @@
     android:id="@+id/networks_recycler_view_wrapper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.screen.networks.NetworksFragment">
+    tools:context=".ui.advanced.networks.view.NetworksFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/networks_recycler_view"

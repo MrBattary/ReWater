@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_devices"
-        android:name="michael.linker.rewater.ui.screen.devices.DevicesFragment"
+        android:name="michael.linker.rewater.ui.advanced.devices.view.DevicesFragment"
         android:label="@string/navigation_title_devices"
         tools:layout="@layout/fragment_devices" />
 </navigation>

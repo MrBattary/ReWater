@@ -1,12 +1,10 @@
-package michael.linker.rewater.assist.provider;
+package michael.linker.rewater.data.res;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 
 import androidx.core.content.res.ResourcesCompat;
-
-import michael.linker.rewater.assist.App;
 
 public class DrawablesProvider {
     private static final Resources RESOURCES = App.getRes();

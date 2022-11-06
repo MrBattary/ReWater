@@ -4,7 +4,7 @@
     package="michael.linker.rewater">
 
     <application
-        android:name=".assist.App"
+        android:name=".data.res.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

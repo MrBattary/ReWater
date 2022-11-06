@@ -7,8 +7,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import michael.linker.rewater.ui.navigation.INavigation;
-import michael.linker.rewater.ui.navigation.Navigation;
+import michael.linker.rewater.ui.advanced.navigation.INavigation;
+import michael.linker.rewater.ui.advanced.navigation.Navigation;
 
 public class MainActivity extends AppCompatActivity {
     private INavigation mINavigation;

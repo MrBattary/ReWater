@@ -1,6 +1,6 @@
 package michael.linker.rewater.model.local.network;
 
-import michael.linker.rewater.constant.Status;
+import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.model.local.status.DetailedStatusModel;
 
 public class NetworkModel {

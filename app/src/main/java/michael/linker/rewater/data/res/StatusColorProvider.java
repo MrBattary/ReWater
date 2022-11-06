@@ -1,9 +1,9 @@
-package michael.linker.rewater.assist.provider;
+package michael.linker.rewater.data.res;
 
 import java.util.Map;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.constant.Status;
+import michael.linker.rewater.data.model.Status;
 
 public class StatusColorProvider {
     private static final Map<Status, Integer> STATUS_INTEGER_MAP;

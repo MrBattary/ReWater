@@ -2,7 +2,7 @@ package michael.linker.rewater.model.local.network;
 
 import android.os.Bundle;
 
-import michael.linker.rewater.constant.Status;
+import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.model.local.IBundle;
 import michael.linker.rewater.model.local.status.DetailedStatusModel;
 

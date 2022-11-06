@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import michael.linker.rewater.constant.Status;
+import michael.linker.rewater.data.model.Status;
 
 public class DetailedStatusModel {
     private final Status water;
