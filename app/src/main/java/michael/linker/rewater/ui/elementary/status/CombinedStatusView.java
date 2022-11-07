@@ -3,7 +3,7 @@ package michael.linker.rewater.ui.elementary.status;
 import android.view.View;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.model.local.status.DetailedStatusModel;
+import michael.linker.rewater.ui.model.DetailedStatusModel;
 import michael.linker.rewater.ui.IView;
 
 public class CombinedStatusView implements IView {

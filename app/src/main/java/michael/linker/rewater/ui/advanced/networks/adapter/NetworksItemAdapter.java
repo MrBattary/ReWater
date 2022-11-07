@@ -9,21 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.model.local.network.NetworksModel;
+import michael.linker.rewater.data.model.NetworkListModel;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 import michael.linker.rewater.ui.advanced.networks.view.NetworksCardView;
 
 public class NetworksItemAdapter extends
         RecyclerView.Adapter<NetworksItemAdapter.NetworksItemViewHolder> {
     private final Context mContext;
-    private final NetworksModel mNetworksModel;
+    private final NetworkListModel mNetworkListModel;
     private final OrderedTransition mTransition;
 
     public NetworksItemAdapter(final Context context,
-            final NetworksModel networksModel,
+            final NetworkListModel networkListModel,
             final OrderedTransition transition) {
         mContext = context;
-        mNetworksModel = networksModel;
+        mNetworkListModel = networkListModel;
         mTransition = transition;
     }
 
@@ -39,12 +39,12 @@ public class NetworksItemAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull NetworksItemViewHolder holder, int position) {
-        holder.mNetworksCardView.setData(mNetworksModel.getNetworkModelList().get(position));
+        holder.mNetworksCardView.setData(mNetworkListModel.getNetworkModelList().get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mNetworksModel.getNetworkModelList().size();
+        return mNetworkListModel.getNetworkModelList().size();
     }
 
     static class NetworksItemViewHolder extends RecyclerView.ViewHolder {

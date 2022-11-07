@@ -23,8 +23,8 @@ import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.network.INetworksData;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.model.local.network.NetworkModel;
-import michael.linker.rewater.model.local.network.NetworkModelBundle;
+import michael.linker.rewater.data.model.FullNetworkModel;
+import michael.linker.rewater.ui.model.bundle.NetworkModelBundle;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.EditNetworkViewModel;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
@@ -53,10 +53,10 @@ public class EditNetworkFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            final NetworkModel networkModel = new NetworkModelBundle().unpack(bundle);
+            final FullNetworkModel fullNetworkModel = new NetworkModelBundle().unpack(bundle);
             initFields(view);
-            initInputs(networkModel);
-            initButtons(view, networkModel);
+            initInputs(fullNetworkModel);
+            initButtons(view, fullNetworkModel);
         }
     }
 
@@ -71,11 +71,11 @@ public class EditNetworkFragment extends Fragment {
         mNetworksData = DataConfiguration.getNetworksData();
     }
 
-    private void initInputs(final NetworkModel networkModel) {
-        List<String> alreadyTakenNetworksNames = mNetworksData.getNetworks().getNetworkModelList()
+    private void initInputs(final FullNetworkModel fullNetworkModel) {
+        List<String> alreadyTakenNetworksNames = mNetworksData.getNetworkList().getNetworkModelList()
                 .stream()
-                .map(NetworkModel::getHeading)
-                .filter(heading -> !Objects.equals(heading, networkModel.getHeading()))
+                .map(FullNetworkModel::getHeading)
+                .filter(heading -> !Objects.equals(heading, fullNetworkModel.getHeading()))
                 .collect(Collectors.toList());
         mHeadingInput.setBlacklist(alreadyTakenNetworksNames,
                 StringsProvider.getString(R.string.input_error_heading_taken));
@@ -86,13 +86,13 @@ public class EditNetworkFragment extends Fragment {
         mDescriptionInput.setMaxLimit(
                 IntegersProvider.getInteger(R.integer.input_max_limit_description),
                 StringsProvider.getString(R.string.input_error_description_overflow));
-        mHeadingInput.setText(networkModel.getHeading());
-        mDescriptionInput.setText(networkModel.getDescription());
+        mHeadingInput.setText(fullNetworkModel.getHeading());
+        mDescriptionInput.setText(fullNetworkModel.getDescription());
     }
 
-    private void initButtons(@NonNull final View view, final NetworkModel networkModel) {
+    private void initButtons(@NonNull final View view, final FullNetworkModel fullNetworkModel) {
         mDeleteButton.setOnClickListener(l -> {
-            mNetworksData.removeNetwork(networkModel.getId());
+            mNetworksData.removeNetwork(fullNetworkModel.getId());
             Navigation.findNavController(view).navigateUp();
         });
 
@@ -101,12 +101,12 @@ public class EditNetworkFragment extends Fragment {
                 final String heading = mHeadingInput.getText();
                 final String description = mDescriptionInput.getText();
                 mNetworksData.updateNetwork(
-                        networkModel.getId(),
-                        new NetworkModel(
-                                networkModel.getId(),
+                        fullNetworkModel.getId(),
+                        new FullNetworkModel(
+                                fullNetworkModel.getId(),
                                 heading,
                                 description,
-                                networkModel.getStatus()));
+                                fullNetworkModel.getStatus()));
                 Navigation.findNavController(view).navigateUp();
             } catch (InputNotAllowedException e) {
                 Log.w(TAG, e.getMessage());

@@ -19,10 +19,11 @@ import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.config.DataConfiguration;
+import michael.linker.rewater.data.model.NewNetworkModel;
 import michael.linker.rewater.data.network.INetworksData;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.model.local.network.NetworkModel;
+import michael.linker.rewater.data.model.FullNetworkModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.AddNetworkViewModel;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
@@ -66,9 +67,9 @@ public class AddNetworkFragment extends Fragment {
     }
 
     private void initInputs() {
-        List<String> alreadyTakenNetworksNames = mNetworksData.getNetworks().getNetworkModelList()
+        List<String> alreadyTakenNetworksNames = mNetworksData.getNetworkList().getNetworkModelList()
                 .stream()
-                .map(NetworkModel::getHeading)
+                .map(FullNetworkModel::getHeading)
                 .collect(Collectors.toList());
         mHeadingInput.setBlacklist(alreadyTakenNetworksNames,
                 StringsProvider.getString(R.string.input_error_heading_taken));
@@ -86,7 +87,7 @@ public class AddNetworkFragment extends Fragment {
             try {
                 final String heading = mHeadingInput.getText();
                 final String description = mDescriptionInput.getText();
-                mNetworksData.addNetwork(new NetworkModel(heading, description));
+                mNetworksData.addNetwork(new NewNetworkModel(heading, description));
                 Navigation.findNavController(view).navigateUp();
             } catch (InputNotAllowedException e) {
                 Log.w(TAG, e.getMessage());

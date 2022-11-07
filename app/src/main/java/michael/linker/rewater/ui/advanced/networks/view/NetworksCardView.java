@@ -11,8 +11,8 @@ import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.DrawablesProvider;
-import michael.linker.rewater.model.local.network.NetworkModel;
-import michael.linker.rewater.model.local.network.NetworkModelBundle;
+import michael.linker.rewater.data.model.FullNetworkModel;
+import michael.linker.rewater.ui.model.bundle.NetworkModelBundle;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 import michael.linker.rewater.ui.IView;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
@@ -26,7 +26,7 @@ public class NetworksCardView implements IView {
     private final Button mSettingsButton;
     private final View mHiddenContent;
     private final OrderedTransition mTransition;
-    private NetworkModel mData;
+    private FullNetworkModel mData;
 
     public NetworksCardView(final View view, final OrderedTransition transition) {
         mCardView = view.findViewById(R.id.networks_card);
@@ -44,7 +44,7 @@ public class NetworksCardView implements IView {
         this.initButtonsLogic();
     }
 
-    public void setData(final NetworkModel dataModel) {
+    public void setData(final FullNetworkModel dataModel) {
         mData = dataModel;
         mHeading.setText(dataModel.getHeading());
         mDescription.setText(dataModel.getDescription());

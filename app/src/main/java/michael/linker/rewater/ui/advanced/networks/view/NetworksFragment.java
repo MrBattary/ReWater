@@ -52,7 +52,7 @@ public class NetworksFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(
-                new NetworksItemAdapter(getContext(), networksLocalData.getNetworks(),
+                new NetworksItemAdapter(getContext(), networksLocalData.getNetworkList(),
                         transition));
 
         final FloatingActionButton addFab = view.findViewById(R.id.networks_add_fab);

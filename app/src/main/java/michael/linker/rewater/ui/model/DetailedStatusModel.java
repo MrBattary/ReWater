@@ -1,4 +1,4 @@
-package michael.linker.rewater.model.local.status;
+package michael.linker.rewater.ui.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;

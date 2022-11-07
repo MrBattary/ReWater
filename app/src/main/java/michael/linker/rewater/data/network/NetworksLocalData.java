@@ -4,54 +4,57 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import michael.linker.rewater.data.model.NewNetworkModel;
 import michael.linker.rewater.data.model.Status;
-import michael.linker.rewater.model.local.network.NetworkModel;
-import michael.linker.rewater.model.local.network.NetworksModel;
-import michael.linker.rewater.model.local.status.DetailedStatusModel;
+import michael.linker.rewater.data.model.FullNetworkModel;
+import michael.linker.rewater.data.model.NetworkListModel;
+import michael.linker.rewater.ui.model.DetailedStatusModel;
 
 public class NetworksLocalData implements INetworksData {
-    private final List<NetworkModel> mNetworkModels;
+    private final List<FullNetworkModel> mFullNetworkModels;
 
     public NetworksLocalData() {
-        mNetworkModels = new LinkedList<>();
-        this.addNetwork(new NetworkModel(null, "First network",
+        mFullNetworkModels = new LinkedList<>();
+        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
+                "First network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at dignissim ligula."
                         + " Duis ornare interdum lacus ullamcorper porta. Duis elementum.",
                 new DetailedStatusModel(Status.OK, Status.OK)));
-        this.addNetwork(new NetworkModel(null, "Second network",
+        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
+                "Second network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dictum.",
                 new DetailedStatusModel(Status.OK, Status.WARNING)));
-        this.addNetwork(new NetworkModel(null, "Third network",
+        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
+                "Third network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt placerat"
                         + " dui nec euismod. Integer.",
                 new DetailedStatusModel(Status.WARNING, Status.OK)));
-        this.addNetwork(new NetworkModel(null, "Fourth network",
+        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
+                "Fourth network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut vulputate felis"
                         + ". Praesent et luctus.",
                 new DetailedStatusModel(Status.WARNING, Status.DEFECT)));
-        this.addNetwork(new NetworkModel(null, "Fifth network",
+        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
+                "Fifth network",
                 null,
                 new DetailedStatusModel(Status.DEFECT, Status.OK)));
     }
 
     @Override
-    public NetworksModel getNetworks() {
-        return new NetworksModel(mNetworkModels);
+    public NetworkListModel getNetworkList() {
+        return new NetworkListModel(mFullNetworkModels);
     }
 
     @Override
-    public void addNetwork(final NetworkModel model) {
-        mNetworkModels.add(
-                new NetworkModel(UUID.randomUUID().toString(), model.getHeading(),
-                        model.getDescription(),
-                        model.getStatus()));
+    public void addNetwork(final NewNetworkModel model) {
+        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(), model));
     }
 
     @Override
-    public void updateNetwork(final String id, final NetworkModel model) {
-        for (int i = 0; i < mNetworkModels.size(); i++) {
-            if (id.equals(mNetworkModels.get(i).getId())) {
-                mNetworkModels.set(i, new NetworkModel(
+    public void updateNetwork(final String id, final FullNetworkModel model) {
+        for (int i = 0; i < mFullNetworkModels.size(); i++) {
+            if (id.equals(mFullNetworkModels.get(i).getId())) {
+                mFullNetworkModels.set(i, new FullNetworkModel(
                         id,
                         model.getHeading(),
                         model.getDescription(),
@@ -63,9 +66,9 @@ public class NetworksLocalData implements INetworksData {
 
     @Override
     public void removeNetwork(final String id) {
-        for (int i = 0; i < mNetworkModels.size(); i++) {
-            if (id.equals(mNetworkModels.get(i).getId())) {
-                mNetworkModels.remove(i);
+        for (int i = 0; i < mFullNetworkModels.size(); i++) {
+            if (id.equals(mFullNetworkModels.get(i).getId())) {
+                mFullNetworkModels.remove(i);
                 return;
             }
         }

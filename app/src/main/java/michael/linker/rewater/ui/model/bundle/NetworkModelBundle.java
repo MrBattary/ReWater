@@ -1,12 +1,12 @@
-package michael.linker.rewater.model.local.network;
+package michael.linker.rewater.ui.model.bundle;
 
 import android.os.Bundle;
 
+import michael.linker.rewater.data.model.FullNetworkModel;
 import michael.linker.rewater.data.model.Status;
-import michael.linker.rewater.model.local.IBundle;
-import michael.linker.rewater.model.local.status.DetailedStatusModel;
+import michael.linker.rewater.ui.model.DetailedStatusModel;
 
-public class NetworkModelBundle implements IBundle<NetworkModel> {
+public class NetworkModelBundle implements IBundle<FullNetworkModel> {
     private static final String ID_KEY = "id";
     private static final String ID_HEADING = "heading";
     private static final String ID_DESCRIPTION = "description";
@@ -14,7 +14,7 @@ public class NetworkModelBundle implements IBundle<NetworkModel> {
     private static final String ID_ENERGY = "energy";
 
     @Override
-    public Bundle pack(final NetworkModel model) {
+    public Bundle pack(final FullNetworkModel model) {
         Bundle bundle = new Bundle();
         bundle.putString(ID_KEY, model.getId());
         bundle.putString(ID_HEADING, model.getHeading());
@@ -25,8 +25,8 @@ public class NetworkModelBundle implements IBundle<NetworkModel> {
     }
 
     @Override
-    public NetworkModel unpack(final Bundle bundle) {
-        return new NetworkModel(
+    public FullNetworkModel unpack(final Bundle bundle) {
+        return new FullNetworkModel(
                 bundle.getString(ID_KEY),
                 bundle.getString(ID_HEADING),
                 bundle.getString(ID_DESCRIPTION),

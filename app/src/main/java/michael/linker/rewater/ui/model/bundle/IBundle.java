@@ -1,4 +1,4 @@
-package michael.linker.rewater.model.local;
+package michael.linker.rewater.ui.model.bundle;
 
 import android.os.Bundle;
 
