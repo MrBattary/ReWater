@@ -4,9 +4,9 @@ import android.view.View;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.ui.model.DetailedStatusModel;
-import michael.linker.rewater.ui.IView;
+import michael.linker.rewater.ui.elementary.ICustomView;
 
-public class CombinedStatusView implements IView {
+public class CombinedStatusView implements ICustomView {
     private final View mView;
     private final OverallStatusView mOverallStatusView;
     private final DetailStatusView mDetailStatusView;

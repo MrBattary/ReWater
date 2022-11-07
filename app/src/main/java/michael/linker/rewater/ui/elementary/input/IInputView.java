@@ -1,6 +1,6 @@
 package michael.linker.rewater.ui.elementary.input;
 
-import michael.linker.rewater.ui.IView;
+import michael.linker.rewater.ui.elementary.ICustomView;
 
-public interface IInputView extends IView {
+public interface IInputView extends ICustomView {
 }

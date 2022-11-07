@@ -1,11 +1,11 @@
-package michael.linker.rewater.ui;
+package michael.linker.rewater.ui.elementary;
 
 import android.view.View;
 
 /**
  * Common interface for the other views
  */
-public interface IView {
+public interface ICustomView {
     /**
      * Returns main View of the element
      *

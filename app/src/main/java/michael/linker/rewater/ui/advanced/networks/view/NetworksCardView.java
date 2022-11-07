@@ -10,14 +10,13 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.model.FullNetworkModel;
-import michael.linker.rewater.ui.model.bundle.NetworkModelBundle;
-import michael.linker.rewater.ui.animation.transition.OrderedTransition;
-import michael.linker.rewater.ui.IView;
+import michael.linker.rewater.data.res.DrawablesProvider;
+import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
+import michael.linker.rewater.ui.model.bundle.NetworkModelBundle;
 
-public class NetworksCardView implements IView {
+public class NetworksCardView {
     private final CardView mCardView;
     private final TextView mHeading;
     private final TextView mDescription;
@@ -25,10 +24,10 @@ public class NetworksCardView implements IView {
     private final ImageButton mExpandOrLooseButton;
     private final Button mSettingsButton;
     private final View mHiddenContent;
-    private final OrderedTransition mTransition;
+    private final IOrderedTransition mTransition;
     private FullNetworkModel mData;
 
-    public NetworksCardView(final View view, final OrderedTransition transition) {
+    public NetworksCardView(final View view, final IOrderedTransition transition) {
         mCardView = view.findViewById(R.id.networks_card);
         mHeading = view.findViewById(R.id.networks_card_heading);
         mDescription = view.findViewById(R.id.networks_card_description);
@@ -113,10 +112,5 @@ public class NetworksCardView implements IView {
         if (text == null || text.equals("")) {
             textView.setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    public View getViewInstance() {
-        return mCardView;
     }
 }

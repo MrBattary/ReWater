@@ -15,17 +15,17 @@ import michael.linker.rewater.ui.advanced.home.viewmodel.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentHomeBinding mBinding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false);
+        View root = mBinding.getRoot();
 
-        final TextView textView = binding.textHome;
+        final TextView textView = mBinding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
@@ -33,6 +33,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        mBinding = null;
     }
 }

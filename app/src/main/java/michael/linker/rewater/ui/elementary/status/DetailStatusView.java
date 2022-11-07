@@ -8,9 +8,9 @@ import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.StatusColorsProvider;
 import michael.linker.rewater.data.res.StatusDrawablesProvider;
 import michael.linker.rewater.ui.model.DetailedStatusModel;
-import michael.linker.rewater.ui.IView;
+import michael.linker.rewater.ui.elementary.ICustomView;
 
-public class DetailStatusView implements IView {
+public class DetailStatusView implements ICustomView {
     private final View mView;
     private final ImageView waterStatusIcon;
     private final ImageView energyStatusIcon;

@@ -1,5 +1,6 @@
 package michael.linker.rewater.ui.advanced.navigation.viewmodel;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,7 +15,7 @@ public class HomeNavigationViewModel extends ViewModel {
         mCurrentStatus.setValue(Status.OK);
     }
 
-    public MutableLiveData<Status> getCurrentStatus() {
+    public LiveData<Status> getCurrentStatus() {
         return mCurrentStatus;
     }
 }

@@ -10,18 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.NetworkListModel;
-import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 import michael.linker.rewater.ui.advanced.networks.view.NetworksCardView;
+import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 
 public class NetworksItemAdapter extends
         RecyclerView.Adapter<NetworksItemAdapter.NetworksItemViewHolder> {
     private final Context mContext;
     private final NetworkListModel mNetworkListModel;
-    private final OrderedTransition mTransition;
+    private final IOrderedTransition mTransition;
 
     public NetworksItemAdapter(final Context context,
             final NetworkListModel networkListModel,
-            final OrderedTransition transition) {
+            final IOrderedTransition transition) {
         mContext = context;
         mNetworkListModel = networkListModel;
         mTransition = transition;
@@ -50,7 +50,7 @@ public class NetworksItemAdapter extends
     static class NetworksItemViewHolder extends RecyclerView.ViewHolder {
         private final NetworksCardView mNetworksCardView;
 
-        private NetworksItemViewHolder(final View view, final OrderedTransition transition) {
+        private NetworksItemViewHolder(final View view, final IOrderedTransition transition) {
             super(view);
             mNetworksCardView = new NetworksCardView(view, transition);
         }
