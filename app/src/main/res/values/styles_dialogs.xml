@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MaterialAlertDialogStyle" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:background">@color/background_secondary</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialogStyle.Title</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialogStyle.Body</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialogStyle.Rounded</item>
+    </style>
+    
+    <style name="MaterialWarningDialogStyle" parent="MaterialAlertDialogStyle">
+        <item name="buttonBarPositiveButtonStyle">@style/TextButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/MaterialAlertDialogStyle.Negative</item>
+    </style>
+
+    <style name="MaterialAlertDialogStyle.Negative" parent="TextButton">
+        <item name="android:textColor">@color/negative_color</item>
+    </style>
+
+    <style name="MaterialAlertDialogStyle.Title" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MaterialAlertDialogStyle.Body" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
+    <style name="MaterialAlertDialogStyle.Rounded" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearance">@style/MaterialAlertDialogStyle.Rounded.ShapeAppearance</item>
+    </style>
+
+    <style name="MaterialAlertDialogStyle.Rounded.ShapeAppearance" parent="">
+        <item name="cornerSize">@dimen/dialog_corner_radius</item>
+    </style>
+
+</resources>

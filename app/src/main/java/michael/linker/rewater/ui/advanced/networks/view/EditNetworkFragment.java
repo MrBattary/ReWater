@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 import java.util.Objects;
@@ -90,8 +91,19 @@ public class EditNetworkFragment extends Fragment {
 
     private void initButtons(@NonNull final View view, final String networkId) {
         mDeleteButton.setOnClickListener(l -> {
-            mViewModel.removeNetwork(networkId);
-            Navigation.findNavController(view).navigateUp();
+            MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(
+                    requireContext(), R.style.MaterialWarningDialogStyle);
+            dialogBuilder.setIcon(R.drawable.ic_warning);
+            dialogBuilder.setTitle(R.string.title_warning);
+            dialogBuilder.setMessage(R.string.global_medium_placeholder);
+            dialogBuilder.setNegativeButton(R.string.button_delete,
+                    (dialogInterface, i) -> {
+                        mViewModel.removeNetwork(networkId);
+                        Navigation.findNavController(view).navigateUp();
+                    });
+            dialogBuilder.setPositiveButton(R.string.button_cancel,
+                    (dialogInterface, i) -> dialogInterface.cancel());
+            dialogBuilder.show();
         });
 
         mSaveButton.setOnClickListener(l -> {

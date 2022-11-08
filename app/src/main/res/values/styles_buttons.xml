@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- The param 'strokeColor' is required! -->
+    <style name="TextButton.Outlined" parent="TextButton">
+        <item name="strokeWidth">@dimen/button_stroke_width</item>
+    </style>
 
     <style name="ButtonParentStyle" parent="Widget.Material3.Button">
         <item name="android:textColor">@color/text_secondary</item>
