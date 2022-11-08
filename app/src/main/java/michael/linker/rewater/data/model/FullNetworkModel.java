@@ -6,11 +6,21 @@ public class FullNetworkModel {
     private final String mId, mHeading, mDescription;
     private final DetailedStatusModel mStatus;
 
-    public FullNetworkModel(final String id, final NewNetworkModel model) {
+    public FullNetworkModel(final String id, final EditableNetworkModel model) {
         mId = id;
         mHeading = model.getHeading();
         mDescription = model.getDescription();
         mStatus = new DetailedStatusModel(Status.UNDEFINED, Status.UNDEFINED);
+    }
+
+    public FullNetworkModel(
+            final String id,
+            final EditableNetworkModel model,
+            final DetailedStatusModel status) {
+        mId = id;
+        mHeading = model.getHeading();
+        mDescription = model.getDescription();
+        mStatus = status;
     }
 
     public FullNetworkModel(

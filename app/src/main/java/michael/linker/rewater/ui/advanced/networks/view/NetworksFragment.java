@@ -9,7 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,21 +22,22 @@ import org.jetbrains.annotations.NotNull;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.IntegersProvider;
-import michael.linker.rewater.databinding.FragmentNetworksBinding;
 import michael.linker.rewater.ui.advanced.networks.adapter.NetworksItemAdapter;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 
 public class NetworksFragment extends Fragment {
     private NetworksViewModel mViewModel;
-    private FragmentNetworksBinding mBinding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        mViewModel = new ViewModelProvider(this).get(NetworksViewModel.class);
-        mBinding = FragmentNetworksBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
+        NavController navController = NavHostFragment.findNavController(this);
+        ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
+                R.id.root_navigation_networks);
+        mViewModel = new ViewModelProvider(viewModelStoreOwner).get(NetworksViewModel.class);
+
+        return inflater.inflate(R.layout.fragment_networks, container, false);
     }
 
     @Override
@@ -46,15 +50,13 @@ public class NetworksFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.networks_recycler_view);
         transition.setRootView(recyclerView);
+        transition.addChangeBoundsTarget(view.findViewById(R.id.networks));
         transition.addChangeBoundsTarget(view.findViewById(R.id.networks_recycler_view));
-        transition.addChangeBoundsTarget(
-                view.findViewById(R.id.networks_recycler_view_wrapper));
-
 
         mViewModel.getNetworkList().observe(getViewLifecycleOwner(), networkList -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(
-                    new NetworksItemAdapter(getContext(), networkList, transition));
+                    new NetworksItemAdapter(getContext(), mViewModel, networkList, transition));
         });
 
         initAddFloatingActionButton(view);
@@ -66,11 +68,5 @@ public class NetworksFragment extends Fragment {
                 Navigation.findNavController(view).navigate(
                         R.id.navigation_action_networks_to_networks_add)
         );
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBinding = null;
     }
 }

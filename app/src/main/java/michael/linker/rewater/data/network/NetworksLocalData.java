@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import michael.linker.rewater.data.model.NewNetworkModel;
+import michael.linker.rewater.data.model.EditableNetworkModel;
 import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.model.FullNetworkModel;
 import michael.linker.rewater.data.model.NetworkListModel;
@@ -46,7 +46,17 @@ public class NetworksLocalData implements INetworksData {
     }
 
     @Override
-    public void addNetwork(final NewNetworkModel model) {
+    public FullNetworkModel getNetwork(final String id) {
+        for (FullNetworkModel networkModel : mFullNetworkModels) {
+            if (id.equals(networkModel.getId())) {
+                return networkModel;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void addNetwork(final EditableNetworkModel model) {
         mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(), model));
     }
 

@@ -1,9 +1,9 @@
 package michael.linker.rewater.data.model;
 
-public class NewNetworkModel {
+public class EditableNetworkModel {
     private final String heading, description;
 
-    public NewNetworkModel(
+    public EditableNetworkModel(
             final String heading,
             final String description) {
         this.heading = heading;
