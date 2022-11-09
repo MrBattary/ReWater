@@ -16,7 +16,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,17 +24,22 @@ import java.util.stream.Collectors;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.EditableNetworkModel;
 import michael.linker.rewater.data.model.FullNetworkModel;
+import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
+import michael.linker.rewater.ui.elementary.dialog.IDialog;
+import michael.linker.rewater.ui.elementary.dialog.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
+import michael.linker.rewater.ui.model.TwoChoicesWarningDialogModel;
 
 public class EditNetworkFragment extends Fragment {
     private static final String TAG = "AddNetworkFragment";
     private ITextInputView mHeadingInput, mDescriptionInput;
     private MaterialButton mDeleteButton, mSaveButton, mCancelButton;
+    private IDialog mOnDeleteDialog;
     private NetworksViewModel mViewModel;
 
     @Override
@@ -54,6 +58,7 @@ public class EditNetworkFragment extends Fragment {
         initFields(view);
         mViewModel.getEditableNetworkModel().observe(getViewLifecycleOwner(), fullNetworkModel -> {
             initInputs(fullNetworkModel);
+            initDialogs(view, fullNetworkModel.getId());
             initButtons(view, fullNetworkModel.getId());
         });
     }
@@ -90,21 +95,7 @@ public class EditNetworkFragment extends Fragment {
     }
 
     private void initButtons(@NonNull final View view, final String networkId) {
-        mDeleteButton.setOnClickListener(l -> {
-            MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(
-                    requireContext(), R.style.MaterialWarningDialogStyle);
-            dialogBuilder.setIcon(R.drawable.ic_warning);
-            dialogBuilder.setTitle(R.string.title_warning);
-            dialogBuilder.setMessage(R.string.global_medium_placeholder);
-            dialogBuilder.setNegativeButton(R.string.button_delete,
-                    (dialogInterface, i) -> {
-                        mViewModel.removeNetwork(networkId);
-                        Navigation.findNavController(view).navigateUp();
-                    });
-            dialogBuilder.setPositiveButton(R.string.button_cancel,
-                    (dialogInterface, i) -> dialogInterface.cancel());
-            dialogBuilder.show();
-        });
+        mDeleteButton.setOnClickListener(l -> mOnDeleteDialog.show());
 
         mSaveButton.setOnClickListener(l -> {
             try {
@@ -121,5 +112,23 @@ public class EditNetworkFragment extends Fragment {
         });
 
         mCancelButton.setOnClickListener(l -> Navigation.findNavController(view).navigateUp());
+    }
+
+    private void initDialogs(@NonNull final View view, final String networkId) {
+        mOnDeleteDialog = new TwoChoicesWarningDialog(requireContext(),
+                new TwoChoicesWarningDialogModel(
+                        DrawablesProvider.getDrawable(R.drawable.ic_warning),
+                        StringsProvider.getString(R.string.title_warning),
+                        StringsProvider.getString(R.string.dialog_delete_network_part_1),
+                        StringsProvider.getString(R.string.button_delete),
+                        StringsProvider.getString(R.string.button_cancel)
+                ),
+                (dialogInterface, i) -> {
+                    mViewModel.removeNetwork(networkId);
+                    dialogInterface.cancel();
+                    Navigation.findNavController(view).navigateUp();
+                },
+                (dialogInterface, i) -> dialogInterface.cancel()
+        );
     }
 }
