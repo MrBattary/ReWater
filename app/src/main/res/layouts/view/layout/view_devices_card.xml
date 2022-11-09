@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/devices_card_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/devices_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
+        android:layout_marginVertical="@dimen/card_vertical_spacing"
+        app:cardBackgroundColor="@color/background_secondary"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/devices_card_content_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/devices_card_expand_or_loose_button"
+                style="@style/RoundButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="@color/background_secondary"
+                android:contentDescription="@string/description_expand_or_loose_card_button"
+                android:padding="@dimen/card_horizontal_spacing"
+                android:src="@drawable/ic_button_expand" />
+
+            <RelativeLayout
+                android:id="@+id/devices_card_content_permanent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="@dimen/card_devices_content_margin_end"
+                android:layout_marginStart="@dimen/card_content_horizontal_spacing"
+                android:layout_marginTop="@dimen/card_content_permanent_margin_top"
+                android:layout_toStartOf="@id/devices_card_expand_or_loose_button">
+
+                <TextView
+                    android:id="@+id/devices_card_heading"
+                    style="@style/CustomTextMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@id/devices_card_combined_status"
+                    android:text="@string/global_short_placeholder" />
+
+                <include
+                    android:id="@+id/devices_card_combined_status"
+                    layout="@layout/view_status_combined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/devices_card_hidden_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/devices_card_content_permanent"
+                android:layout_marginEnd="@dimen/card_devices_content_margin_end"
+                android:visibility="visible">
+
+                <Button
+                    android:id="@+id/devices_card_settings_button"
+                    style="@style/LeftBottomCornerRoundButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/devices_card_parents"
+                    android:layout_marginBottom="@dimen/card_bottom_button_negative_margin"
+                    android:backgroundTint="@color/background_secondary"
+                    android:paddingHorizontal="@dimen/card_horizontal_spacing"
+                    android:paddingVertical="@dimen/card_vertical_spacing"
+                    android:text="@string/button_settings"
+                    app:icon="@drawable/ic_settings" />
+
+                <RelativeLayout
+                    android:id="@+id/devices_card_parents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/card_horizontal_spacing">
+
+                    <include
+                        android:id="@+id/devices_card_parent_network"
+                        layout="@layout/view_parent_schedule_or_network"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@id/devices_card_parent_schedule"
+                        android:layout_marginStart="@dimen/card_horizontal_spacing" />
+
+                    <include
+                        android:id="@+id/devices_card_parent_schedule"
+                        layout="@layout/view_parent_schedule_or_network"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

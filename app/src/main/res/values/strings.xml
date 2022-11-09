@@ -45,4 +45,5 @@
     <string name="description_expand_card_button">Expand card</string>
     <string name="description_loose_card_button">Loose card</string>
     <string name="description_networks_add_fab">Create new network</string>
+    <string name="description_parent_schedule_or_network_icon">Icon of parent</string>
 </resources>
