@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.network;
+package michael.linker.rewater.data.web;
 
 import michael.linker.rewater.data.model.FullNetworkModel;
 import michael.linker.rewater.data.model.NetworkListModel;

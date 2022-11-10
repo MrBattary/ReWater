@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.network;
+package michael.linker.rewater.data.web;
 
 import java.util.LinkedList;
 import java.util.List;
