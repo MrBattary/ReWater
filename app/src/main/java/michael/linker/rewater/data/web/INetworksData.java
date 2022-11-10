@@ -1,8 +1,8 @@
 package michael.linker.rewater.data.web;
 
-import michael.linker.rewater.data.model.FullNetworkModel;
-import michael.linker.rewater.data.model.NetworkListModel;
-import michael.linker.rewater.data.model.EditableNetworkModel;
+import michael.linker.rewater.data.web.model.FullNetworkModel;
+import michael.linker.rewater.data.web.model.NetworkListModel;
+import michael.linker.rewater.data.web.model.EditableNetworkModel;
 
 public interface INetworksData {
     /**
@@ -18,11 +18,10 @@ public interface INetworksData {
      * @param id ID of the network
      * @return model of the required network
      */
-    FullNetworkModel getNetwork(String id);
+    FullNetworkModel getNetworkById(String id);
 
     /**
      * Add a new network.
-     * Attention! ID of the new network will be overwritten.
      *
      * @param model new network model, ID can be null
      */

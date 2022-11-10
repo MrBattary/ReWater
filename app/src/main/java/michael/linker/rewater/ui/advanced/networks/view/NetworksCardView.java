@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.model.FullNetworkModel;
+import michael.linker.rewater.data.web.model.FullNetworkModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;

@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.model.FullNetworkModel;
-import michael.linker.rewater.data.model.NetworkListModel;
-import michael.linker.rewater.data.model.EditableNetworkModel;
 import michael.linker.rewater.data.web.INetworksData;
+import michael.linker.rewater.data.web.model.EditableNetworkModel;
+import michael.linker.rewater.data.web.model.FullNetworkModel;
+import michael.linker.rewater.data.web.model.NetworkListModel;
 
 public class NetworksViewModel extends ViewModel {
     private final INetworksData mNetworksData;
@@ -31,11 +31,11 @@ public class NetworksViewModel extends ViewModel {
     }
 
     public void setEditableNetworkId(final String id) {
-        mEditableNetworkModel.setValue(mNetworksData.getNetwork(id));
+        mEditableNetworkModel.setValue(mNetworksData.getNetworkById(id));
     }
 
     public void updateNetwork(final String id, final EditableNetworkModel model) {
-        final FullNetworkModel fullModel = mNetworksData.getNetwork(id);
+        final FullNetworkModel fullModel = mNetworksData.getNetworkById(id);
         mNetworksData.updateNetwork(id, new FullNetworkModel(
                 fullModel.getId(),
                 model,

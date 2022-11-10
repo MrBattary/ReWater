@@ -1,5 +1,6 @@
-package michael.linker.rewater.data.model;
+package michael.linker.rewater.data.web.model;
 
+import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.ui.model.DetailedStatusModel;
 
 public class FullNetworkModel {

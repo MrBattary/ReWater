@@ -22,8 +22,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.model.EditableNetworkModel;
-import michael.linker.rewater.data.model.FullNetworkModel;
+import michael.linker.rewater.data.web.model.EditableNetworkModel;
+import michael.linker.rewater.data.web.model.FullNetworkModel;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;

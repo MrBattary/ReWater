@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.model.NetworkListModel;
+import michael.linker.rewater.data.web.model.NetworkListModel;
 import michael.linker.rewater.ui.advanced.networks.view.NetworksCardView;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;

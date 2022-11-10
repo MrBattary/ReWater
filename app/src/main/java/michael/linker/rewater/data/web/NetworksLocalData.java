@@ -4,10 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import michael.linker.rewater.data.model.EditableNetworkModel;
+import michael.linker.rewater.data.web.model.EditableNetworkModel;
 import michael.linker.rewater.data.model.Status;
-import michael.linker.rewater.data.model.FullNetworkModel;
-import michael.linker.rewater.data.model.NetworkListModel;
+import michael.linker.rewater.data.web.model.FullNetworkModel;
+import michael.linker.rewater.data.web.model.NetworkListModel;
 import michael.linker.rewater.ui.model.DetailedStatusModel;
 
 public class NetworksLocalData implements INetworksData {
@@ -15,27 +15,27 @@ public class NetworksLocalData implements INetworksData {
 
     public NetworksLocalData() {
         mFullNetworkModels = new LinkedList<>();
-        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
-                "First network",
+        mFullNetworkModels.add(new FullNetworkModel(
+                "9feefdbe-f35a-4ccb-93dc-0baf6955805b", "First network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at dignissim ligula."
                         + " Duis ornare interdum lacus ullamcorper porta. Duis elementum.",
                 new DetailedStatusModel(Status.OK, Status.OK)));
-        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
-                "Second network",
+        mFullNetworkModels.add(new FullNetworkModel(
+                "b70c023b-2016-4583-8d7c-daf4c9e7f979", "Second network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dictum.",
                 new DetailedStatusModel(Status.OK, Status.WARNING)));
-        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
-                "Third network",
+        mFullNetworkModels.add(new FullNetworkModel(
+                "7f9dd006-59b8-4e86-bc31-01528652a601", "Third network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt placerat"
                         + " dui nec euismod. Integer.",
                 new DetailedStatusModel(Status.WARNING, Status.OK)));
-        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
-                "Fourth network",
+        mFullNetworkModels.add(new FullNetworkModel(
+                "ea84ab3c-0c54-436e-a710-e87d7592e490", "Fourth network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut vulputate felis"
                         + ". Praesent et luctus.",
                 new DetailedStatusModel(Status.WARNING, Status.DEFECT)));
-        mFullNetworkModels.add(new FullNetworkModel(UUID.randomUUID().toString(),
-                "Fifth network",
+        mFullNetworkModels.add(new FullNetworkModel(
+                "6d9b41d7-f009-4c55-94ea-02ab5c0baa7c", "Fifth network",
                 null,
                 new DetailedStatusModel(Status.DEFECT, Status.OK)));
     }
@@ -46,7 +46,7 @@ public class NetworksLocalData implements INetworksData {
     }
 
     @Override
-    public FullNetworkModel getNetwork(final String id) {
+    public FullNetworkModel getNetworkById(final String id) {
         for (FullNetworkModel networkModel : mFullNetworkModels) {
             if (id.equals(networkModel.getId())) {
                 return networkModel;

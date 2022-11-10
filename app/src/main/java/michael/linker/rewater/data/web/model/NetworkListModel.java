@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.model;
+package michael.linker.rewater.data.web.model;
 
 import java.util.List;
 
