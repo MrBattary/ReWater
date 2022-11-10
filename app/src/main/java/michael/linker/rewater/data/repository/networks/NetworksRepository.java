@@ -25,7 +25,7 @@ public class NetworksRepository implements INetworksRepository {
         for (FullNetworkModel fullModel : dataModelList) {
             modelList.add(new CompactNetworkModel(
                     fullModel.getId(),
-                    fullModel.getHeading(),
+                    fullModel.getName(),
                     fullModel.getDescription(),
                     fullModel.getStatus()
             ));
@@ -43,10 +43,15 @@ public class NetworksRepository implements INetworksRepository {
         }
         return new CompactNetworkModel(
                 networkModel.getId(),
-                networkModel.getHeading(),
+                networkModel.getName(),
                 networkModel.getDescription(),
                 networkModel.getStatus()
         );
+    }
+
+    @Override
+    public boolean isNetworkExists (final String id) {
+        return mNetworksData.getNetworkById(id) != null;
     }
 
     @Override
@@ -54,7 +59,7 @@ public class NetworksRepository implements INetworksRepository {
             throws NetworksRepositoryAlreadyExistsException {
         final List<String> alreadyUsedNames = mNetworksData.getNetworkList().getNetworkModelList()
                 .stream()
-                .map(FullNetworkModel::getHeading)
+                .map(FullNetworkModel::getName)
                 .collect(Collectors.toList());
         if (alreadyUsedNames.contains(model.getHeading())) {
             throw new NetworksRepositoryAlreadyExistsException(

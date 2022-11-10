@@ -10,20 +10,28 @@ import michael.linker.rewater.data.repository.networks.model.EditableNetworkMode
  */
 public interface INetworksRepository {
     /**
-     * Get all networks simple list.
+     * Get a simple list of the all networks.
      *
-     * @return model with list on networks in it
+     * @return the list of compact network models in it
      */
     List<CompactNetworkModel> getCompactNetworkList();
 
     /**
-     * Get specific network by it's id.
+     * Get specific network by it's ID.
      *
      * @param id ID of the network
      * @return model of the required network
      * @throws NetworksRepositoryAlreadyExistsException if network with provided id does not exist
      */
     CompactNetworkModel getCompactNetworkById(String id) throws NetworksRepositoryNotFoundException;
+
+    /**
+     * Checks whether a network exists with the specified ID.
+     *
+     * @param id ID of the network
+     * @return true if exists, false otherwise
+     */
+    boolean isNetworkExists(String id);
 
     /**
      * Add a new network.

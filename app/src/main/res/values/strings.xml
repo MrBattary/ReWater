@@ -9,7 +9,7 @@
     <string name="navigation_title_settings">Settings</string>
 
     <!-- Inputs. -->
-    <string name="input_hint_heading">Heading</string>
+    <string name="input_hint_name">Name</string>
     <string name="input_hint_description">Description</string>
     <string name="input_error_heading_taken">The name is already taken!</string>
     <string name="input_error_heading_overflow">The name is too long!</string>

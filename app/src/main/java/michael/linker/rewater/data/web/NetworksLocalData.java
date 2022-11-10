@@ -66,7 +66,7 @@ public class NetworksLocalData implements INetworksData {
             if (id.equals(mFullNetworkModels.get(i).getId())) {
                 mFullNetworkModels.set(i, new FullNetworkModel(
                         id,
-                        model.getHeading(),
+                        model.getName(),
                         model.getDescription(),
                         model.getStatus()));
                 return;

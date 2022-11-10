@@ -4,12 +4,12 @@ import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.ui.model.DetailedStatusModel;
 
 public class FullNetworkModel {
-    private final String mId, mHeading, mDescription;
+    private final String mId, mName, mDescription;
     private final DetailedStatusModel mStatus;
 
     public FullNetworkModel(final String id, final EditableNetworkModel model) {
         mId = id;
-        mHeading = model.getHeading();
+        mName = model.getHeading();
         mDescription = model.getDescription();
         mStatus = new DetailedStatusModel(Status.UNDEFINED, Status.UNDEFINED);
     }
@@ -19,18 +19,18 @@ public class FullNetworkModel {
             final EditableNetworkModel model,
             final DetailedStatusModel status) {
         mId = id;
-        mHeading = model.getHeading();
+        mName = model.getHeading();
         mDescription = model.getDescription();
         mStatus = status;
     }
 
     public FullNetworkModel(
             final String id,
-            final String heading,
+            final String name,
             final String description,
             final DetailedStatusModel status) {
         this.mId = id;
-        this.mHeading = heading;
+        this.mName = name;
         this.mDescription = description;
         this.mStatus = status;
     }
@@ -39,8 +39,8 @@ public class FullNetworkModel {
         return mId;
     }
 
-    public String getHeading() {
-        return mHeading;
+    public String getName() {
+        return mName;
     }
 
     public String getDescription() {

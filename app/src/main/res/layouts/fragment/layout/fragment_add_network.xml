@@ -79,7 +79,7 @@
             style="@style/EditTextNormalLimitedViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/input_hint_heading"
+            android:hint="@string/input_hint_name"
             android:importantForAutofill="no"
             android:maxLength="@integer/input_max_limit_header" />
     </com.google.android.material.textfield.TextInputLayout>
