@@ -50,7 +50,7 @@ public class EditNetworkFragment extends Fragment {
         ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
                 R.id.root_navigation_networks);
         mViewModel = new ViewModelProvider(viewModelStoreOwner).get(NetworksViewModel.class);
-        return inflater.inflate(R.layout.fragment_edit_network, container, false);
+        return inflater.inflate(R.layout.fragment_networks_edit, container, false);
     }
 
     @Override

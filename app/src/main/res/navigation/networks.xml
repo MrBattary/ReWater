@@ -30,7 +30,7 @@
         android:id="@+id/navigation_networks_add"
         android:name="michael.linker.rewater.ui.advanced.networks.view.AddNetworkFragment"
         android:label="Create new network"
-        tools:layout="@layout/fragment_add_network" >
+        tools:layout="@layout/fragment_networks_add" >
         <action
             android:id="@+id/navigation_action_networks_add_to_networks"
             app:destination="@id/navigation_networks"
@@ -44,7 +44,7 @@
         android:id="@+id/navigation_networks_edit"
         android:name="michael.linker.rewater.ui.advanced.networks.view.EditNetworkFragment"
         android:label="Edit network"
-        tools:layout="@layout/fragment_edit_network">
+        tools:layout="@layout/fragment_networks_edit">
         <action
             android:id="@+id/navigation_action_networks_edit_to_networks"
             app:destination="@id/navigation_networks"

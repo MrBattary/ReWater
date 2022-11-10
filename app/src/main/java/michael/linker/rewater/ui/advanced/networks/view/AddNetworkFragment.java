@@ -43,7 +43,7 @@ public class AddNetworkFragment extends Fragment {
                 R.id.root_navigation_networks);
         mViewModel = new ViewModelProvider(viewModelStoreOwner).get(NetworksViewModel.class);
 
-        return inflater.inflate(R.layout.fragment_add_network, container, false);
+        return inflater.inflate(R.layout.fragment_networks_add, container, false);
     }
 
     @Override
