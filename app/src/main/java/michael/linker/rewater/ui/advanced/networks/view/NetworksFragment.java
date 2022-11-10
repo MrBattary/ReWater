@@ -53,10 +53,10 @@ public class NetworksFragment extends Fragment {
         transition.addChangeBoundsTarget(view.findViewById(R.id.networks));
         transition.addChangeBoundsTarget(view.findViewById(R.id.networks_recycler_view));
 
-        mViewModel.getNetworkList().observe(getViewLifecycleOwner(), networkList -> {
+        mViewModel.getCompactNetworkModels().observe(getViewLifecycleOwner(), list -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(
-                    new NetworksItemAdapter(getContext(), mViewModel, networkList, transition));
+                    new NetworksItemAdapter(getContext(), mViewModel, list, transition));
         });
 
         initAddFloatingActionButton(view);

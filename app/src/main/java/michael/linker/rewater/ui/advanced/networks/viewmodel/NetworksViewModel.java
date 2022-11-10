@@ -4,50 +4,86 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.web.INetworksData;
-import michael.linker.rewater.data.web.model.EditableNetworkModel;
-import michael.linker.rewater.data.web.model.FullNetworkModel;
-import michael.linker.rewater.data.web.model.NetworkListModel;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import michael.linker.rewater.config.RepositoryConfiguration;
+import michael.linker.rewater.data.repository.networks.INetworksRepository;
+import michael.linker.rewater.data.repository.networks.NetworksRepositoryAlreadyExistsException;
+import michael.linker.rewater.data.repository.networks.NetworksRepositoryNotFoundException;
+import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.EditableNetworkModel;
 
 public class NetworksViewModel extends ViewModel {
-    private final INetworksData mNetworksData;
-    private final MutableLiveData<NetworkListModel> mNetworkList;
-    private final MutableLiveData<FullNetworkModel> mEditableNetworkModel;
+    private final INetworksRepository mNetworksRepository;
+    private final MutableLiveData<List<CompactNetworkModel>> mCompactNetworkModels;
+    private final MutableLiveData<List<String>> mAlreadyTakenNetworkNames;
+    private final MutableLiveData<String> mEditableNetworkId;
+    private final MutableLiveData<CompactNetworkModel> mEditableNetworkModel;
 
     public NetworksViewModel() {
-        mNetworksData = DataConfiguration.getNetworksData();
-        mNetworkList = new MutableLiveData<>();
+        mNetworksRepository = RepositoryConfiguration.getNetworksRepository();
+        mCompactNetworkModels = new MutableLiveData<>();
+        mAlreadyTakenNetworkNames = new MutableLiveData<>();
+        mEditableNetworkId = new MutableLiveData<>();
         mEditableNetworkModel = new MutableLiveData<>();
-        mNetworkList.setValue(mNetworksData.getNetworkList());
+        this.updateNetworkList();
     }
 
-    public LiveData<NetworkListModel> getNetworkList() {
-        return mNetworkList;
+    public LiveData<List<String>> getAlreadyTakenNetworkNames() {
+        return mAlreadyTakenNetworkNames;
     }
 
-    public LiveData<FullNetworkModel> getEditableNetworkModel() {
+    public LiveData<List<CompactNetworkModel>> getCompactNetworkModels() {
+        return mCompactNetworkModels;
+    }
+
+    public LiveData<CompactNetworkModel> getEditableNetworkModel() {
         return mEditableNetworkModel;
     }
 
-    public void setEditableNetworkId(final String id) {
-        mEditableNetworkModel.setValue(mNetworksData.getNetworkById(id));
+    public LiveData<String> getEditableNetworkId() {
+        return mEditableNetworkId;
     }
 
-    public void updateNetwork(final String id, final EditableNetworkModel model) {
-        final FullNetworkModel fullModel = mNetworksData.getNetworkById(id);
-        mNetworksData.updateNetwork(id, new FullNetworkModel(
-                fullModel.getId(),
-                model,
-                fullModel.getStatus()
-        ));
+    public void setEditableNetworkId(final String id) throws NetworksViewModelFailedException {
+        try {
+            final CompactNetworkModel model = mNetworksRepository.getCompactNetworkById(id);
+            mEditableNetworkModel.setValue(model);
+            mEditableNetworkId.setValue(id);
+        } catch (NetworksRepositoryNotFoundException e) {
+            throw new NetworksViewModelFailedException(e.getMessage());
+        }
+    }
+
+    public void updateNetwork(final String id, final EditableNetworkModel model)
+            throws NetworksViewModelFailedException {
+        try {
+            mNetworksRepository.updateNetwork(id, model);
+            this.updateNetworkList();
+        } catch (NetworksRepositoryNotFoundException e) {
+            throw new NetworksViewModelFailedException(e.getMessage());
+        }
     }
 
     public void removeNetwork(final String id) {
-        mNetworksData.removeNetwork(id);
+        mNetworksRepository.removeNetwork(id);
+        this.updateNetworkList();
     }
 
     public void addNetwork(final EditableNetworkModel model) {
-        mNetworksData.addNetwork(model);
+        try {
+            mNetworksRepository.addNetwork(model);
+            this.updateNetworkList();
+        } catch (NetworksRepositoryAlreadyExistsException e) {
+            throw new NetworksViewModelFailedException(e.getMessage());
+        }
+    }
+
+    private void updateNetworkList() {
+        mCompactNetworkModels.setValue(mNetworksRepository.getCompactNetworkList());
+        mAlreadyTakenNetworkNames.setValue(mNetworksRepository.getCompactNetworkList().stream()
+                .map(CompactNetworkModel::getHeading)
+                .collect(Collectors.toList()));
     }
 }

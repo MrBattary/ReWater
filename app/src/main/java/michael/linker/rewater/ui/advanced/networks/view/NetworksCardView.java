@@ -1,5 +1,6 @@
 package michael.linker.rewater.ui.advanced.networks.view;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -9,13 +10,16 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.web.model.FullNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
+import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
+import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class NetworksCardView {
+    private final Context mParentContext;
     private final CardView mCardView;
     private final TextView mHeading;
     private final TextView mDescription;
@@ -24,12 +28,14 @@ public class NetworksCardView {
     private final Button mSettingsButton;
     private final View mHiddenContent;
     private final IOrderedTransition mTransition;
-    private String mNetworkId;
+    private String mId;
 
     public NetworksCardView(
+            final Context context,
             final View view,
             final NetworksViewModel parentViewModel,
             final IOrderedTransition transition) {
+        mParentContext = context;
         mCardView = view.findViewById(R.id.networks_card);
         mHeading = view.findViewById(R.id.networks_card_heading);
         mDescription = view.findViewById(R.id.networks_card_description);
@@ -46,12 +52,12 @@ public class NetworksCardView {
         this.initButtonsLogic(parentViewModel);
     }
 
-    public void setFullNetworkModel(final FullNetworkModel dataModel) {
-        mNetworkId = dataModel.getId();
-        mHeading.setText(dataModel.getHeading());
-        mDescription.setText(dataModel.getDescription());
+    public void setCompactNetworkModel(final CompactNetworkModel model) {
+        mId = model.getId();
+        mHeading.setText(model.getHeading());
+        mDescription.setText(model.getDescription());
         this.setGoneIfNoTextInTextView(mDescription);
-        mCombinedStatusView.setStatus(dataModel.getStatus());
+        mCombinedStatusView.setStatus(model.getStatus());
     }
 
     private void initButtonsLogic(final NetworksViewModel parentViewModel) {
@@ -73,10 +79,11 @@ public class NetworksCardView {
 
     private void initSettingsButtonLogic(final NetworksViewModel parentViewModel) {
         mSettingsButton.setOnClickListener(l -> {
-            parentViewModel.setEditableNetworkId(mNetworkId);
-            /*final Bundle bundle = new FullNetworkModelBundle().pack(mFullNetworkModel);
-            Navigation.findNavController(mCardView).navigate(
-                    R.id.navigation_action_networks_to_networks_edit, bundle);*/
+            try {
+                parentViewModel.setEditableNetworkId(mId);
+            } catch (NetworksViewModelFailedException e) {
+                ToastProvider.showShort(mParentContext, e.getMessage());
+            }
             Navigation.findNavController(mCardView).navigate(
                     R.id.navigation_action_networks_to_networks_edit);
         });

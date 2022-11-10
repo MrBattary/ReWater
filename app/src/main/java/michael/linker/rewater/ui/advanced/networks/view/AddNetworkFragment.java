@@ -1,7 +1,6 @@
 package michael.linker.rewater.ui.advanced.networks.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +18,19 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.web.model.EditableNetworkModel;
-import michael.linker.rewater.data.web.model.FullNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.EditableNetworkModel;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
+import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
+import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class AddNetworkFragment extends Fragment {
-    private static final String TAG = "AddNetworkFragment";
     private ITextInputView mHeadingInput, mDescriptionInput;
     private MaterialButton mCreateButton, mCancelButton;
     private NetworksViewModel mViewModel;
@@ -67,11 +65,7 @@ public class AddNetworkFragment extends Fragment {
 
     private void initInputs() {
         List<String> alreadyTakenNetworksNames = Objects.requireNonNull(
-                        mViewModel.getNetworkList().getValue())
-                .getNetworkModelList()
-                .stream()
-                .map(FullNetworkModel::getHeading)
-                .collect(Collectors.toList());
+                mViewModel.getAlreadyTakenNetworkNames().getValue());
         mHeadingInput.setBlacklist(alreadyTakenNetworksNames,
                 StringsProvider.getString(R.string.input_error_heading_taken));
         mHeadingInput.setMaxLimit(IntegersProvider.getInteger(R.integer.input_max_limit_header),
@@ -90,8 +84,9 @@ public class AddNetworkFragment extends Fragment {
                 final String description = mDescriptionInput.getText();
                 mViewModel.addNetwork(new EditableNetworkModel(heading, description));
                 Navigation.findNavController(view).navigateUp();
-            } catch (InputNotAllowedException e) {
-                Log.w(TAG, e.getMessage());
+            } catch (NetworksViewModelFailedException e) {
+                ToastProvider.showShort(requireContext(), e.getMessage());
+            } catch (InputNotAllowedException ignored) {
             }
         });
 
