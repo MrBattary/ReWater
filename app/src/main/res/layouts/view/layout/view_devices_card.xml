@@ -23,17 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/devices_card_expand_or_loose_button"
-                style="@style/RoundButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:backgroundTint="@color/background_secondary"
-                android:contentDescription="@string/description_expand_or_loose_card_button"
-                android:padding="@dimen/card_horizontal_spacing"
-                android:src="@drawable/ic_button_expand" />
-
             <RelativeLayout
                 android:id="@+id/devices_card_content_permanent"
                 android:layout_width="match_parent"
@@ -41,10 +30,34 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginEnd="@dimen/card_devices_content_margin_end"
-                android:layout_marginStart="@dimen/card_content_horizontal_spacing"
-                android:layout_marginTop="@dimen/card_content_permanent_margin_top"
-                android:layout_toStartOf="@id/devices_card_expand_or_loose_button">
+                android:layout_marginStart="@dimen/card_content_horizontal_spacing">
+
+                <RelativeLayout
+                    android:id="@+id/devices_card_content_permanent_controls"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true">
+
+                    <ImageButton
+                        android:id="@+id/devices_card_expand_or_loose_button"
+                        style="@style/RoundButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/devices_card_combined_status"
+                        android:backgroundTint="@color/background_secondary"
+                        android:contentDescription="@string/description_expand_or_loose_card_button"
+                        android:padding="@dimen/card_horizontal_spacing"
+                        android:src="@drawable/ic_button_expand" />
+
+                    <include
+                        android:id="@+id/devices_card_combined_status"
+                        layout="@layout/view_status_combined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/devices_card_heading"
@@ -52,17 +65,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toStartOf="@id/devices_card_combined_status"
-                    android:text="@string/global_short_placeholder" />
-
-                <include
-                    android:id="@+id/devices_card_combined_status"
-                    layout="@layout/view_status_combined"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_marginEnd="@dimen/card_content_horizontal_spacing"
+                    android:layout_marginVertical="@dimen/card_vertical_spacing"
+                    android:layout_toStartOf="@id/devices_card_content_permanent_controls"
+                    android:text="@string/global_short_placeholder" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -72,7 +79,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/devices_card_content_permanent"
-                android:layout_marginEnd="@dimen/card_devices_content_margin_end"
+                android:layout_marginEnd="@dimen/card_horizontal_spacing"
                 android:visibility="visible">
 
                 <Button

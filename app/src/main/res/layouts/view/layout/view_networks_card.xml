@@ -71,10 +71,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/card_content_horizontal_spacing"
                     android:layout_marginVertical="@dimen/card_vertical_spacing"
                     android:layout_toStartOf="@id/networks_card_content_permanent_controls"
-                    android:text="@string/global_short_placeholder"
-                    android:layout_marginEnd="@dimen/card_content_horizontal_spacing"/>
+                    android:text="@string/global_short_placeholder" />
             </RelativeLayout>
 
             <RelativeLayout
