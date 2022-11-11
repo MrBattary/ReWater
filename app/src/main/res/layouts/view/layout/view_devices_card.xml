@@ -61,6 +61,7 @@
                     layout="@layout/view_status_combined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
@@ -96,7 +97,7 @@
 
                     <include
                         android:id="@+id/devices_card_parent_network"
-                        layout="@layout/view_parent_schedule_or_network"
+                        layout="@layout/view_parent_entity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -105,7 +106,7 @@
 
                     <include
                         android:id="@+id/devices_card_parent_schedule"
-                        layout="@layout/view_parent_schedule_or_network"
+                        layout="@layout/view_parent_entity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
