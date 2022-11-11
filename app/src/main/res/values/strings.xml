@@ -21,6 +21,8 @@
     <string name="global_medium_placeholder">!Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.!</string>
     <string name="parent_schedule_not_found">No schedule set</string>
     <string name="parent_network_not_found">No network set</string>
+    <string name="schedule_information">Schedule information:</string>
+    <string name="schedule_each">each</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>
@@ -34,6 +36,8 @@
     <string name="button_save">Save</string>
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_detach_schedule">Detach schedule</string>
+    <string name="button_attach_schedule">Attach schedule</string>
 
     <!-- Descriptions. -->
     <string name="description_back_button">Back to the previous screen</string>
