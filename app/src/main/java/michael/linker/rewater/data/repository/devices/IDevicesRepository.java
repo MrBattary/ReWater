@@ -11,4 +11,13 @@ public interface IDevicesRepository {
      * @return the list of compact device models in it
      */
     List<CompactDeviceModel> getCompactDeviceList();
+
+    /**
+     * Get specific device by it's ID.
+     *
+     * @param id ID of the device
+     * @return model of the required device
+     * @throws DevicesRepositoryNotFoundException if device with provided id does not exist
+     */
+    CompactDeviceModel getCompactNetworkById(String id) throws DevicesRepositoryNotFoundException;
 }

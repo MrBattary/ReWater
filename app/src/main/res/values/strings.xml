@@ -19,6 +19,8 @@
     <!-- Texts. -->
     <string name="global_short_placeholder">!Lorem ipsum vivamus.!</string>
     <string name="global_medium_placeholder">!Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.!</string>
+    <string name="parent_schedule_not_found">No schedule set</string>
+    <string name="parent_network_not_found">No network set</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>

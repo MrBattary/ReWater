@@ -22,8 +22,8 @@ import org.jetbrains.annotations.NotNull;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.IntegersProvider;
+import michael.linker.rewater.ui.advanced.devices.adapter.DevicesItemAdapter;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
-import michael.linker.rewater.ui.advanced.networks.adapter.NetworksItemAdapter;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 
 public class DevicesFragment extends Fragment {
@@ -56,7 +56,6 @@ public class DevicesFragment extends Fragment {
         mViewModel.getCompactDeviceModels().observe(getViewLifecycleOwner(), list -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(
-                    // TODO: Implement DevicesItemAdapter as NetworksItemAdapter
                     new DevicesItemAdapter(getContext(), mViewModel, list, transition));
         });
 

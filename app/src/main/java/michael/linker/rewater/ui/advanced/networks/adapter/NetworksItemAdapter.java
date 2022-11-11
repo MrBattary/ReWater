@@ -43,7 +43,7 @@ public class NetworksItemAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull NetworksItemViewHolder holder, int position) {
-        holder.mNetworksCardView.setCompactNetworkModel(mCompactNetworkModels.get(position));
+        holder.mNetworksCardView.setDataModel(mCompactNetworkModels.get(position));
     }
 
     @Override

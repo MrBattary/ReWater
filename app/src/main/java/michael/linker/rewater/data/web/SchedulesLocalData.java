@@ -23,11 +23,16 @@ public class SchedulesLocalData implements ISchedulesData {
                 new FullScheduleModel(
                         "2078faea-1db6-46f2-b7d7-bb350646417c",
                         "Second Schedule",
-                        1,15, 0, 0,
+                        1, 15, 0, 0,
                         100, 0,
-                        List.of("832b9239-b362-47c1-bfbc-96589bcad643")
-                )
-        );
+                        List.of("832b9239-b362-47c1-bfbc-96589bcad643")));
+        mFullScheduleModels.add(
+                new FullScheduleModel(
+                        "ad567f2d-10ce-45e2-8fa5-a58ffa14bc1a",
+                        "Third schedule very very very very very long name",
+                        99, 31, 23, 59,
+                        999, 999,
+                        List.of("353f5967-c7bd-4c57-8528-4f1ab7b88005")));
     }
 
     @Override
@@ -38,7 +43,7 @@ public class SchedulesLocalData implements ISchedulesData {
     @Override
     public FullScheduleModel getScheduleById(final String id) {
         for (FullScheduleModel scheduleModel : mFullScheduleModels) {
-            if (id.equals(scheduleModel.getId())) {
+            if (scheduleModel.getId().equals(id)) {
                 return scheduleModel;
             }
         }

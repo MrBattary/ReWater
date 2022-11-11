@@ -30,21 +30,10 @@ public class DevicesRepository implements IDevicesRepository {
                 mDevicesData.getDevicesList().getFullDeviceModels();
         final List<CompactDeviceModel> compactDeviceModels = new ArrayList<>();
         for (FullDeviceModel dataDeviceModel : dataDeviceModelList) {
-            IdNameModel parentSchedule = null;
-            final FullScheduleModel dataScheduleModel = mSchedulesData.getScheduleById(
+            final IdNameModel parentSchedule = this.getParentScheduleIdNameModel(
                     dataDeviceModel.getParentScheduleId());
-            if (dataScheduleModel != null) {
-                parentSchedule = new IdNameModel(dataScheduleModel.getId(),
-                        dataScheduleModel.getName());
-            }
-
-            IdNameModel parentNetwork = null;
-            final FullNetworkModel dataNetworkModel = mNetworksData.getNetworkById(
+            final IdNameModel parentNetwork = this.getParentNetworkIdNameModel(
                     dataDeviceModel.getParentNetworkId());
-            if (dataNetworkModel != null) {
-                parentNetwork = new IdNameModel(dataNetworkModel.getId(),
-                        dataNetworkModel.getName());
-            }
 
             compactDeviceModels.add(new CompactDeviceModel(
                     dataDeviceModel.getId(),
@@ -55,5 +44,43 @@ public class DevicesRepository implements IDevicesRepository {
             ));
         }
         return compactDeviceModels;
+    }
+
+    @Override
+    public CompactDeviceModel getCompactNetworkById(final String id)
+            throws DevicesRepositoryNotFoundException {
+        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(id);
+        if (dataDeviceModel == null) {
+            throw new DevicesRepositoryNotFoundException(
+                    "Requested device with id: " + id + " was not found!");
+        }
+        return new CompactDeviceModel(
+                dataDeviceModel.getId(),
+                dataDeviceModel.getName(),
+                getParentScheduleIdNameModel(dataDeviceModel.getParentScheduleId()),
+                getParentNetworkIdNameModel(dataDeviceModel.getParentNetworkId()),
+                dataDeviceModel.getStatus()
+        );
+    }
+
+    private IdNameModel getParentScheduleIdNameModel(final String parentScheduleId) {
+        IdNameModel parentScheduleIdNameModel = null;
+        final FullScheduleModel dataScheduleModel = mSchedulesData.getScheduleById(
+                parentScheduleId);
+        if (dataScheduleModel != null) {
+            parentScheduleIdNameModel = new IdNameModel(dataScheduleModel.getId(),
+                    dataScheduleModel.getName());
+        }
+        return parentScheduleIdNameModel;
+    }
+
+    private IdNameModel getParentNetworkIdNameModel(final String parentNetworkId) {
+        IdNameModel parentNetworkIdNameModel = null;
+        final FullNetworkModel dataNetworkModel = mNetworksData.getNetworkById(parentNetworkId);
+        if (dataNetworkModel != null) {
+            parentNetworkIdNameModel = new IdNameModel(dataNetworkModel.getId(),
+                    dataNetworkModel.getName());
+        }
+        return parentNetworkIdNameModel;
     }
 }

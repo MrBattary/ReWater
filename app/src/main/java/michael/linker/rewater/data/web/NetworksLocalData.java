@@ -38,6 +38,11 @@ public class NetworksLocalData implements INetworksData {
                 "6d9b41d7-f009-4c55-94ea-02ab5c0baa7c", "Fifth network",
                 null,
                 new DetailedStatusModel(Status.DEFECT, Status.OK)));
+        mFullNetworkModels.add(new FullNetworkModel(
+                "ca23b691-2141-4395-b560-c79d6d71ff46",
+                "Sixth network very very very very very long name",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dolor mauris, scelerisque at faucibus non, malesuada ut est. Fusce aliquam, leo nec vulputate ornare, neque sapien suscipit est, ut leo.",
+                new DetailedStatusModel(Status.OK, Status.OK)));
     }
 
     @Override
@@ -48,7 +53,7 @@ public class NetworksLocalData implements INetworksData {
     @Override
     public FullNetworkModel getNetworkById(final String id) {
         for (FullNetworkModel networkModel : mFullNetworkModels) {
-            if (id.equals(networkModel.getId())) {
+            if (networkModel.getId().equals(id)) {
                 return networkModel;
             }
         }

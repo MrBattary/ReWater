@@ -21,7 +21,7 @@ public interface INetworksRepository {
      *
      * @param id ID of the network
      * @return model of the required network
-     * @throws NetworksRepositoryAlreadyExistsException if network with provided id does not exist
+     * @throws NetworksRepositoryNotFoundException if network with provided id does not exist
      */
     CompactNetworkModel getCompactNetworkById(String id) throws NetworksRepositoryNotFoundException;
 
