@@ -30,15 +30,19 @@ public class ParentEntityView implements ICustomView {
                     StatusColorsProvider.getColorForStatus(Status.OK)
             ));
         } else {
-            this.removeParentEntity();
+            this.clearParentEntity();
         }
     }
 
-    public void removeParentEntity() {
+    public void clearParentEntity() {
         mTextView.setText(mPlaceholderText);
         mImageView.setImageTintList(ColorStateList.valueOf(
                 StatusColorsProvider.getColorForStatus(Status.DEFECT)
         ));
+    }
+
+    public void setVisibility(final int visibility) {
+        mView.setVisibility(visibility);
     }
 
     @Override

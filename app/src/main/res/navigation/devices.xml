@@ -12,7 +12,14 @@
         tools:layout="@layout/fragment_devices">
         <action
             android:id="@+id/navigation_action_devices_to_devices_add"
-            app:destination="@id/navigation_devices_add"
+            app:destination="@id/navigation_devices_add_options"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/navigation_action_devices_to_devices_edit"
+            app:destination="@id/navigation_devices_edit"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -20,12 +27,26 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_devices_add"
+        android:id="@+id/navigation_devices_add_options"
         android:name="michael.linker.rewater.ui.advanced.devices.view.AddDeviceFragment"
-        android:label="Create new device"
-        tools:layout="@layout/fragment_devices_add">
+        android:label="Select the creation method"
+        tools:layout="@layout/fragment_devices_add_options">
         <action
             android:id="@+id/navigation_action_devices_add_to_devices"
+            app:destination="@id/navigation_devices"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_devices_edit"
+        android:name="michael.linker.rewater.ui.advanced.devices.view.EditDeviceFragment"
+        android:label="Edit device"
+        tools:layout="@layout/fragment_devices_edit">
+        <action
+            android:id="@+id/navigation_action_devices_edit_to_devices"
             app:destination="@id/navigation_devices"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"

@@ -67,13 +67,13 @@ public class DevicesCardView {
         if(parentScheduleNameIdModel != null) {
             mParentScheduleView.setParentEntity(parentScheduleNameIdModel.getName());
         } else {
-            mParentScheduleView.removeParentEntity();
+            mParentScheduleView.clearParentEntity();
         }
         final IdNameModel parentNetworkNameIdModel = model.getParentNetwork();
         if(parentNetworkNameIdModel != null) {
             mParentNetworkView.setParentEntity(parentNetworkNameIdModel.getName());
         } else {
-            mParentNetworkView.removeParentEntity();
+            mParentNetworkView.clearParentEntity();
         }
         mCombinedStatusView.setStatus(model.getStatus());
     }
@@ -103,7 +103,7 @@ public class DevicesCardView {
                 ToastProvider.showShort(mParentContext, e.getMessage());
             }
             Navigation.findNavController(mCardView).navigate(
-                    R.id.navigation_action_networks_to_networks_edit);
+                    R.id.navigation_action_devices_to_devices_edit);
         });
     }
 
@@ -125,6 +125,8 @@ public class DevicesCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_expand));
         mCombinedStatusView.displayCompact();
         mSettingsButton.setVisibility(View.GONE);
+        mParentScheduleView.setVisibility(View.GONE);
+        mParentNetworkView.setVisibility(View.GONE);
         mHiddenContent.setVisibility(View.GONE);
     }
 
@@ -133,6 +135,8 @@ public class DevicesCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_loose));
         mCombinedStatusView.displayDetailed();
         mSettingsButton.setVisibility(View.VISIBLE);
+        mParentScheduleView.setVisibility(View.VISIBLE);
+        mParentNetworkView.setVisibility(View.VISIBLE);
         mHiddenContent.setVisibility(View.VISIBLE);
     }
 }
