@@ -16,6 +16,14 @@
     <string name="input_error_heading_lack">The name is too short!</string>
     <string name="input_error_description_overflow">The description is too long!</string>
 
+    <!-- Units of measurement. -->
+    <string name="unit_mouths_short">m</string>
+    <string name="unit_days_short">m</string>
+    <string name="unit_hours_short">m</string>
+    <string name="unit_minutes_short">m</string>
+    <string name="unit_litres_short">l</string>
+    <string name="unit_millilitres_short">ml</string>
+
     <!-- Texts. -->
     <string name="global_short_placeholder">!Lorem ipsum vivamus.!</string>
     <string name="global_medium_placeholder">!Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.!</string>
@@ -29,6 +37,8 @@
 
     <!-- Dialogs. -->
     <string name="dialog_delete_network_part_1">You are going to delete this network. After this action, all watering schedules from this network will be erased. Are you sure?</string>
+    <string name="dialog_detach_schedule">You are going to detach attached schedule from this device. After that, the device will not be able to perform watering according to the schedule. Are you sure?</string>
+    <string name="dialog_delete_device_schedule">You are going to delete this device. After that you won\'t be able to control it and will disappear from the list of your devices. However, you will be able to add it again. Are you sure?</string>
 
     <!-- Buttons. -->
     <string name="button_settings">Settings</string>
