@@ -20,4 +20,11 @@ public interface IDevicesRepository {
      * @throws DevicesRepositoryNotFoundException if device with provided id does not exist
      */
     CompactDeviceModel getCompactNetworkById(String id) throws DevicesRepositoryNotFoundException;
+
+    /**
+     * Remove an existing device from the user device list.
+     *
+     * @param id ID of the device to be removed
+     */
+    void removeDevice(String id);
 }

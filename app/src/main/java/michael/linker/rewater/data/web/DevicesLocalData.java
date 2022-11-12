@@ -59,4 +59,14 @@ public class DevicesLocalData implements IDevicesData {
         }
         return null;
     }
+
+    @Override
+    public void removeDeviceById(final String id) {
+        for (int i = 0; i < mFullDeviceModels.size(); i++) {
+            if (id.equals(mFullDeviceModels.get(i).getId())) {
+                mFullDeviceModels.remove(i);
+                return;
+            }
+        }
+    }
 }

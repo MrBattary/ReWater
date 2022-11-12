@@ -18,4 +18,6 @@ public interface ISchedulesData {
      * @return model of the required schedule
      */
     FullScheduleModel getScheduleById(String id);
+
+    void updateSchedule(String id, FullScheduleModel newModel);
 }

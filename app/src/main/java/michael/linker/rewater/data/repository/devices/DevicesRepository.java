@@ -2,6 +2,7 @@ package michael.linker.rewater.data.repository.devices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.model.IdNameModel;
@@ -61,6 +62,31 @@ public class DevicesRepository implements IDevicesRepository {
                 getParentNetworkIdNameModel(dataDeviceModel.getParentNetworkId()),
                 dataDeviceModel.getStatus()
         );
+    }
+
+    @Override
+    public void removeDevice(final String id) {
+        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(id);
+
+        if (dataDeviceModel.getParentScheduleId() != null &&
+                dataDeviceModel.getParentNetworkId() != null) {
+
+            final FullScheduleModel parentSchedule = mSchedulesData.getScheduleById(
+                    dataDeviceModel.getParentScheduleId());
+
+            final List<String> newListOfAttachedDevices = parentSchedule.getAttachedDevicesIds()
+                    .stream()
+                    .filter(iId -> !id.equals(iId))
+                    .collect(Collectors.toList());
+
+            mSchedulesData.updateSchedule(dataDeviceModel.getId(), new FullScheduleModel(
+                    parentSchedule.getId(), parentSchedule.getName(),
+                    parentSchedule.getPeriod(),
+                    parentSchedule.getVolume(),
+                    newListOfAttachedDevices
+            ));
+        }
+        mDevicesData.removeDeviceById(id);
     }
 
     private IdNameModel getParentScheduleIdNameModel(final String parentScheduleId) {

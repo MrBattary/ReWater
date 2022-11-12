@@ -18,4 +18,6 @@ public interface IDevicesData {
      * @return model of the required device
      */
     FullDeviceModel getDeviceById(String id);
+
+    void removeDeviceById(String id);
 }
