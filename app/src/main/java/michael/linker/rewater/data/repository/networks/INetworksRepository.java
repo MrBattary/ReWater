@@ -26,6 +26,17 @@ public interface INetworksRepository {
     CompactNetworkModel getCompactNetworkById(String id) throws NetworksRepositoryNotFoundException;
 
     /**
+     * Get network ID by inner schedule ID.
+     *
+     * @param scheduleId inner schedule ID
+     * @return network ID
+     * @throws NetworksRepositoryNotFoundException if no network contains a schedule with the
+     * provided ID
+     */
+    String getNetworkIdByIdOfAttachedSchedule(String scheduleId)
+            throws NetworksRepositoryNotFoundException;
+
+    /**
      * Checks whether a network exists with the specified ID.
      *
      * @param id ID of the network

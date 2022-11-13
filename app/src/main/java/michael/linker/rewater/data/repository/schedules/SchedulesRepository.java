@@ -6,13 +6,16 @@ import java.util.List;
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.repository.schedules.model.CompactScheduleModel;
 import michael.linker.rewater.data.web.ISchedulesData;
+import michael.linker.rewater.data.web.links.IOneToManyDataLink;
 import michael.linker.rewater.data.web.model.FullScheduleModel;
 
 public class SchedulesRepository implements ISchedulesRepository {
     private final ISchedulesData mSchedulesData;
+    private final IOneToManyDataLink mScheduleToDevicesDataLink;
 
     public SchedulesRepository() {
         mSchedulesData = DataConfiguration.getSchedulesData();
+        mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
     }
 
     @Override
@@ -45,5 +48,17 @@ public class SchedulesRepository implements ISchedulesRepository {
                 scheduleModel.getVolume(),
                 scheduleModel.getAttachedDevicesIds()
         );
+    }
+
+    @Override
+    public String getScheduleIdByIdOfAttachedDevice(String deviceId)
+            throws SchedulesRepositoryNotFoundException {
+        final String scheduleId = mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(
+                deviceId);
+        if (scheduleId == null) {
+            throw new SchedulesRepositoryNotFoundException(
+                    "No schedule contains a device with the ID: " + deviceId);
+        }
+        return scheduleId;
     }
 }

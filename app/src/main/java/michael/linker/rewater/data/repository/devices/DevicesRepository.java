@@ -5,42 +5,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.repository.devices.model.CompactDeviceModel;
 import michael.linker.rewater.data.web.IDevicesData;
-import michael.linker.rewater.data.web.INetworksData;
 import michael.linker.rewater.data.web.ISchedulesData;
+import michael.linker.rewater.data.web.links.IOneToManyDataLink;
 import michael.linker.rewater.data.web.model.FullDeviceModel;
-import michael.linker.rewater.data.web.model.FullNetworkModel;
 import michael.linker.rewater.data.web.model.FullScheduleModel;
 
 public class DevicesRepository implements IDevicesRepository {
-    private final INetworksData mNetworksData;
     private final ISchedulesData mSchedulesData;
     private final IDevicesData mDevicesData;
+    private final IOneToManyDataLink mScheduleToDevicesDataLink;
 
     public DevicesRepository() {
-        mNetworksData = DataConfiguration.getNetworksData();
         mSchedulesData = DataConfiguration.getSchedulesData();
         mDevicesData = DataConfiguration.getDevicesData();
+        mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
     }
 
     @Override
     public List<CompactDeviceModel> getCompactDeviceList() {
+        final List<CompactDeviceModel> compactDeviceModels = new ArrayList<>();
         final List<FullDeviceModel> dataDeviceModelList =
                 mDevicesData.getDevicesList().getFullDeviceModels();
-        final List<CompactDeviceModel> compactDeviceModels = new ArrayList<>();
-        for (FullDeviceModel dataDeviceModel : dataDeviceModelList) {
-            final IdNameModel parentSchedule = this.getParentScheduleIdNameModel(
-                    dataDeviceModel.getParentScheduleId());
-            final IdNameModel parentNetwork = this.getParentNetworkIdNameModel(
-                    dataDeviceModel.getParentNetworkId());
 
+        for (FullDeviceModel dataDeviceModel : dataDeviceModelList) {
             compactDeviceModels.add(new CompactDeviceModel(
                     dataDeviceModel.getId(),
                     dataDeviceModel.getName(),
-                    parentSchedule,
-                    parentNetwork,
                     dataDeviceModel.getStatus()
             ));
         }
@@ -55,28 +47,31 @@ public class DevicesRepository implements IDevicesRepository {
             throw new DevicesRepositoryNotFoundException(
                     "Requested device with id: " + id + " was not found!");
         }
+
         return new CompactDeviceModel(
                 dataDeviceModel.getId(),
                 dataDeviceModel.getName(),
-                getParentScheduleIdNameModel(dataDeviceModel.getParentScheduleId()),
-                getParentNetworkIdNameModel(dataDeviceModel.getParentNetworkId()),
                 dataDeviceModel.getStatus()
         );
     }
 
     @Override
-    public void removeDevice(final String id) {
-        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(id);
+    public void removeDevice(final String deviceId) {
+        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(deviceId);
 
-        if (dataDeviceModel.getParentScheduleId() != null &&
-                dataDeviceModel.getParentNetworkId() != null) {
+        final String parentScheduleId = mScheduleToDevicesDataLink
+                .getLeftEntityIdByRightEntityId(deviceId);
+        if (parentScheduleId != null) {
 
             final FullScheduleModel parentSchedule = mSchedulesData.getScheduleById(
-                    dataDeviceModel.getParentScheduleId());
+                    parentScheduleId);
+            // Remove data link
+            mScheduleToDevicesDataLink.removeRightEntityId(deviceId);
 
+            // Change schedule entity data
             final List<String> newListOfAttachedDevices = parentSchedule.getAttachedDevicesIds()
                     .stream()
-                    .filter(iId -> !id.equals(iId))
+                    .filter(iId -> !deviceId.equals(iId))
                     .collect(Collectors.toList());
 
             mSchedulesData.updateSchedule(dataDeviceModel.getId(), new FullScheduleModel(
@@ -86,27 +81,6 @@ public class DevicesRepository implements IDevicesRepository {
                     newListOfAttachedDevices
             ));
         }
-        mDevicesData.removeDeviceById(id);
-    }
-
-    private IdNameModel getParentScheduleIdNameModel(final String parentScheduleId) {
-        IdNameModel parentScheduleIdNameModel = null;
-        final FullScheduleModel dataScheduleModel = mSchedulesData.getScheduleById(
-                parentScheduleId);
-        if (dataScheduleModel != null) {
-            parentScheduleIdNameModel = new IdNameModel(dataScheduleModel.getId(),
-                    dataScheduleModel.getName());
-        }
-        return parentScheduleIdNameModel;
-    }
-
-    private IdNameModel getParentNetworkIdNameModel(final String parentNetworkId) {
-        IdNameModel parentNetworkIdNameModel = null;
-        final FullNetworkModel dataNetworkModel = mNetworksData.getNetworkById(parentNetworkId);
-        if (dataNetworkModel != null) {
-            parentNetworkIdNameModel = new IdNameModel(dataNetworkModel.getId(),
-                    dataNetworkModel.getName());
-        }
-        return parentNetworkIdNameModel;
+        mDevicesData.removeDeviceById(deviceId);
     }
 }

@@ -29,10 +29,10 @@ public class FullNetworkModel {
             final String name,
             final String description,
             final DetailedStatusModel status) {
-        this.mId = id;
-        this.mName = name;
-        this.mDescription = description;
-        this.mStatus = status;
+        mId = id;
+        mName = name;
+        mDescription = description;
+        mStatus = status;
     }
 
     public String getId() {

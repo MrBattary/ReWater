@@ -17,7 +17,19 @@ public interface ISchedulesRepository {
      *
      * @param id ID of the schedule
      * @return model of the required schedule
-     * @throws SchedulesRepositoryNotFoundException if schedule with provided id does not exist
+     * @throws SchedulesRepositoryNotFoundException if schedule with provided ID does not exist
      */
-    CompactScheduleModel getCompactScheduleById(String id) throws SchedulesRepositoryNotFoundException;
+    CompactScheduleModel getCompactScheduleById(String id)
+            throws SchedulesRepositoryNotFoundException;
+
+    /**
+     * Get schedule ID by inner device ID.
+     *
+     * @param deviceId inner device ID
+     * @return schedule ID
+     * @throws SchedulesRepositoryNotFoundException if no schedule contains a device with the
+     * provided ID
+     */
+    String getScheduleIdByIdOfAttachedDevice(String deviceId)
+            throws SchedulesRepositoryNotFoundException;
 }

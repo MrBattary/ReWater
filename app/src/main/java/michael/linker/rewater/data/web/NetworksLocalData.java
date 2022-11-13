@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import michael.linker.rewater.data.web.model.EditableNetworkModel;
 import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.web.model.EditableNetworkModel;
 import michael.linker.rewater.data.web.model.FullNetworkModel;
 import michael.linker.rewater.data.web.model.NetworkListModel;
 import michael.linker.rewater.ui.model.DetailedStatusModel;
@@ -41,7 +41,9 @@ public class NetworksLocalData implements INetworksData {
         mFullNetworkModels.add(new FullNetworkModel(
                 "ca23b691-2141-4395-b560-c79d6d71ff46",
                 "Sixth network very very very very very long name",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dolor mauris, scelerisque at faucibus non, malesuada ut est. Fusce aliquam, leo nec vulputate ornare, neque sapien suscipit est, ut leo.",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dolor mauris, "
+                        + "scelerisque at faucibus non, malesuada ut est. Fusce aliquam, leo nec "
+                        + "vulputate ornare, neque sapien suscipit est, ut leo.",
                 new DetailedStatusModel(Status.OK, Status.OK)));
     }
 

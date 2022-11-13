@@ -8,13 +8,18 @@ import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
 import michael.linker.rewater.data.repository.networks.model.EditableNetworkModel;
 import michael.linker.rewater.data.web.INetworksData;
+import michael.linker.rewater.data.web.links.IOneToManyDataLink;
 import michael.linker.rewater.data.web.model.FullNetworkModel;
 
 public class NetworksRepository implements INetworksRepository {
     private final INetworksData mNetworksData;
+    private final IOneToManyDataLink mNetworkToSchedulesDataLink;
+    private final IOneToManyDataLink mScheduleToDevicesDataLink;
 
     public NetworksRepository() {
         mNetworksData = DataConfiguration.getNetworksData();
+        mNetworkToSchedulesDataLink = DataConfiguration.getNetworkToSchedulesDataLink();
+        mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
     }
 
     @Override
@@ -50,7 +55,19 @@ public class NetworksRepository implements INetworksRepository {
     }
 
     @Override
-    public boolean isNetworkExists (final String id) {
+    public String getNetworkIdByIdOfAttachedSchedule(String scheduleId)
+            throws NetworksRepositoryNotFoundException {
+        final String networkId = mNetworkToSchedulesDataLink.getLeftEntityIdByRightEntityId(
+                scheduleId);
+        if (networkId == null) {
+            throw new NetworksRepositoryNotFoundException(
+                    "No network contains a schedule with the ID: " + scheduleId);
+        }
+        return networkId;
+    }
+
+    @Override
+    public boolean isNetworkExists(final String id) {
         return mNetworksData.getNetworkById(id) != null;
     }
 
@@ -88,6 +105,14 @@ public class NetworksRepository implements INetworksRepository {
 
     @Override
     public void removeNetwork(final String id) {
+        // Cascade unlink
+        final List<String> childScheduleIdList =
+                mNetworkToSchedulesDataLink.getRightEntityIdListByLeftEntityId(id);
+        for (String childScheduleId : childScheduleIdList) {
+            mScheduleToDevicesDataLink.removeAllRightEntityIdsByLeftEntityId(childScheduleId);
+        }
+        mNetworkToSchedulesDataLink.removeAllRightEntityIdsByLeftEntityId(id);
+        // Remove
         mNetworksData.removeNetwork(id);
     }
 }
