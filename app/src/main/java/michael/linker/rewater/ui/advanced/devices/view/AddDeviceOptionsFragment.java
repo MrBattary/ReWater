@@ -11,26 +11,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.ui.advanced.devices.viewmodel.AddDeviceViewModel;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.AddDeviceOptionsViewModel;
 
-public class AddDeviceFragment extends Fragment {
+public class AddDeviceOptionsFragment extends Fragment {
 
-    private AddDeviceViewModel mViewModel;
+    private AddDeviceOptionsViewModel mViewModel;
 
-    public static AddDeviceFragment newInstance() {
-        return new AddDeviceFragment();
+    public static AddDeviceOptionsFragment newInstance() {
+        return new AddDeviceOptionsFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_devices_add, container, false);
+        return inflater.inflate(R.layout.fragment_devices_add_options, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(AddDeviceViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(AddDeviceOptionsViewModel.class);
         // TODO: Use the ViewModel
     }
 

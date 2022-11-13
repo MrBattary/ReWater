@@ -92,8 +92,7 @@ public class ScheduleListDeviceFragment extends Fragment {
 
     private static class ScheduleListItemModel extends CompactScheduleModel {
         public ScheduleListItemModel(final CompactScheduleModel model) {
-            super(model.getId(), model.getName(), model.getPeriod(), model.getVolume(),
-                    model.getAttachedDevicesIds());
+            super(model.getId(), model.getName(), model.getPeriod(), model.getVolume());
         }
 
         @NonNull

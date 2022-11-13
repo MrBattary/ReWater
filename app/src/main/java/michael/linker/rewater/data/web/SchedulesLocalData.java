@@ -18,23 +18,19 @@ public class SchedulesLocalData implements ISchedulesData {
                         "c0382b72-d6c1-488e-bd6c-b758c93947f1",
                         "First Schedule",
                         new WateringPeriodModel(0, 0, 12, 30),
-                        new WaterVolumeModel(0, 500),
-                        List.of("a2726b77-2214-4aa2-b4af-2fac0a4f84bc",
-                                "832b9239-b362-47c1-bfbc-96589bcad643")));
+                        new WaterVolumeModel(0, 500)));
         mFullScheduleModels.add(
                 new FullScheduleModel(
                         "2078faea-1db6-46f2-b7d7-bb350646417c",
                         "Second Schedule",
                         new WateringPeriodModel(1, 15, 0, 0),
-                        new WaterVolumeModel(100, 0),
-                        List.of("832b9239-b362-47c1-bfbc-96589bcad643")));
+                        new WaterVolumeModel(100, 0)));
         mFullScheduleModels.add(
                 new FullScheduleModel(
                         "ad567f2d-10ce-45e2-8fa5-a58ffa14bc1a",
                         "Third schedule very very very very very long name",
                         new WateringPeriodModel(99, 31, 23, 59),
-                        new WaterVolumeModel(999, 999),
-                        List.of("353f5967-c7bd-4c57-8528-4f1ab7b88005")));
+                        new WaterVolumeModel(999, 999)));
     }
 
     @Override
@@ -60,8 +56,7 @@ public class SchedulesLocalData implements ISchedulesData {
                         id,
                         newModel.getName(),
                         newModel.getPeriod(),
-                        newModel.getVolume(),
-                        newModel.getAttachedDevicesIds()));
+                        newModel.getVolume()));
                 return;
             }
         }

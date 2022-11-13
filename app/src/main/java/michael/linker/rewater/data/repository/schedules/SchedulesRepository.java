@@ -25,9 +25,10 @@ public class SchedulesRepository implements ISchedulesRepository {
         final List<CompactScheduleModel> modelList = new ArrayList<>();
         for (FullScheduleModel dataFullModel : dataModelList) {
             modelList.add(new CompactScheduleModel(
-                    dataFullModel.getId(), dataFullModel.getName(),
-                    dataFullModel.getPeriod(), dataFullModel.getVolume(),
-                    dataFullModel.getAttachedDevicesIds()
+                    dataFullModel.getId(),
+                    dataFullModel.getName(),
+                    dataFullModel.getPeriod(),
+                    dataFullModel.getVolume()
             ));
         }
         return modelList;
@@ -45,8 +46,7 @@ public class SchedulesRepository implements ISchedulesRepository {
                 scheduleModel.getId(),
                 scheduleModel.getName(),
                 scheduleModel.getPeriod(),
-                scheduleModel.getVolume(),
-                scheduleModel.getAttachedDevicesIds()
+                scheduleModel.getVolume()
         );
     }
 
