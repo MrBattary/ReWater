@@ -60,14 +60,14 @@ public class EditDeviceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.initFields(view);
-        mViewModel.getEditableDeviceModel().observe(getViewLifecycleOwner(), model -> {
-            this.initInputs(model);
-            this.initParentArea(model);
-        });
+        mViewModel.getEditableDeviceModel().observe(getViewLifecycleOwner(), this::initInputs);
         mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(),
                 this::initParentScheduleData);
         mViewModel.getParentNetworkModel().observe(getViewLifecycleOwner(),
                 this::initParentNetworkData);
+        mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(),
+                sm -> mViewModel.getParentNetworkModel().observe(getViewLifecycleOwner(),
+                        nm -> this.initParentArea(sm, nm)));
         mViewModel.getEditableDeviceId().observe(getViewLifecycleOwner(), id -> {
             this.initDialogs(view, id);
             this.initButtons(view, id);
@@ -116,9 +116,9 @@ public class EditDeviceFragment extends Fragment {
         mNameInput.setText(editableModel.getName());
     }
 
-    private void initParentArea(final EditableDeviceModel compactModel) {
-        if (compactModel.getParentScheduleId() == null
-                && compactModel.getParentNetworkId() == null) {
+    private void initParentArea(final CompactScheduleModel compactScheduleModel,
+            final CompactNetworkModel compactNetworkModel) {
+        if (compactScheduleModel == null && compactNetworkModel == null) {
             mParentsNotFoundViewGroup.setVisibility(View.VISIBLE);
             mParentsExistsViewGroup.setVisibility(View.GONE);
         } else {
@@ -165,6 +165,8 @@ public class EditDeviceFragment extends Fragment {
     private void initButtons(final View view, final String id) {
         mDeleteButton.setOnClickListener(l -> mOnDeleteDialog.show());
         mDetachButton.setOnClickListener(l -> mViewModel.detachParents());
+        mAttachButton.setOnClickListener(l -> Navigation.findNavController(view).navigate(
+                R.id.navigation_action_devices_edit_to_devices_schedules));
         mCancelButton.setOnClickListener(l -> Navigation.findNavController(view).navigateUp());
     }
 }

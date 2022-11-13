@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.RepositoryConfiguration;
+import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.repository.devices.DevicesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.devices.model.CompactDeviceModel;
@@ -15,14 +17,17 @@ import michael.linker.rewater.data.repository.devices.model.EditableDeviceModel;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
+import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.schedules.model.CompactScheduleModel;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceCardModel;
 
 public class DevicesViewModel extends ViewModel {
     private final IDevicesRepository mDevicesRepository;
     private final ISchedulesRepository mSchedulesRepository;
     private final INetworksRepository mNetworksRepository;
 
-    private final MutableLiveData<List<CompactDeviceModel>> mCompactDeviceModels;
+    private final MutableLiveData<List<DeviceCardModel>> mDeviceCardModels;
+    private final MutableLiveData<List<CompactScheduleModel>> mCompactScheduleModels;
     private final MutableLiveData<List<String>> mAlreadyTakenDeviceNames;
 
     private final MutableLiveData<String> mEditableDeviceId;
@@ -35,7 +40,8 @@ public class DevicesViewModel extends ViewModel {
         mNetworksRepository = RepositoryConfiguration.getNetworksRepository();
         mSchedulesRepository = RepositoryConfiguration.getSchedulesRepository();
 
-        mCompactDeviceModels = new MutableLiveData<>();
+        mDeviceCardModels = new MutableLiveData<>();
+        mCompactScheduleModels = new MutableLiveData<>();
         mAlreadyTakenDeviceNames = new MutableLiveData<>();
 
         mEditableDeviceId = new MutableLiveData<>();
@@ -46,8 +52,12 @@ public class DevicesViewModel extends ViewModel {
         this.updateLists();
     }
 
-    public LiveData<List<CompactDeviceModel>> getCompactDeviceModels() {
-        return mCompactDeviceModels;
+    public LiveData<List<DeviceCardModel>> getDeviceCardModels() {
+        return mDeviceCardModels;
+    }
+
+    public LiveData<List<CompactScheduleModel>> getCompactScheduleModels() {
+        return mCompactScheduleModels;
     }
 
     public MutableLiveData<List<String>> getAlreadyTakenDeviceNames() {
@@ -70,30 +80,32 @@ public class DevicesViewModel extends ViewModel {
         return mParentNetworkModel;
     }
 
-    public void setEditableDeviceId(final String id) throws DevicesRepositoryNotFoundException {
+    public void setEditableDeviceId(final String deviceId)
+            throws DevicesRepositoryNotFoundException {
         try {
-            final CompactDeviceModel model = mDevicesRepository.getCompactNetworkById(id);
-            final String parentScheduleId =
-                    model.getParentSchedule() != null ? model.getParentSchedule().getId() : null;
-            final String parentNetworkId =
-                    model.getParentNetwork() != null ? model.getParentNetwork().getId() : null;
+            final CompactDeviceModel model = mDevicesRepository.getCompactNetworkById(deviceId);
+            mEditableDeviceId.setValue(deviceId);
+            mEditableDeviceModel.setValue(new EditableDeviceModel(model.getName()));
 
-            mEditableDeviceId.setValue(id);
-            mEditableDeviceModel.setValue(new EditableDeviceModel(
-                    model.getName(),
-                    parentScheduleId,
-                    parentNetworkId
-            ));
-            if (parentNetworkId != null && parentScheduleId != null) {
-                mParentScheduleModel.setValue(
-                        mSchedulesRepository.getCompactScheduleById(parentScheduleId));
-                mParentNetworkModel.setValue(
-                        mNetworksRepository.getCompactNetworkById(parentNetworkId));
-            } else {
+            try {
+                final String parentScheduleId =
+                        mSchedulesRepository.getScheduleIdByIdOfAttachedDevice(
+                                deviceId);
+                if (parentScheduleId != null) {
+                    final String parentNetworkId =
+                            mNetworksRepository.getNetworkIdByIdOfAttachedSchedule(
+                                    parentScheduleId);
+
+                    mParentScheduleModel.setValue(
+                            mSchedulesRepository.getCompactScheduleById(parentScheduleId));
+                    mParentNetworkModel.setValue(
+                            mNetworksRepository.getCompactNetworkById(parentNetworkId));
+                }
+            } catch (SchedulesRepositoryNotFoundException ignored) {
                 mParentScheduleModel.setValue(null);
                 mParentNetworkModel.setValue(null);
             }
-        } catch (DevicesRepositoryNotFoundException e) {
+        } catch (DevicesRepositoryNotFoundException | SchedulesRepositoryNotFoundException e) {
             throw new DevicesViewModelFailedException(e.getMessage());
         }
     }
@@ -101,11 +113,7 @@ public class DevicesViewModel extends ViewModel {
     public void detachParents() {
         final EditableDeviceModel model = mEditableDeviceModel.getValue();
         if (model != null) {
-            mEditableDeviceModel.setValue(new EditableDeviceModel(
-                    model.getName(),
-                    null,
-                    null
-            ));
+            mEditableDeviceModel.setValue(new EditableDeviceModel(model.getName()));
             mParentScheduleModel.setValue(null);
             mParentNetworkModel.setValue(null);
         }
@@ -117,10 +125,50 @@ public class DevicesViewModel extends ViewModel {
     }
 
     private void updateLists() {
-        final List<CompactDeviceModel> newList = mDevicesRepository.getCompactDeviceList();
-        mCompactDeviceModels.setValue(newList);
-        mAlreadyTakenDeviceNames.setValue(newList.stream()
+        final List<CompactDeviceModel> deviceList = mDevicesRepository.getCompactDeviceList();
+        final List<DeviceCardModel> cardModelList = this.buildDeviceCardModelList(deviceList);
+
+        mDeviceCardModels.setValue(cardModelList);
+        mAlreadyTakenDeviceNames.setValue(deviceList.stream()
                 .map(CompactDeviceModel::getName)
                 .collect(Collectors.toList()));
+        mCompactScheduleModels.setValue(mSchedulesRepository.getCompactScheduleList());
+    }
+
+    private List<DeviceCardModel> buildDeviceCardModelList(
+            final List<CompactDeviceModel> deviceList) {
+        final List<DeviceCardModel> cardModelList = new ArrayList<>();
+        for (CompactDeviceModel device : deviceList) {
+            IdNameModel parentScheduleIdNameModel = null;
+            IdNameModel parentNetworkIdNameModel = null;
+            try {
+                final String parentScheduleId =
+                        mSchedulesRepository.getScheduleIdByIdOfAttachedDevice(
+                                device.getId());
+                if (parentScheduleId != null) {
+                    final String parentNetworkId =
+                            mNetworksRepository.getNetworkIdByIdOfAttachedSchedule(
+                                    parentScheduleId);
+
+                    parentScheduleIdNameModel = new IdNameModel(
+                            parentScheduleId,
+                            mSchedulesRepository.getCompactScheduleById(parentScheduleId).getName()
+                    );
+                    parentNetworkIdNameModel = new IdNameModel(
+                            parentNetworkId,
+                            mNetworksRepository.getCompactNetworkById(parentNetworkId).getHeading()
+                    );
+                }
+            } catch (SchedulesRepositoryNotFoundException ignored) {
+            }
+            cardModelList.add(new DeviceCardModel(
+                    device.getId(),
+                    device.getName(),
+                    parentScheduleIdNameModel,
+                    parentNetworkIdNameModel,
+                    device.getStatus())
+            );
+        }
+        return cardModelList;
     }
 }

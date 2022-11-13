@@ -31,6 +31,7 @@
     <string name="parent_network_not_found">No network set</string>
     <string name="schedule_information">Schedule information:</string>
     <string name="schedule_each">each</string>
+    <string name="list_selected">selected</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>

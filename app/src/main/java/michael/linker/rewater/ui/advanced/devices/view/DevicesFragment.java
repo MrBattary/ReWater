@@ -53,7 +53,7 @@ public class DevicesFragment extends Fragment {
         transition.addChangeBoundsTarget(view.findViewById(R.id.devices));
         transition.addChangeBoundsTarget(view.findViewById(R.id.devices_recycler_view));
 
-        mViewModel.getCompactDeviceModels().observe(getViewLifecycleOwner(), list -> {
+        mViewModel.getDeviceCardModels().observe(getViewLifecycleOwner(), list -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(
                     new DevicesItemAdapter(getContext(), mViewModel, list, transition));

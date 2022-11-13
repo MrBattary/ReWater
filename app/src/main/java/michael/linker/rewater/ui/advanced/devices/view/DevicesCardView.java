@@ -11,9 +11,9 @@ import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.IdNameModel;
-import michael.linker.rewater.data.repository.devices.model.CompactDeviceModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.StringsProvider;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceCardModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
@@ -60,7 +60,7 @@ public class DevicesCardView {
         this.initButtonsLogic(parentViewModel);
     }
 
-    public void setDataModel(final CompactDeviceModel model) {
+    public void setDataModel(final DeviceCardModel model) {
         mId = model.getId();
         mName.setText(model.getName());
         final IdNameModel parentScheduleNameIdModel = model.getParentSchedule();
