@@ -14,6 +14,7 @@ import michael.linker.rewater.data.repository.devices.DevicesRepositoryNotFoundE
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.devices.model.CompactDeviceModel;
 import michael.linker.rewater.data.repository.devices.model.EditableDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
@@ -91,21 +92,52 @@ public class DevicesViewModel extends ViewModel {
                 final String parentScheduleId =
                         mSchedulesRepository.getScheduleIdByIdOfAttachedDevice(
                                 deviceId);
-                if (parentScheduleId != null) {
-                    final String parentNetworkId =
-                            mNetworksRepository.getNetworkIdByIdOfAttachedSchedule(
-                                    parentScheduleId);
+                final String parentNetworkId =
+                        mNetworksRepository.getNetworkIdByIdOfAttachedSchedule(
+                                parentScheduleId);
 
-                    mParentScheduleModel.setValue(
-                            mSchedulesRepository.getCompactScheduleById(parentScheduleId));
-                    mParentNetworkModel.setValue(
-                            mNetworksRepository.getCompactNetworkById(parentNetworkId));
-                }
+                mParentScheduleModel.setValue(
+                        mSchedulesRepository.getCompactScheduleById(parentScheduleId));
+                mParentNetworkModel.setValue(
+                        mNetworksRepository.getCompactNetworkById(parentNetworkId));
+
             } catch (SchedulesRepositoryNotFoundException ignored) {
                 mParentScheduleModel.setValue(null);
                 mParentNetworkModel.setValue(null);
             }
         } catch (DevicesRepositoryNotFoundException | SchedulesRepositoryNotFoundException e) {
+            throw new DevicesViewModelFailedException(e.getMessage());
+        }
+    }
+
+    public void attachParentsByScheduleId(final String scheduleId)
+            throws DevicesViewModelFailedException {
+        try {
+            final String parentNetworkId =
+                    mNetworksRepository.getNetworkIdByIdOfAttachedSchedule(
+                            scheduleId);
+
+            mParentScheduleModel.setValue(
+                    mSchedulesRepository.getCompactScheduleById(scheduleId));
+            mParentNetworkModel.setValue(
+                    mNetworksRepository.getCompactNetworkById(parentNetworkId));
+        } catch (DevicesRepositoryNotFoundException | SchedulesRepositoryNotFoundException e) {
+            throw new DevicesViewModelFailedException(e.getMessage());
+        }
+    }
+
+    public void commitAndUpdateDevice(final EditableDeviceModel editableModel)
+            throws DevicesViewModelFailedException {
+        try {
+            mDevicesRepository.updateDevice(mEditableDeviceId.getValue(),
+                    new UpdateDeviceModel(
+                            editableModel,
+                            mParentScheduleModel.getValue() != null ?
+                                    mParentScheduleModel.getValue().getId() : null
+                    )
+            );
+            this.updateLists();
+        } catch (DevicesRepositoryNotFoundException e) {
             throw new DevicesViewModelFailedException(e.getMessage());
         }
     }
@@ -119,8 +151,8 @@ public class DevicesViewModel extends ViewModel {
         }
     }
 
-    public void removeDevice(final String id) {
-        mDevicesRepository.removeDevice(id);
+    public void removeDevice() {
+        mDevicesRepository.removeDevice(mEditableDeviceId.getValue());
         this.updateLists();
     }
 

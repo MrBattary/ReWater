@@ -1,8 +1,12 @@
 package michael.linker.rewater.data.web.links;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class OneToManyDataLink implements IOneToManyDataLink {
     Map<String, List<String>> oneToManyMap;
@@ -12,11 +16,12 @@ public class OneToManyDataLink implements IOneToManyDataLink {
     }
 
     @Override
-    public void addDataLink(String leftEntityId, String rightEntityId) {
+    public void addDataLink(@NonNull String leftEntityId, @NonNull String rightEntityId) {
         if (!oneToManyMap.containsKey(leftEntityId)) {
             oneToManyMap.put(leftEntityId, List.of(rightEntityId));
         } else {
-            final List<String> scheduleIdList = oneToManyMap.get(leftEntityId);
+            final List<String> scheduleIdList = new ArrayList<>(
+                    Objects.requireNonNull(oneToManyMap.get(leftEntityId)));
             scheduleIdList.add(rightEntityId);
             oneToManyMap.replace(leftEntityId, scheduleIdList);
         }
@@ -29,7 +34,7 @@ public class OneToManyDataLink implements IOneToManyDataLink {
 
     @Override
     public List<String> getRightEntityIdListByLeftEntityId(String leftEntityId) {
-        return oneToManyMap.get(leftEntityId);
+        return oneToManyMap.getOrDefault(leftEntityId, null);
     }
 
     @Override
@@ -52,8 +57,14 @@ public class OneToManyDataLink implements IOneToManyDataLink {
         for (Map.Entry<String, List<String>> entry : oneToManyMap.entrySet()) {
             final List<String> scheduleIdList = entry.getValue();
             if (scheduleIdList.contains(rightEntityId)) {
-                scheduleIdList.removeIf(id -> id.equals(rightEntityId));
-                oneToManyMap.replace(entry.getKey(), scheduleIdList);
+                oneToManyMap.replace(
+                        entry.getKey(),
+                        new ArrayList<>(oneToManyMap.get(entry.getKey())
+                                .stream()
+                                .filter(id -> !id.equals(rightEntityId))
+                                .collect(Collectors.toList()
+                                ))
+                );
             }
         }
     }

@@ -57,7 +57,7 @@ public interface INetworksRepository {
      *
      * @param id    ID of the network to be updated
      * @param model model with data for update
-     * @throws NetworksRepositoryAlreadyExistsException if network with provided id does not exist
+     * @throws NetworksRepositoryNotFoundException if network with provided id does not exist
      */
     void updateNetwork(String id, EditableNetworkModel model)
             throws NetworksRepositoryNotFoundException;

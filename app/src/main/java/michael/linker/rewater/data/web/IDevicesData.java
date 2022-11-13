@@ -20,4 +20,12 @@ public interface IDevicesData {
     FullDeviceModel getDeviceById(String id);
 
     void removeDeviceById(String id);
+
+    /**
+     * Update an existing device.
+     *
+     * @param id ID of the device to be updated
+     * @param model model with data for update
+     */
+    void updateDevice(String id, FullDeviceModel model);
 }

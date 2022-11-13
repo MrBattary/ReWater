@@ -30,11 +30,14 @@ import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
 import michael.linker.rewater.ui.elementary.dialog.TwoChoicesWarningDialog;
+import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
+import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 import michael.linker.rewater.ui.model.TwoChoicesWarningDialogModel;
 
 public class EditDeviceFragment extends Fragment {
@@ -43,7 +46,7 @@ public class EditDeviceFragment extends Fragment {
     private ParentEntityView mParentScheduleView, mParentNetworkView;
     private TextView mWaterTextInformationView, mPeriodTextInformationView;
     private MaterialButton mAttachButton, mDetachButton, mDeleteButton, mSaveButton, mCancelButton;
-    private IDialog mOnDetachDialog, mOnDeleteDialog;
+    private IDialog mOnNoScheduleSaveDialog, mOnDeleteDialog;
     private DevicesViewModel mViewModel;
 
     @Override
@@ -61,17 +64,17 @@ public class EditDeviceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         this.initFields(view);
         mViewModel.getEditableDeviceModel().observe(getViewLifecycleOwner(), this::initInputs);
-        mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(),
-                this::initParentScheduleData);
+        mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(), m -> {
+            this.initParentScheduleData(m);
+            this.initButtons(view, m);
+        });
         mViewModel.getParentNetworkModel().observe(getViewLifecycleOwner(),
                 this::initParentNetworkData);
         mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(),
                 sm -> mViewModel.getParentNetworkModel().observe(getViewLifecycleOwner(),
                         nm -> this.initParentArea(sm, nm)));
-        mViewModel.getEditableDeviceId().observe(getViewLifecycleOwner(), id -> {
-            this.initDialogs(view, id);
-            this.initButtons(view, id);
-        });
+        mViewModel.getEditableDeviceId().observe(getViewLifecycleOwner(),
+                id -> this.initDialogs(view));
     }
 
     private void initFields(final View view) {
@@ -145,7 +148,7 @@ public class EditDeviceFragment extends Fragment {
         }
     }
 
-    private void initDialogs(final View view, final String id) {
+    private void initDialogs(final View view) {
         mOnDeleteDialog = new TwoChoicesWarningDialog(requireContext(),
                 new TwoChoicesWarningDialogModel(
                         DrawablesProvider.getDrawable(R.drawable.ic_warning),
@@ -155,18 +158,55 @@ public class EditDeviceFragment extends Fragment {
                         StringsProvider.getString(R.string.button_cancel)
                 ),
                 (dialogInterface, i) -> {
-                    mViewModel.removeDevice(id);
+                    mViewModel.removeDevice();
                     dialogInterface.cancel();
                     Navigation.findNavController(view).navigateUp();
                 },
                 (dialogInterface, i) -> dialogInterface.cancel());
+
+        mOnNoScheduleSaveDialog = new TwoChoicesWarningDialog(requireContext(),
+                new TwoChoicesWarningDialogModel(
+                        DrawablesProvider.getDrawable(R.drawable.ic_warning),
+                        StringsProvider.getString(R.string.title_warning),
+                        StringsProvider.getString(R.string.dialog_no_attached_schedule_on_save),
+                        StringsProvider.getString(R.string.button_save_anyway),
+                        StringsProvider.getString(R.string.button_cancel)
+                ),
+                (dialogInterface, i) -> {
+                    try {
+                        mViewModel.commitAndUpdateDevice(new EditableDeviceModel(
+                                mNameInput.getText()
+                        ));
+                        Navigation.findNavController(view).navigateUp();
+                    } catch (DevicesViewModelFailedException e) {
+                        ToastProvider.showShort(requireContext(), e.getMessage());
+                    } catch (InputNotAllowedException ignored) {
+                    }
+                },
+                (dialogInterface, i) -> dialogInterface.cancel());
     }
 
-    private void initButtons(final View view, final String id) {
+    private void initButtons(final View view, final CompactScheduleModel compactScheduleModel) {
         mDeleteButton.setOnClickListener(l -> mOnDeleteDialog.show());
         mDetachButton.setOnClickListener(l -> mViewModel.detachParents());
         mAttachButton.setOnClickListener(l -> Navigation.findNavController(view).navigate(
                 R.id.navigation_action_devices_edit_to_devices_schedules));
+        mSaveButton.setOnClickListener(l -> {
+            try {
+                if (compactScheduleModel == null || compactScheduleModel.getId() == null) {
+                    mOnNoScheduleSaveDialog.show();
+                } else {
+                    mViewModel.commitAndUpdateDevice(new EditableDeviceModel(
+                            mNameInput.getText()
+                    ));
+                    Navigation.findNavController(view).navigateUp();
+                }
+            } catch (DevicesViewModelFailedException e) {
+                ToastProvider.showShort(requireContext(), e.getMessage());
+            } catch (InputNotAllowedException ignored) {
+            }
+        });
+
         mCancelButton.setOnClickListener(l -> Navigation.findNavController(view).navigateUp());
     }
 }

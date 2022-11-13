@@ -18,6 +18,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import java.util.List;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.repository.schedules.model.CompactScheduleModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class ScheduleListDeviceFragment extends Fragment {
@@ -71,10 +73,14 @@ public class ScheduleListDeviceFragment extends Fragment {
                 if (menuItem.getItemId() == R.id.list_done_button) {
                     for (int i = 0; i < mListView.getCount(); i++) {
                         if (mListView.isItemChecked(i)) {
-                            // TODO: Pass param to view model and navigate back
-                            ToastProvider.showShort(requireContext(),
-                                    ((ScheduleListItemModel) mListView.getItemAtPosition(
-                                            i)).getId());
+                            final ScheduleListItemModel chosenSchedule =
+                                    (ScheduleListItemModel) mListView.getItemAtPosition(i);
+                            try {
+                                mViewModel.attachParentsByScheduleId(chosenSchedule.getId());
+                                Navigation.findNavController(view).navigateUp();
+                            } catch (DevicesViewModelFailedException e) {
+                                ToastProvider.showShort(requireContext(), e.getMessage());
+                            }
                             return true;
                         }
                     }

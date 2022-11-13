@@ -3,9 +3,9 @@ package michael.linker.rewater.data.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.web.model.DevicesListModel;
 import michael.linker.rewater.data.web.model.FullDeviceModel;
-import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.ui.model.DetailedStatusModel;
 
 public class DevicesLocalData implements IDevicesData {
@@ -55,6 +55,19 @@ public class DevicesLocalData implements IDevicesData {
         for (int i = 0; i < mFullDeviceModels.size(); i++) {
             if (id.equals(mFullDeviceModels.get(i).getId())) {
                 mFullDeviceModels.remove(i);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void updateDevice(final String id, final FullDeviceModel model) {
+        for (int i = 0; i < mFullDeviceModels.size(); i++) {
+            if (id.equals(mFullDeviceModels.get(i).getId())) {
+                mFullDeviceModels.set(i, new FullDeviceModel(
+                        id,
+                        model.getName(),
+                        model.getStatus()));
                 return;
             }
         }

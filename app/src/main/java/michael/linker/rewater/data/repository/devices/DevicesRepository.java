@@ -2,10 +2,12 @@ package michael.linker.rewater.data.repository.devices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.repository.devices.model.CompactDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 import michael.linker.rewater.data.web.IDevicesData;
 import michael.linker.rewater.data.web.ISchedulesData;
 import michael.linker.rewater.data.web.links.IOneToManyDataLink;
@@ -82,5 +84,31 @@ public class DevicesRepository implements IDevicesRepository {
             ));
         }
         mDevicesData.removeDeviceById(deviceId);
+    }
+
+    @Override
+    public void updateDevice(String id, UpdateDeviceModel model)
+            throws DevicesRepositoryNotFoundException {
+        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(id);
+        if (dataDeviceModel == null) {
+            throw new DevicesRepositoryNotFoundException(
+                    "Requested device with id: " + id + " was not found and can't be updated!"
+            );
+        }
+
+        String oldScheduleId = mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(id);
+
+        final String newScheduleId = model.getParentScheduleNewId();
+        if (!Objects.equals(oldScheduleId, newScheduleId)) {
+            mScheduleToDevicesDataLink.removeRightEntityId(id);
+            if(newScheduleId != null) {
+                mScheduleToDevicesDataLink.addDataLink(newScheduleId, id);
+            }
+        }
+        mDevicesData.updateDevice(id, new FullDeviceModel(
+                id,
+                model.getDeviceNewModel().getName(),
+                dataDeviceModel.getStatus())
+        );
     }
 }
