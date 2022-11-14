@@ -1,5 +1,6 @@
 package michael.linker.rewater.ui.advanced.devices.view;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
+import michael.linker.rewater.data.res.ColorsProvider;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 
 public class AddDeviceOptionsFragment extends Fragment {
@@ -39,6 +41,11 @@ public class AddDeviceOptionsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         this.initFields(view);
         this.initButtons(view);
+
+        // Disable the mAlreadyPaired button
+        mAlreadyPairedButton.setEnabled(false);
+        mAlreadyPairedButton.setTextColor(ColorsProvider.getColor(R.color.text_disabled));
+        mAlreadyPairedButton.setBackgroundTintList(ColorStateList.valueOf(ColorsProvider.getColor(R.color.background_disabled)));
     }
 
     private void initFields(final View view) {
