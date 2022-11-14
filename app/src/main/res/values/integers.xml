@@ -4,5 +4,5 @@
     <integer name="input_min_limit_header">4</integer>
     <integer name="input_max_limit_description">200</integer>
 
-    <integer name="networks_fragment_animation_time">150</integer>
+    <integer name="transition_animation_time">150</integer>
 </resources>

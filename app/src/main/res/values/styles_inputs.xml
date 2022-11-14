@@ -8,6 +8,11 @@
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
 
+    <style name="TextInputPasswordStyle" parent="TextInputLayoutParentStyle">
+        <item name="passwordToggleEnabled">true</item>
+        <item name="passwordToggleTint">@color/text_secondary</item>
+    </style>
+
     <!-- The param 'counterMaxLength' is required! -->
     <style name="TextInputCounterLayoutStyle" parent="TextInputLayoutParentStyle">
         <item name="counterEnabled">true</item>
@@ -36,9 +41,12 @@
         <item name="android:textCursorDrawable">@drawable/ic_input_cursor_light</item>
     </style>
 
-    <!-- The param 'android:maxLength' is required! -->
-    <style name="EditTextLimitedViewStyle" parent="EditTextViewParentStyle">
+    <style name="EditTextPasswordStyle" parent="EditTextViewParentStyle">
+        <item name="android:inputType">textPassword</item>
     </style>
+
+    <!-- The param 'android:maxLength' is required! -->
+    <style name="EditTextLimitedViewStyle" parent="EditTextViewParentStyle"></style>
 
     <!-- The params 'minLines' and 'maxLines' are required! -->
     <style name="EditTextMultilineLimitedViewStyle" parent="EditTextLimitedViewStyle">

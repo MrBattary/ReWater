@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/devices_add_pair_new"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
@@ -49,16 +50,16 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/devices_add_pair_new_access_key"
-                style="@style/TextInputCounterAndErrorLayoutStyle"
+                style="@style/TextInputPasswordStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true">
+                android:layout_alignParentTop="true" >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/devices_add_pair_new_access_key_input"
-                    style="@style/EditTextNormalLimitedViewStyle"
+                    style="@style/EditTextPasswordStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/input_hint_key"
@@ -116,7 +117,7 @@
 
         <Button
             android:id="@+id/devices_add_pair_new_control_next_button"
-            style="@style/RegularButtonStyle"
+            style="@style/OutlinedButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_next"

@@ -41,6 +41,13 @@
     <string name="schedule_information">Schedule information:</string>
     <string name="schedule_each">each</string>
     <string name="list_selected">selected</string>
+    <string name="pair_device_connect_success">The Bluetooth connection was successfully established.</string>
+    <string name="pair_device_connect_failure">Unable to connect to the device via Bluetooth connection.</string>
+    <string name="pair_device_access_success">Access to the device configuration was obtained successfully.</string>
+    <string name="pair_device_access_failure">The device could not be accessed.</string>
+    <string name="pair_device_network_success">The device\'s network settings have been successfully updated.</string>
+    <string name="pair_device_network_failure">The device failed to update the network settings. Check the correctness of the entered data.</string>
+    <string name="pair_device_success">The device pairing has been successfully completed. Now it remains to setup your new device. To continue, click "next".</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>

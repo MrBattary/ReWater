@@ -46,7 +46,7 @@ public class NetworksFragment extends Fragment {
 
         OrderedTransition transition = new OrderedTransition();
         transition.setDuration(
-                IntegersProvider.getInteger(R.integer.networks_fragment_animation_time));
+                IntegersProvider.getInteger(R.integer.transition_animation_time));
 
         RecyclerView recyclerView = view.findViewById(R.id.networks_recycler_view);
         transition.setRootView(recyclerView);
