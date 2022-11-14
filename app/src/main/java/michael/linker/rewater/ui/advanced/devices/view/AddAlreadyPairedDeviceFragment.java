@@ -9,29 +9,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.ui.advanced.devices.viewmodel.AddAlreadyPairedDeviceViewModel;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 
 public class AddAlreadyPairedDeviceFragment extends Fragment {
-
-    private AddAlreadyPairedDeviceViewModel mViewModel;
-
-    public static AddAlreadyPairedDeviceFragment newInstance() {
-        return new AddAlreadyPairedDeviceFragment();
-    }
+    private DevicesViewModel mViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
+        NavController navController = NavHostFragment.findNavController(this);
+        ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
+                R.id.root_navigation_devices);
+        mViewModel = new ViewModelProvider(viewModelStoreOwner).get(DevicesViewModel.class);
         return inflater.inflate(R.layout.fragment_devices_add_already_paired, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(AddAlreadyPairedDeviceViewModel.class);
-        // TODO: Use the ViewModel
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
 }

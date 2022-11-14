@@ -9,7 +9,7 @@
     tools:context=".ui.advanced.devices.view.AddDeviceOptionsFragment">
 
     <Button
-        android:id="@+id/devices_add_pair_new_button"
+        android:id="@+id/devices_add_options_pair_new_button"
         style="@style/RegularButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,21 +18,21 @@
         android:textColor="@color/positive_color" />
 
     <Button
-        android:id="@+id/devices_add_already_paired_button"
+        android:id="@+id/devices_add_options_already_paired_button"
         style="@style/RegularButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/devices_add_pair_new_button"
+        android:layout_below="@id/devices_add_options_pair_new_button"
         android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
         android:text="@string/button_devices_add_already_paired" />
 
     <Button
-        android:id="@+id/devices_add_cancel_button"
+        android:id="@+id/devices_add_options_cancel_button"
         style="@style/RegularButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/devices_add_already_paired_button"
+        android:layout_below="@id/devices_add_options_already_paired_button"
         android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
         android:text="@string/button_cancel"
         app:icon="@drawable/ic_cancel"

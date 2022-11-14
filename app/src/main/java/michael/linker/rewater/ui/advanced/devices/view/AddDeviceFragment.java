@@ -9,29 +9,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.ui.advanced.devices.viewmodel.AddDeviceViewModel;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 
 public class AddDeviceFragment extends Fragment {
-
-    private AddDeviceViewModel mViewModel;
-
-    public static AddDeviceFragment newInstance() {
-        return new AddDeviceFragment();
-    }
+    private DevicesViewModel mViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
+        NavController navController = NavHostFragment.findNavController(this);
+        ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
+                R.id.root_navigation_devices);
+        mViewModel = new ViewModelProvider(viewModelStoreOwner).get(DevicesViewModel.class);
         return inflater.inflate(R.layout.fragment_devices_add, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(AddDeviceViewModel.class);
-        // TODO: Use the ViewModel
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
 }
