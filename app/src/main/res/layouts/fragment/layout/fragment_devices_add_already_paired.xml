@@ -1,13 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
+    android:paddingVertical="@dimen/fragment_content_vertical_spacing"
     tools:context=".ui.advanced.devices.view.AddAlreadyPairedDeviceFragment">
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/devices_add_pair_new_bluetooth"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+        <TextView
+            android:id="@+id/devices_add_pair_new_bluetooth_todo"
+            style="@style/CustomText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="TODO:HERE SHOULD BE DRAGONS" />
+    </RelativeLayout>
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/devices_add_pair_new_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/devices_add_pair_new_bluetooth"
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/devices_add_pair_new_control_next_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_next"
+            app:icon="@drawable/ic_left_arrow"
+            app:iconTint="@color/positive_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/devices_add_pair_new_control_back_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_back"
+            app:icon="@drawable/ic_right_arrow"
+            app:iconTint="@color/negative_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/devices_add_pair_new_control_cancel_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+            android:text="@string/button_cancel"
+            app:icon="@drawable/ic_cancel"
+            app:iconTint="@color/negative_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/devices_add_pair_new_control_back_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

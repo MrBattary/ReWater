@@ -17,10 +17,12 @@
 
     <!-- Inputs. -->
     <string name="input_hint_name">Name</string>
+    <string name="input_hint_key">Key</string>
     <string name="input_hint_description">Description</string>
     <string name="input_error_heading_taken">The name is already taken!</string>
     <string name="input_error_heading_overflow">The name is too long!</string>
     <string name="input_error_heading_lack">The name is too short!</string>
+    <string name="input_error_key_overflow">The key is too long!</string>
     <string name="input_error_description_overflow">The description is too long!</string>
 
     <!-- Units of measurement. -->
@@ -53,11 +55,15 @@
     <string name="button_create">Create</string>
     <string name="button_save">Save</string>
     <string name="button_save_anyway">Save anyway</string>
+    <string name="button_next">Next</string>
+    <string name="button_back">Back</string>
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_detach_schedule">Detach schedule</string>
     <string name="button_attach_schedule">Attach schedule</string>
+    <string name="button_devices_add_pair">Pair</string>
     <string name="button_devices_add_pair_new">Pair a new device</string>
+    <string name="button_devices_add_pair_connection_established">The connection is established</string>
     <string name="button_devices_add_already_paired">Add the already paired</string>
 
     <!-- Descriptions. -->

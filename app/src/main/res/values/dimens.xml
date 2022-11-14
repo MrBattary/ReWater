@@ -6,6 +6,7 @@
     <!-- Fragments dimensions. -->
     <dimen name="fragment_content_horizontal_spacing">20dp</dimen>
     <dimen name="fragment_content_vertical_spacing">20dp</dimen>
+    <dimen name="fragment_content_vertical_spacing_small">10dp</dimen>
 
     <!-- Dialogs dimensions. -->
     <dimen name="dialog_corner_radius">15dp</dimen>
