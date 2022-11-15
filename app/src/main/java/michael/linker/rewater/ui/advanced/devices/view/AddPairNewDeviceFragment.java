@@ -83,8 +83,8 @@ public class AddPairNewDeviceFragment extends Fragment {
             mViewModel.getBluetoothConnected().observe(getViewLifecycleOwner(), request -> {
                 this.enableButton(mPairButton);
                 if (currentLook == AddPairNewDeviceLook.BLUETOOTH) {
-                    this.setMessage(view, request, R.string.pair_device_network_success,
-                            R.string.pair_device_network_failure);
+                    this.setMessage(view, request, R.string.pair_device_connect_success,
+                            R.string.pair_device_connect_failure);
                     if (request.getStatus() == RequestStatus.OK) {
                         this.disableButton(mPairButton);
                         this.allowProceedToTheNextLook();

@@ -15,6 +15,13 @@ public interface ITextInputView extends IInputView {
     String getText() throws InputNotAllowedException;
 
     /**
+     * Get current text from the text input without checking any rules.
+     *
+     * @return text from input field
+     */
+    String getTextForce();
+
+    /**
      * Set text in the text input.
      * @param text text.
      */
@@ -29,6 +36,21 @@ public interface ITextInputView extends IInputView {
      * @param errorMsg message to display if an error occurs
      */
     void setBlacklist(List<String> blacklist, final String errorMsg);
+
+    /**
+     * Check if the provided text in the blacklist.
+     *
+     * @param text text to check
+     * @return true if blacklisted, false otherwise
+     */
+    boolean isTextBlacklisted(String text);
+
+    /**
+     * Remove text from the blacklist.
+     *
+     * @param allowedText word to remove
+     */
+    void removeFromBlackList(String allowedText);
 
     /**
      * Set max limit rule.

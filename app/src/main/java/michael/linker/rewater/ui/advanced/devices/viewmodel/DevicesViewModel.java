@@ -34,7 +34,7 @@ public class DevicesViewModel extends ViewModel {
 
     private final MutableLiveData<String> mDeviceId;
     private String mDeviceHardwareId;
-    private final MutableLiveData<DeviceInfoModel> mDeviceInfoModel;
+    private final MutableLiveData<String> mDeviceName;
     private final MutableLiveData<ScheduleModel> mParentScheduleModel;
     private final MutableLiveData<NetworkModel> mParentNetworkModel;
 
@@ -48,7 +48,7 @@ public class DevicesViewModel extends ViewModel {
         mAlreadyTakenDeviceNames = new MutableLiveData<>();
 
         mDeviceId = new MutableLiveData<>();
-        mDeviceInfoModel = new MutableLiveData<>();
+        mDeviceName = new MutableLiveData<>();
 
         mParentNetworkModel = new MutableLiveData<>();
         mParentScheduleModel = new MutableLiveData<>();
@@ -71,8 +71,12 @@ public class DevicesViewModel extends ViewModel {
         return mDeviceId;
     }
 
-    public LiveData<DeviceInfoModel> getDeviceInfoModel() {
-        return mDeviceInfoModel;
+    public LiveData<String> getDeviceName() {
+        return mDeviceName;
+    }
+
+    public void setDeviceName(final String name) {
+        mDeviceName.setValue(name);
     }
 
     public LiveData<ScheduleModel> getParentScheduleModel() {
@@ -88,7 +92,7 @@ public class DevicesViewModel extends ViewModel {
         try {
             final DeviceModel model = mDevicesRepository.getDeviceById(deviceId);
             mDeviceId.setValue(deviceId);
-            mDeviceInfoModel.setValue(new DeviceInfoModel(model.getName()));
+            mDeviceName.setValue(model.getName());
 
             try {
                 final String parentScheduleId =
@@ -115,7 +119,7 @@ public class DevicesViewModel extends ViewModel {
     public void setDeviceDuringPairing(final AddDeviceModel model) {
         mDeviceId.setValue(model.getId());
         mDeviceHardwareId = model.getDeviceHardwareId();
-        mDeviceInfoModel.setValue(new DeviceInfoModel(model.getName()));
+        mDeviceName.setValue(model.getName());
 
         // Always null
         mParentScheduleModel.setValue(null);
@@ -173,9 +177,9 @@ public class DevicesViewModel extends ViewModel {
     }
 
     public void detachParents() {
-        final DeviceInfoModel model = mDeviceInfoModel.getValue();
-        if (model != null) {
-            mDeviceInfoModel.setValue(new DeviceInfoModel(model.getName()));
+        final String deviceName = mDeviceName.getValue();
+        if (deviceName != null) {
+            mDeviceName.setValue(deviceName);
             mParentScheduleModel.setValue(null);
             mParentNetworkModel.setValue(null);
         }

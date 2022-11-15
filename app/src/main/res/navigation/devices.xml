@@ -45,14 +45,6 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-
-        <action
-            android:id="@+id/navigation_action_devices_add_options_to_devices_add_already_paired"
-            app:destination="@id/navigation_devices_add_already_paired"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -84,34 +76,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_devices_add_already_paired"
-        android:name="michael.linker.rewater.ui.advanced.devices.view.DEPRECATEDAddAlreadyPairedDeviceFragment"
-        android:label="@string/navigation_title_devices_add_already_paired"
-        tools:layout="@layout/fragment_devices_add_pair_new">
-        <action
-            android:id="@+id/navigation_action_devices_add_already_paired_to_devices"
-            app:destination="@id/navigation_devices_add_options"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
-            android:id="@+id/navigation_action_devices_add_already_paired_to_devices_add_options"
-            app:destination="@id/navigation_devices_add_options"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
-            android:id="@+id/navigation_action_devices_add_already_paired_to_devices_add"
-            app:destination="@id/navigation_devices_add"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
-
-    <fragment
         android:id="@+id/navigation_devices_add"
         android:name="michael.linker.rewater.ui.advanced.devices.view.AddDeviceFragment"
         android:label="@string/navigation_title_devices_add"
@@ -126,13 +90,6 @@
         <action
             android:id="@+id/navigation_action_devices_add_to_devices_add_pair_new"
             app:destination="@id/navigation_devices_add_pair_new"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
-            android:id="@+id/navigation_action_devices_add_to_devices_add_already_paired"
-            app:destination="@id/navigation_devices_add_already_paired"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"

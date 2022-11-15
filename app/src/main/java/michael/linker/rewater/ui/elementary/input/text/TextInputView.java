@@ -6,6 +6,7 @@ import android.view.View;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
@@ -21,7 +22,7 @@ public class TextInputView implements ITextInputView {
     public TextInputView(final TextInputLayout textInputLayout, final TextInputEditText textInput) {
         mTextInputLayout = textInputLayout;
         mTextInput = textInput;
-        mBlacklist = null;
+        mBlacklist = new ArrayList<>();
         mMaxLimit = null;
         mMinLimit = null;
     }
@@ -33,13 +34,7 @@ public class TextInputView implements ITextInputView {
 
     @Override
     public String getText() throws InputNotAllowedException {
-        final Editable editable = mTextInput.getText();
-        final String text;
-        if (editable != null) {
-            text = editable.toString();
-        } else {
-            text = "";
-        }
+        final String text = this.getTextForce() ;
         if (mMinLimit != null && text.length() < mMinLimit) {
             mTextInputLayout.setError(mMinLimitErrorMsg);
             throw new InputNotAllowedException("The text size is less than the allowed value!");
@@ -61,6 +56,16 @@ public class TextInputView implements ITextInputView {
     }
 
     @Override
+    public String getTextForce() {
+        final Editable editable = mTextInput.getText();
+        if (editable != null) {
+            return editable.toString();
+        } else {
+            return  "";
+        }
+    }
+
+    @Override
     public void setText(final String text) {
         mTextInput.setText(text);
     }
@@ -69,6 +74,19 @@ public class TextInputView implements ITextInputView {
     public void setBlacklist(final List<String> blacklist, final String errorMsg) {
         mBlacklist = blacklist;
         mBlacklistErrorMsg = errorMsg;
+    }
+
+    @Override
+    public boolean isTextBlacklisted(final String text) {
+        return mBlacklist.contains(text);
+    }
+
+    @Override
+    public void removeFromBlackList(final String allowedText) {
+        final int positionOfAllowedText = mBlacklist.indexOf(allowedText);
+        if (positionOfAllowedText >= 0) {
+            mBlacklist.remove(positionOfAllowedText);
+        }
     }
 
     @Override

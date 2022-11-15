@@ -17,10 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.repository.networks.model.NetworkModel;
@@ -34,14 +31,15 @@ import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFail
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
 import michael.linker.rewater.ui.elementary.dialog.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
-import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
-import michael.linker.rewater.ui.elementary.input.text.TextInputView;
+import michael.linker.rewater.ui.elementary.input.text.FocusableTextInputView;
+import michael.linker.rewater.ui.elementary.input.text.IFocusableTextInputView;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 import michael.linker.rewater.ui.model.TwoChoicesWarningDialogModel;
 
 public class EditDeviceFragment extends Fragment {
-    private ITextInputView mNameInput;
+    private boolean initialized = false;
+    private IFocusableTextInputView mNameInput;
     private ViewGroup mParentsExistsViewGroup, mParentsNotFoundViewGroup;
     private ParentEntityView mParentScheduleView, mParentNetworkView;
     private TextView mWaterTextInformationView, mPeriodTextInformationView;
@@ -64,7 +62,10 @@ public class EditDeviceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.initFields(view);
-        mViewModel.getDeviceInfoModel().observe(getViewLifecycleOwner(), this::initInputs);
+
+        mViewModel.getAlreadyTakenDeviceNames().observe(getViewLifecycleOwner(),
+                this::initInputsLogic);
+        mViewModel.getDeviceName().observe(getViewLifecycleOwner(), this::initInputs);
         mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(), m -> {
             this.initParentScheduleData(m);
             this.initButtons(view, m);
@@ -81,7 +82,7 @@ public class EditDeviceFragment extends Fragment {
     private void initFields(final View view) {
         mParentsExistsViewGroup = view.findViewById(R.id.edit_device_parents_exists);
         mParentsNotFoundViewGroup = view.findViewById(R.id.edit_device_parents_not_found);
-        mNameInput = new TextInputView(view.findViewById(R.id.edit_device_name),
+        mNameInput = new FocusableTextInputView(view.findViewById(R.id.edit_device_name),
                 view.findViewById(R.id.edit_device_name_input));
         mParentScheduleView = new ParentEntityView(
                 view.findViewById(R.id.edit_device_parents_schedule),
@@ -100,24 +101,26 @@ public class EditDeviceFragment extends Fragment {
         mCancelButton = view.findViewById(R.id.edit_device_cancel_button);
     }
 
-    private void initInputs(final DeviceInfoModel editableModel) {
-        List<String> alreadyTakenDevicesNames =
-                mViewModel.getAlreadyTakenDeviceNames().getValue();
-        List<String> alreadyTakenDevicesNamesExceptThis = Collections.emptyList();
-        if (alreadyTakenDevicesNames != null) {
-            alreadyTakenDevicesNamesExceptThis = alreadyTakenDevicesNames
-                    .stream()
-                    .filter(heading -> !Objects.equals(heading, editableModel.getName()))
-                    .collect(Collectors.toList());
-        }
-
-        mNameInput.setBlacklist(alreadyTakenDevicesNamesExceptThis,
+    private void initInputsLogic(List<String> alreadyTakenDevicesNames) {
+        mNameInput.setBlacklist(alreadyTakenDevicesNames,
                 StringsProvider.getString(R.string.input_error_heading_taken));
         mNameInput.setMaxLimit(IntegersProvider.getInteger(R.integer.input_max_limit_header),
                 StringsProvider.getString(R.string.input_error_heading_overflow));
         mNameInput.setMinLimit(IntegersProvider.getInteger(R.integer.input_min_limit_header),
                 StringsProvider.getString(R.string.input_error_heading_lack));
-        mNameInput.setText(editableModel.getName());
+        mNameInput.setOnFocusChangeListener((view, hasFocus) -> {
+            if (!hasFocus) {
+                this.storeInputs();
+            }
+        });
+    }
+
+    private void initInputs(final String deviceName) {
+        if (!initialized && mNameInput.isTextBlacklisted(deviceName)) {
+            mNameInput.removeFromBlackList(deviceName);
+            initialized = true;
+        }
+        mNameInput.setText(deviceName);
     }
 
     private void initParentArea(final ScheduleModel scheduleModel,
@@ -188,12 +191,22 @@ public class EditDeviceFragment extends Fragment {
     }
 
     private void initButtons(final View view, final ScheduleModel scheduleModel) {
-        mDeleteButton.setOnClickListener(l -> mOnDeleteDialog.show());
-        mDetachButton.setOnClickListener(l -> mViewModel.detachParents());
-        mAttachButton.setOnClickListener(l -> Navigation.findNavController(view).navigate(
-                R.id.navigation_action_devices_edit_to_devices_schedules));
+        mDeleteButton.setOnClickListener(l -> {
+            this.storeInputs();
+            mOnDeleteDialog.show();
+        });
+        mDetachButton.setOnClickListener(l -> {
+            this.storeInputs();
+            mViewModel.detachParents();
+        });
+        mAttachButton.setOnClickListener(l -> {
+            this.storeInputs();
+            Navigation.findNavController(view).navigate(
+                    R.id.navigation_action_devices_edit_to_devices_schedules);
+        });
         mSaveButton.setOnClickListener(l -> {
             try {
+                this.storeInputs();
                 if (scheduleModel == null || scheduleModel.getId() == null) {
                     mOnNoScheduleSaveDialog.show();
                 } else {
@@ -209,5 +222,9 @@ public class EditDeviceFragment extends Fragment {
         });
 
         mCancelButton.setOnClickListener(l -> Navigation.findNavController(view).navigateUp());
+    }
+
+    private void storeInputs() {
+        mViewModel.setDeviceName(mNameInput.getTextForce());
     }
 }

@@ -34,7 +34,7 @@ public class OneToManyDataLink implements IOneToManyDataLink {
 
     @Override
     public List<String> getRightEntityIdListByLeftEntityId(String leftEntityId) {
-        return oneToManyMap.getOrDefault(leftEntityId, null);
+        return oneToManyMap.getOrDefault(leftEntityId, new ArrayList<>());
     }
 
     @Override
