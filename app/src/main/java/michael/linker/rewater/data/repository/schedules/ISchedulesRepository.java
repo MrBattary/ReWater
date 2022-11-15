@@ -2,7 +2,7 @@ package michael.linker.rewater.data.repository.schedules;
 
 import java.util.List;
 
-import michael.linker.rewater.data.repository.schedules.model.CompactScheduleModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 
 public interface ISchedulesRepository {
     /**
@@ -10,7 +10,7 @@ public interface ISchedulesRepository {
      *
      * @return the list of compact schedules models in it
      */
-    List<CompactScheduleModel> getCompactScheduleList();
+    List<ScheduleModel> getCompactScheduleList();
 
     /**
      * Get specific schedule by it's ID.
@@ -19,7 +19,7 @@ public interface ISchedulesRepository {
      * @return model of the required schedule
      * @throws SchedulesRepositoryNotFoundException if schedule with provided ID does not exist
      */
-    CompactScheduleModel getCompactScheduleById(String id)
+    ScheduleModel getCompactScheduleById(String id)
             throws SchedulesRepositoryNotFoundException;
 
     /**

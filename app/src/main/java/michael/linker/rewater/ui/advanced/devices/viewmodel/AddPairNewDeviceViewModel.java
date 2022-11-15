@@ -94,8 +94,9 @@ public class AddPairNewDeviceViewModel extends ViewModel {
         if(mDevicesRepository.isDeviceCanBePaired(null)) {
             // TODO: Handle hash
             mAccessKeyAccepted.setValue(new AddPairNewDeviceRequest(RequestStatus.OK));
+        } else {
+            mAccessKeyAccepted.setValue(new AddPairNewDeviceRequest(RequestStatus.ERROR));
         }
-        mAccessKeyAccepted.setValue(new AddPairNewDeviceRequest(RequestStatus.ERROR));
     }
 
     // TODO: Provide model

@@ -2,11 +2,11 @@ package michael.linker.rewater.data.repository.devices.model;
 
 import michael.linker.rewater.ui.model.DetailedStatusModel;
 
-public class CompactDeviceModel {
+public class DeviceModel {
     private final String mId, mName;
     private final DetailedStatusModel mStatus;
 
-    public CompactDeviceModel(
+    public DeviceModel(
             final String id,
             final String name,
             final DetailedStatusModel status) {

@@ -3,7 +3,7 @@ package michael.linker.rewater.data.repository.devices;
 import java.util.List;
 
 import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
-import michael.linker.rewater.data.repository.devices.model.CompactDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceHardwareModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 
@@ -13,7 +13,7 @@ public interface IDevicesRepository {
      *
      * @return the list of compact device models in it
      */
-    List<CompactDeviceModel> getCompactDeviceList();
+    List<DeviceModel> getDeviceList();
 
     /**
      * Get specific device by it's ID.
@@ -22,7 +22,7 @@ public interface IDevicesRepository {
      * @return model of the required device
      * @throws DevicesRepositoryNotFoundException if device with provided id does not exist
      */
-    CompactDeviceModel getCompactNetworkById(String id) throws DevicesRepositoryNotFoundException;
+    DeviceModel getDeviceById(String id) throws DevicesRepositoryNotFoundException;
 
     /**
      * Remove an existing device from the user device list.

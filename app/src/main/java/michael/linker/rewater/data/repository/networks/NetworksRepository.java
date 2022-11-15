@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
-import michael.linker.rewater.data.repository.networks.model.EditableNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NewNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.UpdateNetworkModel;
 import michael.linker.rewater.data.web.INetworksData;
 import michael.linker.rewater.data.web.links.IOneToManyDataLink;
 import michael.linker.rewater.data.web.model.FullNetworkModel;
@@ -23,12 +24,12 @@ public class NetworksRepository implements INetworksRepository {
     }
 
     @Override
-    public List<CompactNetworkModel> getCompactNetworkList() {
+    public List<NetworkModel> getNetworkList() {
         final List<FullNetworkModel> dataModelList =
                 mNetworksData.getNetworkList().getNetworkModelList();
-        final List<CompactNetworkModel> modelList = new ArrayList<>();
+        final List<NetworkModel> modelList = new ArrayList<>();
         for (FullNetworkModel fullModel : dataModelList) {
-            modelList.add(new CompactNetworkModel(
+            modelList.add(new NetworkModel(
                     fullModel.getId(),
                     fullModel.getName(),
                     fullModel.getDescription(),
@@ -39,14 +40,14 @@ public class NetworksRepository implements INetworksRepository {
     }
 
     @Override
-    public CompactNetworkModel getCompactNetworkById(final String id)
+    public NetworkModel getNetworkById(final String id)
             throws NetworksRepositoryNotFoundException {
         final FullNetworkModel networkModel = mNetworksData.getNetworkById(id);
         if (networkModel == null) {
             throw new NetworksRepositoryNotFoundException(
                     "Requested network with id: " + id + " was not found!");
         }
-        return new CompactNetworkModel(
+        return new NetworkModel(
                 networkModel.getId(),
                 networkModel.getName(),
                 networkModel.getDescription(),
@@ -72,7 +73,7 @@ public class NetworksRepository implements INetworksRepository {
     }
 
     @Override
-    public void addNetwork(final EditableNetworkModel model)
+    public void addNetwork(final NewNetworkModel model)
             throws NetworksRepositoryAlreadyExistsException {
         final List<String> alreadyUsedNames = mNetworksData.getNetworkList().getNetworkModelList()
                 .stream()
@@ -88,7 +89,7 @@ public class NetworksRepository implements INetworksRepository {
     }
 
     @Override
-    public void updateNetwork(final String id, final EditableNetworkModel model)
+    public void updateNetwork(final String id, final UpdateNetworkModel model)
             throws NetworksRepositoryNotFoundException {
         final FullNetworkModel dataNetworkModel = mNetworksData.getNetworkById(id);
         if (dataNetworkModel == null) {

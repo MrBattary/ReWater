@@ -22,8 +22,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
-import michael.linker.rewater.data.repository.networks.model.EditableNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkModel;
+import michael.linker.rewater.data.repository.networks.model.UpdateNetworkModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
@@ -75,7 +75,7 @@ public class EditNetworkFragment extends Fragment {
         mCancelButton = view.findViewById(R.id.edit_network_cancel_button);
     }
 
-    private void initInputs(final CompactNetworkModel compactModel) {
+    private void initInputs(final NetworkModel compactModel) {
         List<String> alreadyTakenNetworksNames =
                 mViewModel.getAlreadyTakenNetworkNames().getValue();
         List<String> alreadyTakenNetworkNamesExceptThis = Collections.emptyList();
@@ -108,7 +108,7 @@ public class EditNetworkFragment extends Fragment {
                 final String description = mDescriptionInput.getText();
                 mViewModel.updateNetwork(
                         networkId,
-                        new EditableNetworkModel(heading, description)
+                        new UpdateNetworkModel(heading, description)
                 );
                 Navigation.findNavController(view).navigateUp();
             } catch (NetworksViewModelFailedException e) {

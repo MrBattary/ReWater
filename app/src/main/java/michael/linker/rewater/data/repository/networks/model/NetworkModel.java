@@ -2,11 +2,11 @@ package michael.linker.rewater.data.repository.networks.model;
 
 import michael.linker.rewater.ui.model.DetailedStatusModel;
 
-public class CompactNetworkModel {
+public class NetworkModel {
     private final String mId, mHeading, mDescription;
     private final DetailedStatusModel mStatus;
 
-    public CompactNetworkModel(
+    public NetworkModel(
             final String id,
             final String heading,
             final String description,

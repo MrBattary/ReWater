@@ -2,8 +2,9 @@ package michael.linker.rewater.data.repository.networks;
 
 import java.util.List;
 
-import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
-import michael.linker.rewater.data.repository.networks.model.EditableNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NewNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.UpdateNetworkModel;
 
 /**
  * The "Bridge" between data (web/local) sources and view models
@@ -14,7 +15,7 @@ public interface INetworksRepository {
      *
      * @return the list of compact network models in it
      */
-    List<CompactNetworkModel> getCompactNetworkList();
+    List<NetworkModel> getNetworkList();
 
     /**
      * Get specific network by it's ID.
@@ -23,7 +24,7 @@ public interface INetworksRepository {
      * @return model of the required network
      * @throws NetworksRepositoryNotFoundException if network with provided id does not exist
      */
-    CompactNetworkModel getCompactNetworkById(String id) throws NetworksRepositoryNotFoundException;
+    NetworkModel getNetworkById(String id) throws NetworksRepositoryNotFoundException;
 
     /**
      * Get network ID by inner schedule ID.
@@ -50,7 +51,7 @@ public interface INetworksRepository {
      * @param model new network model, ID can be null
      * @throws NetworksRepositoryAlreadyExistsException if network with provided name already exists
      */
-    void addNetwork(EditableNetworkModel model) throws NetworksRepositoryAlreadyExistsException;
+    void addNetwork(NewNetworkModel model) throws NetworksRepositoryAlreadyExistsException;
 
     /**
      * Update an existing network.
@@ -59,7 +60,7 @@ public interface INetworksRepository {
      * @param model model with data for update
      * @throws NetworksRepositoryNotFoundException if network with provided id does not exist
      */
-    void updateNetwork(String id, EditableNetworkModel model)
+    void updateNetwork(String id, UpdateNetworkModel model)
             throws NetworksRepositoryNotFoundException;
 
     /**

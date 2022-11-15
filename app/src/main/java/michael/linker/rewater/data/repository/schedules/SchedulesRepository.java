@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.repository.schedules.model.CompactScheduleModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.data.web.ISchedulesData;
 import michael.linker.rewater.data.web.links.IOneToManyDataLink;
 import michael.linker.rewater.data.web.model.FullScheduleModel;
@@ -19,12 +19,12 @@ public class SchedulesRepository implements ISchedulesRepository {
     }
 
     @Override
-    public List<CompactScheduleModel> getCompactScheduleList() {
+    public List<ScheduleModel> getCompactScheduleList() {
         final List<FullScheduleModel> dataModelList =
                 mSchedulesData.getScheduleList().getScheduleModelList();
-        final List<CompactScheduleModel> modelList = new ArrayList<>();
+        final List<ScheduleModel> modelList = new ArrayList<>();
         for (FullScheduleModel dataFullModel : dataModelList) {
-            modelList.add(new CompactScheduleModel(
+            modelList.add(new ScheduleModel(
                     dataFullModel.getId(),
                     dataFullModel.getName(),
                     dataFullModel.getPeriod(),
@@ -35,14 +35,14 @@ public class SchedulesRepository implements ISchedulesRepository {
     }
 
     @Override
-    public CompactScheduleModel getCompactScheduleById(final String id)
+    public ScheduleModel getCompactScheduleById(final String id)
             throws SchedulesRepositoryNotFoundException {
         final FullScheduleModel scheduleModel = mSchedulesData.getScheduleById(id);
         if (scheduleModel == null) {
             throw new SchedulesRepositoryNotFoundException(
                     "Requested schedule with id: " + id + " was not found!");
         }
-        return new CompactScheduleModel(
+        return new ScheduleModel(
                 scheduleModel.getId(),
                 scheduleModel.getName(),
                 scheduleModel.getPeriod(),

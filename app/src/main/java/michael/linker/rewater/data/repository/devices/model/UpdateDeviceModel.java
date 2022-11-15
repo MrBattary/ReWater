@@ -1,21 +1,9 @@
 package michael.linker.rewater.data.repository.devices.model;
 
-public class UpdateDeviceModel {
-    private final EditableDeviceModel mDeviceNewModel;
-    private final String mNewParentScheduleId;
-
+public class UpdateDeviceModel extends ShortDeviceModel {
     public UpdateDeviceModel(
-            final EditableDeviceModel deviceNewModel,
+            final String deviceId,
             final String newParentScheduleId) {
-        mDeviceNewModel = deviceNewModel;
-        mNewParentScheduleId = newParentScheduleId;
-    }
-
-    public EditableDeviceModel getDeviceNewModel() {
-        return mDeviceNewModel;
-    }
-
-    public String getNewParentScheduleId() {
-        return mNewParentScheduleId;
+        super(deviceId, newParentScheduleId);
     }
 }

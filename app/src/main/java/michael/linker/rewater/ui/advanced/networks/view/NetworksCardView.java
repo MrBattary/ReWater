@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
@@ -52,7 +52,7 @@ public class NetworksCardView {
         this.initButtonsLogic(parentViewModel);
     }
 
-    public void setDataModel(final CompactNetworkModel model) {
+    public void setDataModel(final NetworkModel model) {
         mId = model.getId();
         mHeading.setText(model.getHeading());
         mDescription.setText(model.getDescription());

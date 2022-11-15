@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkModel;
 import michael.linker.rewater.ui.advanced.networks.view.NetworksCardView;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
@@ -20,16 +20,16 @@ public class NetworksItemAdapter extends
         RecyclerView.Adapter<NetworksItemAdapter.NetworksItemViewHolder> {
     private final Context mContext;
     private final NetworksViewModel mParentViewModel;
-    private final List<CompactNetworkModel> mCompactNetworkModels;
+    private final List<NetworkModel> mNetworkModels;
     private final IOrderedTransition mTransition;
 
     public NetworksItemAdapter(final Context context,
             final NetworksViewModel parentViewModel,
-            final List<CompactNetworkModel> compactNetworkModels,
+            final List<NetworkModel> networkModels,
             final IOrderedTransition transition) {
         mContext = context;
         mParentViewModel = parentViewModel;
-        mCompactNetworkModels = compactNetworkModels;
+        mNetworkModels = networkModels;
         mTransition = transition;
     }
 
@@ -43,12 +43,12 @@ public class NetworksItemAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull NetworksItemViewHolder holder, int position) {
-        holder.mNetworksCardView.setDataModel(mCompactNetworkModels.get(position));
+        holder.mNetworksCardView.setDataModel(mNetworkModels.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mCompactNetworkModels.size();
+        return mNetworkModels.size();
     }
 
     static class NetworksItemViewHolder extends RecyclerView.ViewHolder {

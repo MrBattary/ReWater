@@ -98,7 +98,7 @@ public class DevicesCardView {
     private void initSettingsButtonLogic(final DevicesViewModel parentViewModel) {
         mSettingsButton.setOnClickListener(l -> {
             try {
-                parentViewModel.setEditableDeviceId(mId);
+                parentViewModel.setDeviceId(mId);
             } catch (NetworksViewModelFailedException e) {
                 ToastProvider.showShort(mParentContext, e.getMessage());
             }

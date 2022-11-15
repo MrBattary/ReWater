@@ -23,12 +23,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.devices.model.EditableDeviceModel;
-import michael.linker.rewater.data.repository.networks.model.CompactNetworkModel;
-import michael.linker.rewater.data.repository.schedules.model.CompactScheduleModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceInfoModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
@@ -63,7 +63,7 @@ public class EditDeviceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.initFields(view);
-        mViewModel.getEditableDeviceModel().observe(getViewLifecycleOwner(), this::initInputs);
+        mViewModel.getDeviceInfoModel().observe(getViewLifecycleOwner(), this::initInputs);
         mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(), m -> {
             this.initParentScheduleData(m);
             this.initButtons(view, m);
@@ -73,7 +73,7 @@ public class EditDeviceFragment extends Fragment {
         mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(),
                 sm -> mViewModel.getParentNetworkModel().observe(getViewLifecycleOwner(),
                         nm -> this.initParentArea(sm, nm)));
-        mViewModel.getEditableDeviceId().observe(getViewLifecycleOwner(),
+        mViewModel.getDeviceId().observe(getViewLifecycleOwner(),
                 id -> this.initDialogs(view));
     }
 
@@ -99,7 +99,7 @@ public class EditDeviceFragment extends Fragment {
         mCancelButton = view.findViewById(R.id.edit_device_cancel_button);
     }
 
-    private void initInputs(final EditableDeviceModel editableModel) {
+    private void initInputs(final DeviceInfoModel editableModel) {
         List<String> alreadyTakenNetworksNames =
                 mViewModel.getAlreadyTakenDeviceNames().getValue();
         List<String> alreadyTakenNetworkNamesExceptThis = Collections.emptyList();
@@ -119,9 +119,9 @@ public class EditDeviceFragment extends Fragment {
         mNameInput.setText(editableModel.getName());
     }
 
-    private void initParentArea(final CompactScheduleModel compactScheduleModel,
-            final CompactNetworkModel compactNetworkModel) {
-        if (compactScheduleModel == null && compactNetworkModel == null) {
+    private void initParentArea(final ScheduleModel scheduleModel,
+            final NetworkModel networkModel) {
+        if (scheduleModel == null && networkModel == null) {
             mParentsNotFoundViewGroup.setVisibility(View.VISIBLE);
             mParentsExistsViewGroup.setVisibility(View.GONE);
         } else {
@@ -130,19 +130,19 @@ public class EditDeviceFragment extends Fragment {
         }
     }
 
-    private void initParentScheduleData(final CompactScheduleModel compactScheduleModel) {
-        if (compactScheduleModel != null) {
-            mParentScheduleView.setParentEntity(compactScheduleModel.getName());
-            mWaterTextInformationView.setText(compactScheduleModel.getVolume().formatToCompact());
-            mPeriodTextInformationView.setText(compactScheduleModel.getPeriod().formatToCompact());
+    private void initParentScheduleData(final ScheduleModel scheduleModel) {
+        if (scheduleModel != null) {
+            mParentScheduleView.setParentEntity(scheduleModel.getName());
+            mWaterTextInformationView.setText(scheduleModel.getVolume().formatToCompact());
+            mPeriodTextInformationView.setText(scheduleModel.getPeriod().formatToCompact());
         } else {
             mParentScheduleView.clearParentEntity();
         }
     }
 
-    private void initParentNetworkData(final CompactNetworkModel compactNetworkModel) {
-        if (compactNetworkModel != null) {
-            mParentNetworkView.setParentEntity(compactNetworkModel.getHeading());
+    private void initParentNetworkData(final NetworkModel networkModel) {
+        if (networkModel != null) {
+            mParentNetworkView.setParentEntity(networkModel.getHeading());
         } else {
             mParentNetworkView.clearParentEntity();
         }
@@ -174,7 +174,7 @@ public class EditDeviceFragment extends Fragment {
                 ),
                 (dialogInterface, i) -> {
                     try {
-                        mViewModel.commitAndUpdateDevice(new EditableDeviceModel(
+                        mViewModel.commitAndUpdateDevice(new DeviceInfoModel(
                                 mNameInput.getText()
                         ));
                         Navigation.findNavController(view).navigateUp();
@@ -186,17 +186,17 @@ public class EditDeviceFragment extends Fragment {
                 (dialogInterface, i) -> dialogInterface.cancel());
     }
 
-    private void initButtons(final View view, final CompactScheduleModel compactScheduleModel) {
+    private void initButtons(final View view, final ScheduleModel scheduleModel) {
         mDeleteButton.setOnClickListener(l -> mOnDeleteDialog.show());
         mDetachButton.setOnClickListener(l -> mViewModel.detachParents());
         mAttachButton.setOnClickListener(l -> Navigation.findNavController(view).navigate(
                 R.id.navigation_action_devices_edit_to_devices_schedules));
         mSaveButton.setOnClickListener(l -> {
             try {
-                if (compactScheduleModel == null || compactScheduleModel.getId() == null) {
+                if (scheduleModel == null || scheduleModel.getId() == null) {
                     mOnNoScheduleSaveDialog.show();
                 } else {
-                    mViewModel.commitAndUpdateDevice(new EditableDeviceModel(
+                    mViewModel.commitAndUpdateDevice(new DeviceInfoModel(
                             mNameInput.getText()
                     ));
                     Navigation.findNavController(view).navigateUp();

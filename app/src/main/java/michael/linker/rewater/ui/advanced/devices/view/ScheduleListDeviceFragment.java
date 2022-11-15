@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.schedules.model.CompactScheduleModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
@@ -53,7 +53,7 @@ public class ScheduleListDeviceFragment extends Fragment {
         mViewModel.getCompactScheduleModels().observe(getViewLifecycleOwner(),
                 compactScheduleModels -> {
                     List<ScheduleListItemModel> scheduleListItemModels = new ArrayList<>();
-                    for (CompactScheduleModel model : compactScheduleModels) {
+                    for (ScheduleModel model : compactScheduleModels) {
                         scheduleListItemModels.add(new ScheduleListItemModel(model));
                     }
                     mAdapter = new ArrayAdapter<>(requireContext(),
@@ -90,8 +90,8 @@ public class ScheduleListDeviceFragment extends Fragment {
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
     }
 
-    private static class ScheduleListItemModel extends CompactScheduleModel {
-        public ScheduleListItemModel(final CompactScheduleModel model) {
+    private static class ScheduleListItemModel extends ScheduleModel {
+        public ScheduleListItemModel(final ScheduleModel model) {
             super(model.getId(), model.getName(), model.getPeriod(), model.getVolume());
         }
 

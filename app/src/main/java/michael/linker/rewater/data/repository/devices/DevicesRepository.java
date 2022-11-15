@@ -8,7 +8,7 @@ import java.util.UUID;
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
-import michael.linker.rewater.data.repository.devices.model.CompactDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceHardwareModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 import michael.linker.rewater.data.web.IDevicesData;
@@ -26,23 +26,23 @@ public class DevicesRepository implements IDevicesRepository {
     }
 
     @Override
-    public List<CompactDeviceModel> getCompactDeviceList() {
-        final List<CompactDeviceModel> compactDeviceModels = new ArrayList<>();
+    public List<DeviceModel> getDeviceList() {
+        final List<DeviceModel> deviceModels = new ArrayList<>();
         final List<FullDeviceModel> dataDeviceModelList =
                 mDevicesData.getDevicesList().getFullDeviceModels();
 
         for (FullDeviceModel dataDeviceModel : dataDeviceModelList) {
-            compactDeviceModels.add(new CompactDeviceModel(
+            deviceModels.add(new DeviceModel(
                     dataDeviceModel.getId(),
                     dataDeviceModel.getName(),
                     dataDeviceModel.getStatus()
             ));
         }
-        return compactDeviceModels;
+        return deviceModels;
     }
 
     @Override
-    public CompactDeviceModel getCompactNetworkById(final String id)
+    public DeviceModel getDeviceById(final String id)
             throws DevicesRepositoryNotFoundException {
         final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(id);
         if (dataDeviceModel == null) {
@@ -50,7 +50,7 @@ public class DevicesRepository implements IDevicesRepository {
                     "Requested device with id: " + id + " was not found!");
         }
 
-        return new CompactDeviceModel(
+        return new DeviceModel(
                 dataDeviceModel.getId(),
                 dataDeviceModel.getName(),
                 dataDeviceModel.getStatus()
@@ -88,7 +88,7 @@ public class DevicesRepository implements IDevicesRepository {
         }
         mDevicesData.updateDevice(id, new FullDeviceModel(
                 id,
-                model.getDeviceNewModel().getName(),
+                model.getName(),
                 dataDeviceModel.getStatus())
         );
     }

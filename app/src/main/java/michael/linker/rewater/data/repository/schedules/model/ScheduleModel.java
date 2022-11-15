@@ -3,12 +3,12 @@ package michael.linker.rewater.data.repository.schedules.model;
 import michael.linker.rewater.data.model.unit.WaterVolumeModel;
 import michael.linker.rewater.data.model.unit.WateringPeriodModel;
 
-public class CompactScheduleModel {
+public class ScheduleModel {
     private final String mId, mName;
     private final WateringPeriodModel mPeriod;
     private final WaterVolumeModel mVolume;
 
-    public CompactScheduleModel(
+    public ScheduleModel(
             final String id,
             final String name,
             final WateringPeriodModel period,
