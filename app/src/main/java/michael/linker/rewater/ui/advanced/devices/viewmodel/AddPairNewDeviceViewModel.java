@@ -7,12 +7,15 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 import java.util.Objects;
 
+import michael.linker.rewater.config.RepositoryConfiguration;
+import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.ui.advanced.devices.model.AddPairNewDeviceLook;
 import michael.linker.rewater.ui.advanced.devices.model.AddPairNewDeviceRequest;
 import michael.linker.rewater.ui.advanced.devices.model.RequestStatus;
 
 public class AddPairNewDeviceViewModel extends ViewModel {
     private final List<AddPairNewDeviceLook> mLookOrder;
+    private final IDevicesRepository mDevicesRepository;
     private final MutableLiveData<AddPairNewDeviceLook> mCurrentLook;
     private final MutableLiveData<AddPairNewDeviceRequest> mBluetoothConnected;
     private final MutableLiveData<AddPairNewDeviceRequest> mAccessKeyAccepted;
@@ -25,6 +28,7 @@ public class AddPairNewDeviceViewModel extends ViewModel {
                 AddPairNewDeviceLook.ACCESS,
                 AddPairNewDeviceLook.NETWORK,
                 AddPairNewDeviceLook.FINISH);
+        mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
 
         mCurrentLook = new MutableLiveData<>();
         mBluetoothConnected = new MutableLiveData<>();
@@ -87,8 +91,11 @@ public class AddPairNewDeviceViewModel extends ViewModel {
 
     public void sendKey(final String key) {
         // TODO: STUB
-        // TODO: Handle hash
-        mAccessKeyAccepted.setValue(new AddPairNewDeviceRequest(RequestStatus.OK));
+        if(mDevicesRepository.isDeviceCanBePaired(null)) {
+            // TODO: Handle hash
+            mAccessKeyAccepted.setValue(new AddPairNewDeviceRequest(RequestStatus.OK));
+        }
+        mAccessKeyAccepted.setValue(new AddPairNewDeviceRequest(RequestStatus.ERROR));
     }
 
     // TODO: Provide model

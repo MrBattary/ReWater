@@ -28,4 +28,6 @@ public interface IDevicesData {
      * @param model model with data for update
      */
     void updateDevice(String id, FullDeviceModel model);
+
+    void addDevice(FullDeviceModel model);
 }

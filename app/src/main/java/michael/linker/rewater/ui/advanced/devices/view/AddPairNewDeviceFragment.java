@@ -78,28 +78,31 @@ public class AddPairNewDeviceFragment extends Fragment {
             }
             mPersonalViewModel.getBluetoothConnected().observe(getViewLifecycleOwner(), request -> {
                 this.enableButton(mPairButton);
-                if (currentLook == AddPairNewDeviceLook.BLUETOOTH
-                        && request.getStatus() == RequestStatus.OK) {
+                if (currentLook == AddPairNewDeviceLook.BLUETOOTH) {
                     this.setMessage(view, request, R.string.pair_device_network_success,
                             R.string.pair_device_network_failure);
-                    this.disableButton(mPairButton);
-                    this.allowProceedToTheNextLook();
+                    if (request.getStatus() == RequestStatus.OK) {
+                        this.disableButton(mPairButton);
+                        this.allowProceedToTheNextLook();
+                    }
                 }
             });
             mPersonalViewModel.getAccessKeyAccepted().observe(getViewLifecycleOwner(), request -> {
-                if (currentLook == AddPairNewDeviceLook.ACCESS
-                        && request.getStatus() == RequestStatus.OK) {
+                if (currentLook == AddPairNewDeviceLook.ACCESS) {
                     this.setMessage(view, request, R.string.pair_device_access_success,
                             R.string.pair_device_access_failure);
-                    this.allowProceedToTheNextLook();
+                    if (request.getStatus() == RequestStatus.OK) {
+                        this.allowProceedToTheNextLook();
+                    }
                 }
             });
             mPersonalViewModel.getNetworkUpdated().observe(getViewLifecycleOwner(), request -> {
-                if (currentLook == AddPairNewDeviceLook.NETWORK
-                        && request.getStatus() == RequestStatus.OK) {
+                if (currentLook == AddPairNewDeviceLook.NETWORK) {
                     this.setMessage(view, request, R.string.pair_device_network_success,
                             R.string.pair_device_network_failure);
-                    this.allowProceedToTheNextLook();
+                    if (request.getStatus() == RequestStatus.OK) {
+                        this.allowProceedToTheNextLook();
+                    }
                 }
             });
         });

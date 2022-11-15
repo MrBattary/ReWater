@@ -72,4 +72,13 @@ public class DevicesLocalData implements IDevicesData {
             }
         }
     }
+
+    @Override
+    public void addDevice(final FullDeviceModel model) {
+        mFullDeviceModels.add(new FullDeviceModel(
+                model.getId(),
+                model.getName(),
+                new DetailedStatusModel(Status.OK, Status.OK)
+        ));
+    }
 }

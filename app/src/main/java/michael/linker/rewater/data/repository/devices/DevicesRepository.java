@@ -3,22 +3,24 @@ package michael.linker.rewater.data.repository.devices;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import michael.linker.rewater.config.DataConfiguration;
+import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
 import michael.linker.rewater.data.repository.devices.model.CompactDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceHardwareModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 import michael.linker.rewater.data.web.IDevicesData;
-import michael.linker.rewater.data.web.ISchedulesData;
 import michael.linker.rewater.data.web.links.IOneToManyDataLink;
 import michael.linker.rewater.data.web.model.FullDeviceModel;
+import michael.linker.rewater.ui.model.DetailedStatusModel;
 
 public class DevicesRepository implements IDevicesRepository {
-    private final ISchedulesData mSchedulesData;
     private final IDevicesData mDevicesData;
     private final IOneToManyDataLink mScheduleToDevicesDataLink;
 
     public DevicesRepository() {
-        mSchedulesData = DataConfiguration.getSchedulesData();
         mDevicesData = DataConfiguration.getDevicesData();
         mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
     }
@@ -77,10 +79,10 @@ public class DevicesRepository implements IDevicesRepository {
 
         String oldScheduleId = mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(id);
 
-        final String newScheduleId = model.getParentScheduleNewId();
+        final String newScheduleId = model.getNewParentScheduleId();
         if (!Objects.equals(oldScheduleId, newScheduleId)) {
             mScheduleToDevicesDataLink.removeRightEntityId(id);
-            if(newScheduleId != null) {
+            if (newScheduleId != null) {
                 mScheduleToDevicesDataLink.addDataLink(newScheduleId, id);
             }
         }
@@ -89,5 +91,29 @@ public class DevicesRepository implements IDevicesRepository {
                 model.getDeviceNewModel().getName(),
                 dataDeviceModel.getStatus())
         );
+    }
+
+    @Override
+    public boolean isDeviceCanBePaired(final DeviceHardwareModel model) {
+        // TODO Request to the server
+        return true;
+    }
+
+    @Override
+    public void addNewDevice(final AddDeviceModel model)
+            throws DevicesRepositoryAlreadyExistsException {
+        final String newDeviceUuid = UUID.randomUUID().toString();
+
+        mDevicesData.addDevice(
+                new FullDeviceModel(
+                        newDeviceUuid,
+                        model.getDeviceHardwareId(),
+                        new DetailedStatusModel(Status.OK, Status.OK)
+                )
+        );
+
+        if (model.getNewParentScheduleId() != null) {
+            mScheduleToDevicesDataLink.addDataLink(model.getNewParentScheduleId(), newDeviceUuid);
+        }
     }
 }

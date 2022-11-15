@@ -2,7 +2,9 @@ package michael.linker.rewater.data.repository.devices;
 
 import java.util.List;
 
+import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
 import michael.linker.rewater.data.repository.devices.model.CompactDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceHardwareModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 
 public interface IDevicesRepository {
@@ -37,4 +39,20 @@ public interface IDevicesRepository {
      * @throws DevicesRepositoryNotFoundException if device with provided id does not exist
      */
     void updateDevice(String id, UpdateDeviceModel model) throws DevicesRepositoryNotFoundException;
+
+    /**
+     * Checks whether the device can be paired.
+     *
+     * @param model hardware model that contains hardware ID
+     * @return true if can, else otherwise
+     */
+    boolean isDeviceCanBePaired(DeviceHardwareModel model);
+
+    /**
+     * Adds the new device.
+     *
+     * @param model model with data for adding
+     * @throws DevicesRepositoryAlreadyExistsException if the device cannot be added
+     */
+    void addNewDevice(AddDeviceModel model) throws DevicesRepositoryAlreadyExistsException;
 }
