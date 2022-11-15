@@ -33,6 +33,11 @@ public class TextInputView implements ITextInputView {
     }
 
     @Override
+    public void setVisibility(final int visibility) {
+        mTextInputLayout.setVisibility(visibility);
+    }
+
+    @Override
     public String getText() throws InputNotAllowedException {
         final String text = this.getTextForce() ;
         if (mMinLimit != null && text.length() < mMinLimit) {

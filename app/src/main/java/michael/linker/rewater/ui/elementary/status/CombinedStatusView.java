@@ -47,4 +47,9 @@ public class CombinedStatusView implements ICustomView {
     public View getViewInstance() {
         return mView;
     }
+
+    @Override
+    public void setVisibility(final int visibility) {
+        mView.setVisibility(visibility);
+    }
 }

@@ -12,4 +12,11 @@ public interface ICustomView {
      * @return View object
      */
     View getViewInstance();
+
+    /**
+     * Sets visibility for the element
+     *
+     * @param visibility GONE, VISIBLE, INVISIBLE
+     */
+    void setVisibility(int visibility);
 }

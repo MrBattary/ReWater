@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +20,7 @@ import androidx.transition.TransitionManager;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
+import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.res.ColorsProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
@@ -32,11 +32,13 @@ import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
+import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
+import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
 
 public class AddPairNewDeviceFragment extends Fragment {
     private ViewGroup mBluetoothView, mAccessView, mNetworkView;
     private ITextInputView mAccessKeyInput;
-    private TextView mErrorMessage, mSuccessMessage;
+    private IStatusStyledTextView mStatusStyledMessage;
     private MaterialButton mPairButton, mNextButton, mBackButton, mCancelButton;
 
     private AddPairNewDeviceViewModel mViewModel;
@@ -66,7 +68,7 @@ public class AddPairNewDeviceFragment extends Fragment {
                 deviceModel -> mParentViewModel.setDeviceDuringPairing(deviceModel));
 
         mViewModel.getCurrentLook().observe(getViewLifecycleOwner(), currentLook -> {
-            this.hideMessages();
+            this.hideMessage();
             this.setVisibilityOfViewGroups(currentLook);
             this.initBackButtonLogic(view, currentLook);
             this.initNextButtonLogic(view, currentLook);
@@ -78,7 +80,9 @@ public class AddPairNewDeviceFragment extends Fragment {
                     autoTransition);
 
             if (currentLook == AddPairNewDeviceLook.FINISH) {
-                setSuccessMessage(StringsProvider.getString(R.string.pair_device_success));
+                mStatusStyledMessage.setVisibility(View.VISIBLE);
+                mStatusStyledMessage.setText(
+                        StringsProvider.getString(R.string.pair_device_success), Status.OK);
             }
             mViewModel.getBluetoothConnected().observe(getViewLifecycleOwner(), request -> {
                 this.enableButton(mPairButton);
@@ -119,8 +123,8 @@ public class AddPairNewDeviceFragment extends Fragment {
 
         mAccessKeyInput = new TextInputView(view.findViewById(R.id.add_device_pair_new_access_key),
                 view.findViewById(R.id.add_device_pair_new_access_key_input));
-        mErrorMessage = view.findViewById(R.id.add_device_pair_new_messages_error_message);
-        mSuccessMessage = view.findViewById(R.id.add_device_pair_new_messages_success_message);
+        mStatusStyledMessage = new StatusStyledColoredTextView(
+                view.findViewById(R.id.add_device_pair_new_message));
 
         mPairButton = view.findViewById(R.id.add_device_pair_new_bluetooth_pair_button);
         mNextButton = view.findViewById(R.id.add_device_pair_new_control_next_button);
@@ -192,39 +196,26 @@ public class AddPairNewDeviceFragment extends Fragment {
         }
     }
 
-    private void hideMessages() {
-        mErrorMessage.setVisibility(View.GONE);
-        mSuccessMessage.setVisibility(View.GONE);
+    private void hideMessage() {
+        mStatusStyledMessage.setVisibility(View.GONE);
     }
 
     private void setMessage(final View view, final AddPairNewDeviceRequest request,
             final int successId, final int failureId) {
         AutoTransition autoTransition = new AutoTransition();
-        autoTransition.addTarget(view.findViewById(R.id.add_device_pair_new_messages));
         autoTransition.addTarget(view.findViewById(R.id.add_device_pair_new_controls));
+        autoTransition.addTarget(view.findViewById(R.id.add_device_pair_new_message));
         autoTransition.setDuration(
                 IntegersProvider.getInteger(R.integer.transition_animation_time));
         TransitionManager.beginDelayedTransition(view.findViewById(R.id.devices_add_pair_new),
                 autoTransition);
 
         if (request.getStatus() == RequestStatus.OK) {
-            setSuccessMessage(StringsProvider.getString(successId));
+            mStatusStyledMessage.setText(StringsProvider.getString(successId), Status.OK);
         }
         if (request.getStatus() == RequestStatus.ERROR) {
-            setErrorMessage(StringsProvider.getString(failureId));
+            mStatusStyledMessage.setText(StringsProvider.getString(failureId), Status.DEFECT);
         }
-    }
-
-    private void setSuccessMessage(final String successMessage) {
-        mSuccessMessage.setText(successMessage);
-        mSuccessMessage.setVisibility(View.VISIBLE);
-        mErrorMessage.setVisibility(View.GONE);
-    }
-
-    private void setErrorMessage(final String errorMessage) {
-        mErrorMessage.setText(errorMessage);
-        mErrorMessage.setVisibility(View.VISIBLE);
-        mSuccessMessage.setVisibility(View.GONE);
     }
 
     private void disableButton(final MaterialButton button) {
@@ -255,6 +246,7 @@ public class AddPairNewDeviceFragment extends Fragment {
 
     private void allowProceedToTheNextLook() {
         mNextButton.setOnClickListener(l -> mViewModel.nextLook());
+        mStatusStyledMessage.setVisibility(View.VISIBLE);
         this.enableButton(mNextButton);
     }
 }

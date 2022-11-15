@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" >
+                android:layout_alignParentTop="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_device_pair_new_access_key_input"
@@ -83,35 +83,20 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/add_device_pair_new_messages"
+    <TextView
+        android:id="@+id/add_device_pair_new_message"
+        style="@style/CustomTextSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_device_pair_new_wrapper"
-        android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small">
-
-        <TextView
-            android:id="@+id/add_device_pair_new_messages_error_message"
-            style="@style/CustomTextSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/global_medium_placeholder"
-            android:textColor="@color/negative_color" />
-
-        <TextView
-            android:id="@+id/add_device_pair_new_messages_success_message"
-            style="@style/CustomTextSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_devices_add_pair_connection_established"
-            android:textColor="@color/positive_color" />
-    </RelativeLayout>
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small"
+        android:text="@string/button_devices_add_pair_connection_established" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_device_pair_new_controls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/add_device_pair_new_messages"
+        android:layout_below="@id/add_device_pair_new_message"
         android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
         android:orientation="horizontal">
 

@@ -35,4 +35,9 @@ public class DetailStatusView implements ICustomView {
         return mView;
     }
 
+    @Override
+    public void setVisibility(final int visibility) {
+        mView.setVisibility(visibility);
+    }
+
 }
