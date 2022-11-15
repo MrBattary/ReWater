@@ -10,6 +10,8 @@
     <string name="navigation_title_devices_add_options">Ways to add</string>
     <string name="navigation_title_devices_add_pair_new">Pair a new device</string>
     <string name="navigation_title_devices_add_already_paired">Add the already paired</string>
+    <string name="navigation_title_devices_info">Device info</string>
+    <string name="navigation_title_devices_force_watering">Force watering</string>
     <string name="navigation_title_devices_edit">Edit device</string>
     <string name="navigation_title_devices_schedules">Choose schedule</string>
     <string name="navigation_title_networks_add">Add new network</string>

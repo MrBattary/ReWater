@@ -24,6 +24,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/navigation_action_devices_to_devices_info"
+            app:destination="@id/navigation_devices_info"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -139,6 +146,41 @@
         <action
             android:id="@+id/navigation_action_devices_schedules_to_devices_add"
             app:destination="@id/navigation_devices_add"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_devices_info"
+        android:name="michael.linker.rewater.ui.advanced.devices.view.DeviceInfoFragment"
+        android:label="@string/navigation_title_devices_info"
+        tools:layout="@layout/fragment_devices_info">
+        <action
+            android:id="@+id/navigation_action_devices_info_to_devices"
+            app:destination="@id/navigation_devices"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/navigation_action_devices_info_to_devices_force_watering"
+            app:destination="@id/navigation_devices_force_watering"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_devices_force_watering"
+        android:name="michael.linker.rewater.ui.advanced.devices.view.DeviceForceWateringFragment"
+        android:label="@string/navigation_title_devices_force_watering"
+        tools:layout="@layout/fragment_devices_force_watering">
+        <action
+            android:id="@+id/navigation_action_devices_force_watering_to_devices_info"
+            app:destination="@id/navigation_devices_info"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
