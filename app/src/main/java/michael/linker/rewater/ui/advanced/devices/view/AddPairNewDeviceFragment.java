@@ -38,8 +38,9 @@ public class AddPairNewDeviceFragment extends Fragment {
     private ITextInputView mAccessKeyInput;
     private TextView mErrorMessage, mSuccessMessage;
     private MaterialButton mPairButton, mNextButton, mBackButton, mCancelButton;
-    private AddPairNewDeviceViewModel mPersonalViewModel;
-    private DevicesViewModel mViewModel;
+
+    private AddPairNewDeviceViewModel mViewModel;
+    private DevicesViewModel mParentViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -48,8 +49,8 @@ public class AddPairNewDeviceFragment extends Fragment {
         ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
                 R.id.root_navigation_devices);
 
-        mPersonalViewModel = new ViewModelProvider(this).get(AddPairNewDeviceViewModel.class);
-        mViewModel = new ViewModelProvider(viewModelStoreOwner).get(DevicesViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(AddPairNewDeviceViewModel.class);
+        mParentViewModel = new ViewModelProvider(viewModelStoreOwner).get(DevicesViewModel.class);
 
         return inflater.inflate(R.layout.fragment_devices_add_pair_new, container, false);
     }
@@ -61,7 +62,10 @@ public class AddPairNewDeviceFragment extends Fragment {
         this.initFields(view);
         this.initButtonsLogic(view);
 
-        mPersonalViewModel.getCurrentLook().observe(getViewLifecycleOwner(), currentLook -> {
+        mViewModel.getAddDeviceModel().observe(getViewLifecycleOwner(),
+                deviceModel -> mParentViewModel.setDeviceDuringPairing(deviceModel));
+
+        mViewModel.getCurrentLook().observe(getViewLifecycleOwner(), currentLook -> {
             this.hideMessages();
             this.setVisibilityOfViewGroups(currentLook);
             this.initBackButtonLogic(view, currentLook);
@@ -76,7 +80,7 @@ public class AddPairNewDeviceFragment extends Fragment {
             if (currentLook == AddPairNewDeviceLook.FINISH) {
                 setSuccessMessage(StringsProvider.getString(R.string.pair_device_success));
             }
-            mPersonalViewModel.getBluetoothConnected().observe(getViewLifecycleOwner(), request -> {
+            mViewModel.getBluetoothConnected().observe(getViewLifecycleOwner(), request -> {
                 this.enableButton(mPairButton);
                 if (currentLook == AddPairNewDeviceLook.BLUETOOTH) {
                     this.setMessage(view, request, R.string.pair_device_network_success,
@@ -87,7 +91,7 @@ public class AddPairNewDeviceFragment extends Fragment {
                     }
                 }
             });
-            mPersonalViewModel.getAccessKeyAccepted().observe(getViewLifecycleOwner(), request -> {
+            mViewModel.getAccessKeyAccepted().observe(getViewLifecycleOwner(), request -> {
                 if (currentLook == AddPairNewDeviceLook.ACCESS) {
                     this.setMessage(view, request, R.string.pair_device_access_success,
                             R.string.pair_device_access_failure);
@@ -96,7 +100,7 @@ public class AddPairNewDeviceFragment extends Fragment {
                     }
                 }
             });
-            mPersonalViewModel.getNetworkUpdated().observe(getViewLifecycleOwner(), request -> {
+            mViewModel.getNetworkUpdated().observe(getViewLifecycleOwner(), request -> {
                 if (currentLook == AddPairNewDeviceLook.NETWORK) {
                     this.setMessage(view, request, R.string.pair_device_network_success,
                             R.string.pair_device_network_failure);
@@ -109,26 +113,26 @@ public class AddPairNewDeviceFragment extends Fragment {
     }
 
     private void initFields(final View view) {
-        mBluetoothView = view.findViewById(R.id.devices_add_pair_new_bluetooth);
-        mAccessView = view.findViewById(R.id.devices_add_pair_new_access);
-        mNetworkView = view.findViewById(R.id.devices_add_pair_new_network);
+        mBluetoothView = view.findViewById(R.id.add_device_pair_new_bluetooth);
+        mAccessView = view.findViewById(R.id.add_device_pair_new_access);
+        mNetworkView = view.findViewById(R.id.add_device_pair_new_network);
 
-        mAccessKeyInput = new TextInputView(view.findViewById(R.id.devices_add_pair_new_access_key),
-                view.findViewById(R.id.devices_add_pair_new_access_key_input));
-        mErrorMessage = view.findViewById(R.id.devices_add_pair_new_messages_error_message);
-        mSuccessMessage = view.findViewById(R.id.devices_add_pair_new_messages_success_message);
+        mAccessKeyInput = new TextInputView(view.findViewById(R.id.add_device_pair_new_access_key),
+                view.findViewById(R.id.add_device_pair_new_access_key_input));
+        mErrorMessage = view.findViewById(R.id.add_device_pair_new_messages_error_message);
+        mSuccessMessage = view.findViewById(R.id.add_device_pair_new_messages_success_message);
 
-        mPairButton = view.findViewById(R.id.devices_add_pair_new_bluetooth_pair_button);
-        mNextButton = view.findViewById(R.id.devices_add_pair_new_control_next_button);
-        mBackButton = view.findViewById(R.id.devices_add_pair_new_control_back_button);
-        mCancelButton = view.findViewById(R.id.devices_add_pair_new_control_cancel_button);
+        mPairButton = view.findViewById(R.id.add_device_pair_new_bluetooth_pair_button);
+        mNextButton = view.findViewById(R.id.add_device_pair_new_control_next_button);
+        mBackButton = view.findViewById(R.id.add_device_pair_new_control_back_button);
+        mCancelButton = view.findViewById(R.id.add_device_pair_new_control_cancel_button);
 
     }
 
     private void initButtonsLogic(final View view) {
         NavController navController = Navigation.findNavController(view);
-        mPairButton.setOnClickListener(l -> mPersonalViewModel.connectToDevice());
-        mBackButton.setOnClickListener(l -> mPersonalViewModel.previousLook());
+        mPairButton.setOnClickListener(l -> mViewModel.connectToDevice());
+        mBackButton.setOnClickListener(l -> mViewModel.previousLook());
         mCancelButton.setOnClickListener(
                 l -> {
                     navController.navigateUp();
@@ -163,7 +167,7 @@ public class AddPairNewDeviceFragment extends Fragment {
         if (look == AddPairNewDeviceLook.BLUETOOTH) {
             mBackButton.setOnClickListener(l -> Navigation.findNavController(view).navigateUp());
         } else {
-            mBackButton.setOnClickListener(l -> mPersonalViewModel.previousLook());
+            mBackButton.setOnClickListener(l -> mViewModel.previousLook());
         }
     }
 
@@ -175,12 +179,12 @@ public class AddPairNewDeviceFragment extends Fragment {
         if (look == AddPairNewDeviceLook.ACCESS) {
             try {
                 mNextButton.setOnClickListener(
-                        l -> mPersonalViewModel.sendKey(mAccessKeyInput.getText()));
+                        l -> mViewModel.sendKey(mAccessKeyInput.getText()));
             } catch (InputNotAllowedException ignored) {
             }
         }
         if (look == AddPairNewDeviceLook.NETWORK) {
-            mNextButton.setOnClickListener(l -> mPersonalViewModel.updateNetworkData());
+            mNextButton.setOnClickListener(l -> mViewModel.updateNetworkData());
         }
         if (look == AddPairNewDeviceLook.FINISH) {
             mNextButton.setOnClickListener(l -> Navigation.findNavController(view).navigate(
@@ -196,8 +200,8 @@ public class AddPairNewDeviceFragment extends Fragment {
     private void setMessage(final View view, final AddPairNewDeviceRequest request,
             final int successId, final int failureId) {
         AutoTransition autoTransition = new AutoTransition();
-        autoTransition.addTarget(view.findViewById(R.id.devices_add_pair_new_messages));
-        autoTransition.addTarget(view.findViewById(R.id.devices_add_pair_new_controls));
+        autoTransition.addTarget(view.findViewById(R.id.add_device_pair_new_messages));
+        autoTransition.addTarget(view.findViewById(R.id.add_device_pair_new_controls));
         autoTransition.setDuration(
                 IntegersProvider.getInteger(R.integer.transition_animation_time));
         TransitionManager.beginDelayedTransition(view.findViewById(R.id.devices_add_pair_new),
@@ -250,7 +254,7 @@ public class AddPairNewDeviceFragment extends Fragment {
     }
 
     private void allowProceedToTheNextLook() {
-        mNextButton.setOnClickListener(l -> mPersonalViewModel.nextLook());
+        mNextButton.setOnClickListener(l -> mViewModel.nextLook());
         this.enableButton(mNextButton);
     }
 }

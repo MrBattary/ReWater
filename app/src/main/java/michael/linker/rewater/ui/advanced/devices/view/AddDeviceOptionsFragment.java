@@ -49,9 +49,9 @@ public class AddDeviceOptionsFragment extends Fragment {
     }
 
     private void initFields(final View view) {
-        mPairNewButton = view.findViewById(R.id.devices_add_options_pair_new_button);
-        mAlreadyPairedButton = view.findViewById(R.id.devices_add_options_already_paired_button);
-        mCancelButton = view.findViewById(R.id.devices_add_options_cancel_button);
+        mPairNewButton = view.findViewById(R.id.add_device_options_pair_new_button);
+        mAlreadyPairedButton = view.findViewById(R.id.add_device_options_already_paired_button);
+        mCancelButton = view.findViewById(R.id.add_device_options_cancel_button);
     }
 
     private void initButtons(final View view) {

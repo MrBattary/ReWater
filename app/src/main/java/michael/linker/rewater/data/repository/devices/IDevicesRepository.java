@@ -25,6 +25,17 @@ public interface IDevicesRepository {
     DeviceModel getDeviceById(String id) throws DevicesRepositoryNotFoundException;
 
     /**
+     * Get specific device by it's hardware ID.
+     *
+     * @param model hardware model that contains hardware ID
+     * @return model of the required device
+     * @throws DevicesRepositoryNotFoundException if the device with the provided hardware ID
+     * does not exist or cannot be accessed
+     */
+    DeviceModel getDeviceByHardware(DeviceHardwareModel model)
+    throws DevicesRepositoryNotFoundException;
+
+    /**
      * Remove an existing device from the user device list.
      *
      * @param id ID of the device to be removed
@@ -39,14 +50,6 @@ public interface IDevicesRepository {
      * @throws DevicesRepositoryNotFoundException if device with provided id does not exist
      */
     void updateDevice(String id, UpdateDeviceModel model) throws DevicesRepositoryNotFoundException;
-
-    /**
-     * Checks whether the device can be paired.
-     *
-     * @param model hardware model that contains hardware ID
-     * @return true if can, else otherwise
-     */
-    boolean isDeviceCanBePaired(DeviceHardwareModel model);
 
     /**
      * Adds the new device.

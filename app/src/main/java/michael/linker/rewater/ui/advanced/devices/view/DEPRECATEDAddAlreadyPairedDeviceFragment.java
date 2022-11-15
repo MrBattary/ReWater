@@ -16,7 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import michael.linker.rewater.R;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 
-public class AddAlreadyPairedDeviceFragment extends Fragment {
+public class DEPRECATEDAddAlreadyPairedDeviceFragment extends Fragment {
     private DevicesViewModel mViewModel;
 
     @Override

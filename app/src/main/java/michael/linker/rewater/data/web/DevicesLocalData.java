@@ -31,7 +31,7 @@ public class DevicesLocalData implements IDevicesData {
                 new DetailedStatusModel(Status.DEFECT, Status.UNDEFINED)));
         mFullDeviceModels.add(new FullDeviceModel(
                 "353f5967-c7bd-4c57-8528-4f1ab7b88005",
-                "Fifth schedule very very very very very long name",
+                "Fifth device very very very very very long name",
                 new DetailedStatusModel(Status.UNDEFINED, Status.UNDEFINED)));
     }
 

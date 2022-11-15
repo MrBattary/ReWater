@@ -94,9 +94,10 @@ public class DevicesRepository implements IDevicesRepository {
     }
 
     @Override
-    public boolean isDeviceCanBePaired(final DeviceHardwareModel model) {
+    public DeviceModel getDeviceByHardware(final DeviceHardwareModel model)
+            throws DevicesRepositoryNotFoundException {
         // TODO Request to the server
-        return true;
+        return new DeviceModel(null, null, null);
     }
 
     @Override
@@ -104,10 +105,12 @@ public class DevicesRepository implements IDevicesRepository {
             throws DevicesRepositoryAlreadyExistsException {
         final String newDeviceUuid = UUID.randomUUID().toString();
 
+        // TODO: Also send hardware id to the server
+
         mDevicesData.addDevice(
                 new FullDeviceModel(
                         newDeviceUuid,
-                        model.getDeviceHardwareId(),
+                        model.getName(),
                         new DetailedStatusModel(Status.OK, Status.OK)
                 )
         );

@@ -6,15 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
     android:paddingVertical="@dimen/fragment_content_vertical_spacing"
-    tools:context=".ui.advanced.devices.view.AddAlreadyPairedDeviceFragment">
+    tools:context=".ui.advanced.devices.view.DEPRECATEDAddAlreadyPairedDeviceFragment">
 
     <RelativeLayout
-        android:id="@+id/devices_add_pair_new_bluetooth"
+        android:id="@+id/add_device_pair_new_bluetooth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
         <TextView
-            android:id="@+id/devices_add_pair_new_bluetooth_todo"
+            android:id="@+id/add_device_pair_new_bluetooth_todo"
             style="@style/CustomText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,15 +23,15 @@
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/devices_add_pair_new_controls"
+        android:id="@+id/add_device_pair_new_controls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/devices_add_pair_new_bluetooth"
+        android:layout_below="@id/add_device_pair_new_bluetooth"
         android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/devices_add_pair_new_control_next_button"
+            android:id="@+id/add_device_pair_new_control_next_button"
             style="@style/RegularButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/devices_add_pair_new_control_back_button"
+            android:id="@+id/add_device_pair_new_control_back_button"
             style="@style/RegularButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/devices_add_pair_new_control_cancel_button"
+            android:id="@+id/add_device_pair_new_control_cancel_button"
             style="@style/RegularButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             app:iconTint="@color/negative_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/devices_add_pair_new_control_back_button" />
+            app:layout_constraintTop_toBottomOf="@id/add_device_pair_new_control_back_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

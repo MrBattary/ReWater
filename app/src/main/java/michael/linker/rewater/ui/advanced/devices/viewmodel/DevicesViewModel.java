@@ -12,6 +12,7 @@ import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.repository.devices.DevicesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
+import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
@@ -32,6 +33,7 @@ public class DevicesViewModel extends ViewModel {
     private final MutableLiveData<List<String>> mAlreadyTakenDeviceNames;
 
     private final MutableLiveData<String> mDeviceId;
+    private String mDeviceHardwareId;
     private final MutableLiveData<DeviceInfoModel> mDeviceInfoModel;
     private final MutableLiveData<ScheduleModel> mParentScheduleModel;
     private final MutableLiveData<NetworkModel> mParentNetworkModel;
@@ -110,6 +112,16 @@ public class DevicesViewModel extends ViewModel {
         }
     }
 
+    public void setDeviceDuringPairing(final AddDeviceModel model) {
+        mDeviceId.setValue(model.getId());
+        mDeviceHardwareId = model.getDeviceHardwareId();
+        mDeviceInfoModel.setValue(new DeviceInfoModel(model.getName()));
+
+        // Always null
+        mParentScheduleModel.setValue(null);
+        mParentNetworkModel.setValue(null);
+    }
+
     public void attachParentsByScheduleId(final String scheduleId)
             throws DevicesViewModelFailedException {
         try {
@@ -131,6 +143,24 @@ public class DevicesViewModel extends ViewModel {
         try {
             mDevicesRepository.updateDevice(mDeviceId.getValue(),
                     new UpdateDeviceModel(
+                            infoModel.getName(),
+                            mParentScheduleModel.getValue() != null ?
+                                    mParentScheduleModel.getValue().getId() : null
+                    )
+            );
+            this.updateLists();
+        } catch (DevicesRepositoryNotFoundException e) {
+            throw new DevicesViewModelFailedException(e.getMessage());
+        }
+    }
+
+    public void commitAndAddNewDevice(final DeviceInfoModel infoModel)
+            throws DevicesViewModelFailedException {
+        try {
+            mDevicesRepository.addNewDevice(
+                    new AddDeviceModel(
+                            mDeviceId.getValue(),
+                            mDeviceHardwareId,
                             infoModel.getName(),
                             mParentScheduleModel.getValue() != null ?
                                     mParentScheduleModel.getValue().getId() : null

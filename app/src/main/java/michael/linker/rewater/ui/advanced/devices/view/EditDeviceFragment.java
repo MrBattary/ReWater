@@ -47,6 +47,7 @@ public class EditDeviceFragment extends Fragment {
     private TextView mWaterTextInformationView, mPeriodTextInformationView;
     private MaterialButton mAttachButton, mDetachButton, mDeleteButton, mSaveButton, mCancelButton;
     private IDialog mOnNoScheduleSaveDialog, mOnDeleteDialog;
+
     private DevicesViewModel mViewModel;
 
     @Override
@@ -100,17 +101,17 @@ public class EditDeviceFragment extends Fragment {
     }
 
     private void initInputs(final DeviceInfoModel editableModel) {
-        List<String> alreadyTakenNetworksNames =
+        List<String> alreadyTakenDevicesNames =
                 mViewModel.getAlreadyTakenDeviceNames().getValue();
-        List<String> alreadyTakenNetworkNamesExceptThis = Collections.emptyList();
-        if (alreadyTakenNetworksNames != null) {
-            alreadyTakenNetworkNamesExceptThis = alreadyTakenNetworksNames
+        List<String> alreadyTakenDevicesNamesExceptThis = Collections.emptyList();
+        if (alreadyTakenDevicesNames != null) {
+            alreadyTakenDevicesNamesExceptThis = alreadyTakenDevicesNames
                     .stream()
                     .filter(heading -> !Objects.equals(heading, editableModel.getName()))
                     .collect(Collectors.toList());
         }
 
-        mNameInput.setBlacklist(alreadyTakenNetworkNamesExceptThis,
+        mNameInput.setBlacklist(alreadyTakenDevicesNamesExceptThis,
                 StringsProvider.getString(R.string.input_error_heading_taken));
         mNameInput.setMaxLimit(IntegersProvider.getInteger(R.integer.input_max_limit_header),
                 StringsProvider.getString(R.string.input_error_heading_overflow));
