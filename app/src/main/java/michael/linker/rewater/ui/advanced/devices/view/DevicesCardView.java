@@ -58,19 +58,20 @@ public class DevicesCardView {
         this.initTransitionTargets();
         this.setCompactView();
         this.initButtonsLogic(parentViewModel);
+        this.initOnClickForCard(parentViewModel);
     }
 
     public void setDataModel(final DeviceCardModel model) {
         mId = model.getId();
         mName.setText(model.getName());
         final IdNameModel parentScheduleNameIdModel = model.getParentSchedule();
-        if(parentScheduleNameIdModel != null) {
+        if (parentScheduleNameIdModel != null) {
             mParentScheduleView.setParentEntity(parentScheduleNameIdModel.getName());
         } else {
             mParentScheduleView.clearParentEntity();
         }
         final IdNameModel parentNetworkNameIdModel = model.getParentNetwork();
-        if(parentNetworkNameIdModel != null) {
+        if (parentNetworkNameIdModel != null) {
             mParentNetworkView.setParentEntity(parentNetworkNameIdModel.getName());
         } else {
             mParentNetworkView.clearParentEntity();
@@ -81,6 +82,18 @@ public class DevicesCardView {
     private void initButtonsLogic(final DevicesViewModel parentViewModel) {
         initExpandOrLooseButtonLogic();
         initSettingsButtonLogic(parentViewModel);
+    }
+
+    private void initOnClickForCard(final DevicesViewModel parentViewModel) {
+        mCardView.setOnClickListener(l -> {
+            try {
+                parentViewModel.setDeviceId(mId);
+            } catch (NetworksViewModelFailedException e) {
+                ToastProvider.showShort(mParentContext, e.getMessage());
+            }
+            Navigation.findNavController(mCardView).navigate(
+                    R.id.navigation_action_devices_to_devices_info);
+        });
     }
 
     private void initExpandOrLooseButtonLogic() {

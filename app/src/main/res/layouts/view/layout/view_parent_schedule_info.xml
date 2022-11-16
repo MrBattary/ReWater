@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/device_info_parent_schedule_information_water"
-        style="@style/CustomTextMedium"
+        style="@style/CustomTextSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/device_info_parent_schedule_information_heading"
@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/device_info_parent_schedule_information_each"
-        style="@style/CustomTextMedium"
+        style="@style/CustomTextSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/device_info_parent_schedule_information_water"
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/device_info_parent_schedule_information_period"
-        style="@style/CustomTextMedium"
+        style="@style/CustomTextSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/device_info_parent_schedule_information_each"
@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/device_info_parent_schedule_information_heading"
-        style="@style/CustomTextMedium"
+        style="@style/CustomTextSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
