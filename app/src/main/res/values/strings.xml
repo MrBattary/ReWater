@@ -54,6 +54,13 @@
     <string name="pair_device_network_success">The device\'s network settings have been successfully updated.</string>
     <string name="pair_device_network_failure">The device failed to update the network settings. Check the correctness of the entered data.</string>
     <string name="pair_device_success">The device pairing has been successfully completed. Now it remains to setup your new device. To continue, click "next".</string>
+    <string name="status_battery_fine">High battery level</string>
+    <string name="status_battery_warning">The battery is partially discharged</string>
+    <string name="status_battery_defect">The battery is very low</string>
+    <string name="status_water_fine">High water level</string>
+    <string name="status_water_warning">The water was partially spent</string>
+    <string name="status_water_defect">There is very little water</string>
+    <string name="status_undefined">Status is undefined</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>

@@ -5,23 +5,23 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DetailedStatusModel {
-    private final Status water;
-    private final Status energy;
+    private final Status mWater;
+    private final Status mBattery;
 
-    public DetailedStatusModel(final Status water, final Status energy) {
-        this.water = water;
-        this.energy = energy;
+    public DetailedStatusModel(final Status water, final Status battery) {
+        this.mWater = water;
+        this.mBattery = battery;
     }
 
     public Status getWater() {
-        return water;
+        return mWater;
     }
 
-    public Status getEnergy() {
-        return energy;
+    public Status getBattery() {
+        return mBattery;
     }
 
     public List<Status> toList() {
-        return new ArrayList<>(Arrays.asList(water, energy));
+        return new ArrayList<>(Arrays.asList(mWater, mBattery));
     }
 }

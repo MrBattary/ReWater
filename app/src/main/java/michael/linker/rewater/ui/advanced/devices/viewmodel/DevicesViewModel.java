@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.RepositoryConfiguration;
+import michael.linker.rewater.data.model.DetailedStatusModel;
 import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.repository.devices.DevicesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
@@ -32,9 +33,10 @@ public class DevicesViewModel extends ViewModel {
     private final MutableLiveData<List<ScheduleModel>> mCompactScheduleModels;
     private final MutableLiveData<List<String>> mAlreadyTakenDeviceNames;
 
-    private final MutableLiveData<String> mDeviceId;
     private String mDeviceHardwareId;
+    private final MutableLiveData<String> mDeviceId;
     private final MutableLiveData<String> mDeviceName;
+    private final MutableLiveData<DetailedStatusModel> mDeviceStatus;
     private final MutableLiveData<ScheduleModel> mParentScheduleModel;
     private final MutableLiveData<NetworkModel> mParentNetworkModel;
 
@@ -49,6 +51,7 @@ public class DevicesViewModel extends ViewModel {
 
         mDeviceId = new MutableLiveData<>();
         mDeviceName = new MutableLiveData<>();
+        mDeviceStatus = new MutableLiveData<>();
 
         mParentNetworkModel = new MutableLiveData<>();
         mParentScheduleModel = new MutableLiveData<>();
@@ -75,6 +78,10 @@ public class DevicesViewModel extends ViewModel {
         return mDeviceName;
     }
 
+    public LiveData<DetailedStatusModel> getDeviceStatus() {
+        return mDeviceStatus;
+    }
+
     public void setDeviceName(final String name) {
         mDeviceName.setValue(name);
     }
@@ -93,6 +100,7 @@ public class DevicesViewModel extends ViewModel {
             final DeviceModel model = mDevicesRepository.getDeviceById(deviceId);
             mDeviceId.setValue(deviceId);
             mDeviceName.setValue(model.getName());
+            mDeviceStatus.setValue(model.getStatus());
 
             try {
                 final String parentScheduleId =

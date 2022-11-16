@@ -27,7 +27,7 @@ public class DetailStatusView implements ICustomView {
         waterStatusIcon.setImageTintList(ColorStateList.valueOf(
                 StatusColorsProvider.getColorForStatus(detailedStatusModel.getWater())));
         energyStatusIcon.setImageDrawable(
-                StatusDrawablesProvider.getIconForEnergyStatus(detailedStatusModel.getEnergy()));
+                StatusDrawablesProvider.getIconForEnergyStatus(detailedStatusModel.getBattery()));
     }
 
     @Override
