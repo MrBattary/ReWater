@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.model;
+package michael.linker.rewater.ui.elementary.dialog.two;
 
 import android.graphics.drawable.Drawable;
 
@@ -12,12 +12,12 @@ public class TwoChoicesWarningDialogModel {
             final String title,
             final String message,
             final String acceptButtonText,
-            final String rejectButtonTextId) {
+            final String rejectButtonText) {
         mIconDrawable = iconDrawable;
         mTitle = title;
         mMessage = message;
         mAcceptButtonText = acceptButtonText;
-        mRejectButtonText = rejectButtonTextId;
+        mRejectButtonText = rejectButtonText;
     }
 
     public Drawable getIconDrawable() {

@@ -6,7 +6,7 @@ import java.util.List;
 import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.web.model.DevicesListModel;
 import michael.linker.rewater.data.web.model.FullDeviceModel;
-import michael.linker.rewater.ui.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.DetailedStatusModel;
 
 public class DevicesLocalData implements IDevicesData {
     private final List<FullDeviceModel> mFullDeviceModels;

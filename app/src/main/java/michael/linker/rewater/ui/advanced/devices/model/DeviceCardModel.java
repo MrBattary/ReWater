@@ -3,7 +3,7 @@ package michael.linker.rewater.ui.advanced.devices.model;
 import androidx.annotation.Nullable;
 
 import michael.linker.rewater.data.model.IdNameModel;
-import michael.linker.rewater.ui.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.DetailedStatusModel;
 
 public class DeviceCardModel {
     private final String mId, mName;

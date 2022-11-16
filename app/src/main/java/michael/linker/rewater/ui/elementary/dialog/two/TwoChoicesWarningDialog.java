@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.elementary.dialog;
+package michael.linker.rewater.ui.elementary.dialog.two;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6,10 +6,10 @@ import android.content.DialogInterface;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.ui.model.TwoChoicesWarningDialogModel;
+import michael.linker.rewater.ui.elementary.dialog.IDialog;
 
 public class TwoChoicesWarningDialog implements IDialog {
-    MaterialAlertDialogBuilder mDialogBuilder;
+    private final MaterialAlertDialogBuilder mDialogBuilder;
 
     public TwoChoicesWarningDialog(
             final Context fragmentContext,

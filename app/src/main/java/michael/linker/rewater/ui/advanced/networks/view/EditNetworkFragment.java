@@ -30,12 +30,12 @@ import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
-import michael.linker.rewater.ui.elementary.dialog.TwoChoicesWarningDialog;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.ui.model.TwoChoicesWarningDialogModel;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialogModel;
 
 public class EditNetworkFragment extends Fragment {
     private ITextInputView mHeadingInput, mDescriptionInput;

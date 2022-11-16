@@ -14,7 +14,7 @@ import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 import michael.linker.rewater.data.web.IDevicesData;
 import michael.linker.rewater.data.web.links.IOneToManyDataLink;
 import michael.linker.rewater.data.web.model.FullDeviceModel;
-import michael.linker.rewater.ui.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.DetailedStatusModel;
 
 public class DevicesRepository implements IDevicesRepository {
     private final IDevicesData mDevicesData;

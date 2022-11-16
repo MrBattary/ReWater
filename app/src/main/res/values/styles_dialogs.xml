@@ -7,7 +7,11 @@
         <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialogStyle.Body</item>
         <item name="alertDialogStyle">@style/MaterialAlertDialogStyle.Rounded</item>
     </style>
-    
+
+    <style name="MaterialInfoDialogStyle" parent="MaterialAlertDialogStyle">
+        <item name="buttonBarPositiveButtonStyle">@style/TextButton</item>
+    </style>
+
     <style name="MaterialWarningDialogStyle" parent="MaterialAlertDialogStyle">
         <item name="buttonBarPositiveButtonStyle">@style/TextButton</item>
         <item name="buttonBarNegativeButtonStyle">@style/MaterialAlertDialogStyle.Negative</item>

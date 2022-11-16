@@ -1,7 +1,7 @@
 package michael.linker.rewater.data.web.model;
 
 import michael.linker.rewater.data.model.Status;
-import michael.linker.rewater.ui.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.DetailedStatusModel;
 
 public class FullNetworkModel {
     private final String mId, mName, mDescription;

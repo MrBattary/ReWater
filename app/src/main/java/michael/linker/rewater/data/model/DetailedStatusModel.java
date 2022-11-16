@@ -1,10 +1,8 @@
-package michael.linker.rewater.ui.model;
+package michael.linker.rewater.data.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import michael.linker.rewater.data.model.Status;
 
 public class DetailedStatusModel {
     private final Status water;

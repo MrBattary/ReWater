@@ -28,14 +28,14 @@ import michael.linker.rewater.ui.advanced.devices.model.DeviceInfoModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
-import michael.linker.rewater.ui.elementary.dialog.TwoChoicesWarningDialog;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.FocusableTextInputView;
 import michael.linker.rewater.ui.elementary.input.text.IFocusableTextInputView;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
 import michael.linker.rewater.ui.elementary.parententity.ParentScheduleInfoView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.ui.model.TwoChoicesWarningDialogModel;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialogModel;
 
 public class AddDeviceFragment extends Fragment {
     private boolean initialized = false;

@@ -84,6 +84,6 @@ public final class Status {
 
 
     public static Status valueOf(final String statusName) {
-        return STATUS_MAP.getOrDefault(statusName, null);
+        return STATUS_MAP.getOrDefault(statusName, UNDEFINED);
     }
 }

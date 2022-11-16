@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.res.StatusColorsProvider;
-import michael.linker.rewater.ui.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.DetailedStatusModel;
 import michael.linker.rewater.ui.elementary.ICustomView;
 
 public class OverallStatusView implements ICustomView {

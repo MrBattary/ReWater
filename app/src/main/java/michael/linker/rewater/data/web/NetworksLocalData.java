@@ -8,7 +8,7 @@ import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.web.model.EditableNetworkModel;
 import michael.linker.rewater.data.web.model.FullNetworkModel;
 import michael.linker.rewater.data.web.model.NetworkListModel;
-import michael.linker.rewater.ui.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.DetailedStatusModel;
 
 public class NetworksLocalData implements INetworksData {
     private final List<FullNetworkModel> mFullNetworkModels;
