@@ -45,6 +45,10 @@
         <item name="android:inputType">textPassword</item>
     </style>
 
+    <style name="EditTextNumberStyle" parent="EditTextViewParentStyle">
+        <item name="android:inputType">number</item>
+    </style>
+
     <!-- The param 'android:maxLength' is required! -->
     <style name="EditTextLimitedViewStyle" parent="EditTextViewParentStyle"></style>
 

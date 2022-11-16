@@ -57,47 +57,20 @@
                     style="@style/OutlinedButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/edit_device_parents_schedule_information_period"
+                    android:layout_below="@id/edit_device_schedule_information"
                     android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
                     android:text="@string/button_detach_schedule"
                     app:icon="@drawable/ic_detach"
                     app:iconTint="@color/negative_color"
                     app:strokeColor="@color/negative_color" />
 
-                <TextView
-                    android:id="@+id/edit_device_parents_schedule_information_water"
-                    style="@style/CustomTextMedium"
-                    android:layout_width="match_parent"
+                <include
+                    android:id="@+id/edit_device_schedule_information"
+                    layout="@layout/view_parent_schedule_info"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/edit_device_parents_schedule_information_heading"
-                    android:layout_marginStart="@dimen/fragment_content_horizontal_spacing"
-                    android:text="@string/global_short_placeholder" />
-
-                <TextView
-                    android:id="@+id/edit_device_parents_schedule_information_each"
-                    style="@style/CustomTextMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/edit_device_parents_schedule_information_water"
-                    android:layout_marginStart="@dimen/fragment_content_horizontal_spacing"
-                    android:text="@string/schedule_each" />
-
-                <TextView
-                    android:id="@+id/edit_device_parents_schedule_information_period"
-                    style="@style/CustomTextMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/edit_device_parents_schedule_information_each"
-                    android:layout_marginStart="@dimen/fragment_content_horizontal_spacing"
-                    android:text="@string/global_short_placeholder" />
-
-                <TextView
-                    android:id="@+id/edit_device_parents_schedule_information_heading"
-                    style="@style/CustomTextMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:text="@string/schedule_information" />
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true" />
             </RelativeLayout>
 
             <RelativeLayout

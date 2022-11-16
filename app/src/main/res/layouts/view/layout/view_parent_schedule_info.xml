@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/device_info_parent_schedule"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/device_info_parent_schedule_information_water"
+        style="@style/CustomTextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/device_info_parent_schedule_information_heading"
+        android:layout_marginStart="@dimen/fragment_content_horizontal_spacing"
+        android:text="@string/global_short_placeholder" />
+
+    <TextView
+        android:id="@+id/device_info_parent_schedule_information_each"
+        style="@style/CustomTextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/device_info_parent_schedule_information_water"
+        android:layout_marginStart="@dimen/fragment_content_horizontal_spacing"
+        android:text="@string/schedule_each" />
+
+    <TextView
+        android:id="@+id/device_info_parent_schedule_information_period"
+        style="@style/CustomTextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/device_info_parent_schedule_information_each"
+        android:layout_marginStart="@dimen/fragment_content_horizontal_spacing"
+        android:text="@string/global_short_placeholder" />
+
+    <TextView
+        android:id="@+id/device_info_parent_schedule_information_heading"
+        style="@style/CustomTextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/schedule_information" />
+</RelativeLayout>

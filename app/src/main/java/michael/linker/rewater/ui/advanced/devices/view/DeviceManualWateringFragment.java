@@ -16,7 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import michael.linker.rewater.R;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 
-public class DeviceForceWateringFragment extends Fragment {
+public class DeviceManualWateringFragment extends Fragment {
     private DevicesViewModel mViewModel;
 
     @Override
@@ -28,7 +28,7 @@ public class DeviceForceWateringFragment extends Fragment {
                 R.id.root_navigation_devices);
         mViewModel = new ViewModelProvider(viewModelStoreOwner).get(DevicesViewModel.class);
 
-        return inflater.inflate(R.layout.fragment_devices_force_watering, container, false);
+        return inflater.inflate(R.layout.fragment_devices_manual_watering, container, false);
     }
 
     @Override

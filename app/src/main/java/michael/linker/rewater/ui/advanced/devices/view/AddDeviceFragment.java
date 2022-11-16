@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +33,7 @@ import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.FocusableTextInputView;
 import michael.linker.rewater.ui.elementary.input.text.IFocusableTextInputView;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
+import michael.linker.rewater.ui.elementary.parententity.ParentScheduleInfoView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 import michael.linker.rewater.ui.model.TwoChoicesWarningDialogModel;
 
@@ -42,7 +42,7 @@ public class AddDeviceFragment extends Fragment {
     private IFocusableTextInputView mNameInput;
     private ViewGroup mParentsExistsViewGroup, mParentsNotFoundViewGroup;
     private ParentEntityView mParentScheduleView, mParentNetworkView;
-    private TextView mWaterTextInformationView, mPeriodTextInformationView;
+    private ParentScheduleInfoView mParentScheduleInfoView;
     private MaterialButton mAttachButton, mDetachButton, mCreateButton, mBackButton, mCancelButton;
     private IDialog mOnNoScheduleAddDialog;
 
@@ -89,10 +89,8 @@ public class AddDeviceFragment extends Fragment {
         mParentNetworkView = new ParentEntityView(
                 view.findViewById(R.id.add_device_parents_network),
                 StringsProvider.getString(R.string.parent_network_not_found));
-        mWaterTextInformationView = view.findViewById(
-                R.id.add_device_parents_schedule_information_water);
-        mPeriodTextInformationView = view.findViewById(
-                R.id.add_device_parents_schedule_information_period);
+        mParentScheduleInfoView = new ParentScheduleInfoView(
+                view.findViewById(R.id.add_device_schedule_information));
         mAttachButton = view.findViewById(R.id.add_device_attach_schedule_button);
         mDetachButton = view.findViewById(R.id.add_device_detach_schedule_button);
         mCreateButton = view.findViewById(R.id.add_device_save_button);
@@ -136,8 +134,8 @@ public class AddDeviceFragment extends Fragment {
     private void initParentScheduleData(final ScheduleModel scheduleModel) {
         if (scheduleModel != null) {
             mParentScheduleView.setParentEntity(scheduleModel.getName());
-            mWaterTextInformationView.setText(scheduleModel.getVolume().formatToCompact());
-            mPeriodTextInformationView.setText(scheduleModel.getPeriod().formatToCompact());
+            mParentScheduleInfoView.setWaterVolumeInfo(scheduleModel.getVolume());
+            mParentScheduleInfoView.setWateringPeriodInfo(scheduleModel.getPeriod());
         } else {
             mParentScheduleView.clearParentEntity();
         }

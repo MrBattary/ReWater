@@ -1,18 +1,18 @@
 package michael.linker.rewater.data.web.model;
 
-import michael.linker.rewater.data.model.unit.WaterVolumeModel;
+import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 import michael.linker.rewater.data.model.unit.WateringPeriodModel;
 
 public class FullScheduleModel {
     private final String mId, mName;
     private final WateringPeriodModel mPeriod;
-    private final WaterVolumeModel mVolume;
+    private final WaterVolumeMetricModel mVolume;
 
     public FullScheduleModel(
             final String id,
             final String name,
             final WateringPeriodModel period,
-            final WaterVolumeModel volume) {
+            final WaterVolumeMetricModel volume) {
         mId = id;
         mName = name;
         mPeriod = period;
@@ -31,7 +31,7 @@ public class FullScheduleModel {
         return mPeriod;
     }
 
-    public WaterVolumeModel getVolume() {
+    public WaterVolumeMetricModel getVolume() {
         return mVolume;
     }
 }

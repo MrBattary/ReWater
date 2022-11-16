@@ -11,7 +11,7 @@
     <string name="navigation_title_devices_add_pair_new">Pair a new device</string>
     <string name="navigation_title_devices_add_already_paired">Add the already paired</string>
     <string name="navigation_title_devices_info">Device info</string>
-    <string name="navigation_title_devices_force_watering">Force watering</string>
+    <string name="navigation_title_devices_manual_watering">Manual watering</string>
     <string name="navigation_title_devices_edit">Edit device</string>
     <string name="navigation_title_devices_schedules">Choose schedule</string>
     <string name="navigation_title_networks_add">Add new network</string>
@@ -20,7 +20,11 @@
     <!-- Inputs. -->
     <string name="input_hint_name">Name</string>
     <string name="input_hint_key">Key</string>
+    <string name="input_hint_litres">Litres</string>
+    <string name="input_hint_millilitres">Millilitres</string>
     <string name="input_hint_description">Description</string>
+    <string name="input_error_litres">The values of litres must be an integer from 0 to 99!</string>
+    <string name="input_error_millilitres">The values of millilitres must be an integer from 0 to 999!</string>
     <string name="input_error_heading_taken">The name is already taken!</string>
     <string name="input_error_heading_overflow">The name is too long!</string>
     <string name="input_error_heading_lack">The name is too short!</string>
@@ -77,6 +81,9 @@
     <string name="button_devices_add_pair_new">Pair a new device</string>
     <string name="button_devices_add_pair_connection_established">The connection is established</string>
     <string name="button_devices_add_already_paired">Add the already paired</string>
+    <string name="button_manual_watering">Manual watering</string>
+    <string name="button_force_watering">Force watering</string>
+    <string name="button_water">Water</string>
 
     <!-- Descriptions. -->
     <string name="description_back_button">Back to the previous screen</string>

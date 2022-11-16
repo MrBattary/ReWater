@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/input_metric_water_volume"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_metric_water_volume_greater"
+        style="@style/TextInputErrorLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_metric_water_volume_greater_input"
+            style="@style/EditTextNumberStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_hint_litres"
+            android:importantForAutofill="no" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_metric_water_volume_lesser"
+        style="@style/TextInputErrorLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/input_metric_water_volume_greater">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_metric_water_volume_lesser_input"
+            style="@style/EditTextNumberStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_hint_millilitres"
+            android:importantForAutofill="no" />
+    </com.google.android.material.textfield.TextInputLayout>
+</RelativeLayout>

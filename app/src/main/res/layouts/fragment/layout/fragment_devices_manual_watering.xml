@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/device_manual_watering"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/card_content_horizontal_spacing"
+    android:paddingVertical="@dimen/fragment_content_vertical_spacing"
+    tools:context=".ui.advanced.devices.view.DeviceManualWateringFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/device_manual_watering_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/device_manual_watering_volume_input"
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add_device_save_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_water"
+            app:icon="@drawable/ic_manual_watering"
+            app:iconTint="@color/positive_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/add_device_back_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_cancel"
+            app:icon="@drawable/ic_cancel"
+            app:iconTint="@color/negative_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/device_manual_watering_volume_input"
+        layout="@layout/view_input_water_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+</RelativeLayout>

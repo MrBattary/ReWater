@@ -16,6 +16,18 @@ public class WateringPeriodModel implements IUnit {
         mMinutes = minutes;
     }
 
+    public int getDays() {
+        return mDays;
+    }
+
+    public int getHours() {
+        return mHours;
+    }
+
+    public int getMinutes() {
+        return mMinutes;
+    }
+
     @Override
     public String formatToCompact() {
         return mDays + StringsProvider.getString(R.string.unit_days_short) + SPACE +
