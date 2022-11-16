@@ -22,6 +22,6 @@ public class WaterVolumeMetricModel implements IUnit {
 
     @Override
     public String formatToCompact() {
-        return mLitres + SPACE + StringsProvider.getString(R.string.unit_litres_short) + SPACE + mMillilitres + SPACE + StringsProvider.getString(R.string.unit_millilitres_short);
+        return mLitres+ StringsProvider.getString(R.string.unit_litres_short) + SPACE + mMillilitres + StringsProvider.getString(R.string.unit_millilitres_short);
     }
 }

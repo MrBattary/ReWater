@@ -35,7 +35,7 @@ import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialogModel;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 
 public class EditNetworkFragment extends Fragment {
     private ITextInputView mHeadingInput, mDescriptionInput;
@@ -122,10 +122,10 @@ public class EditNetworkFragment extends Fragment {
 
     private void initDialogs(@NonNull final View view, final String networkId) {
         mOnDeleteDialog = new TwoChoicesWarningDialog(requireContext(),
-                new TwoChoicesWarningDialogModel(
+                new TwoChoicesDialogModel(
                         DrawablesProvider.getDrawable(R.drawable.ic_warning),
                         StringsProvider.getString(R.string.title_warning),
-                        StringsProvider.getString(R.string.dialog_delete_network_part_1),
+                        StringsProvider.getString(R.string.dialog_delete_network),
                         StringsProvider.getString(R.string.button_delete),
                         StringsProvider.getString(R.string.button_cancel)
                 ),

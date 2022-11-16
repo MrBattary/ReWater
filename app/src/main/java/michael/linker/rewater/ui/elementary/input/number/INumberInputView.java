@@ -2,6 +2,7 @@ package michael.linker.rewater.ui.elementary.input.number;
 
 import michael.linker.rewater.ui.elementary.input.IInputView;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
+import michael.linker.rewater.ui.elementary.input.number.integer.NumberInputViewNotNumberException;
 
 /**
  * @param <T> number type
@@ -19,8 +20,9 @@ public interface INumberInputView<T> extends IInputView {
      * Get current number from the text input without checking any rules.
      *
      * @return number from input field
+     * @throws NumberInputViewNotNumberException if text cannot be parsed into number
      */
-    T getNumberForce();
+    T getNumberForce() throws NumberInputViewNotNumberException;
 
     /**
      * Set number in the text input.

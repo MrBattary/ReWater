@@ -35,7 +35,7 @@ import michael.linker.rewater.ui.elementary.input.text.IFocusableTextInputView;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
 import michael.linker.rewater.ui.elementary.parententity.ParentScheduleInfoView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialogModel;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 
 public class EditDeviceFragment extends Fragment {
     private boolean initialized = false;
@@ -152,7 +152,7 @@ public class EditDeviceFragment extends Fragment {
 
     private void initDialogs(final View view) {
         mOnDeleteDialog = new TwoChoicesWarningDialog(requireContext(),
-                new TwoChoicesWarningDialogModel(
+                new TwoChoicesDialogModel(
                         DrawablesProvider.getDrawable(R.drawable.ic_warning),
                         StringsProvider.getString(R.string.title_warning),
                         StringsProvider.getString(R.string.dialog_delete_device_schedule),
@@ -167,7 +167,7 @@ public class EditDeviceFragment extends Fragment {
                 (dialogInterface, i) -> dialogInterface.cancel());
 
         mOnNoScheduleSaveDialog = new TwoChoicesWarningDialog(requireContext(),
-                new TwoChoicesWarningDialogModel(
+                new TwoChoicesDialogModel(
                         DrawablesProvider.getDrawable(R.drawable.ic_warning),
                         StringsProvider.getString(R.string.title_warning),
                         StringsProvider.getString(R.string.dialog_no_attached_schedule_on_save),

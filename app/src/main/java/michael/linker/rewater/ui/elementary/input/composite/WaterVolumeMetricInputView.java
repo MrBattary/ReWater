@@ -30,7 +30,6 @@ public class WaterVolumeMetricInputView implements ICustomView, IFocusable {
                 parentView.findViewById(R.id.input_metric_water_volume_lesser_input));
 
         this.initRestrictions();
-        setWaterVolume(new WaterVolumeMetricModel(0, 0));
     }
 
     public void setWaterVolume(final WaterVolumeMetricModel metricModel) {

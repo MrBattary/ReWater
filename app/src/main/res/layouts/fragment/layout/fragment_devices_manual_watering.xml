@@ -18,7 +18,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/add_device_save_button"
+            android:id="@+id/device_manual_watering_water_button"
             style="@style/RegularButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/add_device_back_button"
+            android:id="@+id/device_manual_watering_cancel_button"
             style="@style/RegularButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -13,7 +13,7 @@ public class SingleChoiceInfoDialog implements IDialog {
 
     public SingleChoiceInfoDialog(
             final Context fragmentContext,
-            final SingleChoiceInfoDialogModel dialogModel,
+            final SingleChoiceDialogModel dialogModel,
             final DialogInterface.OnClickListener acceptListener) {
         mDialogBuilder = new MaterialAlertDialogBuilder(fragmentContext,
                 R.style.MaterialInfoDialogStyle);

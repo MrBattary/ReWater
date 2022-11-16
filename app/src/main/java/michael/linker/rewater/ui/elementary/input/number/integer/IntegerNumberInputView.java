@@ -6,6 +6,8 @@ import android.view.View;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import michael.linker.rewater.R;
+import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 
 public class IntegerNumberInputView implements IIntegerNumberInput {
@@ -34,25 +36,33 @@ public class IntegerNumberInputView implements IIntegerNumberInput {
 
     @Override
     public Integer getNumber() throws InputNotAllowedException {
-        final Integer number = this.getNumberForce();
-        if (mMinLimit != null && number < mMinLimit) {
-            mTextInputLayout.setError(mMinLimitErrorMsg);
-            throw new InputNotAllowedException("The number is less than the allowed value!");
+        try {
+            final Integer number = this.getNumberForce();
+            if (mMinLimit != null && number < mMinLimit) {
+                mTextInputLayout.setError(mMinLimitErrorMsg);
+                throw new InputNotAllowedException("The number is less than the allowed value!");
+            }
+            if (mMaxLimit != null && number > mMaxLimit) {
+                mTextInputLayout.setError(mMaxLimitErrorMsg);
+                throw new InputNotAllowedException("The number is greater than the allowed value!");
+            }
+            mTextInputLayout.setError(null);
+            return number;
+        } catch (NumberInputViewNotNumberException e) {
+            mTextInputLayout.setError(
+                    StringsProvider.getString(R.string.input_error_number_not_found));
+            throw new InputNotAllowedException(e.getMessage());
         }
-        if (mMaxLimit != null && number > mMaxLimit) {
-            mTextInputLayout.setError(mMaxLimitErrorMsg);
-            throw new InputNotAllowedException("The number is greater than the allowed value!");
-        }
-        return number;
     }
 
     @Override
-    public Integer getNumberForce() {
+    public Integer getNumberForce() throws NumberInputViewNotNumberException {
         final Editable text = mTextInput.getText();
-        if (text != null) {
-            return Integer.getInteger(text.toString());
+        if (text != null && !text.toString().equals("")) {
+            return Integer.parseInt(text.toString());
         }
-        return 0;
+        throw new NumberInputViewNotNumberException(
+                "Text is empty and cannot be converted to the integer!");
     }
 
     @Override
