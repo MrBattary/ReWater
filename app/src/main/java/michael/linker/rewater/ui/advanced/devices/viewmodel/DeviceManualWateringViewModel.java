@@ -13,21 +13,39 @@ public class DeviceManualWateringViewModel extends ViewModel {
     private final IDevicesRepository mDevicesRepository;
 
     private final MutableLiveData<String> mDeviceId;
-    private final MutableLiveData<WaterVolumeMetricModel> mWaterVolumeMetricData;
+    private final MutableLiveData<Integer> mLitresValue;
+    private final MutableLiveData<Integer> mMillilitresValue;
 
     public DeviceManualWateringViewModel() {
         mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
 
         mDeviceId = new MutableLiveData<>();
-        mWaterVolumeMetricData = new MutableLiveData<>();
+        mLitresValue = new MutableLiveData<>();
+        mMillilitresValue = new MutableLiveData<>();
+
+        mLitresValue.setValue(0);
+        mMillilitresValue.setValue(0);
     }
 
-    public LiveData<WaterVolumeMetricModel> getWaterVolumeMetricData() {
-        return mWaterVolumeMetricData;
+    public LiveData<Integer> getLitresValue() {
+        return mLitresValue;
+    }
+
+    public LiveData<Integer> getMillilitresValue() {
+        return mMillilitresValue;
+    }
+
+    public void setLitresValue(final Integer litresValue) {
+        mLitresValue.setValue(litresValue);
+    }
+
+    public void setMillilitresValue(final Integer millilitresValue) {
+        mMillilitresValue.setValue(millilitresValue);
     }
 
     public void setWaterVolumeMetricData(final WaterVolumeMetricModel model) {
-        mWaterVolumeMetricData.setValue(model);
+        mLitresValue.setValue(model.getLitres());
+        mMillilitresValue.setValue(model.getMillilitres());
     }
 
     public void setDeviceId(final String deviceId) {
@@ -35,13 +53,13 @@ public class DeviceManualWateringViewModel extends ViewModel {
     }
 
     public boolean isProvidedModelNotZeroVolume() {
-        final WaterVolumeMetricModel waterModel = mWaterVolumeMetricData.getValue();
-        if (waterModel == null) {
-            return true;
+        final Integer litres = mLitresValue.getValue();
+        final Integer millilitres = mMillilitresValue.getValue();
+        if (litres == null || millilitres == null) {
+            return false;
         }
 
-        final int wateringVolumeMl = waterModel.getLitres() * 1000
-                + mWaterVolumeMetricData.getValue().getMillilitres();
+        final int wateringVolumeMl = litres * 1000 + millilitres;
         return wateringVolumeMl != ZERO_WATERING_VOLUME;
     }
 

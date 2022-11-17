@@ -5,18 +5,18 @@ import michael.linker.rewater.data.res.StringsProvider;
 
 public class WaterVolumeMetricModel implements IUnit {
     private static final String SPACE = " ";
-    private final int mLitres, mMillilitres;
+    private final Integer mLitres, mMillilitres;
 
-    public WaterVolumeMetricModel(final int litres, final int millilitres) {
+    public WaterVolumeMetricModel(final Integer litres, final Integer millilitres) {
         mLitres = litres;
         mMillilitres = millilitres;
     }
 
-    public int getLitres() {
+    public Integer getLitres() {
         return mLitres;
     }
 
-    public int getMillilitres() {
+    public Integer getMillilitres() {
         return mMillilitres;
     }
 

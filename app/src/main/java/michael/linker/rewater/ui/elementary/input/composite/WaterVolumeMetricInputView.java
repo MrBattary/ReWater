@@ -37,14 +37,38 @@ public class WaterVolumeMetricInputView implements ICustomView, IFocusable {
         mMillilitresInput.setNumber(metricModel.getMillilitres());
     }
 
-    public WaterVolumeMetricModel getWaterVolume() throws InputNotAllowedException {
-        return new WaterVolumeMetricModel(mLitresInput.getNumber(),
-                mMillilitresInput.getNumber());
+    public Integer getLitresVolume() throws InputNotAllowedException {
+        return mLitresInput.getNumber();
     }
 
-    public WaterVolumeMetricModel getWaterVolumeForce() {
-        return new WaterVolumeMetricModel(mLitresInput.getNumberForce(),
-                mMillilitresInput.getNumberForce());
+    public Integer getMillilitresVolume() throws InputNotAllowedException {
+        return mMillilitresInput.getNumber();
+    }
+
+    public void setLitresInputOnFocusChangeListener(final View.OnFocusChangeListener listener) {
+        mLitresInput.setOnFocusChangeListener(listener);
+    }
+
+    public void setMillilitresInputOnFocusChangeListener(
+            final View.OnFocusChangeListener listener) {
+        mMillilitresInput.setOnFocusChangeListener(listener);
+    }
+
+    public WaterVolumeMetricModel getWaterVolume() throws InputNotAllowedException {
+        Integer litres = null, millilitres = null;
+        try {
+            litres = mLitresInput.getNumber();
+        } catch (InputNotAllowedException ignored) {
+        }
+        try {
+            millilitres = mMillilitresInput.getNumber();
+        } catch (InputNotAllowedException ignored) {
+        }
+        if (litres != null && millilitres != null) {
+            return new WaterVolumeMetricModel(litres, millilitres);
+        }
+        throw new InputNotAllowedException(
+                "Could not get the entered values for the following reasons:");
     }
 
     @Override

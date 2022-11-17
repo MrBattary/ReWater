@@ -24,14 +24,15 @@ import michael.linker.rewater.ui.advanced.devices.viewmodel.DeviceManualWatering
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
-import michael.linker.rewater.ui.elementary.dialog.one.SingleChoiceInfoDialog;
 import michael.linker.rewater.ui.elementary.dialog.one.SingleChoiceDialogModel;
+import michael.linker.rewater.ui.elementary.dialog.one.SingleChoiceInfoDialog;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesConfirmDialog;
-import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.composite.WaterVolumeMetricInputView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
+import michael.linker.rewater.ui.util.LiveDataUtils;
 
 public class DeviceManualWateringFragment extends Fragment {
     private WaterVolumeMetricInputView mWaterVolumeMetricInputView;
@@ -65,8 +66,14 @@ public class DeviceManualWateringFragment extends Fragment {
 
         mParentViewModel.getDeviceId().observe(getViewLifecycleOwner(),
                 id -> mViewModel.setDeviceId(id));
-        mViewModel.getWaterVolumeMetricData().observe(getViewLifecycleOwner(),
-                metricModel -> initWateringDialog(view, metricModel));
+        new LiveDataUtils.TwoCombinedLiveData<>(
+                mViewModel.getLitresValue(),
+                mViewModel.getMillilitresValue()).observe(
+                getViewLifecycleOwner(), litresMillilitresPair ->
+                        this.initWateringDialog(view,
+                                new WaterVolumeMetricModel(
+                                        litresMillilitresPair.first,
+                                        litresMillilitresPair.second)));
     }
 
     private void initFields(final View view) {
@@ -77,11 +84,20 @@ public class DeviceManualWateringFragment extends Fragment {
     }
 
     private void initInputs() {
-        mWaterVolumeMetricInputView.setOnFocusChangeListener((view, hasFocus) -> {
+        mWaterVolumeMetricInputView.setLitresInputOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
                 try {
-                    mViewModel.setWaterVolumeMetricData(
-                            mWaterVolumeMetricInputView.getWaterVolume());
+                    mViewModel.setLitresValue(
+                            mWaterVolumeMetricInputView.getLitresVolume());
+                } catch (InputNotAllowedException ignored) {
+                }
+            }
+        });
+        mWaterVolumeMetricInputView.setMillilitresInputOnFocusChangeListener((view, hasFocus) -> {
+            if (!hasFocus) {
+                try {
+                    mViewModel.setMillilitresValue(
+                            mWaterVolumeMetricInputView.getMillilitresVolume());
                 } catch (InputNotAllowedException ignored) {
                 }
             }
@@ -104,7 +120,7 @@ public class DeviceManualWateringFragment extends Fragment {
                         mViewModel.waterWithProvidedModel();
                         Navigation.findNavController(view).navigateUp();
                     } catch (DevicesViewModelFailedException e) {
-                        ToastProvider.showShort(requireContext(), e.getMessage());
+                        mForceWateringDialog.show();
                     } catch (InputNotAllowedException ignored) {
                     }
                 },
@@ -135,7 +151,6 @@ public class DeviceManualWateringFragment extends Fragment {
                         Navigation.findNavController(view).navigateUp();
                     } catch (DevicesViewModelFailedException e) {
                         ToastProvider.showShort(requireContext(), e.getMessage());
-                    } catch (InputNotAllowedException ignored) {
                     }
                 },
                 (dialogInterface, i) -> dialogInterface.cancel());
@@ -152,8 +167,6 @@ public class DeviceManualWateringFragment extends Fragment {
                 } else {
                     mZeroWaterDialog.show();
                 }
-            } catch (DevicesViewModelFailedException e) {
-                mForceWateringDialog.show();
             } catch (InputNotAllowedException ignored) {
             }
         });
