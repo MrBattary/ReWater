@@ -8,7 +8,9 @@
     <fragment
         android:id="@+id/navigation_schedules"
         android:name="michael.linker.rewater.ui.advanced.schedules.view.SchedulesFragment"
+        android:label="@string/navigation_title_schedules"
         tools:layout="@layout/fragment_schedules">
+
     </fragment>
 
 </navigation>

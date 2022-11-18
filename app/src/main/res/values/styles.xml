@@ -6,4 +6,10 @@
         <item name="itemTextColor">@color/bottom_navigation_color</item>
         <item name="itemIconTint">@color/bottom_navigation_color</item>
     </style>
+
+    <!-- Action bar style. -->
+    <style name="ActionBarStyle" parent="@style/Widget.MaterialComponents.ActionBar.Primary">
+        <item name="android:titleTextStyle">@style/CustomTextLarge</item>
+        <item name="titleTextStyle">@style/CustomTextLarge</item>
+    </style>
 </resources>
