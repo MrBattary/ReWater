@@ -23,19 +23,25 @@ import org.jetbrains.annotations.NotNull;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.ui.advanced.networks.adapter.NetworksItemAdapter;
+import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksDevicesLinkViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 
 public class NetworksFragment extends Fragment {
     private NetworksViewModel mViewModel;
+    private NetworksDevicesLinkViewModel mLinkViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        NavController navController = NavHostFragment.findNavController(this);
-        ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
+        final NavController navController = NavHostFragment.findNavController(this);
+
+        final ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
                 R.id.root_navigation_networks);
-        mViewModel = new ViewModelProvider(viewModelStoreOwner).get(NetworksViewModel.class);
+        final ViewModelProvider viewModelRootProvider = new ViewModelProvider(viewModelStoreOwner);
+
+        mViewModel = viewModelRootProvider.get(NetworksViewModel.class);
+        mLinkViewModel = viewModelRootProvider.get(NetworksDevicesLinkViewModel.class);
 
         return inflater.inflate(R.layout.fragment_networks, container, false);
     }
@@ -56,7 +62,7 @@ public class NetworksFragment extends Fragment {
         mViewModel.getCompactNetworkModels().observe(getViewLifecycleOwner(), list -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(
-                    new NetworksItemAdapter(getContext(), mViewModel, list, transition));
+                    new NetworksItemAdapter(getContext(), mViewModel, mLinkViewModel, list, transition));
         });
 
         initAddFloatingActionButton(view);

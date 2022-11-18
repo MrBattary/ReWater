@@ -13,6 +13,7 @@ import java.util.List;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.repository.networks.model.NetworkModel;
 import michael.linker.rewater.ui.advanced.networks.view.NetworksCardView;
+import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksDevicesLinkViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 
@@ -20,15 +21,18 @@ public class NetworksItemAdapter extends
         RecyclerView.Adapter<NetworksItemAdapter.NetworksItemViewHolder> {
     private final Context mContext;
     private final NetworksViewModel mParentViewModel;
+    private final NetworksDevicesLinkViewModel mLinkViewModel;
     private final List<NetworkModel> mNetworkModels;
     private final IOrderedTransition mTransition;
 
     public NetworksItemAdapter(final Context context,
             final NetworksViewModel parentViewModel,
+            final NetworksDevicesLinkViewModel linkViewModel,
             final List<NetworkModel> networkModels,
             final IOrderedTransition transition) {
         mContext = context;
         mParentViewModel = parentViewModel;
+        mLinkViewModel = linkViewModel;
         mNetworkModels = networkModels;
         mTransition = transition;
     }
@@ -38,7 +42,8 @@ public class NetworksItemAdapter extends
     public NetworksItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View adapterLayout = LayoutInflater.from(mContext)
                 .inflate(R.layout.view_networks_card, parent, false);
-        return new NetworksItemViewHolder(mContext, adapterLayout, mParentViewModel, mTransition);
+        return new NetworksItemViewHolder(mContext, adapterLayout, mParentViewModel, mLinkViewModel,
+                mTransition);
     }
 
     @Override
@@ -58,9 +63,11 @@ public class NetworksItemAdapter extends
                 final Context context,
                 final View view,
                 final NetworksViewModel parentViewModel,
+                final NetworksDevicesLinkViewModel linkViewModel,
                 final IOrderedTransition transition) {
             super(view);
-            mNetworksCardView = new NetworksCardView(context, view, parentViewModel, transition);
+            mNetworksCardView = new NetworksCardView(context, view, parentViewModel, linkViewModel,
+                    transition);
         }
     }
 }

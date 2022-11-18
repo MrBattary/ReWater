@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_navigation_schedules"
+    app:startDestination="@id/navigation_schedules">
+
+    <fragment
+        android:id="@+id/navigation_schedules"
+        android:name="michael.linker.rewater.ui.advanced.schedules.view.SchedulesFragment"
+        tools:layout="@layout/fragment_schedules">
+    </fragment>
+
+</navigation>
