@@ -15,7 +15,7 @@
         tools:context=".ui.advanced.devices.view.EditDeviceFragment">
 
         <RelativeLayout
-            android:id="@+id/edit_device_parents"
+            android:id="@+id/devices_card_parents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/edit_device_name">
@@ -96,7 +96,7 @@
             android:id="@+id/edit_device_controls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/edit_device_parents"
+            android:layout_below="@id/devices_card_parents"
             android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
             android:orientation="horizontal">
 

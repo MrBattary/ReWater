@@ -17,8 +17,10 @@
 
     <!-- Cards dimensions. -->
     <dimen name="card_horizontal_spacing">20dp</dimen>
+    <dimen name="card_horizontal_spacing_small">10dp</dimen>
     <dimen name="card_vertical_spacing">10dp</dimen>
     <dimen name="card_corner_radius">20dp</dimen>
+    <dimen name="card_corner_radius_small">15dp</dimen>
     <dimen name="card_bottom_button_negative_margin">-3dp</dimen>
     <dimen name="card_content_horizontal_spacing">20dp</dimen>
     <dimen name="card_content_vertical_spacing">10dp</dimen>

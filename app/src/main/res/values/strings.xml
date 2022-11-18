@@ -110,6 +110,7 @@
     <string name="description_battery_status">Battery status</string>
     <string name="description_expand_or_loose_card_button">Expand or loose card</string>
     <string name="description_expand_card_button">Expand card</string>
+    <string name="description_detach_device_button">Detach device</string>
     <string name="description_loose_card_button">Loose card</string>
     <string name="description_networks_add_fab">Create new network</string>
     <string name="description_devices_add_fab">Add new device</string>
