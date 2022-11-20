@@ -19,14 +19,14 @@ import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 public class SchedulesItemAdapter extends
         RecyclerView.Adapter<SchedulesItemAdapter.SchedulesItemViewHolder> {
     private final Context mContext;
-    private final List<ScheduleUiModel> mScheduleUiModels;
     private final SchedulesViewModel mParentViewModel;
+    private final List<ScheduleUiModel> mScheduleUiModels;
     private final IOrderedTransition mTransition;
 
     public SchedulesItemAdapter(
             final Context context,
-            final List<ScheduleUiModel> scheduleUiModels,
             final SchedulesViewModel parentViewModel,
+            final List<ScheduleUiModel> scheduleUiModels,
             final IOrderedTransition transition) {
         mContext = context;
         mScheduleUiModels = scheduleUiModels;

@@ -12,8 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
         android:layout_marginVertical="@dimen/card_vertical_spacing"
-        android:clickable="true"
-        android:foreground="@drawable/selectable_item_background"
         app:cardBackgroundColor="@color/background_secondary"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:layout_constraintBottom_toBottomOf="parent"

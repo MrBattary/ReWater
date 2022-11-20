@@ -14,11 +14,21 @@ public interface ISchedulesRepository {
     List<ScheduleModel> getCompactScheduleList();
 
     /**
-     * Get a list of the all schedules.
+     * Get a list of the all schedules by parent network ID.
      *
-     * @return the list of compact schedules models in it
+     * @param networkId the parent network ID
+     * @return the list of schedules models in the network with the provided ID or an empty list
      */
-    List<ScheduleRepositoryModel> getScheduleList();
+    List<ScheduleRepositoryModel> getScheduleListByNetworkId(String networkId);
+
+    /**
+     * Get specific schedule by it's ID.
+     *
+     * @param id ID of the schedule
+     * @return model of the required schedule
+     * @throws SchedulesRepositoryNotFoundException if schedule with provided ID does not exist
+     */
+    ScheduleRepositoryModel getScheduleById(String id) throws SchedulesRepositoryNotFoundException;
 
     /**
      * Get specific schedule by it's ID.
