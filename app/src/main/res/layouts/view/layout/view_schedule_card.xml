@@ -63,7 +63,7 @@
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/schedule_card_heading"
+                    android:id="@+id/schedule_card_name"
                     style="@style/CustomTextMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
