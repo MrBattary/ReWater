@@ -136,7 +136,7 @@
                     android:scrollbars="vertical"
                     app:layoutManager="LinearLayoutManager"
                     tools:itemCount="2"
-                    tools:listitem="@layout/view_schedule_device_row" />
+                    tools:listitem="@layout/view_schedule_devices_card" />
             </RelativeLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

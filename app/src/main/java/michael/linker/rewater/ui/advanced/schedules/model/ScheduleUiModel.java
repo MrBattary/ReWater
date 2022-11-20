@@ -1,24 +1,25 @@
 package michael.linker.rewater.ui.advanced.schedules.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 import michael.linker.rewater.data.model.unit.WateringPeriodModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceWithoutParentsUiModel;
 
 public class ScheduleUiModel {
     private final String mId, mName;
     private final WateringPeriodModel mPeriod;
     private final WaterVolumeMetricModel mVolume;
-    private final List<DeviceModel> mDeviceModels;
+    private final List<DeviceWithoutParentsUiModel> mDeviceModels;
 
     public ScheduleUiModel(
             final String id,
             final String name,
             final WateringPeriodModel period,
             final WaterVolumeMetricModel volume,
-            final List<DeviceModel> deviceModels) {
+            final List<DeviceWithoutParentsUiModel> deviceModels) {
         mId = id;
         mName = name;
         mPeriod = period;
@@ -31,7 +32,9 @@ public class ScheduleUiModel {
         mName = repositoryModel.getName();
         mPeriod = repositoryModel.getPeriod();
         mVolume = repositoryModel.getVolume();
-        mDeviceModels = repositoryModel.getDeviceModels();
+        mDeviceModels = repositoryModel.getDeviceModels().stream()
+                .map(DeviceWithoutParentsUiModel::new)
+                .collect(Collectors.toList());
     }
 
     public String getId() {
@@ -50,7 +53,7 @@ public class ScheduleUiModel {
         return mVolume;
     }
 
-    public List<DeviceModel> getDeviceModels() {
+    public List<DeviceWithoutParentsUiModel> getDeviceModels() {
         return mDeviceModels;
     }
 }

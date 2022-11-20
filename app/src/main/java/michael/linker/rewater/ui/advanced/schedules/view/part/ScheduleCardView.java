@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.stream.Collectors;
@@ -18,13 +19,14 @@ import michael.linker.rewater.data.model.DetailedStatusModel;
 import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
+import michael.linker.rewater.ui.advanced.schedules.adapter.ScheduleDevicesItemAdapter;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 import michael.linker.rewater.ui.advanced.schedules.viewmodel.SchedulesViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
-public class SchedulesCardView {
+public class ScheduleCardView {
     private final Context mParentContext;
     private final CardView mCardView;
     private final TextView mName, mPeriod, mVolume;
@@ -36,7 +38,7 @@ public class SchedulesCardView {
     private final IOrderedTransition mTransition;
     private ScheduleUiModel mDataModel;
 
-    public SchedulesCardView(
+    public ScheduleCardView(
             final Context context,
             final View view,
             final SchedulesViewModel parentViewModel,
@@ -61,15 +63,20 @@ public class SchedulesCardView {
         this.initButtonsLogic(parentViewModel);
     }
 
-    public void setDataModel(final ScheduleUiModel model) {
+    public void setUiModel(final ScheduleUiModel model) {
         mDataModel = model;
 
+        // Regular data
         mName.setText(model.getName());
         mPeriod.setText(model.getPeriod().formatToCompact());
         mVolume.setText(model.getVolume().formatToCompact());
 
-        // TODO: Adapter to ScheduleDeviceRowView
+        // Attached devices list
+        mAttachedDevicesRecyclerView.setLayoutManager(new LinearLayoutManager(mParentContext));
+        mAttachedDevicesRecyclerView.setAdapter(
+                new ScheduleDevicesItemAdapter(mParentContext, model.getDeviceModels()));
 
+        // Calculate status from the attached devices
         final Status batteryWorstStatus = Status.getWorstStatus(model.getDeviceModels().stream()
                 .map(deviceModel -> deviceModel.getStatus().getBattery())
                 .collect(Collectors.toList()));
