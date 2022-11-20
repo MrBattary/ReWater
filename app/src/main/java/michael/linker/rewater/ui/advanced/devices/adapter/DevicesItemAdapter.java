@@ -12,7 +12,7 @@ import java.util.List;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceCardModel;
-import michael.linker.rewater.ui.advanced.devices.view.DevicesCardView;
+import michael.linker.rewater.ui.advanced.devices.view.part.DevicesCardView;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 

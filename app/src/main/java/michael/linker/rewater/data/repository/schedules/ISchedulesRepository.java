@@ -3,6 +3,7 @@ package michael.linker.rewater.data.repository.schedules;
 import java.util.List;
 
 import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 
 public interface ISchedulesRepository {
     /**
@@ -11,6 +12,13 @@ public interface ISchedulesRepository {
      * @return the list of compact schedules models in it
      */
     List<ScheduleModel> getCompactScheduleList();
+
+    /**
+     * Get a list of the all schedules.
+     *
+     * @return the list of compact schedules models in it
+     */
+    List<ScheduleRepositoryModel> getScheduleList();
 
     /**
      * Get specific schedule by it's ID.
@@ -28,7 +36,7 @@ public interface ISchedulesRepository {
      * @param deviceId inner device ID
      * @return schedule ID
      * @throws SchedulesRepositoryNotFoundException if no schedule contains a device with the
-     * provided ID
+     *                                              provided ID
      */
     String getScheduleIdByIdOfAttachedDevice(String deviceId)
             throws SchedulesRepositoryNotFoundException;

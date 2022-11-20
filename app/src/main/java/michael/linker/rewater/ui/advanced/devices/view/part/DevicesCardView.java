@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.advanced.networks.view;
+package michael.linker.rewater.ui.advanced.devices.view.part;
 
 import android.content.Context;
 import android.view.View;
@@ -11,64 +11,89 @@ import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.IdNameModel;
-import michael.linker.rewater.data.repository.networks.model.NetworkModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
-import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksDevicesLinkViewModel;
-import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
+import michael.linker.rewater.data.res.StringsProvider;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceCardModel;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
+import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
-public class NetworksCardView {
+public class DevicesCardView {
     private final Context mParentContext;
     private final CardView mCardView;
-    private final TextView mHeading;
-    private final TextView mDescription;
+    private final TextView mName;
+    private final ParentEntityView mParentScheduleView, mParentNetworkView;
     private final CombinedStatusView mCombinedStatusView;
     private final ImageButton mExpandOrLooseButton;
     private final Button mSettingsButton;
     private final View mHiddenContent;
     private final IOrderedTransition mTransition;
-    private final NetworksDevicesLinkViewModel mLinkViewModel;
-    private NetworkModel mNetworkModel;
+    private String mId;
 
-    public NetworksCardView(
+    public DevicesCardView(
             final Context context,
             final View view,
-            final NetworksViewModel parentViewModel,
-            final NetworksDevicesLinkViewModel linkViewModel,
+            final DevicesViewModel parentViewModel,
             final IOrderedTransition transition) {
         mParentContext = context;
-        mCardView = view.findViewById(R.id.networks_card);
-        mHeading = view.findViewById(R.id.networks_card_heading);
-        mDescription = view.findViewById(R.id.networks_card_description);
+        mCardView = view.findViewById(R.id.devices_card);
+        mName = view.findViewById(R.id.devices_card_heading);
+        mParentScheduleView = new ParentEntityView(
+                view.findViewById(R.id.devices_card_parent_schedule),
+                StringsProvider.getString(R.string.parent_schedule_not_found));
+        mParentNetworkView = new ParentEntityView(
+                view.findViewById(R.id.devices_card_parent_network),
+                StringsProvider.getString(R.string.parent_network_not_found));
         mCombinedStatusView = new CombinedStatusView(
-                view.findViewById(R.id.networks_card_combined_status));
-        mExpandOrLooseButton = view.findViewById(R.id.networks_card_expand_or_loose_button);
-        mSettingsButton = view.findViewById(R.id.networks_card_settings_button);
-        mHiddenContent = view.findViewById(R.id.networks_card_hidden_content);
-        mLinkViewModel = linkViewModel;
+                view.findViewById(R.id.devices_card_combined_status));
+        mExpandOrLooseButton = view.findViewById(R.id.devices_card_expand_or_loose_button);
+        mSettingsButton = view.findViewById(R.id.devices_card_settings_button);
+        mHiddenContent = view.findViewById(R.id.devices_card_hidden_content);
         mTransition = transition;
 
         transition.addChangeBoundsTarget(view);
         this.initTransitionTargets();
         this.setCompactView();
         this.initButtonsLogic(parentViewModel);
-        this.initOnClickForCard();
+        this.initOnClickForCard(parentViewModel);
     }
 
-    public void setDataModel(final NetworkModel model) {
-        mNetworkModel = model;
-        mHeading.setText(model.getHeading());
-        mDescription.setText(model.getDescription());
-        this.setGoneIfNoTextInTextView(mDescription);
+    public void setDataModel(final DeviceCardModel model) {
+        mId = model.getId();
+        mName.setText(model.getName());
+        final IdNameModel parentScheduleNameIdModel = model.getParentSchedule();
+        if (parentScheduleNameIdModel != null) {
+            mParentScheduleView.setParentEntity(parentScheduleNameIdModel.getName());
+        } else {
+            mParentScheduleView.clearParentEntity();
+        }
+        final IdNameModel parentNetworkNameIdModel = model.getParentNetwork();
+        if (parentNetworkNameIdModel != null) {
+            mParentNetworkView.setParentEntity(parentNetworkNameIdModel.getName());
+        } else {
+            mParentNetworkView.clearParentEntity();
+        }
         mCombinedStatusView.setStatus(model.getStatus());
     }
 
-    private void initButtonsLogic(final NetworksViewModel parentViewModel) {
+    private void initButtonsLogic(final DevicesViewModel parentViewModel) {
         initExpandOrLooseButtonLogic();
         initSettingsButtonLogic(parentViewModel);
+    }
+
+    private void initOnClickForCard(final DevicesViewModel parentViewModel) {
+        mCardView.setOnClickListener(l -> {
+            try {
+                parentViewModel.setDeviceId(mId);
+            } catch (NetworksViewModelFailedException e) {
+                ToastProvider.showShort(mParentContext, e.getMessage());
+            }
+            Navigation.findNavController(mCardView).navigate(
+                    R.id.navigation_action_devices_to_devices_info);
+        });
     }
 
     private void initExpandOrLooseButtonLogic() {
@@ -83,15 +108,15 @@ public class NetworksCardView {
         });
     }
 
-    private void initSettingsButtonLogic(final NetworksViewModel parentViewModel) {
+    private void initSettingsButtonLogic(final DevicesViewModel parentViewModel) {
         mSettingsButton.setOnClickListener(l -> {
             try {
-                parentViewModel.setEditableNetworkId(mNetworkModel.getId());
+                parentViewModel.setDeviceId(mId);
             } catch (NetworksViewModelFailedException e) {
                 ToastProvider.showShort(mParentContext, e.getMessage());
             }
             Navigation.findNavController(mCardView).navigate(
-                    R.id.navigation_action_networks_to_networks_edit);
+                    R.id.navigation_action_devices_to_devices_edit);
         });
     }
 
@@ -104,17 +129,8 @@ public class NetworksCardView {
         // Hidden content
         mTransition.addChangeBoundsTarget(mHiddenContent);
         mTransition.addFadeTarget(mSettingsButton);
-        mTransition.addFadeTarget(mDescription);
-    }
-
-    private void initOnClickForCard() {
-        mCardView.setOnClickListener(l -> {
-                    mLinkViewModel.setParentNetworkIdName(new IdNameModel(
-                                    mNetworkModel.getId(), mNetworkModel.getHeading()));
-                    Navigation.findNavController(mCardView).navigate(
-                            R.id.navigation_action_networks_add_to_schedules);
-                }
-        );
+        mTransition.addFadeTarget(mParentScheduleView.getViewInstance());
+        mTransition.addFadeTarget(mParentNetworkView.getViewInstance());
     }
 
     private void setCompactView() {
@@ -122,7 +138,8 @@ public class NetworksCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_expand));
         mCombinedStatusView.displayCompact();
         mSettingsButton.setVisibility(View.GONE);
-        mDescription.setVisibility(View.GONE);
+        mParentScheduleView.setVisibility(View.GONE);
+        mParentNetworkView.setVisibility(View.GONE);
         mHiddenContent.setVisibility(View.GONE);
     }
 
@@ -131,15 +148,8 @@ public class NetworksCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_loose));
         mCombinedStatusView.displayDetailed();
         mSettingsButton.setVisibility(View.VISIBLE);
-        mDescription.setVisibility(View.VISIBLE);
-        this.setGoneIfNoTextInTextView(mDescription);
+        mParentScheduleView.setVisibility(View.VISIBLE);
+        mParentNetworkView.setVisibility(View.VISIBLE);
         mHiddenContent.setVisibility(View.VISIBLE);
-    }
-
-    private void setGoneIfNoTextInTextView(final TextView textView) {
-        final CharSequence text = textView.getText();
-        if (text == null || text.equals("")) {
-            textView.setVisibility(View.GONE);
-        }
     }
 }

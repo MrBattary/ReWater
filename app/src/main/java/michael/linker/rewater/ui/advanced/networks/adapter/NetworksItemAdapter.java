@@ -12,7 +12,7 @@ import java.util.List;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.repository.networks.model.NetworkModel;
-import michael.linker.rewater.ui.advanced.networks.view.NetworksCardView;
+import michael.linker.rewater.ui.advanced.networks.view.part.NetworksCardView;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksDevicesLinkViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
