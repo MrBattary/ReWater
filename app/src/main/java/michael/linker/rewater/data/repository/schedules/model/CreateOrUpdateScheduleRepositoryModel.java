@@ -5,27 +5,21 @@ import java.util.List;
 import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 import michael.linker.rewater.data.model.unit.WateringPeriodModel;
 
-public class CreateUpdateScheduleRepositoryModel {
-    private final String mNetworkId, mName;
+public class CreateOrUpdateScheduleRepositoryModel {
+    private final String mName;
     private final WateringPeriodModel mPeriod;
     private final WaterVolumeMetricModel mVolume;
     private final List<String> mDeviceModelIds;
 
-    public CreateUpdateScheduleRepositoryModel(
-            final String networkId,
+    public CreateOrUpdateScheduleRepositoryModel(
             final String name,
             final WateringPeriodModel period,
             final WaterVolumeMetricModel volume,
             final List<String> deviceModelIds) {
-        mNetworkId = networkId;
         mName = name;
         mPeriod = period;
         mVolume = volume;
         mDeviceModelIds = deviceModelIds;
-    }
-
-    public String getNetworkId() {
-        return mNetworkId;
     }
 
     public String getName() {

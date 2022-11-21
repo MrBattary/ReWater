@@ -4,8 +4,9 @@ import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.StringsProvider;
 
 public class WateringPeriodModel implements IUnit {
+    private static final int MIN_WATERING_PERIOD_IN_MIN = 1;
     private static final String SPACE = " ";
-    private final int mDays, mHours, mMinutes;
+    private final Integer mDays, mHours, mMinutes;
 
     public WateringPeriodModel(
             final int days,
@@ -16,15 +17,15 @@ public class WateringPeriodModel implements IUnit {
         mMinutes = minutes;
     }
 
-    public int getDays() {
+    public Integer getDays() {
         return mDays;
     }
 
-    public int getHours() {
+    public Integer getHours() {
         return mHours;
     }
 
-    public int getMinutes() {
+    public Integer getMinutes() {
         return mMinutes;
     }
 
@@ -33,5 +34,11 @@ public class WateringPeriodModel implements IUnit {
         return mDays + StringsProvider.getString(R.string.unit_days_short) + SPACE +
                 mHours + StringsProvider.getString(R.string.unit_hours_short) + SPACE +
                 mMinutes + StringsProvider.getString(R.string.unit_minutes_short);
+    }
+
+    @Override
+    public boolean isDataCorrect() {
+        final int wateringPeriodMin = (mDays * 24 * 60) + (mHours * 60) + mMinutes;
+        return wateringPeriodMin < MIN_WATERING_PERIOD_IN_MIN;
     }
 }

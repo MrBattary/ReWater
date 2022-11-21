@@ -9,7 +9,6 @@ import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 
 public class DeviceManualWateringViewModel extends ViewModel {
-    private static final int ZERO_WATERING_VOLUME = 0;
     private final IDevicesRepository mDevicesRepository;
 
     private final MutableLiveData<String> mDeviceId;
@@ -52,15 +51,14 @@ public class DeviceManualWateringViewModel extends ViewModel {
         mDeviceId.setValue(deviceId);
     }
 
-    public boolean isProvidedModelNotZeroVolume() {
+    public boolean isProvidedDataCorrect() {
         final Integer litres = mLitresValue.getValue();
         final Integer millilitres = mMillilitresValue.getValue();
         if (litres == null || millilitres == null) {
             return false;
         }
 
-        final int wateringVolumeMl = litres * 1000 + millilitres;
-        return wateringVolumeMl != ZERO_WATERING_VOLUME;
+        return new WaterVolumeMetricModel(litres, millilitres).isDataCorrect();
     }
 
     public void waterWithProvidedModel()

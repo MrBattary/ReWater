@@ -29,7 +29,6 @@ import michael.linker.rewater.ui.advanced.schedules.viewmodel.SchedulesViewModel
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 
 public class SchedulesFragment extends Fragment {
-
     private NetworksDevicesLinkViewModel mLinkViewModel;
     private SchedulesViewModel mViewModel;
 

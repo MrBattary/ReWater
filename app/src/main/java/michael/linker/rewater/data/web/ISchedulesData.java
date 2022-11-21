@@ -22,4 +22,6 @@ public interface ISchedulesData {
     void updateSchedule(String id, FullScheduleModel newModel);
 
     void createSchedule(FullScheduleModel newModel);
+
+    void removeSchedule(String id);
 }

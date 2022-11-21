@@ -66,4 +66,14 @@ public class SchedulesLocalData implements ISchedulesData {
     public void createSchedule(FullScheduleModel newModel) {
         mFullScheduleModels.add(newModel);
     }
+
+    @Override
+    public void removeSchedule(String id) {
+        for (int i = 0; i < mFullScheduleModels.size(); i++) {
+            if (id.equals(mFullScheduleModels.get(i).getId())) {
+                mFullScheduleModels.remove(i);
+                return;
+            }
+        }
+    }
 }

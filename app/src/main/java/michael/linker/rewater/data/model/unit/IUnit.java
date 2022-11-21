@@ -11,4 +11,6 @@ public interface IUnit {
      * @return compact form of the unit.
      */
     String formatToCompact();
+
+    boolean isDataCorrect();
 }

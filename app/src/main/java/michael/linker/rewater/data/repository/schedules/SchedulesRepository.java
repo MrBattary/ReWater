@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.repository.devices.model.DeviceModel;
-import michael.linker.rewater.data.repository.schedules.model.CreateUpdateScheduleRepositoryModel;
+import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.data.web.IDevicesData;
@@ -143,11 +143,13 @@ public class SchedulesRepository implements ISchedulesRepository {
     }
 
     @Override
-    public void createScheduleById(final CreateUpdateScheduleRepositoryModel model)
+    public void createSchedule(
+            final String networkId,
+            final CreateOrUpdateScheduleRepositoryModel model
+    )
             throws SchedulesRepositoryAlreadyExistsException {
         final List<String> existScheduleIdList =
-                mNetworkToSchedulesDataLink.getRightEntityIdListByLeftEntityId(
-                        model.getNetworkId());
+                mNetworkToSchedulesDataLink.getRightEntityIdListByLeftEntityId(networkId);
         for (String alreadyExistScheduleId : existScheduleIdList) {
             if (mSchedulesData.getScheduleById(alreadyExistScheduleId)
                     .getName().equals(model.getName())) {
@@ -157,12 +159,42 @@ public class SchedulesRepository implements ISchedulesRepository {
         }
 
         final String newScheduleId = UUID.randomUUID().toString();
+        mNetworkToSchedulesDataLink.addDataLink(networkId, newScheduleId);
         mSchedulesData.createSchedule(new FullScheduleModel(
                 newScheduleId,
                 model.getName(),
                 model.getPeriod(),
                 model.getVolume()
         ));
-        mNetworkToSchedulesDataLink.addDataLink(model.getNetworkId(), newScheduleId);
+        for (String attachedDeviceId : model.getDeviceModelIds()) {
+            mScheduleToDevicesDataLink.addDataLink(newScheduleId, attachedDeviceId);
+        }
+    }
+
+    @Override
+    public void updateSchedule(String scheduleId, CreateOrUpdateScheduleRepositoryModel model)
+            throws SchedulesRepositoryNotFoundException {
+        if (mSchedulesData.getScheduleById(scheduleId) == null) {
+            throw new SchedulesRepositoryNotFoundException(
+                    "Requested schedule with id: " + scheduleId + " was not found!");
+        }
+
+        mSchedulesData.updateSchedule(scheduleId, new FullScheduleModel(
+                scheduleId,
+                model.getName(),
+                model.getPeriod(),
+                model.getVolume()
+        ));
+        mScheduleToDevicesDataLink.removeAllRightEntityIdsByLeftEntityId(scheduleId);
+        for (String attachedDeviceId : model.getDeviceModelIds()) {
+            mScheduleToDevicesDataLink.addDataLink(scheduleId, attachedDeviceId);
+        }
+    }
+
+    @Override
+    public void removeSchedule(final String scheduleId) {
+        mSchedulesData.removeSchedule(scheduleId);
+        mNetworkToSchedulesDataLink.removeRightEntityId(scheduleId);
+        mScheduleToDevicesDataLink.removeAllRightEntityIdsByLeftEntityId(scheduleId);
     }
 }
