@@ -25,8 +25,14 @@
     <string name="input_hint_litres">Litres</string>
     <string name="input_hint_millilitres">Millilitres</string>
     <string name="input_hint_description">Description</string>
-    <string name="input_error_litres">The values of litres must be an integer from 0 to 99!</string>
-    <string name="input_error_millilitres">The values of millilitres must be an integer from 0 to 999!</string>
+    <string name="input_hint_days">Days</string>
+    <string name="input_hint_hours">Hours</string>
+    <string name="input_hint_minutes">Minutes</string>
+    <string name="input_error_days">The value of days must be an integer from 0 to 99!</string>
+    <string name="input_error_hours">The value of hours must be an integer from 0 to 23!</string>
+    <string name="input_error_minutes">The value of minutes must be an integer from 0 to 59!</string>
+    <string name="input_error_litres">The value of litres must be an integer from 0 to 99!</string>
+    <string name="input_error_millilitres">The value of millilitres must be an integer from 0 to 999!</string>
     <string name="input_error_heading_taken">The name is already taken!</string>
     <string name="input_error_heading_overflow">The name is too long!</string>
     <string name="input_error_heading_lack">The name is too short!</string>

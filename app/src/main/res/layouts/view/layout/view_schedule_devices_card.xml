@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/card_content_horizontal_spacing"
+            android:layout_marginStart="@dimen/card_horizontal_spacing_small"
             android:backgroundTint="@color/background_secondary"
             android:contentDescription="@string/description_detach_device_button"
             android:src="@drawable/ic_detach" />
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/card_content_horizontal_spacing"
+            android:layout_marginStart="@dimen/card_horizontal_spacing_small"
             android:layout_toEndOf="@id/schedule_device_row_status"
             android:layout_toStartOf="@id/schedule_device_row_detach"
             android:text="@string/global_medium_placeholder" />
