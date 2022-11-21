@@ -61,4 +61,9 @@ public class SchedulesLocalData implements ISchedulesData {
             }
         }
     }
+
+    @Override
+    public void createSchedule(FullScheduleModel newModel) {
+        mFullScheduleModels.add(newModel);
+    }
 }

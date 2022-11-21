@@ -20,4 +20,6 @@ public interface ISchedulesData {
     FullScheduleModel getScheduleById(String id);
 
     void updateSchedule(String id, FullScheduleModel newModel);
+
+    void createSchedule(FullScheduleModel newModel);
 }

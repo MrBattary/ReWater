@@ -12,7 +12,7 @@ import java.util.List;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceWithoutParentsUiModel;
-import michael.linker.rewater.ui.advanced.schedules.view.part.ScheduleDeviceCardView;
+import michael.linker.rewater.ui.advanced.schedules.view.part.ScheduleCardDeviceCardView;
 
 public class ScheduleDevicesItemAdapter extends
         RecyclerView.Adapter<ScheduleDevicesItemAdapter.ScheduleDevicesItemViewHolder> {
@@ -45,11 +45,11 @@ public class ScheduleDevicesItemAdapter extends
     }
 
     static class ScheduleDevicesItemViewHolder extends RecyclerView.ViewHolder {
-        private final ScheduleDeviceCardView mCardView;
+        private final ScheduleCardDeviceCardView mCardView;
 
         public ScheduleDevicesItemViewHolder(@NonNull final View itemView) {
             super(itemView);
-            mCardView = new ScheduleDeviceCardView(itemView);
+            mCardView = new ScheduleCardDeviceCardView(itemView);
         }
     }
 }

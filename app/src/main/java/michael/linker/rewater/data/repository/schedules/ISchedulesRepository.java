@@ -2,6 +2,7 @@ package michael.linker.rewater.data.repository.schedules;
 
 import java.util.List;
 
+import michael.linker.rewater.data.repository.schedules.model.CreateUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 
@@ -50,4 +51,13 @@ public interface ISchedulesRepository {
      */
     String getScheduleIdByIdOfAttachedDevice(String deviceId)
             throws SchedulesRepositoryNotFoundException;
+
+    /**
+     * Create specific schedule in the network using repository model.
+     *
+     * @param model repository model
+     * @throws SchedulesRepositoryAlreadyExistsException if the schedule cannot be created
+     */
+    void createScheduleById(CreateUpdateScheduleRepositoryModel model)
+            throws SchedulesRepositoryAlreadyExistsException;
 }

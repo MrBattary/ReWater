@@ -3,6 +3,7 @@ package michael.linker.rewater.data.repository.devices;
 import java.util.List;
 
 import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceIdNameRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceHardwareModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
@@ -11,9 +12,16 @@ public interface IDevicesRepository {
     /**
      * Get a simple list of the all devices.
      *
-     * @return the list of compact device models in it
+     * @return the list of device models in it
      */
     List<DeviceModel> getDeviceList();
+
+    /**
+     * Get a list of all devices available to attach to the schedule.
+     *
+     * @return the list of ID-Name device models in it
+     */
+    List<DeviceIdNameRepositoryModel> getDeviceAttachList();
 
     /**
      * Get specific device by it's ID.
@@ -30,10 +38,10 @@ public interface IDevicesRepository {
      * @param model hardware model that contains hardware ID
      * @return model of the required device
      * @throws DevicesRepositoryNotFoundException if the device with the provided hardware ID
-     * does not exist or cannot be accessed
+     *                                            does not exist or cannot be accessed
      */
     DeviceModel getDeviceByHardware(DeviceHardwareModel model)
-    throws DevicesRepositoryNotFoundException;
+            throws DevicesRepositoryNotFoundException;
 
     /**
      * Remove an existing device from the user device list.

@@ -70,6 +70,7 @@
     <string name="status_water_warning">The water was partially spent</string>
     <string name="status_water_defect">There is very little water</string>
     <string name="status_undefined">Status is undefined</string>
+    <string name="heading_attached_devices">Attached devices:</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>
@@ -98,6 +99,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_detach_schedule">Detach schedule</string>
     <string name="button_attach_schedule">Attach schedule</string>
+    <string name="button_attach_device">Attach device</string>
     <string name="button_devices_add_pair">Pair</string>
     <string name="button_devices_add_pair_new">Pair a new device</string>
     <string name="button_devices_add_pair_connection_established">The connection is established</string>

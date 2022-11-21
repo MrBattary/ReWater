@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceIdNameRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceHardwareModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
@@ -38,6 +40,36 @@ public class DevicesRepository implements IDevicesRepository {
                     dataDeviceModel.getStatus()
             ));
         }
+        return deviceModels;
+    }
+
+    @Override
+    public List<DeviceIdNameRepositoryModel> getDeviceAttachList() {
+        final List<DeviceIdNameRepositoryModel> deviceModels = new ArrayList<>();
+        final List<FullDeviceModel> dataDeviceModelList =
+                mDevicesData.getDevicesList().getFullDeviceModels();
+        final List<String> unattachedDeviceIdList = dataDeviceModelList.stream()
+                .map(FullDeviceModel::getId)
+                .collect(Collectors.toList());
+
+        for (String scheduleId : mScheduleToDevicesDataLink.getLeftEntityIdList()) {
+            final List<String> attachedToScheduleDeviceIdList =
+                    mScheduleToDevicesDataLink.getRightEntityIdListByLeftEntityId(scheduleId);
+            for (String attachedDeviceId : attachedToScheduleDeviceIdList) {
+                unattachedDeviceIdList.remove(attachedDeviceId);
+            }
+        }
+
+        for (String unattachedDeviceId : unattachedDeviceIdList) {
+            final FullDeviceModel deviceModel = mDevicesData.getDeviceById(unattachedDeviceId);
+            deviceModels.add(
+                    new DeviceIdNameRepositoryModel(
+                            deviceModel.getId(),
+                            deviceModel.getName()
+                    )
+            );
+        }
+
         return deviceModels;
     }
 

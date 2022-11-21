@@ -2,9 +2,11 @@ package michael.linker.rewater.data.repository.schedules;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.repository.devices.model.DeviceModel;
+import michael.linker.rewater.data.repository.schedules.model.CreateUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.data.web.IDevicesData;
@@ -138,5 +140,29 @@ public class SchedulesRepository implements ISchedulesRepository {
                     "No schedule contains a device with the ID: " + deviceId);
         }
         return scheduleId;
+    }
+
+    @Override
+    public void createScheduleById(final CreateUpdateScheduleRepositoryModel model)
+            throws SchedulesRepositoryAlreadyExistsException {
+        final List<String> existScheduleIdList =
+                mNetworkToSchedulesDataLink.getRightEntityIdListByLeftEntityId(
+                        model.getNetworkId());
+        for (String alreadyExistScheduleId : existScheduleIdList) {
+            if (mSchedulesData.getScheduleById(alreadyExistScheduleId)
+                    .getName().equals(model.getName())) {
+                throw new SchedulesRepositoryAlreadyExistsException(
+                        "Schedule with name: " + model.getName() + " already exists!");
+            }
+        }
+
+        final String newScheduleId = UUID.randomUUID().toString();
+        mSchedulesData.createSchedule(new FullScheduleModel(
+                newScheduleId,
+                model.getName(),
+                model.getPeriod(),
+                model.getVolume()
+        ));
+        mNetworkToSchedulesDataLink.addDataLink(model.getNetworkId(), newScheduleId);
     }
 }
