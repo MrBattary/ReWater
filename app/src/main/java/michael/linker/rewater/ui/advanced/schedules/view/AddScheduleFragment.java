@@ -15,6 +15,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -45,6 +47,7 @@ public class AddScheduleFragment extends Fragment {
     private WaterVolumeMetricInputView mVolumeInputView;
     private WateringPeriodInputView mPeriodInputView;
     private RecyclerView mAttachedDevices;
+    private AutoTransition mTransition;
     private MaterialButton mCreateButton, mCancelButton, mAttachDeviceButton;
     private IDialog mNotAllowedScheduleDialog, mNoAttachedDevicesDialog;
 
@@ -67,11 +70,12 @@ public class AddScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.initFields(view);
+        this.initTransition();
         this.initInputLogics();
         this.initDialogs(view);
         this.initButtons(view);
         mViewModel.getAttachedDeviceList().observe(getViewLifecycleOwner(),
-                this::initAttachedDeviceList);
+                attachedDeviceList -> initAttachedDeviceList(attachedDeviceList, view));
 
     }
 
@@ -86,6 +90,11 @@ public class AddScheduleFragment extends Fragment {
         mCreateButton = view.findViewById(R.id.add_schedule_create_button);
         mCancelButton = view.findViewById(R.id.add_schedule_cancel_button);
         mAttachDeviceButton = view.findViewById(R.id.add_schedule_attach_device_button);
+    }
+
+    private void initTransition() {
+        mTransition = new AutoTransition();
+        mTransition.setDuration(IntegersProvider.getInteger(R.integer.transition_animation_time));
     }
 
     private void initInputLogics() {
@@ -249,8 +258,11 @@ public class AddScheduleFragment extends Fragment {
         }
     }
 
-    private void initAttachedDeviceList(final List<DeviceIdNameUiModel> attachedDeviceList) {
+    private void initAttachedDeviceList(final List<DeviceIdNameUiModel> attachedDeviceList,
+            final View view) {
         mAttachedDevices.setLayoutManager(new LinearLayoutManager(getContext()));
+        TransitionManager.beginDelayedTransition(view.findViewById(R.id.schedules_add_schedule),
+                mTransition);
         mAttachedDevices.setAdapter(
                 new ScheduleAttachedDevicesItemAdapter(
                         getContext(),

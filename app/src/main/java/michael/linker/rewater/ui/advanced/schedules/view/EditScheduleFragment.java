@@ -15,6 +15,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -45,6 +47,7 @@ public class EditScheduleFragment extends Fragment {
     private WaterVolumeMetricInputView mVolumeInputView;
     private WateringPeriodInputView mPeriodInputView;
     private RecyclerView mAttachedDevices;
+    private AutoTransition mTransition;
     private MaterialButton mCreateButton, mCancelButton, mDeleteButton, mAttachDeviceButton;
     private IDialog mNotAllowedScheduleDialog, mNoAttachedDevicesDialog, mOnDeleteDialog;
 
@@ -67,11 +70,12 @@ public class EditScheduleFragment extends Fragment {
 
         this.initFields(view);
         this.initFieldsData();
+        this.initTransition();
         this.initInputLogics();
         this.initDialogs(view);
         this.initButtons(view);
         mViewModel.getAttachedDeviceList().observe(getViewLifecycleOwner(),
-                this::initAttachedDeviceList);
+                attachedDeviceList -> initAttachedDeviceList(attachedDeviceList, view));
     }
 
     private void initFields(final View view) {
@@ -101,6 +105,11 @@ public class EditScheduleFragment extends Fragment {
                 h -> mPeriodInputView.setHoursPeriod(h));
         mViewModel.getMinutes().observe(getViewLifecycleOwner(),
                 m -> mPeriodInputView.setMinutesPeriod(m));
+    }
+
+    private void initTransition() {
+        mTransition = new AutoTransition();
+        mTransition.setDuration(IntegersProvider.getInteger(R.integer.transition_animation_time));
     }
 
     private void initInputLogics() {
@@ -280,8 +289,11 @@ public class EditScheduleFragment extends Fragment {
         }
     }
 
-    private void initAttachedDeviceList(final List<DeviceIdNameUiModel> attachedDeviceList) {
+    private void initAttachedDeviceList(final List<DeviceIdNameUiModel> attachedDeviceList,
+            final View view) {
         mAttachedDevices.setLayoutManager(new LinearLayoutManager(getContext()));
+        TransitionManager.beginDelayedTransition(view.findViewById(R.id.schedules_edit_schedule),
+                mTransition);
         mAttachedDevices.setAdapter(
                 new ScheduleAttachedDevicesItemAdapter(
                         getContext(),
