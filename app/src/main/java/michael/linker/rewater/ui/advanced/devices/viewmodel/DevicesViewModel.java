@@ -55,7 +55,7 @@ public class DevicesViewModel extends ViewModel {
 
         mParentNetworkModel = new MutableLiveData<>();
         mParentScheduleModel = new MutableLiveData<>();
-        this.updateLists();
+        this.updateListsFromRepositories();
     }
 
     public LiveData<List<DeviceCardModel>> getDeviceCardModels() {
@@ -160,7 +160,7 @@ public class DevicesViewModel extends ViewModel {
                                     mParentScheduleModel.getValue().getId() : null
                     )
             );
-            this.updateLists();
+            this.updateListsFromRepositories();
         } catch (DevicesRepositoryNotFoundException e) {
             throw new DevicesViewModelFailedException(e.getMessage());
         }
@@ -178,7 +178,7 @@ public class DevicesViewModel extends ViewModel {
                                     mParentScheduleModel.getValue().getId() : null
                     )
             );
-            this.updateLists();
+            this.updateListsFromRepositories();
         } catch (DevicesRepositoryNotFoundException e) {
             throw new DevicesViewModelFailedException(e.getMessage());
         }
@@ -195,10 +195,10 @@ public class DevicesViewModel extends ViewModel {
 
     public void removeDevice() {
         mDevicesRepository.removeDevice(mDeviceId.getValue());
-        this.updateLists();
+        this.updateListsFromRepositories();
     }
 
-    private void updateLists() {
+    public void updateListsFromRepositories() {
         final List<DeviceModel> deviceList = mDevicesRepository.getDeviceList();
         final List<DeviceCardModel> cardModelList = this.buildDeviceCardModelList(deviceList);
 

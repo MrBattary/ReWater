@@ -265,7 +265,7 @@ public class UpdateScheduleViewModel extends ViewModel {
     }
 
 
-    private void updateListsFromRepositories() {
+    public void updateListsFromRepositories() {
         mUnattachedDeviceList.setValue(mDevicesRepository.getDeviceAttachList().stream()
                 .map(deviceModel ->
                         new DeviceIdNameUiModel(

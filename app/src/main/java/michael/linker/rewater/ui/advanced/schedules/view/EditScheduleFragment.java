@@ -171,8 +171,8 @@ public class EditScheduleFragment extends Fragment {
                 new TwoChoicesDialogModel(
                         DrawablesProvider.getDrawable(R.drawable.ic_warning),
                         StringsProvider.getString(R.string.title_warning),
-                        StringsProvider.getString(R.string.dialog_no_attached_devices_on_create),
-                        StringsProvider.getString(R.string.button_create_anyway),
+                        StringsProvider.getString(R.string.dialog_no_attached_devices_on_save),
+                        StringsProvider.getString(R.string.button_save_anyway),
                         StringsProvider.getString(R.string.button_cancel)
                 ),
                 (dialogInterface, i) -> {

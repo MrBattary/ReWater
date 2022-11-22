@@ -28,7 +28,7 @@ public class NetworksViewModel extends ViewModel {
         mAlreadyTakenNetworkNames = new MutableLiveData<>();
         mEditableNetworkId = new MutableLiveData<>();
         mEditableNetworkModel = new MutableLiveData<>();
-        this.updateNetworkList();
+        this.updateListsFromRepositories();
     }
 
     public LiveData<List<String>> getAlreadyTakenNetworkNames() {
@@ -61,7 +61,7 @@ public class NetworksViewModel extends ViewModel {
             throws NetworksViewModelFailedException {
         try {
             mNetworksRepository.updateNetwork(id, model);
-            this.updateNetworkList();
+            this.updateListsFromRepositories();
         } catch (NetworksRepositoryNotFoundException e) {
             throw new NetworksViewModelFailedException(e.getMessage());
         }
@@ -69,19 +69,19 @@ public class NetworksViewModel extends ViewModel {
 
     public void removeNetwork(final String id) {
         mNetworksRepository.removeNetwork(id);
-        this.updateNetworkList();
+        this.updateListsFromRepositories();
     }
 
     public void addNetwork(final NewNetworkModel model) {
         try {
             mNetworksRepository.addNetwork(model);
-            this.updateNetworkList();
+            this.updateListsFromRepositories();
         } catch (NetworksRepositoryAlreadyExistsException e) {
             throw new NetworksViewModelFailedException(e.getMessage());
         }
     }
 
-    private void updateNetworkList() {
+    public void updateListsFromRepositories() {
         mCompactNetworkModels.setValue(mNetworksRepository.getNetworkList());
         mAlreadyTakenNetworkNames.setValue(mNetworksRepository.getNetworkList().stream()
                 .map(NetworkModel::getHeading)
