@@ -25,12 +25,12 @@ import michael.linker.rewater.ui.advanced.devices.model.DeviceIdNameUiModel;
 public class UpdateScheduleViewModel extends ViewModel {
     private final ISchedulesRepository mSchedulesRepository;
     private final IDevicesRepository mDevicesRepository;
-    private final MutableLiveData<List<String>> mAlreadyTakenSchedulesNames;
-
 
     private String mScheduleId, mParentNetworkId;
     private final MutableLiveData<String> mScheduleName;
+    private final MutableLiveData<List<String>> mAlreadyTakenSchedulesNames;
     private final MutableLiveData<Integer> mDays, mHours, mMinutes, mLitres, mMillilitres;
+
     private final MutableLiveData<List<DeviceIdNameUiModel>> mUnattachedDeviceList;
     private final MutableLiveData<List<DeviceIdNameUiModel>> mAttachedDeviceList;
 
@@ -38,14 +38,14 @@ public class UpdateScheduleViewModel extends ViewModel {
         mSchedulesRepository = RepositoryConfiguration.getSchedulesRepository();
         mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
 
-        mAlreadyTakenSchedulesNames = new MutableLiveData<>();
-
         mScheduleName = new MutableLiveData<>();
+        mAlreadyTakenSchedulesNames = new MutableLiveData<>();
         mDays = new MutableLiveData<>();
         mHours = new MutableLiveData<>();
         mMinutes = new MutableLiveData<>();
         mLitres = new MutableLiveData<>();
         mMillilitres = new MutableLiveData<>();
+
         mUnattachedDeviceList = new MutableLiveData<>();
         mAttachedDeviceList = new MutableLiveData<>();
 
@@ -103,8 +103,24 @@ public class UpdateScheduleViewModel extends ViewModel {
         return mAlreadyTakenSchedulesNames;
     }
 
+    public LiveData<List<DeviceIdNameUiModel>> getUnattachedDeviceList() {
+        return mUnattachedDeviceList;
+    }
+
+    public LiveData<List<DeviceIdNameUiModel>> getAttachedDeviceList() {
+        return mAttachedDeviceList;
+    }
+
     public void setParentNetworkId(final String parentNetworkId) {
         mParentNetworkId = parentNetworkId;
+        mScheduleId = null;
+        mScheduleName.setValue(null);
+        mDays.setValue(null);
+        mHours.setValue(null);
+        mMinutes.setValue(null);
+        mLitres.setValue(null);
+        mMillilitres.setValue(null);
+        mAttachedDeviceList.setValue(new ArrayList<>());
         this.updateLists();
     }
 

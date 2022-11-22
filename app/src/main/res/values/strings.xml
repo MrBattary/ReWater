@@ -18,6 +18,9 @@
     <string name="navigation_title_networks_edit">Edit network</string>
     <string name="navigation_title_devices_add">Setup new device</string>
     <string name="navigation_title_schedules">Schedules</string>
+    <string name="navigation_title_schedules_add">Create schedule</string>
+    <string name="navigation_title_schedules_edit">Edit schedule</string>
+    <string name="navigation_title_schedules_devices">Attach devices</string>
 
     <!-- Inputs. -->
     <string name="input_hint_name">Name</string>
@@ -80,8 +83,10 @@
     <string name="dialog_no_attached_schedule_on_save">If you save this device without setting it a watering schedule, it will not perform automatic watering.</string>
     <string name="dialog_no_attached_schedule_on_add">If you add this device without setting it a watering schedule, it will not perform automatic watering. However, you will be able to add a schedule later through the settings.</string>
     <string name="dialog_delete_device_schedule">You are going to delete this device. After that you won\'t be able to control it and will disappear from the list of your devices. However, you will be able to add it again. Are you sure?</string>
-    <string name="dialog_manual_watering_insufficient_volume">Insufficient volume of water for manual watering, the volume should be more than 10 ml. Please enter the correct volume.</string>
-    <string name="dialog_manual_watering_insufficient_volume_or_period">Insufficient volume of water or period. The volume of water should be more than 10 ml and period of watering should be more than 1 minute. Please enter the correct values.</string>
+    <string name="dialog_insufficient_volume">Insufficient volume of water for manual watering, the volume should be more than 10 ml. Please enter the correct volume.</string>
+    <string name="dialog_insufficient_volume_or_period">Insufficient volume of water or period. The volume of water should be more than 10 ml and period of watering should be more than 1 minute. Please enter the correct values.</string>
+    <string name="dialog_no_attached_devices_on_save">If you save this schedule without attached devices, it will not be able to perform automatic watering.</string>
+    <string name="dialog_no_attached_devices_on_create">If you create this schedule without attached devices, it will not be able to perform automatic watering. However, you will be able to add a schedule later through the settings.</string>
     <string name="dialog_manual_watering_overflow">Sensors showed high soil moisture of the plant. Are you sure you want to continue watering?</string>
     <string name="dialog_manual_watering_confirmation_1">Are you sure you want to do a\n</string>
     <string name="dialog_manual_watering_confirmation_2">\ watering?</string>
@@ -89,6 +94,7 @@
     <!-- Buttons. -->
     <string name="button_settings">Settings</string>
     <string name="button_create">Create</string>
+    <string name="button_create_anyway">Create anyway</string>
     <string name="button_add">Add</string>
     <string name="button_add_anyway">Add anyway</string>
     <string name="button_save">Save</string>

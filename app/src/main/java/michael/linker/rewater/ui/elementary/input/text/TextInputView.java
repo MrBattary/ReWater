@@ -57,6 +57,7 @@ public class TextInputView implements ITextInputView {
                 }
             }
         }
+        mTextInputLayout.setError(null);
         return text;
     }
 

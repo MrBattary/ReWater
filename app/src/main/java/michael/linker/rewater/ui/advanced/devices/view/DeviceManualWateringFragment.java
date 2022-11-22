@@ -132,7 +132,7 @@ public class DeviceManualWateringFragment extends Fragment {
                 new SingleChoiceDialogModel(
                         DrawablesProvider.getDrawable(R.drawable.ic_warning),
                         StringsProvider.getString(R.string.title_warning),
-                        StringsProvider.getString(R.string.dialog_manual_watering_insufficient_volume),
+                        StringsProvider.getString(R.string.dialog_insufficient_volume),
                         StringsProvider.getString(R.string.button_ok)
                 ),
                 (dialogInterface, i) -> dialogInterface.cancel());

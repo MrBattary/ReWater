@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -88,6 +89,9 @@ public class SchedulesFragment extends Fragment {
 
     private void initAddFloatingActionButton(@NotNull final View view) {
         final FloatingActionButton addFab = view.findViewById(R.id.schedules_add_fab);
-        // TODO: Add an on click listener to fab
+        addFab.setOnClickListener(buttonView ->
+                Navigation.findNavController(view).navigate(
+                        R.id.navigation_action_schedules_to_schedules_add)
+        );
     }
 }

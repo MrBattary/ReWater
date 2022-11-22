@@ -18,13 +18,11 @@ import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.DetailedStatusModel;
 import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.res.DrawablesProvider;
-import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.advanced.schedules.adapter.ScheduleDevicesItemAdapter;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 import michael.linker.rewater.ui.advanced.schedules.viewmodel.SchedulesViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
-import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class ScheduleCardView {
     private final Context mParentContext;
@@ -106,12 +104,8 @@ public class ScheduleCardView {
 
     private void initSettingsButtonLogic(final SchedulesViewModel parentViewModel) {
         mSettingsButton.setOnClickListener(l -> {
-            try {
-                // TODO: Set logic from the provided view
-                return;
-            } catch (NetworksViewModelFailedException e) {
-                ToastProvider.showShort(mParentContext, e.getMessage());
-            }
+            parentViewModel.setScheduleId(mDataModel.getId());
+            // TODO: Replace to edit
             Navigation.findNavController(mCardView).navigate(
                     R.id.navigation_action_devices_to_devices_edit);
         });

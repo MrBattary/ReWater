@@ -16,13 +16,13 @@ public class SchedulesLocalData implements ISchedulesData {
         mFullScheduleModels.add(
                 new FullScheduleModel(
                         "c0382b72-d6c1-488e-bd6c-b758c93947f1",
-                        "First Schedule",
+                        "First schedule",
                         new WateringPeriodModel(0, 12, 30),
                         new WaterVolumeMetricModel(0, 500)));
         mFullScheduleModels.add(
                 new FullScheduleModel(
                         "2078faea-1db6-46f2-b7d7-bb350646417c",
-                        "Second Schedule",
+                        "Second schedule",
                         new WateringPeriodModel(15, 0, 0),
                         new WaterVolumeMetricModel(100, 0)));
         mFullScheduleModels.add(
