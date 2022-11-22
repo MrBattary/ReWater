@@ -105,9 +105,8 @@ public class ScheduleCardView {
     private void initSettingsButtonLogic(final UpdateScheduleViewModel childViewModel) {
         mSettingsButton.setOnClickListener(l -> {
             childViewModel.setScheduleIdAndRefreshViewModel(mDataModel.getId());
-            // TODO: Replace to edit
             Navigation.findNavController(mCardView).navigate(
-                    R.id.navigation_action_devices_to_devices_edit);
+                    R.id.navigation_action_schedules_to_schedules_edit);
         });
     }
 

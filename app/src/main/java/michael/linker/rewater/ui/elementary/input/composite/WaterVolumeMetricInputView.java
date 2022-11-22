@@ -32,9 +32,13 @@ public class WaterVolumeMetricInputView implements ICustomView, IFocusable {
         this.initRestrictions();
     }
 
-    public void setWaterVolume(final WaterVolumeMetricModel metricModel) {
-        mLitresInput.setNumber(metricModel.getLitres());
-        mMillilitresInput.setNumber(metricModel.getMillilitres());
+    public void setLitresVolume(final Integer litres) {
+        mLitresInput.setNumber(litres);
+
+    }
+
+    public void setMillilitresVolume(final Integer millilitres) {
+        mMillilitresInput.setNumber(millilitres);
     }
 
     public Integer getLitresVolume() throws InputNotAllowedException {

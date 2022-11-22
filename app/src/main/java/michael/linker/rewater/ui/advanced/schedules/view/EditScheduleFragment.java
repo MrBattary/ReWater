@@ -40,13 +40,13 @@ import michael.linker.rewater.ui.elementary.input.text.FocusableTextInputView;
 import michael.linker.rewater.ui.elementary.input.text.IFocusableTextInputView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
-public class AddScheduleFragment extends Fragment {
+public class EditScheduleFragment extends Fragment {
     private IFocusableTextInputView mNameInput;
     private WaterVolumeMetricInputView mVolumeInputView;
     private WateringPeriodInputView mPeriodInputView;
     private RecyclerView mAttachedDevices;
-    private MaterialButton mCreateButton, mCancelButton, mAttachDeviceButton;
-    private IDialog mNotAllowedScheduleDialog, mNoAttachedDevicesDialog;
+    private MaterialButton mCreateButton, mCancelButton, mDeleteButton, mAttachDeviceButton;
+    private IDialog mNotAllowedScheduleDialog, mNoAttachedDevicesDialog, mOnDeleteDialog;
 
     private UpdateScheduleViewModel mViewModel;
 
@@ -58,8 +58,7 @@ public class AddScheduleFragment extends Fragment {
                 R.id.root_navigation_schedules);
 
         mViewModel = new ViewModelProvider(viewModelStoreOwner).get(UpdateScheduleViewModel.class);
-
-        return inflater.inflate(R.layout.fragment_schedules_add, container, false);
+        return inflater.inflate(R.layout.fragment_schedules_edit, container, false);
     }
 
     @Override
@@ -67,25 +66,41 @@ public class AddScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.initFields(view);
+        this.initFieldsData();
         this.initInputLogics();
         this.initDialogs(view);
         this.initButtons(view);
         mViewModel.getAttachedDeviceList().observe(getViewLifecycleOwner(),
                 this::initAttachedDeviceList);
-
     }
 
     private void initFields(final View view) {
-        mNameInput = new FocusableTextInputView(view.findViewById(R.id.add_schedule_name),
-                view.findViewById(R.id.add_schedule_name_input));
+        mNameInput = new FocusableTextInputView(view.findViewById(R.id.edit_schedule_name),
+                view.findViewById(R.id.edit_schedule_name_input));
         mVolumeInputView = new WaterVolumeMetricInputView(
-                view.findViewById(R.id.add_schedule_volume_input));
+                view.findViewById(R.id.edit_schedule_volume_input));
         mPeriodInputView = new WateringPeriodInputView(
-                view.findViewById(R.id.add_schedule_period_input));
-        mAttachedDevices = view.findViewById(R.id.add_schedule_devices_recycler_view);
-        mCreateButton = view.findViewById(R.id.add_schedule_create_button);
-        mCancelButton = view.findViewById(R.id.add_schedule_cancel_button);
-        mAttachDeviceButton = view.findViewById(R.id.add_schedule_attach_device_button);
+                view.findViewById(R.id.edit_schedule_period_input));
+        mAttachedDevices = view.findViewById(R.id.edit_schedule_devices_recycler_view);
+        mCreateButton = view.findViewById(R.id.edit_schedule_create_button);
+        mCancelButton = view.findViewById(R.id.edit_schedule_cancel_button);
+        mDeleteButton = view.findViewById(R.id.edit_schedule_delete_button);
+        mAttachDeviceButton = view.findViewById(R.id.edit_schedule_attach_device_button);
+    }
+
+    private void initFieldsData() {
+        mViewModel.getScheduleName().observe(getViewLifecycleOwner(),
+                name -> mNameInput.setText(name));
+        mViewModel.getLitres().observe(getViewLifecycleOwner(),
+                l -> mVolumeInputView.setLitresVolume(l));
+        mViewModel.getMillilitres().observe(getViewLifecycleOwner(),
+                ml -> mVolumeInputView.setMillilitresVolume(ml));
+        mViewModel.getDays().observe(getViewLifecycleOwner(),
+                d -> mPeriodInputView.setDaysPeriod(d));
+        mViewModel.getHours().observe(getViewLifecycleOwner(),
+                h -> mPeriodInputView.setHoursPeriod(h));
+        mViewModel.getMinutes().observe(getViewLifecycleOwner(),
+                m -> mPeriodInputView.setMinutesPeriod(m));
     }
 
     private void initInputLogics() {
@@ -141,6 +156,7 @@ public class AddScheduleFragment extends Fragment {
     }
 
     private void initDialogs(final View view) {
+        final NavController navController = Navigation.findNavController(view);
         mNotAllowedScheduleDialog = new SingleChoiceInfoDialog(requireContext(),
                 new SingleChoiceDialogModel(
                         DrawablesProvider.getDrawable(R.drawable.ic_warning),
@@ -161,19 +177,34 @@ public class AddScheduleFragment extends Fragment {
                 ),
                 (dialogInterface, i) -> {
                     try {
-                        mViewModel.commitAndCreateSchedule();
-                        Navigation.findNavController(view).navigateUp();
+                        mViewModel.commitAndUpdateSchedule();
+                        navController.navigateUp();
                     } catch (SchedulesViewModelFailedException e) {
                         ToastProvider.showShort(requireContext(), e.getMessage());
                     }
+                },
+                (dialogInterface, i) -> dialogInterface.cancel());
+
+        mOnDeleteDialog = new TwoChoicesWarningDialog(requireContext(),
+                new TwoChoicesDialogModel(
+                        DrawablesProvider.getDrawable(R.drawable.ic_warning),
+                        StringsProvider.getString(R.string.title_warning),
+                        StringsProvider.getString(R.string.dialog_delete_schedule),
+                        StringsProvider.getString(R.string.button_delete),
+                        StringsProvider.getString(R.string.button_cancel)
+                ),
+                (dialogInterface, i) -> {
+                    mViewModel.commitAndDeleteSchedule();
+                    navController.navigateUp();
                 },
                 (dialogInterface, i) -> dialogInterface.cancel());
     }
 
     private void initButtons(final View view) {
         final NavController navController = Navigation.findNavController(view);
+
         mAttachDeviceButton.setOnClickListener(l -> navController.navigate(
-                R.id.navigation_action_schedules_add_to_schedules_devices));
+                R.id.navigation_action_schedules_edit_to_schedules_devices));
         mCreateButton.setOnClickListener(l -> {
             this.saveData();
             if (mViewModel.isProvidedDataCorrect()) {
@@ -182,7 +213,7 @@ public class AddScheduleFragment extends Fragment {
                     mNoAttachedDevicesDialog.show();
                 } else {
                     try {
-                        mViewModel.commitAndCreateSchedule();
+                        mViewModel.commitAndUpdateSchedule();
                         navController.navigateUp();
                     } catch (SchedulesViewModelFailedException e) {
                         ToastProvider.showShort(requireContext(), e.getMessage());
@@ -192,7 +223,7 @@ public class AddScheduleFragment extends Fragment {
                 mNotAllowedScheduleDialog.show();
             }
         });
-
+        mDeleteButton.setOnClickListener(l -> mOnDeleteDialog.show());
         mCancelButton.setOnClickListener(l -> navController.navigateUp());
     }
 
@@ -257,4 +288,5 @@ public class AddScheduleFragment extends Fragment {
                         mViewModel,
                         attachedDeviceList));
     }
+
 }

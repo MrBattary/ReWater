@@ -130,6 +130,7 @@ public class UpdateScheduleViewModel extends ViewModel {
             final ScheduleRepositoryModel scheduleRepositoryModel =
                     mSchedulesRepository.getScheduleById(scheduleId);
 
+            mParentNetworkId = null;
             mScheduleId = scheduleRepositoryModel.getId();
             mScheduleName.setValue(scheduleRepositoryModel.getName());
             mDays.setValue(scheduleRepositoryModel.getPeriod().getDays());
@@ -244,6 +245,11 @@ public class UpdateScheduleViewModel extends ViewModel {
         } catch (SchedulesRepositoryAlreadyExistsException e) {
             throw new SchedulesViewModelFailedException(e);
         }
+    }
+
+    public void commitAndDeleteSchedule() {
+        mSchedulesRepository.removeSchedule(mScheduleId);
+        this.updateListsFromRepositories();
     }
 
     private CreateOrUpdateScheduleRepositoryModel buildCreateOrUpdateScheduleRepositoryModel() {

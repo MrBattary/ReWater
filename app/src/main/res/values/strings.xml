@@ -80,9 +80,10 @@
 
     <!-- Dialogs. -->
     <string name="dialog_delete_network">You are going to delete this network. After this action, all watering schedules from this network will be erased. Are you sure?</string>
+    <string name="dialog_delete_device">You are going to delete this device. After that you won\'t be able to control it and will disappear from the list of your devices. However, you will be able to add it again. Are you sure?</string>
+    <string name="dialog_delete_schedule">You are going to delete this schedule. After this action, all devices of this schedule will stop watering according to the schedule. Are you sure?</string>
     <string name="dialog_no_attached_schedule_on_save">If you save this device without setting it a watering schedule, it will not perform automatic watering.</string>
     <string name="dialog_no_attached_schedule_on_add">If you add this device without setting it a watering schedule, it will not perform automatic watering. However, you will be able to add a schedule later through the settings.</string>
-    <string name="dialog_delete_device_schedule">You are going to delete this device. After that you won\'t be able to control it and will disappear from the list of your devices. However, you will be able to add it again. Are you sure?</string>
     <string name="dialog_insufficient_volume">Insufficient volume of water for manual watering, the volume should be more than 10 ml. Please enter the correct volume.</string>
     <string name="dialog_insufficient_volume_or_period">Insufficient volume of water or period. The volume of water should be more than 10 ml and period of watering should be more than 1 minute. Please enter the correct values.</string>
     <string name="dialog_no_attached_devices_on_save">If you save this schedule without attached devices, it will not be able to perform automatic watering.</string>
@@ -106,7 +107,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_detach_schedule">Detach schedule</string>
     <string name="button_attach_schedule">Attach schedule</string>
-    <string name="button_attach_device">Attach device</string>
+    <string name="button_attach_devices">Attach devices</string>
     <string name="button_devices_add_pair">Pair</string>
     <string name="button_devices_add_pair_new">Pair a new device</string>
     <string name="button_devices_add_pair_connection_established">The connection is established</string>

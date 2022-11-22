@@ -38,10 +38,16 @@ public class WateringPeriodInputView implements ICustomView, IFocusable {
         this.initRestrictions();
     }
 
-    public void setWateringPeriod(final WateringPeriodModel periodModel) {
-        mDaysInput.setNumber(periodModel.getDays());
-        mHoursInput.setNumber(periodModel.getHours());
-        mMinutesInput.setNumber(periodModel.getMinutes());
+    public void setDaysPeriod(final Integer days) {
+        mDaysInput.setNumber(days);
+    }
+
+    public void setHoursPeriod(final Integer hours) {
+        mHoursInput.setNumber(hours);
+    }
+
+    public void setMinutesPeriod(final Integer minutes) {
+        mMinutesInput.setNumber(minutes);
     }
 
     public Integer getDaysPeriod() throws InputNotAllowedException {

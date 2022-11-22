@@ -155,7 +155,7 @@ public class EditDeviceFragment extends Fragment {
                 new TwoChoicesDialogModel(
                         DrawablesProvider.getDrawable(R.drawable.ic_warning),
                         StringsProvider.getString(R.string.title_warning),
-                        StringsProvider.getString(R.string.dialog_delete_device_schedule),
+                        StringsProvider.getString(R.string.dialog_delete_device),
                         StringsProvider.getString(R.string.button_delete),
                         StringsProvider.getString(R.string.button_cancel)
                 ),
