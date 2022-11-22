@@ -62,6 +62,10 @@ public class ScheduleListDeviceFragment extends Fragment {
                     mListView.setAdapter(mAdapter);
                 });
 
+        this.addMenuProvider(view);
+    }
+
+    private void addMenuProvider(@NonNull final View view) {
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {

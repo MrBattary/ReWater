@@ -33,6 +33,14 @@ public class DevicesLocalData implements IDevicesData {
                 "353f5967-c7bd-4c57-8528-4f1ab7b88005",
                 "Fifth device very very very very very long name",
                 new DetailedStatusModel(Status.UNDEFINED, Status.UNDEFINED)));
+        mFullDeviceModels.add(new FullDeviceModel(
+                "de5f1c7b-f792-4ff2-9d29-9b6fe1257047",
+                "Sixth device",
+                new DetailedStatusModel(Status.WARNING, Status.OK)));
+        mFullDeviceModels.add(new FullDeviceModel(
+                "21bef4a5-c1c1-4588-b2c9-7f8188c89db4",
+                "Seventh device",
+                new DetailedStatusModel(Status.WARNING, Status.WARNING)));
     }
 
     @Override

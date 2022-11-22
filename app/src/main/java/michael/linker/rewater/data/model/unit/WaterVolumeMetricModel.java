@@ -30,6 +30,6 @@ public class WaterVolumeMetricModel implements IUnit {
     @Override
     public boolean isDataCorrect() {
         final int wateringVolumeMl = (mLitres * 1000) + mMillilitres;
-        return wateringVolumeMl < MIN_WATERING_VOLUME_IN_ML;
+        return wateringVolumeMl > MIN_WATERING_VOLUME_IN_ML;
     }
 }

@@ -37,7 +37,6 @@
                 style="@style/CustomTextMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/fragment_content_vertical_spacing_small"
                 android:text="@string/heading_attached_devices" />
 
             <androidx.recyclerview.widget.RecyclerView

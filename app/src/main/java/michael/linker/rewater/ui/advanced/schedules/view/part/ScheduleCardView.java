@@ -20,7 +20,7 @@ import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.ui.advanced.schedules.adapter.ScheduleDevicesItemAdapter;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
-import michael.linker.rewater.ui.advanced.schedules.viewmodel.SchedulesViewModel;
+import michael.linker.rewater.ui.advanced.schedules.viewmodel.UpdateScheduleViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
 
@@ -39,7 +39,7 @@ public class ScheduleCardView {
     public ScheduleCardView(
             final Context context,
             final View view,
-            final SchedulesViewModel parentViewModel,
+            final UpdateScheduleViewModel childViewModel,
             final IOrderedTransition transition
     ) {
         mParentContext = context;
@@ -58,7 +58,7 @@ public class ScheduleCardView {
         transition.addChangeBoundsTarget(view);
         this.initTransitionTargets();
         this.setCompactView();
-        this.initButtonsLogic(parentViewModel);
+        this.initButtonsLogic(childViewModel);
     }
 
     public void setUiModel(final ScheduleUiModel model) {
@@ -85,9 +85,9 @@ public class ScheduleCardView {
                 new DetailedStatusModel(waterWorstStatus, batteryWorstStatus));
     }
 
-    private void initButtonsLogic(final SchedulesViewModel parentViewModel) {
+    private void initButtonsLogic(final UpdateScheduleViewModel childViewModel) {
         initExpandOrLooseButtonLogic();
-        initSettingsButtonLogic(parentViewModel);
+        initSettingsButtonLogic(childViewModel);
     }
 
     private void initExpandOrLooseButtonLogic() {
@@ -102,9 +102,9 @@ public class ScheduleCardView {
         });
     }
 
-    private void initSettingsButtonLogic(final SchedulesViewModel parentViewModel) {
+    private void initSettingsButtonLogic(final UpdateScheduleViewModel childViewModel) {
         mSettingsButton.setOnClickListener(l -> {
-            parentViewModel.setScheduleId(mDataModel.getId());
+            childViewModel.setScheduleIdAndRefreshViewModel(mDataModel.getId());
             // TODO: Replace to edit
             Navigation.findNavController(mCardView).navigate(
                     R.id.navigation_action_devices_to_devices_edit);

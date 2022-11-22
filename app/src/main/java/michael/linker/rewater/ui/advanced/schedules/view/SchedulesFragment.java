@@ -27,11 +27,13 @@ import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksDevicesLinkViewModel;
 import michael.linker.rewater.ui.advanced.schedules.adapter.SchedulesItemAdapter;
 import michael.linker.rewater.ui.advanced.schedules.viewmodel.SchedulesViewModel;
+import michael.linker.rewater.ui.advanced.schedules.viewmodel.UpdateScheduleViewModel;
 import michael.linker.rewater.ui.animation.transition.OrderedTransition;
 
 public class SchedulesFragment extends Fragment {
     private NetworksDevicesLinkViewModel mLinkViewModel;
     private SchedulesViewModel mViewModel;
+    private UpdateScheduleViewModel mChildViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -44,6 +46,8 @@ public class SchedulesFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(currentViewModelStoreOwner).get(
                 SchedulesViewModel.class);
+        mChildViewModel = new ViewModelProvider(currentViewModelStoreOwner).get(
+                UpdateScheduleViewModel.class);
         mLinkViewModel = new ViewModelProvider(linkViewModelStoreOwner).get(
                 NetworksDevicesLinkViewModel.class);
 
@@ -57,6 +61,7 @@ public class SchedulesFragment extends Fragment {
         mLinkViewModel.getParentNetworkIdName().observe(getViewLifecycleOwner(), idNameModel -> {
             initSupportActionBar(idNameModel.getName());
             mViewModel.setParentNetworkIdAndLoadSchedules(idNameModel.getId());
+            initAddFloatingActionButton(view, idNameModel.getId());
         });
 
         OrderedTransition transition = new OrderedTransition();
@@ -71,10 +76,8 @@ public class SchedulesFragment extends Fragment {
         mViewModel.getScheduleList().observe(getViewLifecycleOwner(), list -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(
-                    new SchedulesItemAdapter(getContext(), mViewModel, list, transition));
+                    new SchedulesItemAdapter(getContext(), mChildViewModel, list, transition));
         });
-
-        initAddFloatingActionButton(view);
     }
 
     private void initSupportActionBar(final String parentNetworkName) {
@@ -87,11 +90,13 @@ public class SchedulesFragment extends Fragment {
         }
     }
 
-    private void initAddFloatingActionButton(@NotNull final View view) {
+    private void initAddFloatingActionButton(@NotNull final View view, final String id) {
         final FloatingActionButton addFab = view.findViewById(R.id.schedules_add_fab);
-        addFab.setOnClickListener(buttonView ->
-                Navigation.findNavController(view).navigate(
-                        R.id.navigation_action_schedules_to_schedules_add)
+        addFab.setOnClickListener(buttonView -> {
+                    mChildViewModel.setParentNetworkIdAndRefreshViewModel(id);
+                    Navigation.findNavController(view).navigate(
+                            R.id.navigation_action_schedules_to_schedules_add);
+                }
         );
     }
 }

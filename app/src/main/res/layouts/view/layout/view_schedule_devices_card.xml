@@ -6,10 +6,12 @@
     android:id="@+id/schedule_device_row_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/card_between_spacing_small"
     android:clickable="false"
     android:foreground="@drawable/selectable_item_background"
     app:cardBackgroundColor="@color/background_secondary"
-    app:cardCornerRadius="@dimen/card_corner_radius_small">
+    app:cardCornerRadius="@dimen/card_corner_radius_small"
+    app:cardElevation="0dp">
 
     <RelativeLayout
         android:id="@+id/schedule_device_row"
@@ -18,16 +20,37 @@
         android:paddingHorizontal="@dimen/card_horizontal_spacing_small"
         android:paddingVertical="@dimen/card_vertical_spacing">
 
-        <ImageButton
-            android:id="@+id/schedule_device_row_detach"
+        <FrameLayout
+            android:id="@+id/schedule_device_row_status_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true">
+
+            <include
+                android:id="@+id/schedule_device_row_status"
+                layout="@layout/view_status_detailed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/card_horizontal_spacing_small" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/schedule_device_row_detach_wrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/card_horizontal_spacing_small"
-            android:backgroundTint="@color/background_secondary"
-            android:contentDescription="@string/description_detach_device_button"
-            android:src="@drawable/ic_detach" />
+            android:layout_centerVertical="true">
+
+            <ImageButton
+                android:id="@+id/schedule_device_row_detach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_horizontal_spacing_small"
+                android:backgroundTint="@color/background_secondary"
+                android:contentDescription="@string/description_detach_device_button"
+                android:src="@drawable/ic_detach" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/schedule_device_row_device_name"
@@ -35,18 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/schedule_device_row_status"
-            android:layout_toStartOf="@id/schedule_device_row_detach"
+            android:layout_toEndOf="@id/schedule_device_row_status_wrapper"
+            android:layout_toStartOf="@id/schedule_device_row_detach_wrapper"
             android:text="@string/global_medium_placeholder" />
-
-        <include
-            android:id="@+id/schedule_device_row_status"
-            layout="@layout/view_status_detailed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/card_horizontal_spacing_small" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
 

@@ -57,7 +57,7 @@ public class AddScheduleFragment extends Fragment {
         ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
                 R.id.root_navigation_schedules);
 
-        mViewModel = new ViewModelProvider(this).get(UpdateScheduleViewModel.class);
+        mViewModel = new ViewModelProvider(viewModelStoreOwner).get(UpdateScheduleViewModel.class);
         mParentViewModel = new ViewModelProvider(viewModelStoreOwner).get(SchedulesViewModel.class);
 
         return inflater.inflate(R.layout.fragment_schedules_add, container, false);
@@ -67,21 +67,19 @@ public class AddScheduleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.initViewModel();
+        //this.initViewModel();
         this.initFields(view);
         this.initInputLogics();
         this.initDialogs(view);
+        this.initButtons(view);
         mViewModel.getAttachedDeviceList().observe(getViewLifecycleOwner(),
-                attachedDeviceList -> {
-                    this.initButtons(view, attachedDeviceList);
-                    this.initAttachedDeviceList(attachedDeviceList);
-                });
+                this::initAttachedDeviceList);
 
     }
 
     private void initViewModel() {
         mParentViewModel.getParentNetworkId().observe(getViewLifecycleOwner(),
-                id -> mViewModel.setParentNetworkId(id));
+                id -> mViewModel.setParentNetworkIdAndRefreshViewModel(id));
     }
 
     private void initFields(final View view) {
@@ -113,11 +111,7 @@ public class AddScheduleFragment extends Fragment {
                 StringsProvider.getString(R.string.input_error_heading_lack));
         mNameInput.setOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
-                try {
-                    mViewModel.setScheduleName(mNameInput.getText());
-                } catch (InputNotAllowedException ignored) {
-
-                }
+                this.saveName();
             }
         });
     }
@@ -125,18 +119,12 @@ public class AddScheduleFragment extends Fragment {
     private void initVolumeInputLogic() {
         mVolumeInputView.setLitresInputOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
-                try {
-                    mViewModel.setLitres(mVolumeInputView.getLitresVolume());
-                } catch (InputNotAllowedException ignored) {
-                }
+                this.saveLitres();
             }
         });
         mVolumeInputView.setMillilitresInputOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
-                try {
-                    mViewModel.setMillilitres(mVolumeInputView.getMillilitresVolume());
-                } catch (InputNotAllowedException ignored) {
-                }
+                this.saveMillilitres();
             }
         });
     }
@@ -144,26 +132,17 @@ public class AddScheduleFragment extends Fragment {
     private void initPeriodInputLogic() {
         mPeriodInputView.setDaysInputOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
-                try {
-                    mViewModel.setDays(mPeriodInputView.getDaysPeriod());
-                } catch (InputNotAllowedException ignored) {
-                }
+                this.saveDays();
             }
         });
         mPeriodInputView.setHoursInputOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
-                try {
-                    mViewModel.setHours(mPeriodInputView.getHoursPeriod());
-                } catch (InputNotAllowedException ignored) {
-                }
+                this.saveHours();
             }
         });
         mPeriodInputView.setMinutesInputOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
-                try {
-                    mViewModel.setMinutes(mPeriodInputView.getMinutesPeriod());
-                } catch (InputNotAllowedException ignored) {
-                }
+                this.saveMinutes();
             }
         });
     }
@@ -194,14 +173,15 @@ public class AddScheduleFragment extends Fragment {
                 (dialogInterface, i) -> dialogInterface.cancel());
     }
 
-    private void initButtons(final View view, final List<DeviceIdNameUiModel> attachedDeviceList) {
+    private void initButtons(final View view) {
         final NavController navController = Navigation.findNavController(view);
-        mAttachDeviceButton.setOnClickListener(l -> {
-            navController.navigate(R.id.navigation_action_schedules_add_to_schedules_devices);
-        });
+        mAttachDeviceButton.setOnClickListener(l -> navController.navigate(
+                R.id.navigation_action_schedules_add_to_schedules_devices));
         mCreateButton.setOnClickListener(l -> {
+            this.saveData();
             if (mViewModel.isProvidedDataCorrect()) {
-                if (attachedDeviceList.size() == 0) {
+                if (mViewModel.getAttachedDeviceList().getValue() != null
+                        && mViewModel.getAttachedDeviceList().getValue().size() == 0) {
                     mNoAttachedDevicesDialog.show();
                 } else {
                     mViewModel.commitAndCreateSchedule();
@@ -213,6 +193,59 @@ public class AddScheduleFragment extends Fragment {
         });
 
         mCancelButton.setOnClickListener(l -> navController.navigateUp());
+    }
+
+    private void saveData() {
+        this.saveName();
+
+        this.saveLitres();
+        this.saveMillilitres();
+
+        this.saveDays();
+        this.saveHours();
+        this.saveMinutes();
+    }
+
+    private void saveName() {
+        try {
+            mViewModel.setScheduleName(mNameInput.getText());
+        } catch (InputNotAllowedException ignored) {
+        }
+    }
+
+    private void saveLitres() {
+        try {
+            mViewModel.setLitres(mVolumeInputView.getLitresVolume());
+        } catch (InputNotAllowedException ignored) {
+        }
+    }
+
+    private void saveMillilitres() {
+        try {
+            mViewModel.setMillilitres(mVolumeInputView.getMillilitresVolume());
+        } catch (InputNotAllowedException ignored) {
+        }
+    }
+
+    private void saveDays() {
+        try {
+            mViewModel.setDays(mPeriodInputView.getDaysPeriod());
+        } catch (InputNotAllowedException ignored) {
+        }
+    }
+
+    private void saveHours() {
+        try {
+            mViewModel.setHours(mPeriodInputView.getHoursPeriod());
+        } catch (InputNotAllowedException ignored) {
+        }
+    }
+
+    private void saveMinutes() {
+        try {
+            mViewModel.setMinutes(mPeriodInputView.getMinutesPeriod());
+        } catch (InputNotAllowedException ignored) {
+        }
     }
 
     private void initAttachedDeviceList(final List<DeviceIdNameUiModel> attachedDeviceList) {

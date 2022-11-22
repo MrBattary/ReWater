@@ -111,7 +111,7 @@ public class UpdateScheduleViewModel extends ViewModel {
         return mAttachedDeviceList;
     }
 
-    public void setParentNetworkId(final String parentNetworkId) {
+    public void setParentNetworkIdAndRefreshViewModel(final String parentNetworkId) {
         mParentNetworkId = parentNetworkId;
         mScheduleId = null;
         mScheduleName.setValue(null);
@@ -121,10 +121,10 @@ public class UpdateScheduleViewModel extends ViewModel {
         mLitres.setValue(null);
         mMillilitres.setValue(null);
         mAttachedDeviceList.setValue(new ArrayList<>());
-        this.updateLists();
+        this.updateListsFromRepositories();
     }
 
-    public void setScheduleIdAndLoadIt(final String scheduleId)
+    public void setScheduleIdAndRefreshViewModel(final String scheduleId)
             throws SchedulesViewModelFailedException {
         try {
             final ScheduleRepositoryModel scheduleRepositoryModel =
@@ -145,22 +145,27 @@ public class UpdateScheduleViewModel extends ViewModel {
                                             deviceModel.getName()))
                             .collect(Collectors.toList())
             );
-            this.updateLists();
+            this.updateListsFromRepositories();
         } catch (SchedulesRepositoryNotFoundException e) {
             throw new SchedulesViewModelFailedException(e);
         }
     }
 
-    public void attachDeviceToSchedule(final String deviceId) {
-        final List<DeviceIdNameUiModel> unattachedDevices = mUnattachedDeviceList.getValue();
-        final List<DeviceIdNameUiModel> attachedDevices = mAttachedDeviceList.getValue();
+    public void attachMultipleDevicesToSchedule(final List<String> deviceIdList) {
+        List<DeviceIdNameUiModel> unattachedDevices = mUnattachedDeviceList.getValue();
+        List<DeviceIdNameUiModel> attachedDevices = mAttachedDeviceList.getValue();
 
-        Pair<List<DeviceIdNameUiModel>, List<DeviceIdNameUiModel>> listPair =
-                this.moveDeviceIdNameUiModelFromFirstListToSecondListByDeviceId(
-                        unattachedDevices, attachedDevices, deviceId);
+        for (String deviceId : deviceIdList) {
+            Pair<List<DeviceIdNameUiModel>, List<DeviceIdNameUiModel>> listPair =
+                    this.moveDeviceIdNameUiModelFromFirstListToSecondListByDeviceId(
+                            unattachedDevices, attachedDevices, deviceId);
 
-        mUnattachedDeviceList.setValue(listPair.first);
-        mAttachedDeviceList.setValue(listPair.second);
+            unattachedDevices = listPair.first;
+            attachedDevices = listPair.second;
+        }
+
+        mUnattachedDeviceList.postValue(unattachedDevices);
+        mAttachedDeviceList.postValue(attachedDevices);
     }
 
     public void detachDeviceFromSchedule(final String deviceId) {
@@ -171,8 +176,8 @@ public class UpdateScheduleViewModel extends ViewModel {
                 this.moveDeviceIdNameUiModelFromFirstListToSecondListByDeviceId(
                         attachedDevices, unattachedDevices, deviceId);
 
-        mAttachedDeviceList.setValue(listPair.first);
-        mUnattachedDeviceList.setValue(listPair.second);
+        mAttachedDeviceList.postValue(listPair.first);
+        mUnattachedDeviceList.postValue(listPair.second);
     }
 
     private Pair<List<DeviceIdNameUiModel>, List<DeviceIdNameUiModel>>
@@ -224,7 +229,7 @@ public class UpdateScheduleViewModel extends ViewModel {
             mSchedulesRepository.createSchedule(
                     mParentNetworkId,
                     this.buildCreateOrUpdateScheduleRepositoryModel());
-            this.updateLists();
+            this.updateListsFromRepositories();
         } catch (SchedulesRepositoryAlreadyExistsException e) {
             throw new SchedulesViewModelFailedException(e);
         }
@@ -235,7 +240,7 @@ public class UpdateScheduleViewModel extends ViewModel {
             mSchedulesRepository.updateSchedule(
                     mScheduleId,
                     this.buildCreateOrUpdateScheduleRepositoryModel());
-            this.updateLists();
+            this.updateListsFromRepositories();
         } catch (SchedulesRepositoryAlreadyExistsException e) {
             throw new SchedulesViewModelFailedException(e);
         }
@@ -254,7 +259,7 @@ public class UpdateScheduleViewModel extends ViewModel {
     }
 
 
-    private void updateLists() {
+    private void updateListsFromRepositories() {
         mUnattachedDeviceList.setValue(mDevicesRepository.getDeviceAttachList().stream()
                 .map(deviceModel ->
                         new DeviceIdNameUiModel(

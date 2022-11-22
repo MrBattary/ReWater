@@ -13,24 +13,24 @@ import java.util.List;
 import michael.linker.rewater.R;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 import michael.linker.rewater.ui.advanced.schedules.view.part.ScheduleCardView;
-import michael.linker.rewater.ui.advanced.schedules.viewmodel.SchedulesViewModel;
+import michael.linker.rewater.ui.advanced.schedules.viewmodel.UpdateScheduleViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 
 public class SchedulesItemAdapter extends
         RecyclerView.Adapter<SchedulesItemAdapter.SchedulesItemViewHolder> {
     private final Context mContext;
-    private final SchedulesViewModel mParentViewModel;
+    private final UpdateScheduleViewModel mChildViewModel;
     private final List<ScheduleUiModel> mScheduleUiModels;
     private final IOrderedTransition mTransition;
 
     public SchedulesItemAdapter(
             final Context context,
-            final SchedulesViewModel parentViewModel,
+            final UpdateScheduleViewModel childViewModel,
             final List<ScheduleUiModel> scheduleUiModels,
             final IOrderedTransition transition) {
         mContext = context;
         mScheduleUiModels = scheduleUiModels;
-        mParentViewModel = parentViewModel;
+        mChildViewModel = childViewModel;
         mTransition = transition;
     }
 
@@ -40,7 +40,7 @@ public class SchedulesItemAdapter extends
             int viewType) {
         View adapterLayout = LayoutInflater.from(mContext)
                 .inflate(R.layout.view_schedules_card, parent, false);
-        return new SchedulesItemViewHolder(mContext, adapterLayout, mParentViewModel, mTransition);
+        return new SchedulesItemViewHolder(mContext, adapterLayout, mChildViewModel, mTransition);
     }
 
     @Override
@@ -59,10 +59,10 @@ public class SchedulesItemAdapter extends
         public SchedulesItemViewHolder(
                 final Context context,
                 @NonNull final View itemView,
-                final SchedulesViewModel parentViewModel,
+                final UpdateScheduleViewModel childViewModel,
                 final IOrderedTransition transition) {
             super(itemView);
-            mCardView = new ScheduleCardView(context, itemView, parentViewModel, transition);
+            mCardView = new ScheduleCardView(context, itemView, childViewModel, transition);
         }
     }
 }

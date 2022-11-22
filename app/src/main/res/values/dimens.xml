@@ -24,6 +24,7 @@
     <dimen name="card_bottom_button_negative_margin">-3dp</dimen>
     <dimen name="card_content_horizontal_spacing">20dp</dimen>
     <dimen name="card_content_vertical_spacing">10dp</dimen>
+    <dimen name="card_between_spacing_small">5dp</dimen>
 
     <!-- Buttons dimensions. -->
     <dimen name="fab_margin">18dp</dimen>

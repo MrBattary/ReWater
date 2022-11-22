@@ -15,7 +15,6 @@ public class UpdateScheduleDeviceCardView extends ScheduleDeviceCardView {
         super(parentView);
 
         mDetailStatusView.setVisibility(View.GONE);
-
     }
 
     public void setUiModel(final DeviceIdNameUiModel deviceUiModel) {

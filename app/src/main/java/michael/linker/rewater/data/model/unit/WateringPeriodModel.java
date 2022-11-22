@@ -39,6 +39,6 @@ public class WateringPeriodModel implements IUnit {
     @Override
     public boolean isDataCorrect() {
         final int wateringPeriodMin = (mDays * 24 * 60) + (mHours * 60) + mMinutes;
-        return wateringPeriodMin < MIN_WATERING_PERIOD_IN_MIN;
+        return wateringPeriodMin > MIN_WATERING_PERIOD_IN_MIN;
     }
 }
