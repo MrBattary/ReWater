@@ -1,12 +1,12 @@
-package michael.linker.rewater.data.web;
+package michael.linker.rewater.data.local.stub;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 import michael.linker.rewater.data.model.unit.WateringPeriodModel;
-import michael.linker.rewater.data.web.model.FullScheduleModel;
-import michael.linker.rewater.data.web.model.ScheduleListModel;
+import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
+import michael.linker.rewater.data.local.stub.model.ScheduleListModel;
 
 public class SchedulesLocalData implements ISchedulesData {
     private final List<FullScheduleModel> mFullScheduleModels;

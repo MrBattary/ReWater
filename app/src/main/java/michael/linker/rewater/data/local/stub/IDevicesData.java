@@ -1,7 +1,7 @@
-package michael.linker.rewater.data.web;
+package michael.linker.rewater.data.local.stub;
 
-import michael.linker.rewater.data.web.model.DevicesListModel;
-import michael.linker.rewater.data.web.model.FullDeviceModel;
+import michael.linker.rewater.data.local.stub.model.DevicesListModel;
+import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
 
 public interface IDevicesData {
     /**

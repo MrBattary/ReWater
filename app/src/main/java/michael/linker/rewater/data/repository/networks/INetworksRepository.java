@@ -2,9 +2,8 @@ package michael.linker.rewater.data.repository.networks;
 
 import java.util.List;
 
-import michael.linker.rewater.data.repository.networks.model.NetworkModel;
-import michael.linker.rewater.data.repository.networks.model.NewNetworkModel;
-import michael.linker.rewater.data.repository.networks.model.UpdateNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 
 /**
  * The "Bridge" between data (web/local) sources and view models
@@ -15,7 +14,7 @@ public interface INetworksRepository {
      *
      * @return the list of compact network models in it
      */
-    List<NetworkModel> getNetworkList();
+    List<NetworkRepositoryModel> getNetworkList();
 
     /**
      * Get specific network by it's ID.
@@ -24,9 +23,10 @@ public interface INetworksRepository {
      * @return model of the required network
      * @throws NetworksRepositoryNotFoundException if network with provided id does not exist
      */
-    NetworkModel getNetworkById(String id) throws NetworksRepositoryNotFoundException;
+    NetworkRepositoryModel getNetworkById(String id) throws NetworksRepositoryNotFoundException;
 
     /**
+     * DEPRECATED
      * Get network ID by inner schedule ID.
      *
      * @param scheduleId inner schedule ID
@@ -38,20 +38,12 @@ public interface INetworksRepository {
             throws NetworksRepositoryNotFoundException;
 
     /**
-     * Checks whether a network exists with the specified ID.
-     *
-     * @param id ID of the network
-     * @return true if exists, false otherwise
-     */
-    boolean isNetworkExists(String id);
-
-    /**
      * Add a new network.
      *
      * @param model new network model, ID can be null
      * @throws NetworksRepositoryAlreadyExistsException if network with provided name already exists
      */
-    void addNetwork(NewNetworkModel model) throws NetworksRepositoryAlreadyExistsException;
+    void addNetwork(CreateOrUpdateNetworkRepositoryModel model) throws NetworksRepositoryAlreadyExistsException;
 
     /**
      * Update an existing network.
@@ -60,7 +52,7 @@ public interface INetworksRepository {
      * @param model model with data for update
      * @throws NetworksRepositoryNotFoundException if network with provided id does not exist
      */
-    void updateNetwork(String id, UpdateNetworkModel model)
+    void updateNetwork(String id, CreateOrUpdateNetworkRepositoryModel model)
             throws NetworksRepositoryNotFoundException;
 
     /**

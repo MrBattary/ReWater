@@ -1,7 +1,7 @@
-package michael.linker.rewater.data.web;
+package michael.linker.rewater.data.local.stub;
 
-import michael.linker.rewater.data.web.model.FullScheduleModel;
-import michael.linker.rewater.data.web.model.ScheduleListModel;
+import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
+import michael.linker.rewater.data.local.stub.model.ScheduleListModel;
 
 public interface ISchedulesData {
     /**

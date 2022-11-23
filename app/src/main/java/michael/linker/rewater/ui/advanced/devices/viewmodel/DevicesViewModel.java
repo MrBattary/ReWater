@@ -17,7 +17,7 @@ import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
-import michael.linker.rewater.data.repository.networks.model.NetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
 import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
@@ -38,7 +38,7 @@ public class DevicesViewModel extends ViewModel {
     private final MutableLiveData<String> mDeviceName;
     private final MutableLiveData<DetailedStatusModel> mDeviceStatus;
     private final MutableLiveData<ScheduleModel> mParentScheduleModel;
-    private final MutableLiveData<NetworkModel> mParentNetworkModel;
+    private final MutableLiveData<NetworkRepositoryModel> mParentNetworkModel;
 
     public DevicesViewModel() {
         mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
@@ -90,7 +90,7 @@ public class DevicesViewModel extends ViewModel {
         return mParentScheduleModel;
     }
 
-    public LiveData<NetworkModel> getParentNetworkModel() {
+    public LiveData<NetworkRepositoryModel> getParentNetworkModel() {
         return mParentNetworkModel;
     }
 
@@ -230,7 +230,7 @@ public class DevicesViewModel extends ViewModel {
                     );
                     parentNetworkIdNameModel = new IdNameModel(
                             parentNetworkId,
-                            mNetworksRepository.getNetworkById(parentNetworkId).getHeading()
+                            mNetworksRepository.getNetworkById(parentNetworkId).getName()
                     );
                 }
             } catch (SchedulesRepositoryNotFoundException ignored) {

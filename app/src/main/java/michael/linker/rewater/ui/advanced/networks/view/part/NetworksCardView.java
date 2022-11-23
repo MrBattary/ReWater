@@ -11,7 +11,7 @@ import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.IdNameModel;
-import michael.linker.rewater.data.repository.networks.model.NetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksDevicesLinkViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
@@ -31,7 +31,7 @@ public class NetworksCardView {
     private final View mHiddenContent;
     private final IOrderedTransition mTransition;
     private final NetworksDevicesLinkViewModel mLinkViewModel;
-    private NetworkModel mNetworkModel;
+    private NetworkRepositoryModel mNetworkRepositoryModel;
 
     public NetworksCardView(
             final Context context,
@@ -58,9 +58,9 @@ public class NetworksCardView {
         this.initOnClickForCard();
     }
 
-    public void setDataModel(final NetworkModel model) {
-        mNetworkModel = model;
-        mHeading.setText(model.getHeading());
+    public void setDataModel(final NetworkRepositoryModel model) {
+        mNetworkRepositoryModel = model;
+        mHeading.setText(model.getName());
         mDescription.setText(model.getDescription());
         this.setGoneIfNoTextInTextView(mDescription);
         mCombinedStatusView.setStatus(model.getStatus());
@@ -86,7 +86,7 @@ public class NetworksCardView {
     private void initSettingsButtonLogic(final NetworksViewModel parentViewModel) {
         mSettingsButton.setOnClickListener(l -> {
             try {
-                parentViewModel.setEditableNetworkId(mNetworkModel.getId());
+                parentViewModel.setEditableNetworkId(mNetworkRepositoryModel.getId());
             } catch (NetworksViewModelFailedException e) {
                 ToastProvider.showShort(mParentContext, e.getMessage());
             }
@@ -110,7 +110,7 @@ public class NetworksCardView {
     private void initOnClickForCard() {
         mCardView.setOnClickListener(l -> {
                     mLinkViewModel.setParentNetworkIdName(new IdNameModel(
-                                    mNetworkModel.getId(), mNetworkModel.getHeading()));
+                                    mNetworkRepositoryModel.getId(), mNetworkRepositoryModel.getName()));
                     Navigation.findNavController(mCardView).navigate(
                             R.id.navigation_action_networks_add_to_schedules);
                 }

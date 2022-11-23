@@ -5,31 +5,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.repository.networks.model.NetworkModel;
-import michael.linker.rewater.data.repository.networks.model.NewNetworkModel;
-import michael.linker.rewater.data.repository.networks.model.UpdateNetworkModel;
-import michael.linker.rewater.data.web.INetworksData;
-import michael.linker.rewater.data.web.links.IOneToManyDataLink;
-import michael.linker.rewater.data.web.model.FullNetworkModel;
+import michael.linker.rewater.data.local.stub.INetworksData;
+import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
+import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 
-public class NetworksRepository implements INetworksRepository {
+public class NetworksLocalRepository implements INetworksRepository {
     private final INetworksData mNetworksData;
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
     private final IOneToManyDataLink mScheduleToDevicesDataLink;
 
-    public NetworksRepository() {
+    public NetworksLocalRepository() {
         mNetworksData = DataConfiguration.getNetworksData();
         mNetworkToSchedulesDataLink = DataConfiguration.getNetworkToSchedulesDataLink();
         mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
     }
 
     @Override
-    public List<NetworkModel> getNetworkList() {
+    public List<NetworkRepositoryModel> getNetworkList() {
         final List<FullNetworkModel> dataModelList =
                 mNetworksData.getNetworkList().getNetworkModelList();
-        final List<NetworkModel> modelList = new ArrayList<>();
+        final List<NetworkRepositoryModel> modelList = new ArrayList<>();
         for (FullNetworkModel fullModel : dataModelList) {
-            modelList.add(new NetworkModel(
+            modelList.add(new NetworkRepositoryModel(
                     fullModel.getId(),
                     fullModel.getName(),
                     fullModel.getDescription(),
@@ -40,14 +39,14 @@ public class NetworksRepository implements INetworksRepository {
     }
 
     @Override
-    public NetworkModel getNetworkById(final String id)
+    public NetworkRepositoryModel getNetworkById(final String id)
             throws NetworksRepositoryNotFoundException {
         final FullNetworkModel networkModel = mNetworksData.getNetworkById(id);
         if (networkModel == null) {
             throw new NetworksRepositoryNotFoundException(
                     "Requested network with id: " + id + " was not found!");
         }
-        return new NetworkModel(
+        return new NetworkRepositoryModel(
                 networkModel.getId(),
                 networkModel.getName(),
                 networkModel.getDescription(),
@@ -68,12 +67,7 @@ public class NetworksRepository implements INetworksRepository {
     }
 
     @Override
-    public boolean isNetworkExists(final String id) {
-        return mNetworksData.getNetworkById(id) != null;
-    }
-
-    @Override
-    public void addNetwork(final NewNetworkModel model)
+    public void addNetwork(final CreateOrUpdateNetworkRepositoryModel model)
             throws NetworksRepositoryAlreadyExistsException {
         final List<String> alreadyUsedNames = mNetworksData.getNetworkList().getNetworkModelList()
                 .stream()
@@ -83,13 +77,13 @@ public class NetworksRepository implements INetworksRepository {
             throw new NetworksRepositoryAlreadyExistsException(
                     "Network with heading: " + model.getHeading() + " already exists!");
         }
-        mNetworksData.addNetwork(new michael.linker.rewater.data.web.model.EditableNetworkModel(
+        mNetworksData.addNetwork(new michael.linker.rewater.data.local.stub.model.EditableNetworkModel(
                 model.getHeading(), model.getDescription()
         ));
     }
 
     @Override
-    public void updateNetwork(final String id, final UpdateNetworkModel model)
+    public void updateNetwork(final String id, final CreateOrUpdateNetworkRepositoryModel model)
             throws NetworksRepositoryNotFoundException {
         final FullNetworkModel dataNetworkModel = mNetworksData.getNetworkById(id);
         if (dataNetworkModel == null) {

@@ -1,11 +1,11 @@
-package michael.linker.rewater.data.web;
+package michael.linker.rewater.data.local.stub;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import michael.linker.rewater.data.model.Status;
-import michael.linker.rewater.data.web.model.DevicesListModel;
-import michael.linker.rewater.data.web.model.FullDeviceModel;
+import michael.linker.rewater.data.local.stub.model.DevicesListModel;
+import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
 import michael.linker.rewater.data.model.DetailedStatusModel;
 
 public class DevicesLocalData implements IDevicesData {

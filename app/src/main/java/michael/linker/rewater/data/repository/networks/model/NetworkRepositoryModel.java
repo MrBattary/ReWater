@@ -2,17 +2,17 @@ package michael.linker.rewater.data.repository.networks.model;
 
 import michael.linker.rewater.data.model.DetailedStatusModel;
 
-public class NetworkModel {
-    private final String mId, mHeading, mDescription;
+public class NetworkRepositoryModel {
+    private final String mId, mName, mDescription;
     private final DetailedStatusModel mStatus;
 
-    public NetworkModel(
+    public NetworkRepositoryModel(
             final String id,
-            final String heading,
+            final String name,
             final String description,
             final DetailedStatusModel status) {
         mId = id;
-        mHeading = heading;
+        mName = name;
         mDescription = description;
         mStatus = status;
     }
@@ -21,8 +21,8 @@ public class NetworkModel {
         return mId;
     }
 
-    public String getHeading() {
-        return mHeading;
+    public String getName() {
+        return mName;
     }
 
     public String getDescription() {

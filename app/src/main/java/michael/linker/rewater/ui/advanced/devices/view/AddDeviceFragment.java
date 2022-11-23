@@ -19,7 +19,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.networks.model.NetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
@@ -121,8 +121,8 @@ public class AddDeviceFragment extends Fragment {
     }
 
     private void initParentArea(final ScheduleModel scheduleModel,
-            final NetworkModel networkModel) {
-        if (scheduleModel == null && networkModel == null) {
+            final NetworkRepositoryModel networkRepositoryModel) {
+        if (scheduleModel == null && networkRepositoryModel == null) {
             mParentsNotFoundViewGroup.setVisibility(View.VISIBLE);
             mParentsExistsViewGroup.setVisibility(View.GONE);
         } else {
@@ -141,9 +141,9 @@ public class AddDeviceFragment extends Fragment {
         }
     }
 
-    private void initParentNetworkData(final NetworkModel networkModel) {
-        if (networkModel != null) {
-            mParentNetworkView.setParentEntity(networkModel.getHeading());
+    private void initParentNetworkData(final NetworkRepositoryModel networkRepositoryModel) {
+        if (networkRepositoryModel != null) {
+            mParentNetworkView.setParentEntity(networkRepositoryModel.getName());
         } else {
             mParentNetworkView.clearParentEntity();
         }

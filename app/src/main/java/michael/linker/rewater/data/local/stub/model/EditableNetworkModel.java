@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.web.model;
+package michael.linker.rewater.data.local.stub.model;
 
 public class EditableNetworkModel {
     private final String heading, description;

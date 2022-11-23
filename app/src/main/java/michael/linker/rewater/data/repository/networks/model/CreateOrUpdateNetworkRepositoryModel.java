@@ -1,9 +1,9 @@
 package michael.linker.rewater.data.repository.networks.model;
 
-public class ShortNetworkModel {
+public class CreateOrUpdateNetworkRepositoryModel {
     private final String heading, description;
 
-    public ShortNetworkModel(
+    public CreateOrUpdateNetworkRepositoryModel(
             final String heading,
             final String description) {
         this.heading = heading;

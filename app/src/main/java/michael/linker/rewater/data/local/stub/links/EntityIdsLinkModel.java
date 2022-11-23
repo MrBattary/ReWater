@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.web.links;
+package michael.linker.rewater.data.local.stub.links;
 
 public class EntityIdsLinkModel {
     private final String firstEntityId, secondEntityId;

@@ -1,14 +1,14 @@
 package michael.linker.rewater.config;
 
-import michael.linker.rewater.data.web.DevicesLocalData;
-import michael.linker.rewater.data.web.IDevicesData;
-import michael.linker.rewater.data.web.INetworksData;
-import michael.linker.rewater.data.web.ISchedulesData;
-import michael.linker.rewater.data.web.NetworksLocalData;
-import michael.linker.rewater.data.web.SchedulesLocalData;
-import michael.linker.rewater.data.web.links.IOneToManyDataLink;
-import michael.linker.rewater.data.web.links.NetworkToSchedulesLocalDataLink;
-import michael.linker.rewater.data.web.links.ScheduleToDevicesLocalDataLink;
+import michael.linker.rewater.data.local.stub.DevicesLocalData;
+import michael.linker.rewater.data.local.stub.IDevicesData;
+import michael.linker.rewater.data.local.stub.INetworksData;
+import michael.linker.rewater.data.local.stub.ISchedulesData;
+import michael.linker.rewater.data.local.stub.NetworksLocalData;
+import michael.linker.rewater.data.local.stub.SchedulesLocalData;
+import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
+import michael.linker.rewater.data.local.stub.links.NetworkToSchedulesLocalDataLink;
+import michael.linker.rewater.data.local.stub.links.ScheduleToDevicesLocalDataLink;
 
 public class DataConfiguration {
     private static INetworksData sNetworksData;

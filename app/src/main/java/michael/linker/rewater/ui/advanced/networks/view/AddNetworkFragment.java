@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.networks.model.NewNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
@@ -82,7 +82,7 @@ public class AddNetworkFragment extends Fragment {
             try {
                 final String heading = mHeadingInput.getText();
                 final String description = mDescriptionInput.getText();
-                mViewModel.addNetwork(new NewNetworkModel(heading, description));
+                mViewModel.addNetwork(new CreateOrUpdateNetworkRepositoryModel(heading, description));
                 Navigation.findNavController(view).navigateUp();
             } catch (NetworksViewModelFailedException e) {
                 ToastProvider.showShort(requireContext(), e.getMessage());

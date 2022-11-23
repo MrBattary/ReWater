@@ -1,8 +1,8 @@
-package michael.linker.rewater.data.web;
+package michael.linker.rewater.data.local.stub;
 
-import michael.linker.rewater.data.web.model.FullNetworkModel;
-import michael.linker.rewater.data.web.model.NetworkListModel;
-import michael.linker.rewater.data.web.model.EditableNetworkModel;
+import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
+import michael.linker.rewater.data.local.stub.model.NetworkListModel;
+import michael.linker.rewater.data.local.stub.model.EditableNetworkModel;
 
 public interface INetworksData {
     /**

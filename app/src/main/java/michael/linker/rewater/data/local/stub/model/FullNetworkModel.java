@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.web.model;
+package michael.linker.rewater.data.local.stub.model;
 
 import michael.linker.rewater.data.model.Status;
 import michael.linker.rewater.data.model.DetailedStatusModel;

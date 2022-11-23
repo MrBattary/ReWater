@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.networks.model.NetworkModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.ui.advanced.networks.view.part.NetworksCardView;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksDevicesLinkViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
@@ -22,18 +22,18 @@ public class NetworksItemAdapter extends
     private final Context mContext;
     private final NetworksViewModel mParentViewModel;
     private final NetworksDevicesLinkViewModel mLinkViewModel;
-    private final List<NetworkModel> mNetworkModels;
+    private final List<NetworkRepositoryModel> mNetworkRepositoryModels;
     private final IOrderedTransition mTransition;
 
     public NetworksItemAdapter(final Context context,
             final NetworksViewModel parentViewModel,
             final NetworksDevicesLinkViewModel linkViewModel,
-            final List<NetworkModel> networkModels,
+            final List<NetworkRepositoryModel> networkRepositoryModels,
             final IOrderedTransition transition) {
         mContext = context;
         mParentViewModel = parentViewModel;
         mLinkViewModel = linkViewModel;
-        mNetworkModels = networkModels;
+        mNetworkRepositoryModels = networkRepositoryModels;
         mTransition = transition;
     }
 
@@ -48,12 +48,12 @@ public class NetworksItemAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull NetworksItemViewHolder holder, int position) {
-        holder.mNetworksCardView.setDataModel(mNetworkModels.get(position));
+        holder.mNetworksCardView.setDataModel(mNetworkRepositoryModels.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mNetworkModels.size();
+        return mNetworkRepositoryModels.size();
     }
 
     static class NetworksItemViewHolder extends RecyclerView.ViewHolder {

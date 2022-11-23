@@ -9,11 +9,11 @@ import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
-import michael.linker.rewater.data.web.IDevicesData;
-import michael.linker.rewater.data.web.ISchedulesData;
-import michael.linker.rewater.data.web.links.IOneToManyDataLink;
-import michael.linker.rewater.data.web.model.FullDeviceModel;
-import michael.linker.rewater.data.web.model.FullScheduleModel;
+import michael.linker.rewater.data.local.stub.IDevicesData;
+import michael.linker.rewater.data.local.stub.ISchedulesData;
+import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
+import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
+import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
 
 public class SchedulesRepository implements ISchedulesRepository {
     private final ISchedulesData mSchedulesData;

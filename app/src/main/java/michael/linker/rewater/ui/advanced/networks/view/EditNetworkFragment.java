@@ -22,20 +22,20 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.networks.model.NetworkModel;
-import michael.linker.rewater.data.repository.networks.model.UpdateNetworkModel;
+import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
+import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 
 public class EditNetworkFragment extends Fragment {
     private ITextInputView mHeadingInput, mDescriptionInput;
@@ -75,14 +75,14 @@ public class EditNetworkFragment extends Fragment {
         mCancelButton = view.findViewById(R.id.edit_network_cancel_button);
     }
 
-    private void initInputs(final NetworkModel compactModel) {
+    private void initInputs(final NetworkRepositoryModel compactModel) {
         List<String> alreadyTakenNetworksNames =
                 mViewModel.getAlreadyTakenNetworkNames().getValue();
         List<String> alreadyTakenNetworkNamesExceptThis = Collections.emptyList();
         if (alreadyTakenNetworksNames != null) {
             alreadyTakenNetworkNamesExceptThis = alreadyTakenNetworksNames
                     .stream()
-                    .filter(heading -> !Objects.equals(heading, compactModel.getHeading()))
+                    .filter(heading -> !Objects.equals(heading, compactModel.getName()))
                     .collect(Collectors.toList());
         }
 
@@ -95,7 +95,7 @@ public class EditNetworkFragment extends Fragment {
         mDescriptionInput.setMaxLimit(
                 IntegersProvider.getInteger(R.integer.input_max_limit_description),
                 StringsProvider.getString(R.string.input_error_description_overflow));
-        mHeadingInput.setText(compactModel.getHeading());
+        mHeadingInput.setText(compactModel.getName());
         mDescriptionInput.setText(compactModel.getDescription());
     }
 
@@ -108,7 +108,7 @@ public class EditNetworkFragment extends Fragment {
                 final String description = mDescriptionInput.getText();
                 mViewModel.updateNetwork(
                         networkId,
-                        new UpdateNetworkModel(heading, description)
+                        new CreateOrUpdateNetworkRepositoryModel(heading, description)
                 );
                 Navigation.findNavController(view).navigateUp();
             } catch (NetworksViewModelFailedException e) {

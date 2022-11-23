@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.web.links;
+package michael.linker.rewater.data.local.stub.links;
 
 import java.util.HashMap;
 import java.util.List;
