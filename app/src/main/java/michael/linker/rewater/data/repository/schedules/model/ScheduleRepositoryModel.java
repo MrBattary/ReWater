@@ -4,25 +4,25 @@ import java.util.List;
 
 import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 import michael.linker.rewater.data.model.unit.WateringPeriodModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceWithoutParentsRepositoryModel;
 
 public class ScheduleRepositoryModel {
     private final String mId, mName;
     private final WateringPeriodModel mPeriod;
     private final WaterVolumeMetricModel mVolume;
-    private final List<DeviceModel> mDeviceModels;
+    private final List<DeviceWithoutParentsRepositoryModel> mDeviceWithoutParentsRepositoryModels;
 
     public ScheduleRepositoryModel(
             final String id,
             final String name,
             final WateringPeriodModel period,
             final WaterVolumeMetricModel volume,
-            final List<DeviceModel> deviceModels) {
+            final List<DeviceWithoutParentsRepositoryModel> deviceWithoutParentsRepositoryModels) {
         mId = id;
         mName = name;
         mPeriod = period;
         mVolume = volume;
-        mDeviceModels = deviceModels;
+        mDeviceWithoutParentsRepositoryModels = deviceWithoutParentsRepositoryModels;
     }
 
     public String getId() {
@@ -41,7 +41,7 @@ public class ScheduleRepositoryModel {
         return mVolume;
     }
 
-    public List<DeviceModel> getDeviceModels() {
-        return mDeviceModels;
+    public List<DeviceWithoutParentsRepositoryModel> getDeviceModels() {
+        return mDeviceWithoutParentsRepositoryModels;
     }
 }

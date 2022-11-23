@@ -24,7 +24,6 @@ import michael.linker.rewater.data.repository.schedules.model.ScheduleRepository
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.ui.advanced.devices.model.DeviceInfoModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
@@ -176,9 +175,7 @@ public class EditDeviceFragment extends Fragment {
                 ),
                 (dialogInterface, i) -> {
                     try {
-                        mViewModel.commitAndUpdateDevice(new DeviceInfoModel(
-                                mNameInput.getText()
-                        ));
+                        mViewModel.commitAndUpdateDevice();
                         Navigation.findNavController(view).navigateUp();
                     } catch (DevicesViewModelFailedException e) {
                         ToastProvider.showShort(requireContext(), e.getMessage());
@@ -208,9 +205,7 @@ public class EditDeviceFragment extends Fragment {
                 if (scheduleModel == null || scheduleModel.getId() == null) {
                     mOnNoScheduleSaveDialog.show();
                 } else {
-                    mViewModel.commitAndUpdateDevice(new DeviceInfoModel(
-                            mNameInput.getText()
-                    ));
+                    mViewModel.commitAndUpdateDevice();
                     Navigation.findNavController(view).navigateUp();
                 }
             } catch (DevicesViewModelFailedException e) {
@@ -223,6 +218,10 @@ public class EditDeviceFragment extends Fragment {
     }
 
     private void storeInputs() {
-        mViewModel.setDeviceName(mNameInput.getTextForce());
+        try {
+
+            mViewModel.setDeviceName(mNameInput.getText());
+        } catch (InputNotAllowedException ignored) {
+        }
     }
 }

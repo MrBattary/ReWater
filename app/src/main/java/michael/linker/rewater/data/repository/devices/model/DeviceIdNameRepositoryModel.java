@@ -1,20 +1,21 @@
 package michael.linker.rewater.data.repository.devices.model;
 
+import michael.linker.rewater.data.model.IdNameModel;
+
 public class DeviceIdNameRepositoryModel {
-    private final String mId, mName;
+    private final IdNameModel mIdNameModel;
 
     public DeviceIdNameRepositoryModel(
             final String id,
             final String name) {
-        mId = id;
-        mName = name;
+        mIdNameModel = new IdNameModel(id, name);
     }
 
     public String getId() {
-        return mId;
+        return mIdNameModel.getId();
     }
 
     public String getName() {
-        return mName;
+        return mIdNameModel.getName();
     }
 }

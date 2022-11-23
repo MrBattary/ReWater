@@ -2,19 +2,18 @@ package michael.linker.rewater.data.repository.devices;
 
 import java.util.List;
 
-import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.CreateDeviceRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceIdNameRepositoryModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceHardwareModel;
-import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
+import michael.linker.rewater.data.repository.devices.model.UpdateDeviceRepositoryModel;
 
 public interface IDevicesRepository {
     /**
-     * Get a simple list of the all devices.
+     * Get a list of the all devices.
      *
      * @return the list of device models in it
      */
-    List<DeviceModel> getDeviceList();
+    List<DeviceRepositoryModel> getDeviceList();
 
     /**
      * Get a list of all devices available to attach to the schedule.
@@ -30,17 +29,17 @@ public interface IDevicesRepository {
      * @return model of the required device
      * @throws DevicesRepositoryNotFoundException if device with provided id does not exist
      */
-    DeviceModel getDeviceById(String id) throws DevicesRepositoryNotFoundException;
+    DeviceRepositoryModel getDeviceById(String id) throws DevicesRepositoryNotFoundException;
 
     /**
      * Get specific device by it's hardware ID.
      *
-     * @param model hardware model that contains hardware ID
+     * @param hardwareId hardware ID of the device
      * @return model of the required device
      * @throws DevicesRepositoryNotFoundException if the device with the provided hardware ID
      *                                            does not exist or cannot be accessed
      */
-    DeviceModel getDeviceByHardware(DeviceHardwareModel model)
+    DeviceRepositoryModel getDeviceByHardware(String hardwareId)
             throws DevicesRepositoryNotFoundException;
 
     /**
@@ -57,13 +56,13 @@ public interface IDevicesRepository {
      * @param model model with data for update
      * @throws DevicesRepositoryNotFoundException if device with provided id does not exist
      */
-    void updateDevice(String id, UpdateDeviceModel model) throws DevicesRepositoryNotFoundException;
+    void updateDevice(String id, UpdateDeviceRepositoryModel model) throws DevicesRepositoryNotFoundException;
 
     /**
      * Adds the new device.
      *
-     * @param model model with data for adding
+     * @param model model with data for creation
      * @throws DevicesRepositoryAlreadyExistsException if the device cannot be added
      */
-    void addNewDevice(AddDeviceModel model) throws DevicesRepositoryAlreadyExistsException;
+    void createDevice(CreateDeviceRepositoryModel model) throws DevicesRepositoryAlreadyExistsException;
 }

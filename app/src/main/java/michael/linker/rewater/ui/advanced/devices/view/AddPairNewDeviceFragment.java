@@ -24,9 +24,9 @@ import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.ColorsProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.ui.advanced.devices.model.AddPairNewDeviceLook;
+import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
 import michael.linker.rewater.ui.advanced.devices.model.AddPairNewDeviceRequest;
-import michael.linker.rewater.ui.advanced.devices.model.RequestStatus;
+import michael.linker.rewater.ui.advanced.devices.enums.RequestStatus;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.AddPairNewDeviceViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
@@ -64,7 +64,7 @@ public class AddPairNewDeviceFragment extends Fragment {
         this.initFields(view);
         this.initButtonsLogic(view);
 
-        mViewModel.getAddDeviceModel().observe(getViewLifecycleOwner(),
+        mViewModel.getDeviceAfterPairingUiModel().observe(getViewLifecycleOwner(),
                 deviceModel -> mParentViewModel.setDeviceDuringPairing(deviceModel));
 
         mViewModel.getCurrentLook().observe(getViewLifecycleOwner(), currentLook -> {

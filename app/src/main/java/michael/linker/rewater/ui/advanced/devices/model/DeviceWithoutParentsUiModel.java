@@ -1,7 +1,7 @@
 package michael.linker.rewater.ui.advanced.devices.model;
 
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceWithoutParentsRepositoryModel;
 
 public class DeviceWithoutParentsUiModel {
     private final String mId, mName;
@@ -16,7 +16,7 @@ public class DeviceWithoutParentsUiModel {
         mStatus = status;
     }
 
-    public DeviceWithoutParentsUiModel(final DeviceModel repositoryModel) {
+    public DeviceWithoutParentsUiModel(final DeviceWithoutParentsRepositoryModel repositoryModel) {
         mId = repositoryModel.getId();
         mName = repositoryModel.getName();
         mStatus = repositoryModel.getStatus();

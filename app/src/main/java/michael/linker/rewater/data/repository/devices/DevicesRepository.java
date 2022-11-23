@@ -7,40 +7,73 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.model.status.Status;
-import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceIdNameRepositoryModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceHardwareModel;
-import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 import michael.linker.rewater.data.local.stub.IDevicesData;
+import michael.linker.rewater.data.local.stub.INetworksData;
+import michael.linker.rewater.data.local.stub.ISchedulesData;
 import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
 import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
+import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
+import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
+import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
+import michael.linker.rewater.data.model.status.Status;
+import michael.linker.rewater.data.repository.devices.model.CreateDeviceRepositoryModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceIdNameRepositoryModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
+import michael.linker.rewater.data.repository.devices.model.UpdateDeviceRepositoryModel;
 
 public class DevicesRepository implements IDevicesRepository {
+    private final INetworksData mNetworksData;
+    private final ISchedulesData mSchedulesData;
     private final IDevicesData mDevicesData;
     private final IOneToManyDataLink mScheduleToDevicesDataLink;
+    private final IOneToManyDataLink mNetworkToSchedulesDataLink;
 
     public DevicesRepository() {
+        mNetworksData = DataConfiguration.getNetworksData();
+        mSchedulesData = DataConfiguration.getSchedulesData();
         mDevicesData = DataConfiguration.getDevicesData();
         mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
+        mNetworkToSchedulesDataLink = DataConfiguration.getNetworkToSchedulesDataLink();
     }
 
     @Override
-    public List<DeviceModel> getDeviceList() {
-        final List<DeviceModel> deviceModels = new ArrayList<>();
+    public List<DeviceRepositoryModel> getDeviceList() {
+        final List<DeviceRepositoryModel> deviceRepositoryModels = new ArrayList<>();
         final List<FullDeviceModel> dataDeviceModelList =
                 mDevicesData.getDevicesList().getFullDeviceModels();
 
         for (FullDeviceModel dataDeviceModel : dataDeviceModelList) {
-            deviceModels.add(new DeviceModel(
+            IdNameModel parentScheduleIdNameModel = new IdNameModel(null, null);
+            IdNameModel parentNetworkIdNameModel = new IdNameModel(null, null);
+
+            final String parentScheduleId =
+                    mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(
+                            dataDeviceModel.getId());
+            if (parentScheduleId != null) {
+                final FullScheduleModel scheduleModel =
+                        mSchedulesData.getScheduleById(parentScheduleId);
+                parentScheduleIdNameModel =
+                        new IdNameModel(scheduleModel.getId(), scheduleModel.getName());
+
+                final String parentNetworkId =
+                        mNetworkToSchedulesDataLink.getLeftEntityIdByRightEntityId(
+                                parentScheduleId);
+                final FullNetworkModel deviceModel = mNetworksData.getNetworkById(parentNetworkId);
+                parentNetworkIdNameModel =
+                        new IdNameModel(deviceModel.getId(), deviceModel.getName());
+            }
+
+
+            deviceRepositoryModels.add(new DeviceRepositoryModel(
                     dataDeviceModel.getId(),
                     dataDeviceModel.getName(),
+                    parentScheduleIdNameModel,
+                    parentNetworkIdNameModel,
                     dataDeviceModel.getStatus()
             ));
         }
-        return deviceModels;
+        return deviceRepositoryModels;
     }
 
     @Override
@@ -74,7 +107,7 @@ public class DevicesRepository implements IDevicesRepository {
     }
 
     @Override
-    public DeviceModel getDeviceById(final String id)
+    public DeviceRepositoryModel getDeviceById(final String id)
             throws DevicesRepositoryNotFoundException {
         final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(id);
         if (dataDeviceModel == null) {
@@ -82,9 +115,32 @@ public class DevicesRepository implements IDevicesRepository {
                     "Requested device with id: " + id + " was not found!");
         }
 
-        return new DeviceModel(
+        IdNameModel parentScheduleIdNameModel = new IdNameModel(null, null);
+        IdNameModel parentNetworkIdNameModel = new IdNameModel(null, null);
+
+        final String parentScheduleId =
+                mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(
+                        dataDeviceModel.getId());
+        if (parentScheduleId != null) {
+            final FullScheduleModel scheduleModel =
+                    mSchedulesData.getScheduleById(parentScheduleId);
+            parentScheduleIdNameModel =
+                    new IdNameModel(scheduleModel.getId(), scheduleModel.getName());
+
+            final String parentNetworkId =
+                    mNetworkToSchedulesDataLink.getLeftEntityIdByRightEntityId(
+                            parentScheduleId);
+            final FullNetworkModel deviceModel = mNetworksData.getNetworkById(parentNetworkId);
+            parentNetworkIdNameModel =
+                    new IdNameModel(deviceModel.getId(), deviceModel.getName());
+        }
+
+
+        return new DeviceRepositoryModel(
                 dataDeviceModel.getId(),
                 dataDeviceModel.getName(),
+                parentScheduleIdNameModel,
+                parentNetworkIdNameModel,
                 dataDeviceModel.getStatus()
         );
     }
@@ -100,7 +156,7 @@ public class DevicesRepository implements IDevicesRepository {
     }
 
     @Override
-    public void updateDevice(String id, UpdateDeviceModel model)
+    public void updateDevice(String id, UpdateDeviceRepositoryModel model)
             throws DevicesRepositoryNotFoundException {
         final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(id);
         if (dataDeviceModel == null) {
@@ -111,7 +167,7 @@ public class DevicesRepository implements IDevicesRepository {
 
         String oldScheduleId = mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(id);
 
-        final String newScheduleId = model.getNewParentScheduleId();
+        final String newScheduleId = model.getScheduleId();
         if (!Objects.equals(oldScheduleId, newScheduleId)) {
             mScheduleToDevicesDataLink.removeRightEntityId(id);
             if (newScheduleId != null) {
@@ -126,18 +182,19 @@ public class DevicesRepository implements IDevicesRepository {
     }
 
     @Override
-    public DeviceModel getDeviceByHardware(final DeviceHardwareModel model)
+    public DeviceRepositoryModel getDeviceByHardware(final String hardwareId)
             throws DevicesRepositoryNotFoundException {
         // TODO Request to the server
-        return new DeviceModel(null, null, null);
+        return new DeviceRepositoryModel(null, null, null, null, null);
     }
 
     @Override
-    public void addNewDevice(final AddDeviceModel model)
+    public void createDevice(final CreateDeviceRepositoryModel model)
             throws DevicesRepositoryAlreadyExistsException {
         final String newDeviceUuid = UUID.randomUUID().toString();
 
         // TODO: Also send hardware id to the server
+        // model.getDeviceHardwareId();
 
         mDevicesData.addDevice(
                 new FullDeviceModel(
@@ -147,8 +204,8 @@ public class DevicesRepository implements IDevicesRepository {
                 )
         );
 
-        if (model.getNewParentScheduleId() != null) {
-            mScheduleToDevicesDataLink.addDataLink(model.getNewParentScheduleId(), newDeviceUuid);
+        if (model.getScheduleId() != null) {
+            mScheduleToDevicesDataLink.addDataLink(model.getScheduleId(), newDeviceUuid);
         }
     }
 }

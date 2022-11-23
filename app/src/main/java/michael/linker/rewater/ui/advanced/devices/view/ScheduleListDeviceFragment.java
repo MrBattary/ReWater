@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkRepositoryModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkIdNameRepositoryModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
@@ -53,7 +53,7 @@ public class ScheduleListDeviceFragment extends Fragment {
         mViewModel.getScheduleWithNetworkModels().observe(getViewLifecycleOwner(),
                 compactScheduleModels -> {
                     List<ScheduleListItemModel> scheduleListItemModels = new ArrayList<>();
-                    for (ScheduleWithNetworkRepositoryModel model : compactScheduleModels) {
+                    for (ScheduleWithNetworkIdNameRepositoryModel model : compactScheduleModels) {
                         scheduleListItemModels.add(new ScheduleListItemModel(model));
                     }
                     mAdapter = new ArrayAdapter<>(requireContext(),
@@ -97,7 +97,7 @@ public class ScheduleListDeviceFragment extends Fragment {
     private static class ScheduleListItemModel {
         private final String mScheduleId, mScheduleName;
 
-        public ScheduleListItemModel(final ScheduleWithNetworkRepositoryModel model) {
+        public ScheduleListItemModel(final ScheduleWithNetworkIdNameRepositoryModel model) {
             mScheduleId = model.getScheduleIdNameModel().getId();
             mScheduleName = model.getScheduleIdNameModel().getName();
         }

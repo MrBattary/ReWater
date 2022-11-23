@@ -13,17 +13,17 @@ import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.data.repository.devices.DevicesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
-import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceModel;
-import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
+import michael.linker.rewater.data.repository.devices.model.CreateDeviceRepositoryModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
+import michael.linker.rewater.data.repository.devices.model.UpdateDeviceRepositoryModel;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
 import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkRepositoryModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkIdNameRepositoryModel;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceAfterPairingUiModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceCardModel;
-import michael.linker.rewater.ui.advanced.devices.model.DeviceInfoModel;
 
 public class DevicesViewModel extends ViewModel {
     private final IDevicesRepository mDevicesRepository;
@@ -31,7 +31,7 @@ public class DevicesViewModel extends ViewModel {
     private final INetworksRepository mNetworksRepository;
 
     private final MutableLiveData<List<DeviceCardModel>> mDeviceCardModels;
-    private final MutableLiveData<List<ScheduleWithNetworkRepositoryModel>>
+    private final MutableLiveData<List<ScheduleWithNetworkIdNameRepositoryModel>>
             mScheduleWithNetworkModels;
     private final MutableLiveData<List<String>> mAlreadyTakenDeviceNames;
 
@@ -64,7 +64,7 @@ public class DevicesViewModel extends ViewModel {
         return mDeviceCardModels;
     }
 
-    public LiveData<List<ScheduleWithNetworkRepositoryModel>> getScheduleWithNetworkModels() {
+    public LiveData<List<ScheduleWithNetworkIdNameRepositoryModel>> getScheduleWithNetworkModels() {
         return mScheduleWithNetworkModels;
     }
 
@@ -99,7 +99,7 @@ public class DevicesViewModel extends ViewModel {
     public void setDeviceId(final String deviceId)
             throws DevicesRepositoryNotFoundException {
         try {
-            final DeviceModel model = mDevicesRepository.getDeviceById(deviceId);
+            final DeviceRepositoryModel model = mDevicesRepository.getDeviceById(deviceId);
             mDeviceId.setValue(deviceId);
             mDeviceName.setValue(model.getName());
             mDeviceStatus.setValue(model.getStatus());
@@ -126,10 +126,10 @@ public class DevicesViewModel extends ViewModel {
         }
     }
 
-    public void setDeviceDuringPairing(final AddDeviceModel model) {
-        mDeviceId.setValue(model.getId());
-        mDeviceHardwareId = model.getDeviceHardwareId();
-        mDeviceName.setValue(model.getName());
+    public void setDeviceDuringPairing(final DeviceAfterPairingUiModel model) {
+        mDeviceHardwareId = model.getHardwareId();
+        mDeviceId.setValue(model.getDeviceId());
+        mDeviceName.setValue(model.getDeviceName());
 
         // Always null
         mParentScheduleModel.setValue(null);
@@ -152,12 +152,12 @@ public class DevicesViewModel extends ViewModel {
         }
     }
 
-    public void commitAndUpdateDevice(final DeviceInfoModel infoModel)
+    public void commitAndUpdateDevice()
             throws DevicesViewModelFailedException {
         try {
             mDevicesRepository.updateDevice(mDeviceId.getValue(),
-                    new UpdateDeviceModel(
-                            infoModel.getName(),
+                    new UpdateDeviceRepositoryModel(
+                            mDeviceName.getValue(),
                             mParentScheduleModel.getValue() != null ?
                                     mParentScheduleModel.getValue().getId() : null
                     )
@@ -168,14 +168,13 @@ public class DevicesViewModel extends ViewModel {
         }
     }
 
-    public void commitAndAddNewDevice(final DeviceInfoModel infoModel)
+    public void commitAndCreateNewDevice()
             throws DevicesViewModelFailedException {
         try {
-            mDevicesRepository.addNewDevice(
-                    new AddDeviceModel(
-                            mDeviceId.getValue(),
+            mDevicesRepository.createDevice(
+                    new CreateDeviceRepositoryModel(
                             mDeviceHardwareId,
-                            infoModel.getName(),
+                            mDeviceName.getValue(),
                             mParentScheduleModel.getValue() != null ?
                                     mParentScheduleModel.getValue().getId() : null
                     )
@@ -201,20 +200,20 @@ public class DevicesViewModel extends ViewModel {
     }
 
     public void updateListsFromRepositories() {
-        final List<DeviceModel> deviceList = mDevicesRepository.getDeviceList();
+        final List<DeviceRepositoryModel> deviceList = mDevicesRepository.getDeviceList();
         final List<DeviceCardModel> cardModelList = this.buildDeviceCardModelList(deviceList);
 
         mDeviceCardModels.setValue(cardModelList);
         mAlreadyTakenDeviceNames.setValue(deviceList.stream()
-                .map(DeviceModel::getName)
+                .map(DeviceRepositoryModel::getName)
                 .collect(Collectors.toList()));
         mScheduleWithNetworkModels.setValue(mSchedulesRepository.getScheduleWithNetworkList());
     }
 
     private List<DeviceCardModel> buildDeviceCardModelList(
-            final List<DeviceModel> deviceList) {
+            final List<DeviceRepositoryModel> deviceList) {
         final List<DeviceCardModel> cardModelList = new ArrayList<>();
-        for (DeviceModel device : deviceList) {
+        for (DeviceRepositoryModel device : deviceList) {
             IdNameModel parentScheduleIdNameModel = null;
             IdNameModel parentNetworkIdNameModel = null;
             try {

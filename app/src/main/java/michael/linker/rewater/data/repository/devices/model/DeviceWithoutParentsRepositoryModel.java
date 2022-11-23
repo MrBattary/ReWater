@@ -2,11 +2,11 @@ package michael.linker.rewater.data.repository.devices.model;
 
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
 
-public class DeviceModel {
+public class DeviceWithoutParentsRepositoryModel {
     private final String mId, mName;
     private final DetailedStatusModel mStatus;
 
-    public DeviceModel(
+    public DeviceWithoutParentsRepositoryModel(
             final String id,
             final String name,
             final DetailedStatusModel status) {

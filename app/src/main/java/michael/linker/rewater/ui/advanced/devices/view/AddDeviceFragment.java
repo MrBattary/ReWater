@@ -24,7 +24,6 @@ import michael.linker.rewater.data.repository.schedules.model.ScheduleRepository
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.ui.advanced.devices.model.DeviceInfoModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
@@ -160,9 +159,11 @@ public class AddDeviceFragment extends Fragment {
                 ),
                 (dialogInterface, i) -> {
                     try {
-                        mViewModel.commitAndAddNewDevice(new DeviceInfoModel(
-                                mNameInput.getText()
-                        ));
+                        if (mViewModel.getDeviceId() != null) {
+                            mViewModel.commitAndUpdateDevice();
+                        } else {
+                            mViewModel.commitAndCreateNewDevice();
+                        }
                         this.finishAdding(Navigation.findNavController(view));
                     } catch (DevicesViewModelFailedException e) {
                         ToastProvider.showShort(requireContext(), e.getMessage());
@@ -190,9 +191,11 @@ public class AddDeviceFragment extends Fragment {
                 if (scheduleModel == null || scheduleModel.getId() == null) {
                     mOnNoScheduleAddDialog.show();
                 } else {
-                    mViewModel.commitAndAddNewDevice(new DeviceInfoModel(
-                            mNameInput.getText()
-                    ));
+                    if (mViewModel.getDeviceId() != null) {
+                        mViewModel.commitAndUpdateDevice();
+                    } else {
+                        mViewModel.commitAndCreateNewDevice();
+                    }
                     this.finishAdding(navController);
                 }
             } catch (DevicesViewModelFailedException e) {
@@ -214,6 +217,9 @@ public class AddDeviceFragment extends Fragment {
     }
 
     private void storeInputs() {
-        mViewModel.setDeviceName(mNameInput.getTextForce());
+        try {
+            mViewModel.setDeviceName(mNameInput.getText());
+        } catch (InputNotAllowedException ignored) {
+        }
     }
 }

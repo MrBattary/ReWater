@@ -10,17 +10,16 @@ import java.util.Objects;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.repository.devices.DevicesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
-import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceHardwareModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceModel;
-import michael.linker.rewater.ui.advanced.devices.model.AddPairNewDeviceLook;
+import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
+import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
+import michael.linker.rewater.ui.advanced.devices.enums.RequestStatus;
 import michael.linker.rewater.ui.advanced.devices.model.AddPairNewDeviceRequest;
-import michael.linker.rewater.ui.advanced.devices.model.RequestStatus;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceAfterPairingUiModel;
 
 public class AddPairNewDeviceViewModel extends ViewModel {
     private final List<AddPairNewDeviceLook> mLookOrder;
     private final IDevicesRepository mDevicesRepository;
-    private final MutableLiveData<AddDeviceModel> mAddDeviceModel;
+    private final MutableLiveData<DeviceAfterPairingUiModel> mDeviceAfterPairingUiModel;
 
     private final MutableLiveData<AddPairNewDeviceLook> mCurrentLook;
     private final MutableLiveData<AddPairNewDeviceRequest> mBluetoothConnected;
@@ -35,7 +34,7 @@ public class AddPairNewDeviceViewModel extends ViewModel {
                 AddPairNewDeviceLook.NETWORK,
                 AddPairNewDeviceLook.FINISH);
         mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
-        mAddDeviceModel = new MutableLiveData<>();
+        mDeviceAfterPairingUiModel = new MutableLiveData<>();
 
         mCurrentLook = new MutableLiveData<>();
         mBluetoothConnected = new MutableLiveData<>();
@@ -48,8 +47,8 @@ public class AddPairNewDeviceViewModel extends ViewModel {
         mNetworkUpdated.setValue(new AddPairNewDeviceRequest(RequestStatus.UNDEFINED));
     }
 
-    public LiveData<AddDeviceModel> getAddDeviceModel() {
-        return mAddDeviceModel;
+    public LiveData<DeviceAfterPairingUiModel> getDeviceAfterPairingUiModel() {
+        return mDeviceAfterPairingUiModel;
     }
 
     public LiveData<AddPairNewDeviceLook> getCurrentLook() {
@@ -103,14 +102,18 @@ public class AddPairNewDeviceViewModel extends ViewModel {
     public void sendKey(final String key) {
         // TODO: STUB
         try {
+            final String deviceHardwareId = "STUB";
             // TODO: Send hashed key to the device with bluetooth, and if it is OK, request
             //       server for model by the provided hardware ID
-            final DeviceHardwareModel deviceHardwareModel = new DeviceHardwareModel("STUB");
-            final DeviceModel deviceModel = mDevicesRepository.getDeviceByHardware(
-                    deviceHardwareModel);
+            final DeviceRepositoryModel deviceRepositoryModel =
+                    mDevicesRepository.getDeviceByHardware(deviceHardwareId);
             // Parent schedule always null
-            mAddDeviceModel.setValue(new AddDeviceModel(deviceModel.getId(), deviceModel.getId(),
-                    deviceModel.getName(), null));
+            mDeviceAfterPairingUiModel.setValue(
+                    new DeviceAfterPairingUiModel(
+                            deviceHardwareId,
+                            deviceRepositoryModel.getId(),
+                            deviceRepositoryModel.getName(),
+                            null));
             mAccessKeyAccepted.setValue(new AddPairNewDeviceRequest(RequestStatus.OK));
         } catch (DevicesRepositoryNotFoundException e) {
             mAccessKeyAccepted.setValue(new AddPairNewDeviceRequest(RequestStatus.ERROR));

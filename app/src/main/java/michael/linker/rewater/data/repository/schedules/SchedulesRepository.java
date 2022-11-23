@@ -12,10 +12,10 @@ import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
 import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
 import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
 import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkRepositoryModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkIdNameRepositoryModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceWithoutParentsRepositoryModel;
 
 public class SchedulesRepository implements ISchedulesRepository {
     private final INetworksData mNetworksData;
@@ -33,10 +33,10 @@ public class SchedulesRepository implements ISchedulesRepository {
     }
 
     @Override
-    public List<ScheduleWithNetworkRepositoryModel> getScheduleWithNetworkList() {
+    public List<ScheduleWithNetworkIdNameRepositoryModel> getScheduleWithNetworkList() {
         final List<FullScheduleModel> scheduleModelList =
                 mSchedulesData.getScheduleList().getScheduleModelList();
-        final List<ScheduleWithNetworkRepositoryModel> resultList = new ArrayList<>();
+        final List<ScheduleWithNetworkIdNameRepositoryModel> resultList = new ArrayList<>();
         for (FullScheduleModel scheduleModel : scheduleModelList) {
             final String parentNetworkId =
                     mNetworkToSchedulesDataLink.getLeftEntityIdByRightEntityId(
@@ -44,7 +44,7 @@ public class SchedulesRepository implements ISchedulesRepository {
             final FullNetworkModel parentNetworkModel =
                     mNetworksData.getNetworkById(parentNetworkId);
 
-            resultList.add(new ScheduleWithNetworkRepositoryModel(
+            resultList.add(new ScheduleWithNetworkIdNameRepositoryModel(
                     scheduleModel.getId(),
                     scheduleModel.getName(),
                     parentNetworkModel.getId(),
@@ -67,11 +67,11 @@ public class SchedulesRepository implements ISchedulesRepository {
                         mScheduleToDevicesDataLink.getRightEntityIdListByLeftEntityId(
                                 scheduleModel.getId());
 
-                final List<DeviceModel> scheduleDeviceList = new ArrayList<>();
+                final List<DeviceWithoutParentsRepositoryModel> scheduleDeviceList = new ArrayList<>();
                 for (String deviceId : scheduleDeviceIdList) {
                     final FullDeviceModel deviceModel = mDevicesData.getDeviceById(deviceId);
                     scheduleDeviceList.add(
-                            new DeviceModel(
+                            new DeviceWithoutParentsRepositoryModel(
                                     deviceId,
                                     deviceModel.getName(),
                                     deviceModel.getStatus()
@@ -103,11 +103,11 @@ public class SchedulesRepository implements ISchedulesRepository {
                 mScheduleToDevicesDataLink.getRightEntityIdListByLeftEntityId(
                         scheduleModel.getId());
 
-        final List<DeviceModel> scheduleDeviceList = new ArrayList<>();
+        final List<DeviceWithoutParentsRepositoryModel> scheduleDeviceList = new ArrayList<>();
         for (String deviceId : scheduleDeviceIdList) {
             final FullDeviceModel deviceModel = mDevicesData.getDeviceById(deviceId);
             scheduleDeviceList.add(
-                    new DeviceModel(
+                    new DeviceWithoutParentsRepositoryModel(
                             deviceId,
                             deviceModel.getName(),
                             deviceModel.getStatus()

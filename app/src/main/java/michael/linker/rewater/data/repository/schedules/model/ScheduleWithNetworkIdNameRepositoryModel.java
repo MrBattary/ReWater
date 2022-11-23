@@ -2,10 +2,10 @@ package michael.linker.rewater.data.repository.schedules.model;
 
 import michael.linker.rewater.data.model.IdNameModel;
 
-public class ScheduleWithNetworkRepositoryModel {
+public class ScheduleWithNetworkIdNameRepositoryModel {
     private final IdNameModel mScheduleIdNameModel, mParentNetworkIdNameModel;
 
-    public ScheduleWithNetworkRepositoryModel(
+    public ScheduleWithNetworkIdNameRepositoryModel(
             final String scheduleId,
             final String scheduleName,
             final String parentNetworkId,

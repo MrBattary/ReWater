@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.advanced.devices.model;
+package michael.linker.rewater.ui.advanced.devices.enums;
 
 public enum RequestStatus {
     UNDEFINED,
