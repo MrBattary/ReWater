@@ -201,7 +201,7 @@ public class EditDeviceFragment extends Fragment {
         });
         mSaveButton.setOnClickListener(l -> {
             try {
-                this.storeInputs();
+                mViewModel.setDeviceName(mNameInput.getText());
                 if (scheduleModel == null || scheduleModel.getId() == null) {
                     mOnNoScheduleSaveDialog.show();
                 } else {
@@ -219,7 +219,6 @@ public class EditDeviceFragment extends Fragment {
 
     private void storeInputs() {
         try {
-
             mViewModel.setDeviceName(mNameInput.getText());
         } catch (InputNotAllowedException ignored) {
         }

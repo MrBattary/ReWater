@@ -17,14 +17,14 @@ import michael.linker.rewater.data.repository.schedules.model.ScheduleRepository
 import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkIdNameRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceWithoutParentsRepositoryModel;
 
-public class SchedulesRepository implements ISchedulesRepository {
+public class SchedulesLocalRepository implements ISchedulesRepository {
     private final INetworksData mNetworksData;
     private final ISchedulesData mSchedulesData;
     private final IDevicesData mDevicesData;
     private final IOneToManyDataLink mScheduleToDevicesDataLink;
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
 
-    public SchedulesRepository() {
+    public SchedulesLocalRepository() {
         mNetworksData = DataConfiguration.getNetworksData();
         mSchedulesData = DataConfiguration.getSchedulesData();
         mDevicesData = DataConfiguration.getDevicesData();

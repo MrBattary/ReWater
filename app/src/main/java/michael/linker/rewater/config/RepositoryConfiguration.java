@@ -1,11 +1,11 @@
 package michael.linker.rewater.config;
 
-import michael.linker.rewater.data.repository.devices.DevicesRepository;
+import michael.linker.rewater.data.repository.devices.DevicesLocalRepository;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.NetworksLocalRepository;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
-import michael.linker.rewater.data.repository.schedules.SchedulesRepository;
+import michael.linker.rewater.data.repository.schedules.SchedulesLocalRepository;
 
 public class RepositoryConfiguration {
     private static INetworksRepository sNetworksRepository;
@@ -21,14 +21,14 @@ public class RepositoryConfiguration {
 
     public static IDevicesRepository getDevicesRepository() {
         if (sDevicesRepository == null) {
-            sDevicesRepository = new DevicesRepository();
+            sDevicesRepository = new DevicesLocalRepository();
         }
         return sDevicesRepository;
     }
 
     public static ISchedulesRepository getSchedulesRepository() {
         if (sSchedulesRepository == null) {
-            sSchedulesRepository = new SchedulesRepository();
+            sSchedulesRepository = new SchedulesLocalRepository();
         }
         return sSchedulesRepository;
     }

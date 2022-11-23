@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.DataConfiguration;
 import michael.linker.rewater.data.local.stub.INetworksData;
+import michael.linker.rewater.data.local.stub.ISchedulesData;
 import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
 import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
 import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
@@ -13,11 +14,13 @@ import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryMo
 
 public class NetworksLocalRepository implements INetworksRepository {
     private final INetworksData mNetworksData;
+    private final ISchedulesData mSchedulesData;
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
     private final IOneToManyDataLink mScheduleToDevicesDataLink;
 
     public NetworksLocalRepository() {
         mNetworksData = DataConfiguration.getNetworksData();
+        mSchedulesData = DataConfiguration.getSchedulesData();
         mNetworkToSchedulesDataLink = DataConfiguration.getNetworkToSchedulesDataLink();
         mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
     }
@@ -77,9 +80,10 @@ public class NetworksLocalRepository implements INetworksRepository {
             throw new NetworksRepositoryAlreadyExistsException(
                     "Network with heading: " + model.getHeading() + " already exists!");
         }
-        mNetworksData.addNetwork(new michael.linker.rewater.data.local.stub.model.EditableNetworkModel(
-                model.getHeading(), model.getDescription()
-        ));
+        mNetworksData.addNetwork(
+                new michael.linker.rewater.data.local.stub.model.EditableNetworkModel(
+                        model.getHeading(), model.getDescription()
+                ));
     }
 
     @Override
@@ -100,11 +104,12 @@ public class NetworksLocalRepository implements INetworksRepository {
 
     @Override
     public void removeNetwork(final String id) {
-        // Cascade unlink
+        // Cascade unlink and schedules remove
         final List<String> childScheduleIdList =
                 mNetworkToSchedulesDataLink.getRightEntityIdListByLeftEntityId(id);
         for (String childScheduleId : childScheduleIdList) {
             mScheduleToDevicesDataLink.removeAllRightEntityIdsByLeftEntityId(childScheduleId);
+            mSchedulesData.removeSchedule(childScheduleId);
         }
         mNetworkToSchedulesDataLink.removeAllRightEntityIdsByLeftEntityId(id);
         // Remove

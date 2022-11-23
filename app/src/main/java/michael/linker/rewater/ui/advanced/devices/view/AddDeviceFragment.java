@@ -159,7 +159,7 @@ public class AddDeviceFragment extends Fragment {
                 ),
                 (dialogInterface, i) -> {
                     try {
-                        if (mViewModel.getDeviceId() != null) {
+                        if (mViewModel.getDeviceId().getValue() != null) {
                             mViewModel.commitAndUpdateDevice();
                         } else {
                             mViewModel.commitAndCreateNewDevice();
@@ -187,11 +187,11 @@ public class AddDeviceFragment extends Fragment {
         });
         mCreateButton.setOnClickListener(l -> {
             try {
-                this.storeInputs();
+                mViewModel.setDeviceName(mNameInput.getText());
                 if (scheduleModel == null || scheduleModel.getId() == null) {
                     mOnNoScheduleAddDialog.show();
                 } else {
-                    if (mViewModel.getDeviceId() != null) {
+                    if (mViewModel.getDeviceId().getValue() != null) {
                         mViewModel.commitAndUpdateDevice();
                     } else {
                         mViewModel.commitAndCreateNewDevice();
@@ -200,6 +200,7 @@ public class AddDeviceFragment extends Fragment {
                 }
             } catch (DevicesViewModelFailedException e) {
                 ToastProvider.showShort(requireContext(), e.getMessage());
+            } catch (InputNotAllowedException ignored) {
             }
         });
 

@@ -22,14 +22,14 @@ import michael.linker.rewater.data.repository.devices.model.DeviceIdNameReposito
 import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceRepositoryModel;
 
-public class DevicesRepository implements IDevicesRepository {
+public class DevicesLocalRepository implements IDevicesRepository {
     private final INetworksData mNetworksData;
     private final ISchedulesData mSchedulesData;
     private final IDevicesData mDevicesData;
     private final IOneToManyDataLink mScheduleToDevicesDataLink;
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
 
-    public DevicesRepository() {
+    public DevicesLocalRepository() {
         mNetworksData = DataConfiguration.getNetworksData();
         mSchedulesData = DataConfiguration.getSchedulesData();
         mDevicesData = DataConfiguration.getDevicesData();
