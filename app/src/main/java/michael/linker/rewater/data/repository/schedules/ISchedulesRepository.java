@@ -3,16 +3,16 @@ package michael.linker.rewater.data.repository.schedules;
 import java.util.List;
 
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkRepositoryModel;
 
 public interface ISchedulesRepository {
     /**
-     * Get a simple list of the all schedules.
+     * Get a list of the all schedules for choosing.
      *
-     * @return the list of compact schedules models in it
+     * @return the list of schedules ID-name models in it
      */
-    List<ScheduleModel> getCompactScheduleList();
+    List<ScheduleWithNetworkRepositoryModel> getScheduleWithNetworkList();
 
     /**
      * Get a list of the all schedules by parent network ID.
@@ -32,16 +32,7 @@ public interface ISchedulesRepository {
     ScheduleRepositoryModel getScheduleById(String id) throws SchedulesRepositoryNotFoundException;
 
     /**
-     * Get specific schedule by it's ID.
-     *
-     * @param id ID of the schedule
-     * @return model of the required schedule
-     * @throws SchedulesRepositoryNotFoundException if schedule with provided ID does not exist
-     */
-    ScheduleModel getCompactScheduleById(String id)
-            throws SchedulesRepositoryNotFoundException;
-
-    /**
+     * DEPRECATED
      * Get schedule ID by inner device ID.
      *
      * @param deviceId inner device ID

@@ -1,6 +1,6 @@
 package michael.linker.rewater.data.local.stub.model;
 
-import michael.linker.rewater.data.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.status.DetailedStatusModel;
 
 public class FullDeviceModel {
     private final String mId, mName;

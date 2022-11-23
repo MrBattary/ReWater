@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.elementary.ICustomView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;

@@ -4,11 +4,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.local.stub.model.EditableNetworkModel;
 import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
 import michael.linker.rewater.data.local.stub.model.NetworkListModel;
-import michael.linker.rewater.data.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.status.DetailedStatusModel;
 
 public class NetworksLocalData implements INetworksData {
     private final List<FullNetworkModel> mFullNetworkModels;

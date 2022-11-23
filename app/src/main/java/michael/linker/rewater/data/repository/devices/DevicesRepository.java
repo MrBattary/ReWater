@@ -7,7 +7,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceIdNameRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceModel;
@@ -16,7 +16,7 @@ import michael.linker.rewater.data.repository.devices.model.UpdateDeviceModel;
 import michael.linker.rewater.data.local.stub.IDevicesData;
 import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
 import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
-import michael.linker.rewater.data.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.status.DetailedStatusModel;
 
 public class DevicesRepository implements IDevicesRepository {
     private final IDevicesData mDevicesData;

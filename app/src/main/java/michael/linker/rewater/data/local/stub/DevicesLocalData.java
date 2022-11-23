@@ -3,10 +3,10 @@ package michael.linker.rewater.data.local.stub;
 import java.util.ArrayList;
 import java.util.List;
 
-import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.local.stub.model.DevicesListModel;
 import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
-import michael.linker.rewater.data.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.status.DetailedStatusModel;
 
 public class DevicesLocalData implements IDevicesData {
     private final List<FullDeviceModel> mFullDeviceModels;

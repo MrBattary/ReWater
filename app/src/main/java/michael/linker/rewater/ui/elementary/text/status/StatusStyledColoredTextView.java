@@ -3,7 +3,7 @@ package michael.linker.rewater.ui.elementary.text.status;
 import android.view.View;
 import android.widget.TextView;
 
-import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.StatusColorsProvider;
 
 public class StatusStyledColoredTextView implements IStatusStyledTextView {

@@ -5,23 +5,27 @@ import java.util.List;
 import java.util.UUID;
 
 import michael.linker.rewater.config.DataConfiguration;
-import michael.linker.rewater.data.repository.devices.model.DeviceModel;
-import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.data.local.stub.IDevicesData;
+import michael.linker.rewater.data.local.stub.INetworksData;
 import michael.linker.rewater.data.local.stub.ISchedulesData;
 import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
 import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
+import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
 import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceModel;
+import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkRepositoryModel;
 
 public class SchedulesRepository implements ISchedulesRepository {
+    private final INetworksData mNetworksData;
     private final ISchedulesData mSchedulesData;
     private final IDevicesData mDevicesData;
     private final IOneToManyDataLink mScheduleToDevicesDataLink;
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
 
     public SchedulesRepository() {
+        mNetworksData = DataConfiguration.getNetworksData();
         mSchedulesData = DataConfiguration.getSchedulesData();
         mDevicesData = DataConfiguration.getDevicesData();
         mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
@@ -29,19 +33,25 @@ public class SchedulesRepository implements ISchedulesRepository {
     }
 
     @Override
-    public List<ScheduleModel> getCompactScheduleList() {
-        final List<FullScheduleModel> dataModelList =
+    public List<ScheduleWithNetworkRepositoryModel> getScheduleWithNetworkList() {
+        final List<FullScheduleModel> scheduleModelList =
                 mSchedulesData.getScheduleList().getScheduleModelList();
-        final List<ScheduleModel> modelList = new ArrayList<>();
-        for (FullScheduleModel dataFullModel : dataModelList) {
-            modelList.add(new ScheduleModel(
-                    dataFullModel.getId(),
-                    dataFullModel.getName(),
-                    dataFullModel.getPeriod(),
-                    dataFullModel.getVolume()
+        final List<ScheduleWithNetworkRepositoryModel> resultList = new ArrayList<>();
+        for (FullScheduleModel scheduleModel : scheduleModelList) {
+            final String parentNetworkId =
+                    mNetworkToSchedulesDataLink.getLeftEntityIdByRightEntityId(
+                            scheduleModel.getId());
+            final FullNetworkModel parentNetworkModel =
+                    mNetworksData.getNetworkById(parentNetworkId);
+
+            resultList.add(new ScheduleWithNetworkRepositoryModel(
+                    scheduleModel.getId(),
+                    scheduleModel.getName(),
+                    parentNetworkModel.getId(),
+                    parentNetworkModel.getName()
             ));
         }
-        return modelList;
+        return resultList;
     }
 
     @Override
@@ -111,22 +121,6 @@ public class SchedulesRepository implements ISchedulesRepository {
                 scheduleModel.getPeriod(),
                 scheduleModel.getVolume(),
                 scheduleDeviceList
-        );
-    }
-
-    @Override
-    public ScheduleModel getCompactScheduleById(final String id)
-            throws SchedulesRepositoryNotFoundException {
-        final FullScheduleModel scheduleModel = mSchedulesData.getScheduleById(id);
-        if (scheduleModel == null) {
-            throw new SchedulesRepositoryNotFoundException(
-                    "Requested schedule with id: " + id + " was not found!");
-        }
-        return new ScheduleModel(
-                scheduleModel.getId(),
-                scheduleModel.getName(),
-                scheduleModel.getPeriod(),
-                scheduleModel.getVolume()
         );
     }
 

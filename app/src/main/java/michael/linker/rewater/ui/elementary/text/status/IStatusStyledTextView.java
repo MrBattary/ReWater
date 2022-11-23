@@ -1,6 +1,6 @@
 package michael.linker.rewater.ui.elementary.text.status;
 
-import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.ui.elementary.text.IText;
 
 public interface IStatusStyledTextView extends IText {

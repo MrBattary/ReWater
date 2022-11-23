@@ -18,9 +18,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
@@ -84,7 +84,7 @@ public class DeviceInfoFragment extends Fragment {
         mCancelButton = view.findViewById(R.id.device_info_back_button);
     }
 
-    private void initParentScheduleData(final ScheduleModel scheduleModel) {
+    private void initParentScheduleData(final ScheduleRepositoryModel scheduleModel) {
         if (scheduleModel != null) {
             mParentScheduleView.setParentEntity(scheduleModel.getName());
             mParentScheduleInfoView.setWaterVolumeInfo(scheduleModel.getVolume());

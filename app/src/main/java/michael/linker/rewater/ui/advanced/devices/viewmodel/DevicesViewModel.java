@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import michael.linker.rewater.config.RepositoryConfiguration;
-import michael.linker.rewater.data.model.DetailedStatusModel;
 import michael.linker.rewater.data.model.IdNameModel;
+import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.data.repository.devices.DevicesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.devices.model.AddDeviceModel;
@@ -20,7 +20,8 @@ import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
 import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryNotFoundException;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkRepositoryModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceCardModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceInfoModel;
 
@@ -30,14 +31,15 @@ public class DevicesViewModel extends ViewModel {
     private final INetworksRepository mNetworksRepository;
 
     private final MutableLiveData<List<DeviceCardModel>> mDeviceCardModels;
-    private final MutableLiveData<List<ScheduleModel>> mCompactScheduleModels;
+    private final MutableLiveData<List<ScheduleWithNetworkRepositoryModel>>
+            mScheduleWithNetworkModels;
     private final MutableLiveData<List<String>> mAlreadyTakenDeviceNames;
 
     private String mDeviceHardwareId;
     private final MutableLiveData<String> mDeviceId;
     private final MutableLiveData<String> mDeviceName;
     private final MutableLiveData<DetailedStatusModel> mDeviceStatus;
-    private final MutableLiveData<ScheduleModel> mParentScheduleModel;
+    private final MutableLiveData<ScheduleRepositoryModel> mParentScheduleModel;
     private final MutableLiveData<NetworkRepositoryModel> mParentNetworkModel;
 
     public DevicesViewModel() {
@@ -46,7 +48,7 @@ public class DevicesViewModel extends ViewModel {
         mSchedulesRepository = RepositoryConfiguration.getSchedulesRepository();
 
         mDeviceCardModels = new MutableLiveData<>();
-        mCompactScheduleModels = new MutableLiveData<>();
+        mScheduleWithNetworkModels = new MutableLiveData<>();
         mAlreadyTakenDeviceNames = new MutableLiveData<>();
 
         mDeviceId = new MutableLiveData<>();
@@ -62,8 +64,8 @@ public class DevicesViewModel extends ViewModel {
         return mDeviceCardModels;
     }
 
-    public LiveData<List<ScheduleModel>> getCompactScheduleModels() {
-        return mCompactScheduleModels;
+    public LiveData<List<ScheduleWithNetworkRepositoryModel>> getScheduleWithNetworkModels() {
+        return mScheduleWithNetworkModels;
     }
 
     public MutableLiveData<List<String>> getAlreadyTakenDeviceNames() {
@@ -86,7 +88,7 @@ public class DevicesViewModel extends ViewModel {
         mDeviceName.setValue(name);
     }
 
-    public LiveData<ScheduleModel> getParentScheduleModel() {
+    public LiveData<ScheduleRepositoryModel> getParentScheduleModel() {
         return mParentScheduleModel;
     }
 
@@ -111,7 +113,7 @@ public class DevicesViewModel extends ViewModel {
                                 parentScheduleId);
 
                 mParentScheduleModel.setValue(
-                        mSchedulesRepository.getCompactScheduleById(parentScheduleId));
+                        mSchedulesRepository.getScheduleById(parentScheduleId));
                 mParentNetworkModel.setValue(
                         mNetworksRepository.getNetworkById(parentNetworkId));
 
@@ -142,7 +144,7 @@ public class DevicesViewModel extends ViewModel {
                             scheduleId);
 
             mParentScheduleModel.setValue(
-                    mSchedulesRepository.getCompactScheduleById(scheduleId));
+                    mSchedulesRepository.getScheduleById(scheduleId));
             mParentNetworkModel.setValue(
                     mNetworksRepository.getNetworkById(parentNetworkId));
         } catch (DevicesRepositoryNotFoundException | SchedulesRepositoryNotFoundException e) {
@@ -206,7 +208,7 @@ public class DevicesViewModel extends ViewModel {
         mAlreadyTakenDeviceNames.setValue(deviceList.stream()
                 .map(DeviceModel::getName)
                 .collect(Collectors.toList()));
-        mCompactScheduleModels.setValue(mSchedulesRepository.getCompactScheduleList());
+        mScheduleWithNetworkModels.setValue(mSchedulesRepository.getScheduleWithNetworkList());
     }
 
     private List<DeviceCardModel> buildDeviceCardModelList(
@@ -226,7 +228,7 @@ public class DevicesViewModel extends ViewModel {
 
                     parentScheduleIdNameModel = new IdNameModel(
                             parentScheduleId,
-                            mSchedulesRepository.getCompactScheduleById(parentScheduleId).getName()
+                            mSchedulesRepository.getScheduleById(parentScheduleId).getName()
                     );
                     parentNetworkIdNameModel = new IdNameModel(
                             parentNetworkId,

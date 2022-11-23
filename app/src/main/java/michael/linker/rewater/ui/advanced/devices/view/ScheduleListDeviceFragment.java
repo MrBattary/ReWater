@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkRepositoryModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
@@ -50,10 +50,10 @@ public class ScheduleListDeviceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = view.findViewById(R.id.devices_schedules_list);
-        mViewModel.getCompactScheduleModels().observe(getViewLifecycleOwner(),
+        mViewModel.getScheduleWithNetworkModels().observe(getViewLifecycleOwner(),
                 compactScheduleModels -> {
                     List<ScheduleListItemModel> scheduleListItemModels = new ArrayList<>();
-                    for (ScheduleModel model : compactScheduleModels) {
+                    for (ScheduleWithNetworkRepositoryModel model : compactScheduleModels) {
                         scheduleListItemModels.add(new ScheduleListItemModel(model));
                     }
                     mAdapter = new ArrayAdapter<>(requireContext(),
@@ -94,15 +94,22 @@ public class ScheduleListDeviceFragment extends Fragment {
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
     }
 
-    private static class ScheduleListItemModel extends ScheduleModel {
-        public ScheduleListItemModel(final ScheduleModel model) {
-            super(model.getId(), model.getName(), model.getPeriod(), model.getVolume());
+    private static class ScheduleListItemModel {
+        private final String mScheduleId, mScheduleName;
+
+        public ScheduleListItemModel(final ScheduleWithNetworkRepositoryModel model) {
+            mScheduleId = model.getScheduleIdNameModel().getId();
+            mScheduleName = model.getScheduleIdNameModel().getName();
         }
 
         @NonNull
         @Override
         public String toString() {
-            return super.getName();
+            return mScheduleName;
+        }
+
+        public String getId() {
+            return mScheduleId;
         }
     }
 }

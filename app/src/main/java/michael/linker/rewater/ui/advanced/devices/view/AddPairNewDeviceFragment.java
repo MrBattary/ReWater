@@ -20,7 +20,7 @@ import androidx.transition.TransitionManager;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.ColorsProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;

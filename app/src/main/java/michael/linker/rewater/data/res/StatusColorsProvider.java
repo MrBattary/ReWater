@@ -3,7 +3,7 @@ package michael.linker.rewater.data.res;
 import java.util.Map;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.model.status.Status;
 
 public class StatusColorsProvider {
     private static final Map<Status, Integer> STATUS_INTEGER_MAP;

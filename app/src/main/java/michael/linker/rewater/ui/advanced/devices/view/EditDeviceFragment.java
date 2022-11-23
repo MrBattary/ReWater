@@ -20,7 +20,7 @@ import java.util.List;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
+import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
@@ -28,6 +28,7 @@ import michael.linker.rewater.ui.advanced.devices.model.DeviceInfoModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.FocusableTextInputView;
@@ -35,7 +36,6 @@ import michael.linker.rewater.ui.elementary.input.text.IFocusableTextInputView;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
 import michael.linker.rewater.ui.elementary.parententity.ParentScheduleInfoView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 
 public class EditDeviceFragment extends Fragment {
     private boolean initialized = false;
@@ -121,7 +121,7 @@ public class EditDeviceFragment extends Fragment {
         mNameInput.setText(deviceName);
     }
 
-    private void initParentArea(final ScheduleModel scheduleModel,
+    private void initParentArea(final ScheduleRepositoryModel scheduleModel,
             final NetworkRepositoryModel networkRepositoryModel) {
         if (scheduleModel == null && networkRepositoryModel == null) {
             mParentsNotFoundViewGroup.setVisibility(View.VISIBLE);
@@ -132,7 +132,7 @@ public class EditDeviceFragment extends Fragment {
         }
     }
 
-    private void initParentScheduleData(final ScheduleModel scheduleModel) {
+    private void initParentScheduleData(final ScheduleRepositoryModel scheduleModel) {
         if (scheduleModel != null) {
             mParentScheduleView.setParentEntity(scheduleModel.getName());
             mParentScheduleInfoView.setWaterVolumeInfo(scheduleModel.getVolume());
@@ -188,7 +188,7 @@ public class EditDeviceFragment extends Fragment {
                 (dialogInterface, i) -> dialogInterface.cancel());
     }
 
-    private void initButtons(final View view, final ScheduleModel scheduleModel) {
+    private void initButtons(final View view, final ScheduleRepositoryModel scheduleModel) {
         mDeleteButton.setOnClickListener(l -> {
             this.storeInputs();
             mOnDeleteDialog.show();

@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import michael.linker.rewater.data.model.Status;
+import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.StatusColorsProvider;
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 

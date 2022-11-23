@@ -1,6 +1,6 @@
 package michael.linker.rewater.data.repository.networks.model;
 
-import michael.linker.rewater.data.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.status.DetailedStatusModel;
 
 public class NetworkRepositoryModel {
     private final String mId, mName, mDescription;

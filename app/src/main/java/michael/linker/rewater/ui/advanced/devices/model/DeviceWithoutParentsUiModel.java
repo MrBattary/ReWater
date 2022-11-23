@@ -1,6 +1,6 @@
 package michael.linker.rewater.ui.advanced.devices.model;
 
-import michael.linker.rewater.data.model.DetailedStatusModel;
+import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceModel;
 
 public class DeviceWithoutParentsUiModel {

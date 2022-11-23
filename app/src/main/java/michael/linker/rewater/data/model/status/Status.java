@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.model;
+package michael.linker.rewater.data.model.status;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

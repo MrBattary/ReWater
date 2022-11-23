@@ -18,7 +18,6 @@ import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
 import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryAlreadyExistsException;
 import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceIdNameUiModel;
 
@@ -272,8 +271,9 @@ public class UpdateScheduleViewModel extends ViewModel {
                                 deviceModel.getId(),
                                 deviceModel.getName()))
                 .collect(Collectors.toList()));
-        mAlreadyTakenSchedulesNames.setValue(mSchedulesRepository.getCompactScheduleList().stream()
-                .map(ScheduleModel::getName)
-                .collect(Collectors.toList()));
+        mAlreadyTakenSchedulesNames.setValue(
+                mSchedulesRepository.getScheduleWithNetworkList().stream()
+                        .map(model -> model.getScheduleIdNameModel().getName())
+                        .collect(Collectors.toList()));
     }
 }
