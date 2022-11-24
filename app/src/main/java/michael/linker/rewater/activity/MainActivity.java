@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private NavController findNavController(final AppCompatActivity activity)
             throws RuntimeException {
         Fragment fragment = activity.getSupportFragmentManager().findFragmentById(
-                R.id.navigation_host_fragment);
+                R.id.main_navigation_host_fragment);
         if (!(fragment instanceof NavHostFragment)) {
             throw new RuntimeException(
                     "Activity " + this + " does not have a NavHostFragment");

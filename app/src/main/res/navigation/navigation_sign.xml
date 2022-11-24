@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_sign"
+    app:startDestination="@id/navigation_sign_in">
+
+    <fragment
+        android:id="@+id/navigation_sign_in"
+        android:name="michael.linker.rewater.ui.advanced.sign.in.view.SignInFragment"
+        android:label="@string/navigation_title_sign_in"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/navigation_action_sign_in_to_sign_up"
+            app:destination="@id/navigation_sign_up"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_sign_up"
+        android:name="michael.linker.rewater.ui.advanced.sign.up.view.SignUpFragment"
+        android:label="@string/navigation_title_sign_up"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/navigation_action_sign_up_to_sign_in"
+            app:destination="@id/navigation_sign_in"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+</navigation>

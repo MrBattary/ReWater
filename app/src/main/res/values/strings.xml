@@ -21,6 +21,8 @@
     <string name="navigation_title_schedules_add">Create schedule</string>
     <string name="navigation_title_schedules_edit">Edit schedule</string>
     <string name="navigation_title_schedules_devices">Attach devices</string>
+    <string name="navigation_title_sign_in">Sign In</string>
+    <string name="navigation_title_sign_up">Sign Up</string>
 
     <!-- Inputs. -->
     <string name="input_hint_name">Name</string>
