@@ -14,6 +14,7 @@ import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 import michael.linker.rewater.data.model.unit.WateringPeriodModel;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
+import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
 import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryAlreadyExistsException;
 import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryNotFoundException;
@@ -22,6 +23,7 @@ import michael.linker.rewater.data.repository.schedules.model.ScheduleRepository
 import michael.linker.rewater.ui.advanced.devices.model.DeviceIdNameUiModel;
 
 public class UpdateScheduleViewModel extends ViewModel {
+    private final INetworksRepository mNetworksRepository;
     private final ISchedulesRepository mSchedulesRepository;
     private final IDevicesRepository mDevicesRepository;
 
@@ -34,6 +36,7 @@ public class UpdateScheduleViewModel extends ViewModel {
     private final MutableLiveData<List<DeviceIdNameUiModel>> mAttachedDeviceList;
 
     public UpdateScheduleViewModel() {
+        mNetworksRepository = RepositoryConfiguration.getNetworksRepository();
         mSchedulesRepository = RepositoryConfiguration.getSchedulesRepository();
         mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
 
@@ -265,6 +268,7 @@ public class UpdateScheduleViewModel extends ViewModel {
 
 
     public void updateListsFromRepositories() {
+        mNetworksRepository.updateNetworkList();
         mUnattachedDeviceList.setValue(mDevicesRepository.getDeviceAttachList().stream()
                 .map(deviceModel ->
                         new DeviceIdNameUiModel(

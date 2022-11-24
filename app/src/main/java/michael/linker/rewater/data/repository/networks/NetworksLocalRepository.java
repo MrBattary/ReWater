@@ -1,6 +1,10 @@
 package michael.linker.rewater.data.repository.networks;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,26 +23,56 @@ public class NetworksLocalRepository implements INetworksRepository {
     private final INetworksData mNetworksData;
     private final ISchedulesData mSchedulesData;
     private final IDevicesData mDevicesData;
+
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
     private final IOneToManyDataLink mScheduleToDevicesDataLink;
+
+    private final MutableLiveData<Status> mOverallStatusOfTheAllNetworks;
+    private List<NetworkRepositoryModel> internalNetworkList;
 
     public NetworksLocalRepository() {
         mNetworksData = DataConfiguration.getNetworksData();
         mSchedulesData = DataConfiguration.getSchedulesData();
         mDevicesData = DataConfiguration.getDevicesData();
+
         mNetworkToSchedulesDataLink = DataConfiguration.getNetworkToSchedulesDataLink();
         mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
+
+        mOverallStatusOfTheAllNetworks = new MutableLiveData<>();
+        internalNetworkList = new ArrayList<>();
+        this.updateNetworkList();
     }
 
     @Override
-    public List<NetworkRepositoryModel> getNetworkList() {
+    public LiveData<Status> getNetworksOverallStatusLiveData() {
+        return mOverallStatusOfTheAllNetworks;
+    }
+
+    @Override
+    public void updateNetworkList() {
         final List<FullNetworkModel> dataModelList =
                 mNetworksData.getNetworkList();
         final List<NetworkRepositoryModel> modelList = new ArrayList<>();
         for (FullNetworkModel networkModel : dataModelList) {
             modelList.add(this.getNetworkById(networkModel.getId()));
         }
-        return modelList;
+        internalNetworkList = modelList;
+
+        final Status networksWaterStatus = Status.getWorstStatus(
+                modelList.stream()
+                        .map(network -> network.getStatus().getWater())
+                        .collect(Collectors.toList()));
+        final Status networksBatteryStatus = Status.getWorstStatus(
+                modelList.stream()
+                        .map(network -> network.getStatus().getBattery())
+                        .collect(Collectors.toList()));
+        mOverallStatusOfTheAllNetworks.setValue(
+                Status.getWorstStatus(Arrays.asList(networksWaterStatus, networksBatteryStatus)));
+    }
+
+    @Override
+    public List<NetworkRepositoryModel> getNetworkList() {
+        return internalNetworkList;
     }
 
     @Override

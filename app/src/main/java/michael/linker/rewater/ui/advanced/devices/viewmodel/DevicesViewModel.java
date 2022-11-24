@@ -192,6 +192,7 @@ public class DevicesViewModel extends ViewModel {
     }
 
     public void updateListsFromRepositories() {
+        mNetworksRepository.updateNetworkList();
         final List<DeviceRepositoryModel> deviceList = mDevicesRepository.getDeviceList();
         final List<DeviceCardUiModel> cardModelList = this.buildDeviceCardModelList(deviceList);
 

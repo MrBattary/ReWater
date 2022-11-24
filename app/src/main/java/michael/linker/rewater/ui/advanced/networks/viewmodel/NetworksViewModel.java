@@ -82,6 +82,7 @@ public class NetworksViewModel extends ViewModel {
     }
 
     public void updateListsFromRepositories() {
+        mNetworksRepository.updateNetworkList();
         final List<NetworkRepositoryModel> networkRepositoryModelList =
                 mNetworksRepository.getNetworkList();
         mCompactNetworkModels.setValue(

@@ -1,7 +1,10 @@
 package michael.linker.rewater.data.repository.networks;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
+import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 
@@ -10,9 +13,23 @@ import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryMo
  */
 public interface INetworksRepository {
     /**
-     * Get a simple list of the all networks.
+     * Returns current data containing the general status of all the user's networks.
      *
-     * @return the list of compact network models in it
+     * @return live data of the current status.
+     */
+    LiveData<Status> getNetworksOverallStatusLiveData();
+
+    /**
+     * Requires update of the all networks list from the data source to the internal memory.
+     * Also updates the NetworksOverallStatusLiveData
+     * @see INetworksRepository::getNetworksOverallStatusLiveData
+     */
+    void updateNetworkList();
+
+    /**
+     * Get a simple list of the all networks from the internal memory.
+     *
+     * @return the list of network models in it
      */
     List<NetworkRepositoryModel> getNetworkList();
 
@@ -31,7 +48,8 @@ public interface INetworksRepository {
      * @param model new network model, ID can be null
      * @throws NetworksRepositoryAlreadyExistsException if network with provided name already exists
      */
-    void addNetwork(CreateOrUpdateNetworkRepositoryModel model) throws NetworksRepositoryAlreadyExistsException;
+    void addNetwork(CreateOrUpdateNetworkRepositoryModel model)
+            throws NetworksRepositoryAlreadyExistsException;
 
     /**
      * Update an existing network.
