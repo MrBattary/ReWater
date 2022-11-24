@@ -1,13 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sign_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.advanced.sign.up.view.SignUpFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <Button
+        android:id="@+id/sign_up_sign_in_button"
+        style="@style/TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/sign_top_right_corner_button_margin"
+        android:layout_marginVertical="@dimen/sign_top_right_corner_button_margin"
+        android:text="@string/button_sign_up"
+        app:icon="@drawable/ic_sign_in"
+        app:iconTint="@color/text_secondary" />
 
-</FrameLayout>
+    <RelativeLayout
+        android:id="@+id/sign_in_center_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true">
+
+        <Button
+            android:id="@+id/sign_up_sign_up_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sign_up_inputs"
+            android:layout_centerHorizontal="true"
+            android:text="@string/button_sign_up"
+            app:icon="@drawable/ic_sign_up"
+            app:iconTint="@color/positive_color" />
+
+        <RelativeLayout
+            android:id="@+id/sign_up_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/sign_up_logo_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/description_sign_logo"
+                android:src="@drawable/ic_logo_big" />
+
+            <TextView
+                android:id="@+id/sign_up_logo_app_name"
+                style="@style/CustomTextLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sign_up_logo_image"
+                android:layout_centerHorizontal="true"
+                android:text="@string/app_name" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/sign_up_inputs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sign_up_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/sign_input_margin">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sign_up_input_password"
+                style="@style/TextInputPasswordErrorLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/sign_up_input_email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sign_up_input_password_input"
+                    style="@style/EditTextPasswordStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/input_hint_password"
+                    android:importantForAutofill="no" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sign_up_input_username"
+                style="@style/TextInputErrorLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sign_up_input_username_input"
+                    style="@style/EditTextViewParentStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/input_hint_username"
+                    android:importantForAutofill="no" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/sign_up_input_email"
+                style="@style/TextInputErrorLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/sign_up_input_username">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sign_up_input_email_input"
+                    style="@style/EditTextViewParentStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/input_hint_email"
+                    android:importantForAutofill="no" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

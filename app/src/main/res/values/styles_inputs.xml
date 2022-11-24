@@ -31,6 +31,11 @@
         <item name="errorTextColor">@color/negative_color</item>
     </style>
 
+    <style name="TextInputPasswordErrorLayoutStyle" parent="TextInputPasswordStyle">
+        <item name="errorEnabled">true</item>
+        <item name="errorTextColor">@color/negative_color</item>
+    </style>
+
 
     <!-- Input styles. -->
     <style name="EditTextViewParentStyle" parent="android:Widget.EditText">

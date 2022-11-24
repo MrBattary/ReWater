@@ -33,6 +33,10 @@
     <string name="input_hint_days">Days</string>
     <string name="input_hint_hours">Hours</string>
     <string name="input_hint_minutes">Minutes</string>
+    <string name="input_hint_username">Username</string>
+    <string name="input_hint_email">Email</string>
+    <string name="input_hint_username_or_email">Username or Email</string>
+    <string name="input_hint_password">Password</string>
     <string name="input_error_days">The value of days must be an integer from 0 to 99!</string>
     <string name="input_error_hours">The value of hours must be an integer from 0 to 23!</string>
     <string name="input_error_minutes">The value of minutes must be an integer from 0 to 59!</string>
@@ -117,6 +121,9 @@
     <string name="button_manual_watering">Manual watering</string>
     <string name="button_force_watering">Force watering</string>
     <string name="button_water">Water</string>
+    <string name="button_sign_in">Sign in</string>
+    <string name="button_sign_up">Sign up</string>
+    <string name="button_restore_password">Forgot password?</string>
 
     <!-- Descriptions. -->
     <string name="description_back_button">Back to the previous screen</string>
@@ -133,4 +140,5 @@
     <string name="description_networks_add_fab">Create new network</string>
     <string name="description_devices_add_fab">Add new device</string>
     <string name="description_parent_schedule_or_network_icon">Icon of parent</string>
+    <string name="description_sign_logo">ReWater app logo</string>
 </resources>

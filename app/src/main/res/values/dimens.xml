@@ -35,4 +35,8 @@
     <!-- Navigation dimensions. -->
     <dimen name="navigation_icon_size">26dp</dimen>
     <dimen name="navigation_home_icon_size">40dp</dimen>
+
+    <!-- Sign in/up dimensions. -->
+    <dimen name="sign_input_margin">30dp</dimen>
+    <dimen name="sign_top_right_corner_button_margin">5dp</dimen>
 </resources>
