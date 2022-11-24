@@ -35,7 +35,7 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
     @Override
     public List<ScheduleWithNetworkIdNameRepositoryModel> getScheduleWithNetworkList() {
         final List<FullScheduleModel> scheduleModelList =
-                mSchedulesData.getScheduleList().getScheduleModelList();
+                mSchedulesData.getScheduleList();
         final List<ScheduleWithNetworkIdNameRepositoryModel> resultList = new ArrayList<>();
         for (FullScheduleModel scheduleModel : scheduleModelList) {
             final String parentNetworkId =
@@ -58,7 +58,7 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
     public List<ScheduleRepositoryModel> getScheduleListByNetworkId(final String networkId) {
         final List<ScheduleRepositoryModel> modelList = new ArrayList<>();
         final List<FullScheduleModel> dataModelList =
-                mSchedulesData.getScheduleList().getScheduleModelList();
+                mSchedulesData.getScheduleList();
         final List<String> parentNetworkScheduleList =
                 mNetworkToSchedulesDataLink.getRightEntityIdListByLeftEntityId(networkId);
         for (FullScheduleModel scheduleModel : dataModelList) {

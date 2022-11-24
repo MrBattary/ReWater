@@ -40,8 +40,7 @@ public class DevicesLocalRepository implements IDevicesRepository {
     @Override
     public List<DeviceRepositoryModel> getDeviceList() {
         final List<DeviceRepositoryModel> deviceRepositoryModels = new ArrayList<>();
-        final List<FullDeviceModel> dataDeviceModelList =
-                mDevicesData.getDevicesList().getFullDeviceModels();
+        final List<FullDeviceModel> dataDeviceModelList = mDevicesData.getDevicesList();
 
         for (FullDeviceModel dataDeviceModel : dataDeviceModelList) {
             IdNameModel parentScheduleIdNameModel = new IdNameModel(null, null);
@@ -80,7 +79,7 @@ public class DevicesLocalRepository implements IDevicesRepository {
     public List<DeviceIdNameRepositoryModel> getDeviceAttachList() {
         final List<DeviceIdNameRepositoryModel> deviceModels = new ArrayList<>();
         final List<FullDeviceModel> dataDeviceModelList =
-                mDevicesData.getDevicesList().getFullDeviceModels();
+                mDevicesData.getDevicesList();
         final List<String> unattachedDeviceIdList = dataDeviceModelList.stream()
                 .map(FullDeviceModel::getId)
                 .collect(Collectors.toList());

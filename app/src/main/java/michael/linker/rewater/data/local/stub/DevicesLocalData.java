@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import michael.linker.rewater.data.model.status.Status;
-import michael.linker.rewater.data.local.stub.model.DevicesListModel;
 import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
 
@@ -44,8 +43,8 @@ public class DevicesLocalData implements IDevicesData {
     }
 
     @Override
-    public DevicesListModel getDevicesList() {
-        return new DevicesListModel(mFullDeviceModels);
+    public List<FullDeviceModel> getDevicesList() {
+        return new ArrayList<>(mFullDeviceModels);
     }
 
     @Override

@@ -6,7 +6,6 @@ import java.util.List;
 import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 import michael.linker.rewater.data.model.unit.WateringPeriodModel;
 import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
-import michael.linker.rewater.data.local.stub.model.ScheduleListModel;
 
 public class SchedulesLocalData implements ISchedulesData {
     private final List<FullScheduleModel> mFullScheduleModels;
@@ -34,8 +33,8 @@ public class SchedulesLocalData implements ISchedulesData {
     }
 
     @Override
-    public ScheduleListModel getScheduleList() {
-        return new ScheduleListModel(mFullScheduleModels);
+    public List<FullScheduleModel> getScheduleList() {
+        return new ArrayList<>(mFullScheduleModels);
     }
 
     @Override

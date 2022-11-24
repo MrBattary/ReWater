@@ -1,7 +1,8 @@
 package michael.linker.rewater.data.local.stub;
 
+import java.util.List;
+
 import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
-import michael.linker.rewater.data.local.stub.model.ScheduleListModel;
 
 public interface ISchedulesData {
     /**
@@ -9,7 +10,7 @@ public interface ISchedulesData {
      *
      * @return model with list on schedules in it
      */
-    ScheduleListModel getScheduleList();
+    List<FullScheduleModel> getScheduleList();
 
     /**
      * Get specific schedule by it's id.

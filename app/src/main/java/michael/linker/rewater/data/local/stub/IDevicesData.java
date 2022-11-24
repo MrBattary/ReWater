@@ -1,6 +1,7 @@
 package michael.linker.rewater.data.local.stub;
 
-import michael.linker.rewater.data.local.stub.model.DevicesListModel;
+import java.util.List;
+
 import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
 
 public interface IDevicesData {
@@ -9,7 +10,7 @@ public interface IDevicesData {
      *
      * @return model with list on devices in it
      */
-    DevicesListModel getDevicesList();
+    List<FullDeviceModel> getDevicesList();
 
     /**
      * Get specific device by it's id.

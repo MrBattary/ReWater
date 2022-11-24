@@ -1,8 +1,8 @@
 package michael.linker.rewater.data.local.stub;
 
+import java.util.List;
+
 import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
-import michael.linker.rewater.data.local.stub.model.NetworkListModel;
-import michael.linker.rewater.data.local.stub.model.EditableNetworkModel;
 
 public interface INetworksData {
     /**
@@ -10,7 +10,7 @@ public interface INetworksData {
      *
      * @return model with list on networks in it
      */
-    NetworkListModel getNetworkList();
+    List<FullNetworkModel> getNetworkList();
 
     /**
      * Get specific network by it's id.
@@ -25,7 +25,7 @@ public interface INetworksData {
      *
      * @param model new network model, ID can be null
      */
-    void addNetwork(EditableNetworkModel model);
+    void addNetwork(FullNetworkModel model);
 
     /**
      * Update an existing network.
