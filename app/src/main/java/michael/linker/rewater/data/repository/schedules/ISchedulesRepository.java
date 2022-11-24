@@ -32,18 +32,6 @@ public interface ISchedulesRepository {
     ScheduleRepositoryModel getScheduleById(String id) throws SchedulesRepositoryNotFoundException;
 
     /**
-     * DEPRECATED
-     * Get schedule ID by inner device ID.
-     *
-     * @param deviceId inner device ID
-     * @return schedule ID
-     * @throws SchedulesRepositoryNotFoundException if no schedule contains a device with the
-     *                                              provided ID
-     */
-    String getScheduleIdByIdOfAttachedDevice(String deviceId)
-            throws SchedulesRepositoryNotFoundException;
-
-    /**
      * Create specific schedule in the specific network using repository model.
      *
      * @param networkId parent network ID

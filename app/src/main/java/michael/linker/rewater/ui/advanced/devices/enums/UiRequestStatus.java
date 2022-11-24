@@ -1,6 +1,6 @@
 package michael.linker.rewater.ui.advanced.devices.enums;
 
-public enum RequestStatus {
+public enum UiRequestStatus {
     UNDEFINED,
     OK,
     ERROR

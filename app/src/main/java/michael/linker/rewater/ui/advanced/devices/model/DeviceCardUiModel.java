@@ -5,13 +5,13 @@ import androidx.annotation.Nullable;
 import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
 
-public class DeviceCardModel {
+public class DeviceCardUiModel {
     private final String mId, mName;
     private final IdNameModel mParentSchedule;
     private final IdNameModel mParentNetwork;
     private final DetailedStatusModel mStatus;
 
-    public DeviceCardModel(
+    public DeviceCardUiModel(
             final String id,
             final String name,
             @Nullable IdNameModel parentSchedule,

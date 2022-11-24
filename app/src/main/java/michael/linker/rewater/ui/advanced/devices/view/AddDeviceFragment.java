@@ -19,13 +19,13 @@ import com.google.android.material.button.MaterialButton;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
+import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
+import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
@@ -64,17 +64,15 @@ public class AddDeviceFragment extends Fragment {
         mViewModel.getAlreadyTakenDeviceNames().observe(getViewLifecycleOwner(),
                 this::initInputsLogic);
         mViewModel.getDeviceName().observe(getViewLifecycleOwner(), this::initInputs);
+        mViewModel.getDeviceId().observe(getViewLifecycleOwner(),
+                id -> this.initDialogs(view));
         mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(), m -> {
             this.initParentScheduleData(m);
             this.initButtons(view, m);
+            this.initParentArea(m);
         });
         mViewModel.getParentNetworkModel().observe(getViewLifecycleOwner(),
                 this::initParentNetworkData);
-        mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(),
-                sm -> mViewModel.getParentNetworkModel().observe(getViewLifecycleOwner(),
-                        nm -> this.initParentArea(sm, nm)));
-        mViewModel.getDeviceId().observe(getViewLifecycleOwner(),
-                id -> this.initDialogs(view));
     }
 
     private void initFields(final View view) {
@@ -119,9 +117,8 @@ public class AddDeviceFragment extends Fragment {
         mNameInput.setText(deviceName);
     }
 
-    private void initParentArea(final ScheduleRepositoryModel scheduleModel,
-            final NetworkRepositoryModel networkRepositoryModel) {
-        if (scheduleModel == null && networkRepositoryModel == null) {
+    private void initParentArea(final ScheduleUiModel scheduleModel) {
+        if (scheduleModel == null) {
             mParentsNotFoundViewGroup.setVisibility(View.VISIBLE);
             mParentsExistsViewGroup.setVisibility(View.GONE);
         } else {
@@ -130,7 +127,7 @@ public class AddDeviceFragment extends Fragment {
         }
     }
 
-    private void initParentScheduleData(final ScheduleRepositoryModel scheduleModel) {
+    private void initParentScheduleData(final ScheduleUiModel scheduleModel) {
         if (scheduleModel != null) {
             mParentScheduleView.setParentEntity(scheduleModel.getName());
             mParentScheduleInfoView.setWaterVolumeInfo(scheduleModel.getVolume());
@@ -140,9 +137,9 @@ public class AddDeviceFragment extends Fragment {
         }
     }
 
-    private void initParentNetworkData(final NetworkRepositoryModel networkRepositoryModel) {
-        if (networkRepositoryModel != null) {
-            mParentNetworkView.setParentEntity(networkRepositoryModel.getName());
+    private void initParentNetworkData(final NetworkUiModel networkModel) {
+        if (networkModel != null) {
+            mParentNetworkView.setParentEntity(networkModel.getName());
         } else {
             mParentNetworkView.clearParentEntity();
         }
@@ -173,7 +170,7 @@ public class AddDeviceFragment extends Fragment {
                 (dialogInterface, i) -> dialogInterface.cancel());
     }
 
-    private void initButtons(final View view, final ScheduleRepositoryModel scheduleModel) {
+    private void initButtons(final View view, final ScheduleUiModel scheduleModel) {
         final NavController navController = Navigation.findNavController(view);
 
         mDetachButton.setOnClickListener(l -> {

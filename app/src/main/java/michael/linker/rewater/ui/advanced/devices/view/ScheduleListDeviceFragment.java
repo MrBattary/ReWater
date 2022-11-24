@@ -80,7 +80,9 @@ public class ScheduleListDeviceFragment extends Fragment {
                             final ScheduleListItemModel chosenSchedule =
                                     (ScheduleListItemModel) mListView.getItemAtPosition(i);
                             try {
-                                mViewModel.attachParentsByScheduleId(chosenSchedule.getId());
+                                mViewModel.attachParentsByScheduleId(
+                                        chosenSchedule.getId(),
+                                        chosenSchedule.getNetworkId());
                                 Navigation.findNavController(view).navigateUp();
                             } catch (DevicesViewModelFailedException e) {
                                 ToastProvider.showShort(requireContext(), e.getMessage());
@@ -95,11 +97,12 @@ public class ScheduleListDeviceFragment extends Fragment {
     }
 
     private static class ScheduleListItemModel {
-        private final String mScheduleId, mScheduleName;
+        private final String mScheduleId, mScheduleName, mNetworkId;
 
         public ScheduleListItemModel(final ScheduleWithNetworkIdNameRepositoryModel model) {
             mScheduleId = model.getScheduleIdNameModel().getId();
             mScheduleName = model.getScheduleIdNameModel().getName();
+            mNetworkId = model.getParentNetworkIdNameModel().getId();
         }
 
         @NonNull
@@ -110,6 +113,10 @@ public class ScheduleListDeviceFragment extends Fragment {
 
         public String getId() {
             return mScheduleId;
+        }
+
+        public String getNetworkId() {
+            return mNetworkId;
         }
     }
 }

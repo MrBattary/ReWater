@@ -13,7 +13,7 @@ import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.ui.advanced.devices.model.DeviceCardModel;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceCardUiModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
@@ -61,7 +61,7 @@ public class DevicesCardView {
         this.initOnClickForCard(parentViewModel);
     }
 
-    public void setDataModel(final DeviceCardModel model) {
+    public void setDataModel(final DeviceCardUiModel model) {
         mId = model.getId();
         mName.setText(model.getName());
         final IdNameModel parentScheduleNameIdModel = model.getParentSchedule();

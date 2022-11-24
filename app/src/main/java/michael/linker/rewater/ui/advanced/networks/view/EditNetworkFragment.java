@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
-import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
+import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
@@ -75,14 +75,14 @@ public class EditNetworkFragment extends Fragment {
         mCancelButton = view.findViewById(R.id.edit_network_cancel_button);
     }
 
-    private void initInputs(final NetworkRepositoryModel compactModel) {
+    private void initInputs(final NetworkUiModel networkModel) {
         List<String> alreadyTakenNetworksNames =
                 mViewModel.getAlreadyTakenNetworkNames().getValue();
         List<String> alreadyTakenNetworkNamesExceptThis = Collections.emptyList();
         if (alreadyTakenNetworksNames != null) {
             alreadyTakenNetworkNamesExceptThis = alreadyTakenNetworksNames
                     .stream()
-                    .filter(heading -> !Objects.equals(heading, compactModel.getName()))
+                    .filter(heading -> !Objects.equals(heading, networkModel.getName()))
                     .collect(Collectors.toList());
         }
 
@@ -95,8 +95,8 @@ public class EditNetworkFragment extends Fragment {
         mDescriptionInput.setMaxLimit(
                 IntegersProvider.getInteger(R.integer.input_max_limit_description),
                 StringsProvider.getString(R.string.input_error_description_overflow));
-        mHeadingInput.setText(compactModel.getName());
-        mDescriptionInput.setText(compactModel.getDescription());
+        mHeadingInput.setText(networkModel.getName());
+        mDescriptionInput.setText(networkModel.getDescription());
     }
 
     private void initButtons(@NonNull final View view, final String networkId) {

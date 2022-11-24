@@ -19,10 +19,10 @@ import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
-import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
+import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
+import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
 import michael.linker.rewater.ui.elementary.parententity.ParentScheduleInfoView;
 import michael.linker.rewater.ui.elementary.status.DetailDescribedStatusView;
@@ -84,7 +84,7 @@ public class DeviceInfoFragment extends Fragment {
         mCancelButton = view.findViewById(R.id.device_info_back_button);
     }
 
-    private void initParentScheduleData(final ScheduleRepositoryModel scheduleModel) {
+    private void initParentScheduleData(final ScheduleUiModel scheduleModel) {
         if (scheduleModel != null) {
             mParentScheduleView.setParentEntity(scheduleModel.getName());
             mParentScheduleInfoView.setWaterVolumeInfo(scheduleModel.getVolume());
@@ -94,9 +94,9 @@ public class DeviceInfoFragment extends Fragment {
         }
     }
 
-    private void initParentNetworkData(final NetworkRepositoryModel networkRepositoryModel) {
-        if (networkRepositoryModel != null) {
-            mParentNetworkView.setParentEntity(networkRepositoryModel.getName());
+    private void initParentNetworkData(final NetworkUiModel networkModel) {
+        if (networkModel != null) {
+            mParentNetworkView.setParentEntity(networkModel.getName());
         } else {
             mParentNetworkView.clearParentEntity();
         }

@@ -26,18 +26,6 @@ public interface INetworksRepository {
     NetworkRepositoryModel getNetworkById(String id) throws NetworksRepositoryNotFoundException;
 
     /**
-     * DEPRECATED
-     * Get network ID by inner schedule ID.
-     *
-     * @param scheduleId inner schedule ID
-     * @return network ID
-     * @throws NetworksRepositoryNotFoundException if no network contains a schedule with the
-     * provided ID
-     */
-    String getNetworkIdByIdOfAttachedSchedule(String scheduleId)
-            throws NetworksRepositoryNotFoundException;
-
-    /**
      * Add a new network.
      *
      * @param model new network model, ID can be null

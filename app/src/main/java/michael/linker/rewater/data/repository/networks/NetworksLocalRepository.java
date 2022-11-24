@@ -58,18 +58,6 @@ public class NetworksLocalRepository implements INetworksRepository {
     }
 
     @Override
-    public String getNetworkIdByIdOfAttachedSchedule(String scheduleId)
-            throws NetworksRepositoryNotFoundException {
-        final String networkId = mNetworkToSchedulesDataLink.getLeftEntityIdByRightEntityId(
-                scheduleId);
-        if (networkId == null) {
-            throw new NetworksRepositoryNotFoundException(
-                    "No network contains a schedule with the ID: " + scheduleId);
-        }
-        return networkId;
-    }
-
-    @Override
     public void addNetwork(final CreateOrUpdateNetworkRepositoryModel model)
             throws NetworksRepositoryAlreadyExistsException {
         final List<String> alreadyUsedNames = mNetworksData.getNetworkList().getNetworkModelList()

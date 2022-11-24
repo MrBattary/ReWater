@@ -125,18 +125,6 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
     }
 
     @Override
-    public String getScheduleIdByIdOfAttachedDevice(String deviceId)
-            throws SchedulesRepositoryNotFoundException {
-        final String scheduleId = mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(
-                deviceId);
-        if (scheduleId == null) {
-            throw new SchedulesRepositoryNotFoundException(
-                    "No schedule contains a device with the ID: " + deviceId);
-        }
-        return scheduleId;
-    }
-
-    @Override
     public void createSchedule(
             final String networkId,
             final CreateOrUpdateScheduleRepositoryModel model

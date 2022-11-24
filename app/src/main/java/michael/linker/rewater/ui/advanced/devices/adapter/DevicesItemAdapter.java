@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.ui.advanced.devices.model.DeviceCardModel;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceCardUiModel;
 import michael.linker.rewater.ui.advanced.devices.view.part.DevicesCardView;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
@@ -20,13 +20,13 @@ public class DevicesItemAdapter extends
         RecyclerView.Adapter<DevicesItemAdapter.DevicesItemViewHolder> {
     private final Context mContext;
     private final DevicesViewModel mParentViewModel;
-    private final List<DeviceCardModel> mCompactDeviceModels;
+    private final List<DeviceCardUiModel> mCompactDeviceModels;
     private final IOrderedTransition mTransition;
 
     public DevicesItemAdapter(
             final Context context,
             final DevicesViewModel parentViewModel,
-            final List<DeviceCardModel> compactDeviceModels,
+            final List<DeviceCardUiModel> compactDeviceModels,
             final IOrderedTransition transition) {
         mContext = context;
         mParentViewModel = parentViewModel;

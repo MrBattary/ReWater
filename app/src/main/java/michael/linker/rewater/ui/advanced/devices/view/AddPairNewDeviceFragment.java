@@ -25,8 +25,8 @@ import michael.linker.rewater.data.res.ColorsProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
-import michael.linker.rewater.ui.advanced.devices.model.AddPairNewDeviceRequest;
-import michael.linker.rewater.ui.advanced.devices.enums.RequestStatus;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
+import michael.linker.rewater.ui.advanced.devices.enums.UiRequestStatus;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.AddPairNewDeviceViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
@@ -89,7 +89,7 @@ public class AddPairNewDeviceFragment extends Fragment {
                 if (currentLook == AddPairNewDeviceLook.BLUETOOTH) {
                     this.setMessage(view, request, R.string.pair_device_connect_success,
                             R.string.pair_device_connect_failure);
-                    if (request.getStatus() == RequestStatus.OK) {
+                    if (request.getStatus() == UiRequestStatus.OK) {
                         this.disableButton(mPairButton);
                         this.allowProceedToTheNextLook();
                     }
@@ -99,7 +99,7 @@ public class AddPairNewDeviceFragment extends Fragment {
                 if (currentLook == AddPairNewDeviceLook.ACCESS) {
                     this.setMessage(view, request, R.string.pair_device_access_success,
                             R.string.pair_device_access_failure);
-                    if (request.getStatus() == RequestStatus.OK) {
+                    if (request.getStatus() == UiRequestStatus.OK) {
                         this.allowProceedToTheNextLook();
                     }
                 }
@@ -108,7 +108,7 @@ public class AddPairNewDeviceFragment extends Fragment {
                 if (currentLook == AddPairNewDeviceLook.NETWORK) {
                     this.setMessage(view, request, R.string.pair_device_network_success,
                             R.string.pair_device_network_failure);
-                    if (request.getStatus() == RequestStatus.OK) {
+                    if (request.getStatus() == UiRequestStatus.OK) {
                         this.allowProceedToTheNextLook();
                     }
                 }
@@ -200,7 +200,7 @@ public class AddPairNewDeviceFragment extends Fragment {
         mStatusStyledMessage.setVisibility(View.GONE);
     }
 
-    private void setMessage(final View view, final AddPairNewDeviceRequest request,
+    private void setMessage(final View view, final DeviceUiRequest request,
             final int successId, final int failureId) {
         AutoTransition autoTransition = new AutoTransition();
         autoTransition.addTarget(view.findViewById(R.id.add_device_pair_new_controls));
@@ -210,10 +210,10 @@ public class AddPairNewDeviceFragment extends Fragment {
         TransitionManager.beginDelayedTransition(view.findViewById(R.id.devices_add_pair_new),
                 autoTransition);
 
-        if (request.getStatus() == RequestStatus.OK) {
+        if (request.getStatus() == UiRequestStatus.OK) {
             mStatusStyledMessage.setText(StringsProvider.getString(successId), Status.OK);
         }
-        if (request.getStatus() == RequestStatus.ERROR) {
+        if (request.getStatus() == UiRequestStatus.ERROR) {
             mStatusStyledMessage.setText(StringsProvider.getString(failureId), Status.DEFECT);
         }
     }
