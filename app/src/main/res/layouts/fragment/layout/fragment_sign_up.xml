@@ -119,7 +119,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/sign_up_input_email_input"
-                    style="@style/EditTextViewParentStyle"
+                    style="@style/EditTextEmailStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/input_hint_email"

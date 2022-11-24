@@ -50,6 +50,10 @@
         <item name="android:inputType">textPassword</item>
     </style>
 
+    <style name="EditTextEmailStyle" parent="EditTextViewParentStyle">
+        <item name="android:inputType">textEmailAddress</item>
+    </style>
+
     <style name="EditTextNumberStyle" parent="EditTextViewParentStyle">
         <item name="android:inputType">number</item>
     </style>
