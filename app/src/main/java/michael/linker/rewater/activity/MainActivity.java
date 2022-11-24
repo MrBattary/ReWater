@@ -1,4 +1,4 @@
-package michael.linker.rewater;
+package michael.linker.rewater.activity;
 
 import android.os.Bundle;
 
@@ -11,6 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import michael.linker.rewater.R;
 import michael.linker.rewater.databinding.ActivityMainBinding;
 import michael.linker.rewater.ui.advanced.navigation.view.HomeNavigationView;
 
