@@ -1,5 +1,7 @@
 package michael.linker.rewater.ui.advanced.sign.in.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
+import michael.linker.rewater.activity.MainActivity;
 import michael.linker.rewater.ui.advanced.sign.in.viewmodel.SignInViewModel;
 
 public class SignInFragment extends Fragment {
@@ -53,6 +56,14 @@ public class SignInFragment extends Fragment {
 
         mSignUpSwitchButton.setOnClickListener(
                 l -> navController.navigate(R.id.navigation_action_sign_in_to_sign_up));
+        mSignInButton.setOnClickListener(l -> {
+            final Activity activity = requireActivity();
+            final Intent intent = new Intent(activity, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+            activity.finish();
+        });
     }
 
 }
