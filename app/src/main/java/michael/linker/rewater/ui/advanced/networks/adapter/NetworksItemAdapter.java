@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
+import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
 import michael.linker.rewater.ui.advanced.networks.view.part.NetworksCardView;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksDevicesLinkViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
@@ -22,13 +22,13 @@ public class NetworksItemAdapter extends
     private final Context mContext;
     private final NetworksViewModel mParentViewModel;
     private final NetworksDevicesLinkViewModel mLinkViewModel;
-    private final List<NetworkRepositoryModel> mNetworkRepositoryModels;
+    private final List<NetworkUiModel> mNetworkRepositoryModels;
     private final IOrderedTransition mTransition;
 
     public NetworksItemAdapter(final Context context,
             final NetworksViewModel parentViewModel,
             final NetworksDevicesLinkViewModel linkViewModel,
-            final List<NetworkRepositoryModel> networkRepositoryModels,
+            final List<NetworkUiModel> networkRepositoryModels,
             final IOrderedTransition transition) {
         mContext = context;
         mParentViewModel = parentViewModel;

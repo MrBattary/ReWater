@@ -11,8 +11,8 @@ import androidx.navigation.Navigation;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.IdNameModel;
-import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
+import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksDevicesLinkViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModel;
 import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
@@ -31,7 +31,7 @@ public class NetworksCardView {
     private final View mHiddenContent;
     private final IOrderedTransition mTransition;
     private final NetworksDevicesLinkViewModel mLinkViewModel;
-    private NetworkRepositoryModel mNetworkRepositoryModel;
+    private NetworkUiModel mNetworkRepositoryModel;
 
     public NetworksCardView(
             final Context context,
@@ -58,7 +58,7 @@ public class NetworksCardView {
         this.initOnClickForCard();
     }
 
-    public void setDataModel(final NetworkRepositoryModel model) {
+    public void setDataModel(final NetworkUiModel model) {
         mNetworkRepositoryModel = model;
         mHeading.setText(model.getName());
         mDescription.setText(model.getDescription());

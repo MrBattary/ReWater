@@ -13,13 +13,14 @@ import michael.linker.rewater.data.repository.networks.NetworksRepositoryAlready
 import michael.linker.rewater.data.repository.networks.NetworksRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
+import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
 
 public class NetworksViewModel extends ViewModel {
     private final INetworksRepository mNetworksRepository;
-    private final MutableLiveData<List<NetworkRepositoryModel>> mCompactNetworkModels;
+    private final MutableLiveData<List<NetworkUiModel>> mCompactNetworkModels;
     private final MutableLiveData<List<String>> mAlreadyTakenNetworkNames;
     private final MutableLiveData<String> mEditableNetworkId;
-    private final MutableLiveData<NetworkRepositoryModel> mEditableNetworkModel;
+    private final MutableLiveData<NetworkUiModel> mEditableNetworkModel;
 
     public NetworksViewModel() {
         mNetworksRepository = RepositoryConfiguration.getNetworksRepository();
@@ -34,11 +35,11 @@ public class NetworksViewModel extends ViewModel {
         return mAlreadyTakenNetworkNames;
     }
 
-    public LiveData<List<NetworkRepositoryModel>> getCompactNetworkModels() {
+    public LiveData<List<NetworkUiModel>> getCompactNetworkModels() {
         return mCompactNetworkModels;
     }
 
-    public LiveData<NetworkRepositoryModel> getEditableNetworkModel() {
+    public LiveData<NetworkUiModel> getEditableNetworkModel() {
         return mEditableNetworkModel;
     }
 
@@ -49,7 +50,7 @@ public class NetworksViewModel extends ViewModel {
     public void setEditableNetworkId(final String id) throws NetworksViewModelFailedException {
         try {
             final NetworkRepositoryModel model = mNetworksRepository.getNetworkById(id);
-            mEditableNetworkModel.setValue(model);
+            mEditableNetworkModel.setValue(new NetworkUiModel(model));
             mEditableNetworkId.setValue(id);
         } catch (NetworksRepositoryNotFoundException e) {
             throw new NetworksViewModelFailedException(e.getMessage());
@@ -81,9 +82,15 @@ public class NetworksViewModel extends ViewModel {
     }
 
     public void updateListsFromRepositories() {
-        mCompactNetworkModels.setValue(mNetworksRepository.getNetworkList());
-        mAlreadyTakenNetworkNames.setValue(mNetworksRepository.getNetworkList().stream()
-                .map(NetworkRepositoryModel::getName)
-                .collect(Collectors.toList()));
+        final List<NetworkRepositoryModel> networkRepositoryModelList =
+                mNetworksRepository.getNetworkList();
+        mCompactNetworkModels.setValue(
+                networkRepositoryModelList.stream()
+                        .map(NetworkUiModel::new)
+                        .collect(Collectors.toList()));
+        mAlreadyTakenNetworkNames.setValue(
+                networkRepositoryModelList.stream()
+                        .map(NetworkRepositoryModel::getName)
+                        .collect(Collectors.toList()));
     }
 }
