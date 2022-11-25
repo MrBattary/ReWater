@@ -48,6 +48,11 @@
     <string name="input_error_key_overflow">The key is too long!</string>
     <string name="input_error_description_overflow">The description is too long!</string>
     <string name="input_error_number_not_found">Please enter an integer number!</string>
+    <string name="input_error_password_min_length">The password length must be greater or equal to 6 characters.</string>
+    <string name="input_error_password_no_whitespace">The password must contain no whitespace character.</string>
+    <string name="input_error_password_digit">The password must contain at least one digit.</string>
+    <string name="input_error_password_lower_case">The password must contain at least one lower case character.</string>
+    <string name="input_error_password_upper_case">The password must contain at least one upper case character.</string>
 
     <!-- Units of measurement. -->
     <string name="unit_mouths_short">m</string>

@@ -73,7 +73,7 @@
             android:layout_margin="@dimen/sign_input_margin">
 
             <Button
-                android:id="@+id/sign_in_input_restore_password_text_button"
+                android:id="@+id/sign_in_restore_password_text_button"
                 style="@style/TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

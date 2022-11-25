@@ -39,7 +39,7 @@ public class TextInputView implements ITextInputView {
 
     @Override
     public String getText() throws InputNotAllowedException {
-        final String text = this.getTextForce() ;
+        final String text = this.getTextForce();
         if (mMinLimit != null && text.length() < mMinLimit) {
             mTextInputLayout.setError(mMinLimitErrorMsg);
             throw new InputNotAllowedException("The text size is less than the allowed value!");
