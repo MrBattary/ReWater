@@ -85,6 +85,9 @@
     <string name="status_water_defect">There is very little water</string>
     <string name="status_undefined">Status is undefined</string>
     <string name="heading_attached_devices">Attached devices:</string>
+    <string name="sign_in_failure">Incorrect username or password was entered.</string>
+    <string name="sign_up_failure_username_used">The username is already taken.</string>
+    <string name="sign_up_failure_email_used">The user with this email is already registered.</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>

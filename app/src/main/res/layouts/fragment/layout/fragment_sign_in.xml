@@ -110,7 +110,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/sign_in_input_username_input"
-                    style="@style/EditTextViewParentStyle"
+                    style="@style/EditTextNormalStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/input_hint_username"

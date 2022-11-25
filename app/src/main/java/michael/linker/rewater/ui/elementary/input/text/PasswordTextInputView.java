@@ -58,7 +58,7 @@ public class PasswordTextInputView implements IPasswordTextInputView {
 
     @Override
     public String getPasswordHash() {
-        return HashFunction.hash(this.getText(), HashFunction.SHA3_256);
+        return HashFunction.hash(this.getText(), HashFunction.SHA_256);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class PasswordTextInputView implements IPasswordTextInputView {
             throw new InputNotAllowedException(
                     StringsProvider.getString(R.string.input_error_password_no_whitespace));
         }
-        return HashFunction.hash(passwordPlainText, HashFunction.SHA3_256);
+        return HashFunction.hash(passwordPlainText, HashFunction.SHA_256);
     }
 
     private String getText() {

@@ -1,9 +1,9 @@
 package michael.linker.rewater.data.repository.user.model;
 
-public class UserSignUpRepositoryModel extends UserSignInRepositoryModel {
+public class SignUpUserRepositoryModel extends SignInUserRepositoryModel {
     private final String mEmail;
 
-    public UserSignUpRepositoryModel(
+    public SignUpUserRepositoryModel(
             final String username,
             final String password,
             final String email) {

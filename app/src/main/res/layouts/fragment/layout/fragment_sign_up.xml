@@ -101,7 +101,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/sign_up_input_username_input"
-                    style="@style/EditTextViewParentStyle"
+                    style="@style/EditTextNormalStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/input_hint_username"
@@ -123,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/input_hint_email"
-                    android:importantForAutofill="no" />
+                    android:importantForAutofill="yes" />
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
     </RelativeLayout>

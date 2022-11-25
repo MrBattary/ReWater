@@ -6,7 +6,7 @@ import michael.linker.rewater.data.res.StringsProvider;
 public class UsersRepositoryAccessDeniedException extends RuntimeException {
     private static final String sERROR_MSG = StringsProvider.getString(R.string.sign_in_failure);
 
-    public UsersRepositoryAccessDeniedException(String message) {
-        super(message);
+    public UsersRepositoryAccessDeniedException() {
+        super(sERROR_MSG);
     }
 }

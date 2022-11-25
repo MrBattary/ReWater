@@ -5,14 +5,14 @@ import androidx.annotation.NonNull;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public final class HashFunction {
-    public static final HashFunction SHA3_512;
-    public static final HashFunction SHA3_256;
+    public static final HashFunction SHA_512;
+    public static final HashFunction SHA_256;
 
     private final String mHashMethodName;
 
     static {
-        SHA3_512 = new HashFunction("SHA3-512");
-        SHA3_256 = new HashFunction("SHA3-256");
+        SHA_512 = new HashFunction("SHA-512");
+        SHA_256 = new HashFunction("SHA-256");
     }
 
     public HashFunction(String hashMethodName) {
@@ -20,11 +20,11 @@ public final class HashFunction {
     }
 
     public static String hash(final String msg, final HashFunction hashFunction) {
-        if (hashFunction == SHA3_256) {
-            return DigestUtils.sha3_256Hex(msg);
+        if (hashFunction == SHA_256) {
+            return DigestUtils.sha256Hex(msg);
         }
-        if (hashFunction == SHA3_512) {
-            return DigestUtils.sha3_512Hex(msg);
+        if (hashFunction == SHA_512) {
+            return DigestUtils.sha512Hex(msg);
         }
         throw new SecurityHashRuntimeException("Hash function implementation not found!");
     }

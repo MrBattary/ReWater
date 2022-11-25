@@ -46,6 +46,10 @@
         <item name="android:textCursorDrawable">@drawable/ic_input_cursor_light</item>
     </style>
 
+    <style name="EditTextNormalStyle" parent="EditTextViewParentStyle">
+        <item name="android:inputType">text</item>
+    </style>
+
     <style name="EditTextPasswordStyle" parent="EditTextViewParentStyle">
         <item name="android:inputType">textPassword</item>
     </style>
@@ -59,17 +63,17 @@
     </style>
 
     <!-- The param 'android:maxLength' is required! -->
-    <style name="EditTextLimitedViewStyle" parent="EditTextViewParentStyle"></style>
+    <style name="EditTextLimitedStyle" parent="EditTextViewParentStyle"></style>
 
     <!-- The params 'minLines' and 'maxLines' are required! -->
-    <style name="EditTextMultilineLimitedViewStyle" parent="EditTextLimitedViewStyle">
+    <style name="EditTextMultilineLimitedStyle" parent="EditTextLimitedStyle">
         <item name="android:inputType">textMultiLine</item>
         <item name="android:gravity">top|start</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:scrollHorizontally">false</item>
     </style>
 
-    <style name="EditTextNormalLimitedViewStyle" parent="EditTextLimitedViewStyle">
+    <style name="EditTextNormalLimitedStyle" parent="EditTextLimitedStyle">
         <item name="android:inputType">text</item>
     </style>
 </resources>

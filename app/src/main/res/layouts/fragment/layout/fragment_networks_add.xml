@@ -55,7 +55,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_network_description_input"
-            style="@style/EditTextMultilineLimitedViewStyle"
+            style="@style/EditTextMultilineLimitedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/input_hint_description"
@@ -76,7 +76,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_network_heading_input"
-            style="@style/EditTextNormalLimitedViewStyle"
+            style="@style/EditTextNormalLimitedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/input_hint_name"

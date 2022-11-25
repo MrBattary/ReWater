@@ -1,9 +1,9 @@
 package michael.linker.rewater.data.repository.user.model;
 
-public class UserSignInRepositoryModel {
+public class SignInUserRepositoryModel {
     private final String mUsername, mPassword;
 
-    public UserSignInRepositoryModel(
+    public SignInUserRepositoryModel(
             final String username,
             final String password) {
         mUsername = username;

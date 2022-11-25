@@ -6,11 +6,14 @@ import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.NetworksLocalRepository;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
 import michael.linker.rewater.data.repository.schedules.SchedulesLocalRepository;
+import michael.linker.rewater.data.repository.user.UsersLocalRepository;
+import michael.linker.rewater.data.repository.user.IUsersRepository;
 
 public class RepositoryConfiguration {
     private static INetworksRepository sNetworksRepository;
     private static IDevicesRepository sDevicesRepository;
     private static ISchedulesRepository sSchedulesRepository;
+    private static IUsersRepository sUserRepository;
 
     public static INetworksRepository getNetworksRepository() {
         if (sNetworksRepository == null) {
@@ -31,5 +34,12 @@ public class RepositoryConfiguration {
             sSchedulesRepository = new SchedulesLocalRepository();
         }
         return sSchedulesRepository;
+    }
+
+    public static IUsersRepository getUsersRepository() {
+        if (sUserRepository == null) {
+            sUserRepository = new UsersLocalRepository();
+        }
+        return sUserRepository;
     }
 }

@@ -1,9 +1,9 @@
 package michael.linker.rewater.data.repository.user;
 
-import michael.linker.rewater.data.repository.user.model.UserSignInRepositoryModel;
-import michael.linker.rewater.data.repository.user.model.UserSignUpRepositoryModel;
+import michael.linker.rewater.data.repository.user.model.SignInUserRepositoryModel;
+import michael.linker.rewater.data.repository.user.model.SignUpUserRepositoryModel;
 
-public interface IUserRepository {
+public interface IUsersRepository {
     /**
      * Sign in.
      *
@@ -11,7 +11,7 @@ public interface IUserRepository {
      * @throws UsersRepositoryAccessDeniedException If an incorrect username-password pair is
      *                                              entered
      */
-    void signIn(UserSignInRepositoryModel model) throws UsersRepositoryAccessDeniedException;
+    void signIn(SignInUserRepositoryModel model) throws UsersRepositoryAccessDeniedException;
 
     /**
      * Sign up.
@@ -20,5 +20,5 @@ public interface IUserRepository {
      * @throws UsersRepositoryAlreadyExistsException If the username or email address is already
      *                                               registered in the system
      */
-    void signUp(UserSignUpRepositoryModel model) throws UsersRepositoryAlreadyExistsException;
+    void signUp(SignUpUserRepositoryModel model) throws UsersRepositoryAlreadyExistsException;
 }
