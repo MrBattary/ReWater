@@ -5,7 +5,7 @@
     android:id="@+id/sign_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.advanced.sign.up.view.SignUpFragment">
+    tools:context=".ui.advanced.sign.view.SignUpFragment">
 
     <Button
         android:id="@+id/sign_up_sign_in_button"
@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/sign_top_right_corner_button_margin"
         android:layout_marginVertical="@dimen/sign_top_right_corner_button_margin"
-        android:text="@string/button_sign_up"
+        android:text="@string/button_sign_in"
         app:icon="@drawable/ic_sign_in"
         app:iconTint="@color/text_secondary" />
 

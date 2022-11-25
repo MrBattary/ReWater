@@ -5,7 +5,7 @@
     android:id="@+id/sign_in"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.advanced.sign.in.view.SignInFragment">
+    tools:context=".ui.advanced.sign.view.SignInFragment">
 
     <Button
         android:id="@+id/sign_in_sign_up_button"

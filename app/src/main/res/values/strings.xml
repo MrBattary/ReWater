@@ -48,6 +48,7 @@
     <string name="input_error_key_overflow">The key is too long!</string>
     <string name="input_error_description_overflow">The description is too long!</string>
     <string name="input_error_number_not_found">Please enter an integer number!</string>
+    <string name="input_error_username_lack">The username is too short!</string>
     <string name="input_error_password_min_length">The password length must be greater or equal to 6 characters.</string>
     <string name="input_error_password_no_whitespace">The password must contain no whitespace character.</string>
     <string name="input_error_password_digit">The password must contain at least one digit.</string>

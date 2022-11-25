@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_sign_in"
-        android:name="michael.linker.rewater.ui.advanced.sign.in.view.SignInFragment"
+        android:name="michael.linker.rewater.ui.advanced.sign.view.SignInFragment"
         android:label="@string/navigation_title_sign_in"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_sign_up"
-        android:name="michael.linker.rewater.ui.advanced.sign.up.view.SignUpFragment"
+        android:name="michael.linker.rewater.ui.advanced.sign.view.SignUpFragment"
         android:label="@string/navigation_title_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action

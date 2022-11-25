@@ -22,13 +22,13 @@ public class PasswordTextInputView implements IPasswordTextInputView {
      * $                 | end-of-string
      */
     private static final String sPASSWORD_POLICY_DIGIT =
-            "^(?=.*[0-9])$";
+            "^(?=.*[0-9]).{6,}$";
     private static final String sPASSWORD_POLICY_LOWER_CASE =
-            "^(?=.*[a-z])$";
+            "^(?=.*[a-z]).{6,}$";
     private static final String sPASSWORD_POLICY_UPPER_CASE =
-            "^(?=.*[A-Z])$";
+            "^(?=.*[A-Z]).{6,}$";
     private static final String sPASSWORD_POLICY_NO_WHITESPACE =
-            "^(?=\\S+$)$";
+            "^(?=\\S+$).{6,}$";
     private static final Integer sPASSWORD_POLICY_LENGTH = 6;
 
     private final TextInputLayout mTextInputLayout;
@@ -64,26 +64,22 @@ public class PasswordTextInputView implements IPasswordTextInputView {
     @Override
     public String validateAndGetPasswordHash() throws InputNotAllowedException {
         final String passwordPlainText = this.getText();
-        if (passwordPlainText.length() <= sPASSWORD_POLICY_LENGTH) {
-            throw new InputNotAllowedException(
-                    StringsProvider.getString(R.string.input_error_password_min_length));
+        if (passwordPlainText.length() < sPASSWORD_POLICY_LENGTH) {
+            setErrorMessageAndThrowException(R.string.input_error_password_min_length);
         }
         if (!passwordPlainText.matches(sPASSWORD_POLICY_DIGIT)) {
-            throw new InputNotAllowedException(
-                    StringsProvider.getString(R.string.input_error_password_digit));
+            setErrorMessageAndThrowException(R.string.input_error_password_digit);
         }
         if (!passwordPlainText.matches(sPASSWORD_POLICY_LOWER_CASE)) {
-            throw new InputNotAllowedException(
-                    StringsProvider.getString(R.string.input_error_password_lower_case));
+            setErrorMessageAndThrowException(R.string.input_error_password_lower_case);
         }
         if (!passwordPlainText.matches(sPASSWORD_POLICY_UPPER_CASE)) {
-            throw new InputNotAllowedException(
-                    StringsProvider.getString(R.string.input_error_password_upper_case));
+            setErrorMessageAndThrowException(R.string.input_error_password_upper_case);
         }
         if (!passwordPlainText.matches(sPASSWORD_POLICY_NO_WHITESPACE)) {
-            throw new InputNotAllowedException(
-                    StringsProvider.getString(R.string.input_error_password_no_whitespace));
+            setErrorMessageAndThrowException(R.string.input_error_password_no_whitespace);
         }
+        mTextInputLayout.setError(null);
         return HashFunction.hash(passwordPlainText, HashFunction.SHA_256);
     }
 
@@ -94,5 +90,12 @@ public class PasswordTextInputView implements IPasswordTextInputView {
         } else {
             return "";
         }
+    }
+
+    private void setErrorMessageAndThrowException(final int errorMsgId)
+            throws InputNotAllowedException {
+        final String errorMsg = StringsProvider.getString(errorMsgId);
+        mTextInputLayout.setError(errorMsg);
+        throw new InputNotAllowedException(errorMsg);
     }
 }

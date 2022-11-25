@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.advanced.sign.in.view;
+package michael.linker.rewater.ui.advanced.sign.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,8 +20,10 @@ import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.activity.MainActivity;
-import michael.linker.rewater.ui.advanced.sign.in.viewmodel.SignInViewModel;
-import michael.linker.rewater.ui.advanced.sign.in.viewmodel.SignInViewModelFailedException;
+import michael.linker.rewater.ui.advanced.sign.model.SignBundle;
+import michael.linker.rewater.ui.advanced.sign.model.SignUiModel;
+import michael.linker.rewater.ui.advanced.sign.viewmodel.SignViewModel;
+import michael.linker.rewater.ui.advanced.sign.viewmodel.SignViewModelFailedException;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.FocusableTextInputView;
 import michael.linker.rewater.ui.elementary.input.text.IFocusableTextInputView;
@@ -34,7 +36,8 @@ public class SignInFragment extends Fragment {
     private IFocusableTextInputView mUsernameInputView;
     private IPasswordTextInputView mPasswordInputView;
 
-    private SignInViewModel mViewModel;
+    private SignUiModel mSignUiModel;
+    private SignViewModel mViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -42,7 +45,7 @@ public class SignInFragment extends Fragment {
         NavController navController = NavHostFragment.findNavController(this);
         ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
                 R.id.navigation_sign);
-        mViewModel = new ViewModelProvider(viewModelStoreOwner).get(SignInViewModel.class);
+        mViewModel = new ViewModelProvider(viewModelStoreOwner).get(SignViewModel.class);
 
         return inflater.inflate(R.layout.fragment_sign_in, container, false);
     }
@@ -51,9 +54,20 @@ public class SignInFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        this.unpackBundle();
         this.initFields(view);
+        this.initFieldsData();
         this.initInputLogics();
         this.initButtons(view);
+    }
+
+    private void unpackBundle() {
+        final Bundle bundle = getArguments();
+        if (bundle != null) {
+            mSignUiModel = SignBundle.INSTANCE.unpack(bundle);
+        } else {
+            mSignUiModel = new SignUiModel(null);
+        }
     }
 
     private void initFields(final View view) {
@@ -66,6 +80,10 @@ public class SignInFragment extends Fragment {
         mSignInButton = view.findViewById(R.id.sign_in_sign_in_button);
         mSignUpSwitchButton = view.findViewById(R.id.sign_in_sign_up_button);
         mRestorePasswordButton = view.findViewById(R.id.sign_in_restore_password_text_button);
+    }
+
+    private void initFieldsData() {
+        mUsernameInputView.setText(mSignUiModel.getUsername());
     }
 
     private void initInputLogics() {
@@ -85,13 +103,17 @@ public class SignInFragment extends Fragment {
         final NavController navController = Navigation.findNavController(view);
 
         mSignUpSwitchButton.setOnClickListener(
-                l -> navController.navigate(R.id.navigation_action_sign_in_to_sign_up));
+                l -> {
+                    this.saveUsername();
+                    navController.navigate(R.id.navigation_action_sign_in_to_sign_up,
+                            SignBundle.INSTANCE.pack(mSignUiModel));
+                });
         mSignInButton.setOnClickListener(l -> {
             try {
                 this.saveData();
                 mViewModel.commitAndSignIn();
                 this.moveToMainActivity();
-            } catch (SignInViewModelFailedException e) {
+            } catch (SignViewModelFailedException e) {
                 ToastProvider.showShort(requireContext(), e.getMessage());
             }
         });
@@ -99,6 +121,7 @@ public class SignInFragment extends Fragment {
             // TODO (ML): Move to restore password fragment
         });
     }
+
     private void moveToMainActivity() {
         final Activity activity = requireActivity();
         final Intent intent = new Intent(activity, MainActivity.class);
@@ -115,7 +138,9 @@ public class SignInFragment extends Fragment {
 
     private void saveUsername() {
         try {
-            mViewModel.setUsername(mUsernameInputView.getText());
+            final String username = mUsernameInputView.getText();
+            mViewModel.setUsername(username);
+            mSignUiModel.setUsername(username);
         } catch (InputNotAllowedException ignored) {
         }
     }
