@@ -19,7 +19,8 @@ public final class HashFunction {
         mHashMethodName = hashMethodName;
     }
 
-    public static String hash(final String msg, final HashFunction hashFunction) {
+    public static String hash(final String msg, final HashFunction hashFunction)
+            throws SecurityHashRuntimeException {
         if (hashFunction == SHA_256) {
             return DigestUtils.sha256Hex(msg);
         }

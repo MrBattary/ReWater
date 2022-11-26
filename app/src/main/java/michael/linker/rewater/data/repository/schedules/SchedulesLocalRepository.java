@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import michael.linker.rewater.config.DataConfiguration;
+import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.local.stub.IDevicesData;
 import michael.linker.rewater.data.local.stub.INetworksData;
 import michael.linker.rewater.data.local.stub.ISchedulesData;
@@ -25,11 +25,11 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
 
     public SchedulesLocalRepository() {
-        mNetworksData = DataConfiguration.getNetworksData();
-        mSchedulesData = DataConfiguration.getSchedulesData();
-        mDevicesData = DataConfiguration.getDevicesData();
-        mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
-        mNetworkToSchedulesDataLink = DataConfiguration.getNetworkToSchedulesDataLink();
+        mNetworksData = StubDataConfiguration.getNetworksData();
+        mSchedulesData = StubDataConfiguration.getSchedulesData();
+        mDevicesData = StubDataConfiguration.getDevicesData();
+        mScheduleToDevicesDataLink = StubDataConfiguration.getScheduleToDevicesDataLink();
+        mNetworkToSchedulesDataLink = StubDataConfiguration.getNetworkToSchedulesDataLink();
     }
 
     @Override

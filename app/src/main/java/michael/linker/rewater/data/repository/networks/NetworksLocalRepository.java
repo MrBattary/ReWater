@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import michael.linker.rewater.config.DataConfiguration;
+import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.local.stub.IDevicesData;
 import michael.linker.rewater.data.local.stub.INetworksData;
 import michael.linker.rewater.data.local.stub.ISchedulesData;
@@ -31,12 +31,12 @@ public class NetworksLocalRepository implements INetworksRepository {
     private List<NetworkRepositoryModel> internalNetworkList;
 
     public NetworksLocalRepository() {
-        mNetworksData = DataConfiguration.getNetworksData();
-        mSchedulesData = DataConfiguration.getSchedulesData();
-        mDevicesData = DataConfiguration.getDevicesData();
+        mNetworksData = StubDataConfiguration.getNetworksData();
+        mSchedulesData = StubDataConfiguration.getSchedulesData();
+        mDevicesData = StubDataConfiguration.getDevicesData();
 
-        mNetworkToSchedulesDataLink = DataConfiguration.getNetworkToSchedulesDataLink();
-        mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
+        mNetworkToSchedulesDataLink = StubDataConfiguration.getNetworkToSchedulesDataLink();
+        mScheduleToDevicesDataLink = StubDataConfiguration.getScheduleToDevicesDataLink();
 
         mOverallStatusOfTheAllNetworks = new MutableLiveData<>();
         internalNetworkList = new ArrayList<>();

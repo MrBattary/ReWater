@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import michael.linker.rewater.config.DataConfiguration;
+import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.local.stub.IDevicesData;
 import michael.linker.rewater.data.local.stub.INetworksData;
 import michael.linker.rewater.data.local.stub.ISchedulesData;
@@ -30,11 +30,11 @@ public class DevicesLocalRepository implements IDevicesRepository {
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
 
     public DevicesLocalRepository() {
-        mNetworksData = DataConfiguration.getNetworksData();
-        mSchedulesData = DataConfiguration.getSchedulesData();
-        mDevicesData = DataConfiguration.getDevicesData();
-        mScheduleToDevicesDataLink = DataConfiguration.getScheduleToDevicesDataLink();
-        mNetworkToSchedulesDataLink = DataConfiguration.getNetworkToSchedulesDataLink();
+        mNetworksData = StubDataConfiguration.getNetworksData();
+        mSchedulesData = StubDataConfiguration.getSchedulesData();
+        mDevicesData = StubDataConfiguration.getDevicesData();
+        mScheduleToDevicesDataLink = StubDataConfiguration.getScheduleToDevicesDataLink();
+        mNetworkToSchedulesDataLink = StubDataConfiguration.getNetworkToSchedulesDataLink();
     }
 
     @Override

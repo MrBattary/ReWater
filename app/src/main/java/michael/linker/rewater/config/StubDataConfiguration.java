@@ -10,7 +10,7 @@ import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
 import michael.linker.rewater.data.local.stub.links.NetworkToSchedulesLocalDataLink;
 import michael.linker.rewater.data.local.stub.links.ScheduleToDevicesLocalDataLink;
 
-public class DataConfiguration {
+public class StubDataConfiguration {
     private static INetworksData sNetworksData;
     private static IDevicesData sDevicesData;
     private static ISchedulesData sSchedulesData;
