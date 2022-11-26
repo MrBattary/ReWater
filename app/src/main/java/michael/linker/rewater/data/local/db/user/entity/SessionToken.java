@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.local.db.entity;
+package michael.linker.rewater.data.local.db.user.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class AuthToken {
+public class SessionToken {
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "owner_username")
     @NonNull
@@ -14,4 +14,7 @@ public class AuthToken {
 
     @ColumnInfo(name = "token")
     public String token;
+
+    @ColumnInfo(name = "valid_until")
+    public String validUntil;
 }

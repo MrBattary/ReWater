@@ -1,11 +1,11 @@
-package michael.linker.rewater.data.local.db.dao;
+package michael.linker.rewater.data.local.db.user.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import michael.linker.rewater.data.local.db.entity.AuthToken;
+import michael.linker.rewater.data.local.db.user.entity.AuthToken;
 
 @Dao
 public interface AuthTokenDao {

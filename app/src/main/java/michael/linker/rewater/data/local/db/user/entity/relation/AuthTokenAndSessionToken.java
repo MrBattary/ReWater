@@ -1,11 +1,11 @@
-package michael.linker.rewater.data.local.db.entity.relation;
+package michael.linker.rewater.data.local.db.user.entity.relation;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
-import michael.linker.rewater.data.local.db.entity.AuthToken;
-import michael.linker.rewater.data.local.db.entity.SessionToken;
-import michael.linker.rewater.data.local.db.entity.User;
+import michael.linker.rewater.data.local.db.user.entity.AuthToken;
+import michael.linker.rewater.data.local.db.user.entity.SessionToken;
+import michael.linker.rewater.data.local.db.user.entity.User;
 
 public class AuthTokenAndSessionToken {
     @Embedded

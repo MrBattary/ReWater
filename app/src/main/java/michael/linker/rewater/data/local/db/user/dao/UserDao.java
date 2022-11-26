@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.local.db.dao;
+package michael.linker.rewater.data.local.db.user.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -8,8 +8,8 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import michael.linker.rewater.data.local.db.entity.User;
-import michael.linker.rewater.data.local.db.entity.relation.AuthTokenAndSessionToken;
+import michael.linker.rewater.data.local.db.user.entity.User;
+import michael.linker.rewater.data.local.db.user.entity.relation.AuthTokenAndSessionToken;
 
 @Dao
 public interface UserDao {
@@ -29,6 +29,9 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
+
+    @Query("DELETE FROM user WHERE username = :username")
+    void deleteByUsername(final String username);
 
     @Query("DELETE FROM user WHERE active")
     void deleteActive();

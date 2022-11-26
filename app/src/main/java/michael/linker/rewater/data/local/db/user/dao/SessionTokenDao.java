@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.local.db.dao;
+package michael.linker.rewater.data.local.db.user.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import michael.linker.rewater.data.local.db.entity.SessionToken;
+import michael.linker.rewater.data.local.db.user.entity.SessionToken;
 
 @Dao
 public interface SessionTokenDao {

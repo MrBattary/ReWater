@@ -3,12 +3,12 @@ package michael.linker.rewater.data.local.db;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import michael.linker.rewater.data.local.db.dao.AuthTokenDao;
-import michael.linker.rewater.data.local.db.dao.SessionTokenDao;
-import michael.linker.rewater.data.local.db.dao.UserDao;
-import michael.linker.rewater.data.local.db.entity.AuthToken;
-import michael.linker.rewater.data.local.db.entity.SessionToken;
-import michael.linker.rewater.data.local.db.entity.User;
+import michael.linker.rewater.data.local.db.user.dao.AuthTokenDao;
+import michael.linker.rewater.data.local.db.user.dao.SessionTokenDao;
+import michael.linker.rewater.data.local.db.user.dao.UserDao;
+import michael.linker.rewater.data.local.db.user.entity.AuthToken;
+import michael.linker.rewater.data.local.db.user.entity.SessionToken;
+import michael.linker.rewater.data.local.db.user.entity.User;
 
 @Database(
         entities = {
