@@ -1,0 +1,20 @@
+package michael.linker.rewater.data.local.db.entity;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+public class SessionToken {
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "owner_username")
+    @NonNull
+    public String ownerUsername;
+
+    @ColumnInfo(name = "token")
+    public String mToken;
+
+    @ColumnInfo(name = "valid_until")
+    public String mValidUntil;
+}
