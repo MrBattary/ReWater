@@ -89,6 +89,7 @@
     <string name="sign_in_failure">Incorrect username or password was entered.</string>
     <string name="sign_up_failure_username_used">The username is already taken.</string>
     <string name="sign_up_failure_email_used">The user with this email is already registered.</string>
+    <string name="sign_failure_auth_token_not_accepted">The authorization token is not accepted.</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>

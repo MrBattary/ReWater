@@ -1,12 +1,10 @@
 package michael.linker.rewater.data.local.db.user.model;
 
-import java.time.Instant;
-
 public class UserSessionTokenDataModel {
     private final String mToken;
-    private final Instant mValidUntil;
+    private final String mValidUntil;
 
-    public UserSessionTokenDataModel(final String token, final Instant validUntil) {
+    public UserSessionTokenDataModel(final String token, final String validUntil) {
         mToken = token;
         mValidUntil = validUntil;
     }
@@ -15,7 +13,7 @@ public class UserSessionTokenDataModel {
         return mToken;
     }
 
-    public Instant getValidUntil() {
+    public String getValidUntil() {
         return mValidUntil;
     }
 

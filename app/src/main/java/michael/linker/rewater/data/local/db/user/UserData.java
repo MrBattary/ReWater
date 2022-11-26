@@ -1,7 +1,5 @@
 package michael.linker.rewater.data.local.db.user;
 
-import java.time.Instant;
-
 import michael.linker.rewater.config.DatabaseConfiguration;
 import michael.linker.rewater.data.local.db.AppDatabase;
 import michael.linker.rewater.data.local.db.user.entity.AuthToken;
@@ -92,6 +90,8 @@ public class UserData implements IUserData {
 
     @Override
     public void removeUser(String username) {
+        mDatabase.authTokenDao().deleteByOwnerUsername(username);
+        mDatabase.sessionTokenDao().deleteByOwnerUsername(username);
         mDatabase.userDao().deleteByUsername(username);
     }
 
@@ -106,7 +106,7 @@ public class UserData implements IUserData {
                         new UserAuthTokenDataModel(userAuthToken.token),
                         new UserSessionTokenDataModel(
                                 userSessionToken.token,
-                                Instant.parse(userSessionToken.validUntil)
+                                userSessionToken.validUntil
                         )
                 )
         );
@@ -119,7 +119,7 @@ public class UserData implements IUserData {
         if (userSessionToken != null) {
             return new UserSessionTokenDataModel(
                     userSessionToken.token,
-                    Instant.parse(userSessionToken.validUntil)
+                    userSessionToken.validUntil
             );
         } else {
             throw new UserDataNotFoundException("Active user was not found");

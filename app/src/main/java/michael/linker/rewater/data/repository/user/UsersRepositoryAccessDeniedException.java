@@ -9,4 +9,8 @@ public class UsersRepositoryAccessDeniedException extends RuntimeException {
     public UsersRepositoryAccessDeniedException() {
         super(sERROR_MSG);
     }
+
+    public UsersRepositoryAccessDeniedException(String message) {
+        super(message);
+    }
 }

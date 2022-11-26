@@ -8,10 +8,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import michael.linker.rewater.R;
 import michael.linker.rewater.data.local.stub.model.AuthTokenModel;
 import michael.linker.rewater.data.local.stub.model.FullUserModel;
 import michael.linker.rewater.data.local.stub.model.SessionTokenModel;
 import michael.linker.rewater.data.local.stub.model.SignInUserModel;
+import michael.linker.rewater.data.res.StringsProvider;
 
 public class UsersLocalData implements IUsersData {
     private final Map<String, FullUserModel> mUsers;
@@ -28,23 +30,25 @@ public class UsersLocalData implements IUsersData {
     @Override
     public void signUp(FullUserModel model) throws UsersDataException {
         if (mUsers.containsKey(model.getUsername())) {
-            throw new UsersDataException();
+            throw new UsersDataException(
+                    StringsProvider.getString(R.string.sign_up_failure_username_used));
+        }
+        if (mUsers.values().stream().anyMatch(user -> user.getEmail().equals(model.getEmail()))) {
+            throw new UsersDataException(
+                    StringsProvider.getString(R.string.sign_up_failure_email_used));
         }
         mUsers.put(model.getUsername(), model);
     }
 
     @Override
     public AuthTokenModel signIn(SignInUserModel model) throws UsersDataException {
-        if (!mUsers.containsKey(model.getUsername())) {
-            throw new UsersDataException();
+        if (!mUsers.containsKey(model.getUsername()) || !mUsers.get(
+                model.getUsername()).getPassword().equals(model.getPassword())) {
+            throw new UsersDataException(StringsProvider.getString(R.string.sign_in_failure));
         } else {
-            if (mUsers.get(model.getUsername()).getPassword().equals(model.getPassword())) {
-                final String token = UUID.randomUUID().toString();
-                mAssignedTokens.add(token);
-                return new AuthTokenModel(token);
-            } else {
-                throw new UsersDataException();
-            }
+            final String token = UUID.randomUUID().toString();
+            mAssignedTokens.add(token);
+            return new AuthTokenModel(token);
         }
     }
 

@@ -49,14 +49,14 @@ public interface IUserData {
     void deactivateActiveUser();
 
     /**
-     * Deactivates already active user then removes it from the internal storage
+     * Deactivates already active user then removes it from the internal storage with all tokens.
      *
      * @param username username
      */
     void removeUser(String username);
 
     /**
-     * Getter
+     * Getter.
      *
      * @return user model
      * @throws UserDataNotFoundException if the active user was not found
@@ -64,7 +64,7 @@ public interface IUserData {
     UserDataModel getActiveUserModel() throws UserDataNotFoundException;
 
     /**
-     * Session token getter
+     * Session token getter.
      *
      * @return session token model
      * @throws UserDataNotFoundException if the active user was not found
@@ -72,7 +72,7 @@ public interface IUserData {
     UserSessionTokenDataModel getSessionTokenOfActiveUser() throws UserDataNotFoundException;
 
     /**
-     * Session token getter
+     * Session token getter.
      *
      * @return auth token model
      * @throws UserDataNotFoundException if the active user was not found
