@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.repository.user.IUsersRepository;
 import michael.linker.rewater.data.repository.user.UsersRepositoryAccessDeniedException;
+import michael.linker.rewater.data.repository.user.UsersRepositoryAlreadyExistsException;
+import michael.linker.rewater.data.repository.user.UsersRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.user.model.SignInUserRepositoryModel;
 import michael.linker.rewater.data.repository.user.model.SignUpUserRepositoryModel;
 
@@ -15,7 +17,6 @@ public class SignViewModel extends ViewModel {
 
     public SignViewModel() {
         mUsersRepository = RepositoryConfiguration.getUsersRepository();
-
     }
 
 
@@ -38,7 +39,7 @@ public class SignViewModel extends ViewModel {
                             mUsername,
                             mPassword,
                             mEmail));
-        } catch (UsersRepositoryAccessDeniedException e) {
+        } catch (UsersRepositoryAlreadyExistsException e) {
             throw new SignViewModelFailedException(e);
         }
     }
@@ -48,6 +49,14 @@ public class SignViewModel extends ViewModel {
             mUsersRepository.signIn(
                     new SignInUserRepositoryModel(mUsername, mPassword));
         } catch (UsersRepositoryAccessDeniedException e) {
+            throw new SignViewModelFailedException(e);
+        }
+    }
+
+    public void autoSignIn() throws SignViewModelFailedException {
+        try {
+            mUsersRepository.refreshSessionToken();
+        } catch (UsersRepositoryNotFoundException | UsersRepositoryAccessDeniedException e) {
             throw new SignViewModelFailedException(e);
         }
     }

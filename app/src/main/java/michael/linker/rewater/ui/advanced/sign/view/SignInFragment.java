@@ -53,12 +53,23 @@ public class SignInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.tryToAutoSignIn();
 
         this.unpackBundle();
         this.initFields(view);
         this.initFieldsData();
         this.initInputLogics();
         this.initButtons(view);
+    }
+
+    private void tryToAutoSignIn() {
+        try {
+            mViewModel.autoSignIn();
+            this.moveToMainActivity();
+        } catch (SignViewModelFailedException e) {
+            // TODO (ML): Set to ignored
+            ToastProvider.showShort(requireActivity(), e.getMessage());
+        }
     }
 
     private void unpackBundle() {
