@@ -4,16 +4,26 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+import michael.linker.rewater.config.RepositoryConfiguration;
+import michael.linker.rewater.data.repository.user.IUsersRepository;
+import michael.linker.rewater.ui.advanced.profile.model.ProfileUiModel;
 
-    private final MutableLiveData<String> mText;
+public class HomeViewModel extends ViewModel {
+    private final IUsersRepository mUsersRepository;
+
+    private final MutableLiveData<ProfileUiModel> mProfileModel;
 
     public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mUsersRepository = RepositoryConfiguration.getUsersRepository();
+
+        mProfileModel = new MutableLiveData<>();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public void requireProfileUpdate() {
+        mProfileModel.setValue(new ProfileUiModel(mUsersRepository.getActiveUserData()));
+    }
+
+    public LiveData<ProfileUiModel> getProfileModel() {
+        return mProfileModel;
     }
 }

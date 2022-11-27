@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 import michael.linker.rewater.R;
@@ -22,7 +21,7 @@ public class UsersLocalData implements IUsersData {
     public UsersLocalData() {
         mUsers = new HashMap<>();
         mUsers.put("ReWater", new FullUserModel("ReWater",
-                "74c373af0384a5bd9caa158fd7f5b36286316583533102c4c2333d2958dc2c8f",
+                "55e1ebd3ebe4f1b46a5ccc9866df4d74e99fe240397e155d04664e5ce2d8e5dc",
                 "admin@rewater.com"));
         mAssignedTokens = new ArrayList<>();
     }
@@ -54,12 +53,14 @@ public class UsersLocalData implements IUsersData {
 
     @Override
     public SessionTokenModel refreshToken(AuthTokenModel tokenModel) throws UsersDataException {
-        Random random = new Random();
+        /*Random random = new Random();
         if (!mAssignedTokens.contains(tokenModel.getToken()) && random.nextInt(2) == 0) {
             throw new UsersDataException();
         } else {
             return new SessionTokenModel(UUID.randomUUID().toString(),
                     Instant.now().plusSeconds(3600).toString());
-        }
+        }*/
+        return new SessionTokenModel(UUID.randomUUID().toString(),
+                Instant.now().plusSeconds(3600).toString());
     }
 }

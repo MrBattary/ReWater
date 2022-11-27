@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/description_sign_logo"
-                android:src="@drawable/ic_logo_big" />
+                android:src="@drawable/ic_app_logo_big" />
 
             <TextView
                 android:id="@+id/sign_in_logo_app_name"

@@ -9,6 +9,7 @@
 
     <!-- Action bar style. -->
     <style name="ActionBarStyle" parent="@style/Widget.MaterialComponents.ActionBar.Primary">
+        <item name="background">@color/background_primary</item>
         <item name="android:titleTextStyle">@style/CustomTextLarge</item>
         <item name="titleTextStyle">@style/CustomTextLarge</item>
     </style>

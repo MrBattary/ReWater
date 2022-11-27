@@ -6,7 +6,6 @@ import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.repository.user.IUsersRepository;
 import michael.linker.rewater.data.repository.user.UsersRepositoryAccessDeniedException;
 import michael.linker.rewater.data.repository.user.UsersRepositoryAlreadyExistsException;
-import michael.linker.rewater.data.repository.user.UsersRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.user.model.SignInUserRepositoryModel;
 import michael.linker.rewater.data.repository.user.model.SignUpUserRepositoryModel;
 
@@ -40,7 +39,7 @@ public class SignViewModel extends ViewModel {
                             mPassword,
                             mEmail));
         } catch (UsersRepositoryAlreadyExistsException e) {
-            throw new SignViewModelFailedException(e);
+            throw new SignViewModelFailedException(e.getMessage());
         }
     }
 
@@ -49,15 +48,7 @@ public class SignViewModel extends ViewModel {
             mUsersRepository.signIn(
                     new SignInUserRepositoryModel(mUsername, mPassword));
         } catch (UsersRepositoryAccessDeniedException e) {
-            throw new SignViewModelFailedException(e);
-        }
-    }
-
-    public void autoSignIn() throws SignViewModelFailedException {
-        try {
-            mUsersRepository.refreshSessionToken();
-        } catch (UsersRepositoryNotFoundException | UsersRepositoryAccessDeniedException e) {
-            throw new SignViewModelFailedException(e);
+            throw new SignViewModelFailedException(e.getMessage());
         }
     }
 }

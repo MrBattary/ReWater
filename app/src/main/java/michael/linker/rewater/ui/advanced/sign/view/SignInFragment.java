@@ -17,7 +17,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.activity.ActivityGate;
 import michael.linker.rewater.ui.advanced.sign.model.SignBundle;
 import michael.linker.rewater.ui.advanced.sign.model.SignUiModel;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignViewModel;
@@ -51,23 +50,12 @@ public class SignInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.tryToAutoSignIn();
 
         this.unpackBundle();
         this.initFields(view);
         this.initFieldsData();
         this.initInputLogics();
         this.initButtons(view);
-    }
-
-    private void tryToAutoSignIn() {
-        try {
-            mViewModel.autoSignIn();
-            this.moveToMainActivity();
-        } catch (SignViewModelFailedException e) {
-            // TODO (ML): Set to ignored
-            ToastProvider.showShort(requireActivity(), e.getMessage());
-        }
     }
 
     private void unpackBundle() {
@@ -121,7 +109,7 @@ public class SignInFragment extends Fragment {
             try {
                 this.saveData();
                 mViewModel.commitAndSignIn();
-                this.moveToMainActivity();
+                navController.navigate(R.id.navigation_action_sign_in_to_sign_in_loading);
             } catch (SignViewModelFailedException e) {
                 ToastProvider.showShort(requireContext(), e.getMessage());
             }
@@ -129,10 +117,6 @@ public class SignInFragment extends Fragment {
         mRestorePasswordButton.setOnClickListener(l -> {
             // TODO (ML): Move to restore password fragment
         });
-    }
-
-    private void moveToMainActivity() {
-        ActivityGate.moveToMainActivity(requireActivity());
     }
 
     private void saveData() {
