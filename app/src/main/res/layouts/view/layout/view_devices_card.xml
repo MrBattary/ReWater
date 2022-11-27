@@ -71,7 +71,7 @@
                     android:layout_marginEnd="@dimen/card_content_horizontal_spacing"
                     android:layout_marginVertical="@dimen/card_vertical_spacing"
                     android:layout_toStartOf="@id/devices_card_content_permanent_controls"
-                    android:text="@string/global_short_placeholder" />
+                    android:text="@string/placeholder_global_short" />
             </RelativeLayout>
 
             <RelativeLayout

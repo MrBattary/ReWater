@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/fragment_content_horizontal_spacing_small"
             android:layout_toEndOf="@id/status_described_water_image"
-            android:text="@string/global_short_placeholder" />
+            android:text="@string/placeholder_global_short" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -54,6 +54,6 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/fragment_content_horizontal_spacing_small"
             android:layout_toEndOf="@id/status_described_battery_image"
-            android:text="@string/global_short_placeholder" />
+            android:text="@string/placeholder_global_short" />
     </RelativeLayout>
 </RelativeLayout>

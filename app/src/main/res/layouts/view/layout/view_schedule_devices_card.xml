@@ -60,7 +60,7 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/schedule_device_row_status_wrapper"
             android:layout_toStartOf="@id/schedule_device_row_detach_wrapper"
-            android:text="@string/global_medium_placeholder" />
+            android:text="@string/placeholder_global_medium" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
 

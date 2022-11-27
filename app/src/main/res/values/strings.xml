@@ -64,8 +64,9 @@
     <string name="unit_millilitres_short">ml</string>
 
     <!-- Texts. -->
-    <string name="global_short_placeholder">!Lorem ipsum vivamus.!</string>
-    <string name="global_medium_placeholder">!Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.!</string>
+    <string name="placeholder_global_short">!Lorem ipsum vivamus.!</string>
+    <string name="placeholder_global_medium">!Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.!</string>
+    <string name="placeholder_username">Username</string>
     <string name="parent_schedule_not_found">No schedule set</string>
     <string name="parent_network_not_found">No network set</string>
     <string name="schedule_information">Schedule information:</string>
@@ -90,6 +91,7 @@
     <string name="sign_up_failure_username_used">The username is already taken.</string>
     <string name="sign_up_failure_email_used">The user with this email is already registered.</string>
     <string name="sign_failure_auth_token_not_accepted">The authorization token is not accepted.</string>
+    <string name="home_greeting">Hello,</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>
@@ -133,6 +135,7 @@
     <string name="button_water">Water</string>
     <string name="button_sign_in">Sign in</string>
     <string name="button_sign_up">Sign up</string>
+    <string name="button_sign_out">Sign out</string>
     <string name="button_restore_password">Forgot password?</string>
 
     <!-- Descriptions. -->
@@ -151,4 +154,5 @@
     <string name="description_devices_add_fab">Add new device</string>
     <string name="description_parent_schedule_or_network_icon">Icon of parent</string>
     <string name="description_sign_logo">ReWater app logo</string>
+    <string name="description_profile_icon">User icon</string>
 </resources>

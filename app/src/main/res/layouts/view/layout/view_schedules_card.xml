@@ -70,7 +70,7 @@
                     android:layout_marginEnd="@dimen/card_content_horizontal_spacing"
                     android:layout_marginVertical="@dimen/card_vertical_spacing"
                     android:layout_toStartOf="@id/schedule_card_content_permanent_controls"
-                    android:text="@string/global_short_placeholder" />
+                    android:text="@string/placeholder_global_short" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -111,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:text="@string/global_short_placeholder" />
+                        android:text="@string/placeholder_global_short" />
 
                     <TextView
                         android:id="@+id/schedule_card_volume"
@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/schedule_card_period"
                         android:layout_marginTop="@dimen/card_content_vertical_spacing"
-                        android:text="@string/global_short_placeholder" />
+                        android:text="@string/placeholder_global_short" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

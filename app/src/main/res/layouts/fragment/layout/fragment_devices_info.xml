@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="@string/global_medium_placeholder" />
+            android:text="@string/placeholder_global_medium" />
 
         <include
             android:id="@+id/device_info_status"

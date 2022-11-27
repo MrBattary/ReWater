@@ -20,6 +20,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/parent_entity_icon"
-        android:text="@string/global_medium_placeholder" />
+        android:text="@string/placeholder_global_medium" />
 
 </RelativeLayout>

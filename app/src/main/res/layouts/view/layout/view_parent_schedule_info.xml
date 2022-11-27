@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/device_info_parent_schedule_information_heading"
         android:layout_marginStart="@dimen/fragment_content_horizontal_spacing"
-        android:text="@string/global_short_placeholder" />
+        android:text="@string/placeholder_global_short" />
 
     <TextView
         android:id="@+id/device_info_parent_schedule_information_each"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/device_info_parent_schedule_information_each"
         android:layout_marginStart="@dimen/fragment_content_horizontal_spacing"
-        android:text="@string/global_short_placeholder" />
+        android:text="@string/placeholder_global_short" />
 
     <TextView
         android:id="@+id/device_info_parent_schedule_information_heading"
