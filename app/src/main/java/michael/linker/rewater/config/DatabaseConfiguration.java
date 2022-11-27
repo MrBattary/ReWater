@@ -1,5 +1,7 @@
 package michael.linker.rewater.config;
 
+import android.content.Context;
+
 import androidx.room.Room;
 
 import michael.linker.rewater.data.local.db.AppDatabase;
@@ -10,9 +12,10 @@ public class DatabaseConfiguration {
     private static AppDatabase sDatabase;
 
     public static AppDatabase getDatabase() {
+        final Context context = App.getInstance().getApplicationContext();
         if (sDatabase == null) {
             sDatabase = Room.databaseBuilder(
-                    App.getInstance().getApplicationContext(),
+                    context,
                     AppDatabase.class,
                     DATABASE_NAME).allowMainThreadQueries().build();
         }

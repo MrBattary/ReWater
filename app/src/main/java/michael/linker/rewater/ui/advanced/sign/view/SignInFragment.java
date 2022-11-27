@@ -1,7 +1,5 @@
 package michael.linker.rewater.ui.advanced.sign.view;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.activity.MainActivity;
+import michael.linker.rewater.activity.ActivityGate;
 import michael.linker.rewater.ui.advanced.sign.model.SignBundle;
 import michael.linker.rewater.ui.advanced.sign.model.SignUiModel;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignViewModel;
@@ -134,12 +132,7 @@ public class SignInFragment extends Fragment {
     }
 
     private void moveToMainActivity() {
-        final Activity activity = requireActivity();
-        final Intent intent = new Intent(activity, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
-        activity.finish();
+        ActivityGate.moveToMainActivity(requireActivity());
     }
 
     private void saveData() {
