@@ -40,7 +40,7 @@ public class SignLoadingViewModel extends ViewModel {
     public Single<Boolean> checkInternetConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
                     try {
-                        TimeUnit.SECONDS.sleep(1);
+                        //TimeUnit.SECONDS.sleep(1);
                         return true;
                     } catch (RuntimeException e) {
                         this.setErrorStageMessageAndThrowException(
@@ -57,7 +57,7 @@ public class SignLoadingViewModel extends ViewModel {
     public Single<Boolean> checkServerConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
                     try {
-                        TimeUnit.SECONDS.sleep(1);
+                        TimeUnit.MILLISECONDS.sleep(100);
                         return true;
                     } catch (RuntimeException e) {
                         this.setErrorStageMessageAndThrowException(
@@ -73,7 +73,7 @@ public class SignLoadingViewModel extends ViewModel {
         return Single.fromCallable(() -> {
                     try {
                         DatabaseConfiguration.getDatabase();
-                        TimeUnit.SECONDS.sleep(1);
+                        TimeUnit.MILLISECONDS.sleep(100);
                         return true;
                     } catch (RuntimeException e) {
                         this.setErrorStageMessageAndThrowException(
@@ -91,7 +91,7 @@ public class SignLoadingViewModel extends ViewModel {
                 final IUsersRepository mUsersRepository =
                         RepositoryConfiguration.getUsersRepository();
                 mUsersRepository.refreshSessionToken();
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(100);
                 return true;
             } catch (UsersRepositoryNotFoundException | UsersRepositoryAccessDeniedException e) {
                 throw new SignViewModelFailedException(e.getMessage());

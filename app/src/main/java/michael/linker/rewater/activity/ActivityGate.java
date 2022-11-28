@@ -3,6 +3,8 @@ package michael.linker.rewater.activity;
 import android.app.Activity;
 import android.content.Intent;
 
+import michael.linker.rewater.activity.intent.SignOutIntent;
+import michael.linker.rewater.activity.intent.SignOutIntentModel;
 import michael.linker.rewater.config.DatabaseConfiguration;
 
 public class ActivityGate {
@@ -13,6 +15,13 @@ public class ActivityGate {
 
     public static void moveToSignActivity(final Activity activity) {
         final Intent intent = new Intent(activity, SignActivity.class);
+        ActivityGate.moveToActivity(activity, intent);
+    }
+
+    public static void moveToSignActivityOnSignOut(final Activity activity) {
+        final Intent intent = SignOutIntent.INSTANCE.pack(
+                new SignOutIntentModel(SignOutIntent.EXPECTED_SIGN_OUT),
+                new Intent(activity, SignActivity.class));
         ActivityGate.moveToActivity(activity, intent);
     }
 

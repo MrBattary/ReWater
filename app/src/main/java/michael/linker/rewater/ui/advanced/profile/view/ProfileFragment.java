@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment {
     private void initButtons() {
         mSignOutButton.setOnClickListener(l -> {
             mViewModel.signOut();
-            ActivityGate.moveToSignActivity(requireActivity());
+            ActivityGate.moveToSignActivityOnSignOut(requireActivity());
         });
     }
 

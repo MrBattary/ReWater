@@ -78,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/sign_in_input_password"
+                android:focusedByDefault="false"
                 android:text="@string/button_restore_password"
                 android:textAllCaps="false" />
 
@@ -95,6 +96,7 @@
                     style="@style/EditTextPasswordStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:nextFocusForward="@+id/sign_in_sign_in_button"
                     android:hint="@string/input_hint_password"
                     android:importantForAutofill="no" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +116,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/input_hint_username"
-                    android:importantForAutofill="no" />
+                    android:importantForAutofill="no"
+                    android:nextFocusDown="@+id/sign_in_input_password_input" />
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
     </RelativeLayout>

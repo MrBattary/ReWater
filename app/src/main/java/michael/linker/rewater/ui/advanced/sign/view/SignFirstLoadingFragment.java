@@ -21,6 +21,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.R;
 import michael.linker.rewater.activity.ActivityGate;
+import michael.linker.rewater.activity.intent.SignOutIntent;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignLoadingViewModel;
@@ -65,6 +66,16 @@ public class SignFirstLoadingFragment extends Fragment {
 
         mExitButton = view.findViewById(R.id.sign_loading_exit_button);
         mExitButton.setOnClickListener(l -> ActivityGate.finishApplication(requireActivity()));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (SignOutIntent.INSTANCE.unpack(
+                requireActivity().getIntent()).getExpectedSignOutValue()) {
+            NavHostFragment.findNavController(this).navigate(
+                    R.id.navigation_action_sign_first_loading_to_sign_in);
+        }
     }
 
     @Override
