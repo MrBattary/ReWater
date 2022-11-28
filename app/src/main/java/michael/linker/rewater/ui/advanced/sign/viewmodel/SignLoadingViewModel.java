@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.core.Single;
 import michael.linker.rewater.R;
 import michael.linker.rewater.config.DatabaseConfiguration;
 import michael.linker.rewater.config.RepositoryConfiguration;
@@ -21,6 +24,10 @@ public class SignLoadingViewModel extends ViewModel {
         errorStageMessage = new MutableLiveData<>();
     }
 
+    public void setInitStageMessage(final String msg) {
+        stageMessage.setValue(msg);
+    }
+
     public LiveData<String> getStageMessage() {
         return stageMessage;
     }
@@ -30,57 +37,108 @@ public class SignLoadingViewModel extends ViewModel {
     }
 
     // TODO (ML): Add the internet connection check
-    public void checkInternetConnection() throws SignLoadingViewModelFailedException {
-        stageMessage.setValue(
-                StringsProvider.getString(R.string.loading_stage_internet_connection));
-        /*this.setErrorStageMessageAndThrowException(
-                R.string.loading_stage_internet_connection_failure);*/
+    public Single<Boolean> checkInternetConnection() throws SignLoadingViewModelFailedException {
+        return Single.fromCallable(() -> {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        return true;
+                    } catch (RuntimeException e) {
+                        this.setErrorStageMessageAndThrowException(
+                                R.string.loading_stage_internet_connection_failure);
+                        return false;
+                    }
+                })
+                .doOnSuccess(b -> stageMessage.postValue(
+                        StringsProvider.getString(R.string.loading_stage_server_connection)));
+
     }
 
     // TODO (ML): Add the server connection check
-    public void checkServerConnection() throws SignLoadingViewModelFailedException {
-        stageMessage.setValue(
-                StringsProvider.getString(R.string.loading_stage_server_connection));
-        /*this.setErrorStageMessageAndThrowException(
-                R.string.loading_stage_server_connection_failure);*/
+    public Single<Boolean> checkServerConnection() throws SignLoadingViewModelFailedException {
+        return Single.fromCallable(() -> {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        return true;
+                    } catch (RuntimeException e) {
+                        this.setErrorStageMessageAndThrowException(
+                                R.string.loading_stage_server_connection_failure);
+                        return false;
+                    }
+                })
+                .doOnSuccess(b -> stageMessage.postValue(
+                        StringsProvider.getString(R.string.loading_stage_database_connection)));
     }
 
-    public void loadDatabase() throws SignLoadingViewModelFailedException {
-        stageMessage.setValue(
-                StringsProvider.getString(R.string.loading_stage_database_connection));
-        DatabaseConfiguration.getDatabase();
-        /*this.setErrorStageMessageAndThrowException(
-                R.string.loading_stage_database_connection_failure);*/
+    public Single<Boolean> loadDatabase() throws SignLoadingViewModelFailedException {
+        return Single.fromCallable(() -> {
+                    try {
+                        DatabaseConfiguration.getDatabase();
+                        TimeUnit.SECONDS.sleep(1);
+                        return true;
+                    } catch (RuntimeException e) {
+                        this.setErrorStageMessageAndThrowException(
+                                R.string.loading_stage_database_connection_failure);
+                        return false;
+                    }
+                })
+                .doOnSuccess(b -> stageMessage.postValue(
+                        StringsProvider.getString(R.string.loading_stage_auto_login)));
     }
 
-    public void autoSignIn() throws SignViewModelFailedException {
-        try {
-            final IUsersRepository mUsersRepository = RepositoryConfiguration.getUsersRepository();
-            mUsersRepository.refreshSessionToken();
-        } catch (UsersRepositoryNotFoundException | UsersRepositoryAccessDeniedException e) {
-            throw new SignViewModelFailedException(e.getMessage());
-        }
+    public Single<Boolean> autoSignIn() throws SignViewModelFailedException {
+        return Single.fromCallable(() -> {
+            try {
+                final IUsersRepository mUsersRepository =
+                        RepositoryConfiguration.getUsersRepository();
+                mUsersRepository.refreshSessionToken();
+                TimeUnit.SECONDS.sleep(1);
+                return true;
+            } catch (UsersRepositoryNotFoundException | UsersRepositoryAccessDeniedException e) {
+                throw new SignViewModelFailedException(e.getMessage());
+            }
+        });
     }
 
-    public void initRepositories() {
-        RepositoryConfiguration.getNetworksRepository();
-        RepositoryConfiguration.getDevicesRepository();
-        RepositoryConfiguration.getSchedulesRepository();
+    public Single<Boolean> initRepositories() {
+        return Single.fromCallable(() -> {
+                    try {
+                        RepositoryConfiguration.getNetworksRepository();
+                        RepositoryConfiguration.getDevicesRepository();
+                        RepositoryConfiguration.getSchedulesRepository();
+                        return true;
+                    } catch (RuntimeException e) {
+                        this.setErrorStageMessageAndThrowException(
+                                R.string.loading_stage_repository_installation_failure);
+                        return false;
+                    }
+                })
+                .doOnSuccess(b -> stageMessage.postValue(
+                        StringsProvider.getString(R.string.loading_stage_data_installation)));
+
     }
 
-    public void initData() {
-        StubDataConfiguration.getNetworksData();
-        StubDataConfiguration.getSchedulesData();
-        StubDataConfiguration.getNetworkToSchedulesDataLink();
-        StubDataConfiguration.getDevicesData();
-        StubDataConfiguration.getScheduleToDevicesDataLink();
-        StubDataConfiguration.getUsersData();
+    public Single<Boolean> initData() {
+        return Single.fromCallable(() -> {
+            try {
+                StubDataConfiguration.getNetworksData();
+                StubDataConfiguration.getSchedulesData();
+                StubDataConfiguration.getNetworkToSchedulesDataLink();
+                StubDataConfiguration.getDevicesData();
+                StubDataConfiguration.getScheduleToDevicesDataLink();
+                StubDataConfiguration.getUsersData();
+                return true;
+            } catch (RuntimeException e) {
+                this.setErrorStageMessageAndThrowException(
+                        R.string.loading_stage_data_installation_failure);
+                return false;
+            }
+        });
     }
 
     private void setErrorStageMessageAndThrowException(final int rId)
-            throws SignViewModelFailedException {
+            throws SignLoadingViewModelFailedException {
         final String errorMsg = StringsProvider.getString(rId);
-        errorStageMessage.setValue(errorMsg);
+        errorStageMessage.postValue(errorMsg);
         throw new SignLoadingViewModelFailedException(errorMsg);
     }
 }

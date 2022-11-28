@@ -13,12 +13,18 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.R;
 import michael.linker.rewater.activity.ActivityGate;
 import michael.linker.rewater.data.model.status.Status;
+import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignLoadingViewModel;
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
+import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class SignInLoadingFragment extends Fragment {
     private IStatusStyledTextView mStageTextView;
@@ -57,11 +63,32 @@ public class SignInLoadingFragment extends Fragment {
                 m -> mStageTextView.setText(m, Status.OK));
         mViewModel.getErrorStageMessage().observe(getViewLifecycleOwner(),
                 m -> mStageTextView.setText(m, Status.DEFECT));
+        mViewModel.setInitStageMessage(
+                StringsProvider.getString(R.string.loading_stage_repository_installation));
     }
 
     private void loadUserData() {
-        mViewModel.initData();
-        mViewModel.initRepositories();
-        ActivityGate.moveToMainActivity(requireActivity());
+        mViewModel.initRepositories()
+                .flatMap(ir -> mViewModel.initData())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<>() {
+                    @Override
+                    public void onSubscribe(
+                            @io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onSuccess(
+                            @io.reactivex.rxjava3.annotations.NonNull Boolean aBoolean) {
+                        ActivityGate.moveToMainActivity(requireActivity());
+                    }
+
+                    @Override
+                    public void onError(
+                            @io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        ToastProvider.showShort(requireActivity(), e.getMessage());
+                    }
+                });
     }
 }

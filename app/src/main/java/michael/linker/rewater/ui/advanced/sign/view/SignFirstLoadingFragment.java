@@ -15,11 +15,15 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.R;
 import michael.linker.rewater.activity.ActivityGate;
 import michael.linker.rewater.data.model.status.Status;
+import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignLoadingViewModel;
-import michael.linker.rewater.ui.advanced.sign.viewmodel.SignLoadingViewModelFailedException;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignViewModelFailedException;
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
@@ -56,6 +60,8 @@ public class SignFirstLoadingFragment extends Fragment {
                 m -> mStageTextView.setText(m, Status.OK));
         mViewModel.getErrorStageMessage().observe(getViewLifecycleOwner(),
                 m -> mStageTextView.setText(m, Status.DEFECT));
+        mViewModel.setInitStageMessage(
+                StringsProvider.getString(R.string.loading_stage_internet_connection));
 
         mExitButton = view.findViewById(R.id.sign_loading_exit_button);
         mExitButton.setOnClickListener(l -> ActivityGate.finishApplication(requireActivity()));
@@ -69,17 +75,36 @@ public class SignFirstLoadingFragment extends Fragment {
 
     private void firstLoading() {
         NavController navController = NavHostFragment.findNavController(this);
-        try {
-            mViewModel.checkInternetConnection();
-            mViewModel.checkServerConnection();
-            mViewModel.loadDatabase();
-            mViewModel.autoSignIn();
-            navController.navigate(R.id.navigation_action_sign_first_loading_to_sign_in_loading);
-        } catch (SignViewModelFailedException e) {
-            ToastProvider.showShort(requireActivity(), e.getMessage());
-            navController.navigate(R.id.navigation_action_sign_first_loading_to_sign_in);
-        } catch (SignLoadingViewModelFailedException ignored) {
-            mExitButton.setVisibility(View.VISIBLE);
-        }
+        mViewModel.checkInternetConnection()
+                .flatMap(ic -> mViewModel.checkServerConnection())
+                .flatMap(sc -> mViewModel.loadDatabase())
+                .flatMap(d -> mViewModel.autoSignIn())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<>() {
+                    @Override
+                    public void onSubscribe(
+                            @io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onSuccess(
+                            @io.reactivex.rxjava3.annotations.NonNull Boolean aBoolean) {
+                        navController.navigate(
+                                R.id.navigation_action_sign_first_loading_to_sign_in_loading);
+                    }
+
+                    @Override
+                    public void onError(
+                            @io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        if (e instanceof SignViewModelFailedException) {
+                            ToastProvider.showShort(requireActivity(), e.getMessage());
+                            navController.navigate(
+                                    R.id.navigation_action_sign_first_loading_to_sign_in);
+                        } else {
+                            mExitButton.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
     }
 }

@@ -101,7 +101,9 @@
     <string name="loading_stage_database_connection_failure">The connection to the database could not be established, please try reinstalling the application.</string>
     <string name="loading_stage_auto_login">Uploading user data</string>
     <string name="loading_stage_repository_installation">Establishing a connection with the repositories</string>
+    <string name="loading_stage_repository_installation_failure">Failed to establish connections with repositories</string>
     <string name="loading_stage_data_installation">Uploading internal data</string>
+    <string name="loading_stage_data_installation_failure">Failed to upload internal data</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>

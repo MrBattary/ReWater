@@ -66,7 +66,7 @@ public class NetworksLocalRepository implements INetworksRepository {
                 modelList.stream()
                         .map(network -> network.getStatus().getBattery())
                         .collect(Collectors.toList()));
-        mOverallStatusOfTheAllNetworks.setValue(
+        mOverallStatusOfTheAllNetworks.postValue(
                 Status.getWorstStatus(Arrays.asList(networksWaterStatus, networksBatteryStatus)));
     }
 
