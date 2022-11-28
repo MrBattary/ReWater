@@ -11,7 +11,6 @@ import michael.linker.rewater.R;
 import michael.linker.rewater.config.DatabaseConfiguration;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.config.StubDataConfiguration;
-import michael.linker.rewater.data.repository.user.IUsersRepository;
 import michael.linker.rewater.data.repository.user.UsersRepositoryAccessDeniedException;
 import michael.linker.rewater.data.repository.user.UsersRepositoryNotFoundException;
 import michael.linker.rewater.data.res.StringsProvider;
@@ -28,6 +27,10 @@ public class SignLoadingViewModel extends ViewModel {
         stageMessage.setValue(msg);
     }
 
+    public void postErrorStageMessage(final String errorMsg) {
+        errorStageMessage.postValue(errorMsg);
+    }
+
     public LiveData<String> getStageMessage() {
         return stageMessage;
     }
@@ -40,7 +43,8 @@ public class SignLoadingViewModel extends ViewModel {
     public Single<Boolean> checkInternetConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
                     try {
-                        //TimeUnit.SECONDS.sleep(1);
+                        // TODO (ML): Remove demonstration sleep
+                        TimeUnit.MILLISECONDS.sleep(100);
                         return true;
                     } catch (RuntimeException e) {
                         this.setErrorStageMessageAndThrowException(
@@ -57,6 +61,7 @@ public class SignLoadingViewModel extends ViewModel {
     public Single<Boolean> checkServerConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
                     try {
+                        // TODO (ML): Remove demonstration sleep
                         TimeUnit.MILLISECONDS.sleep(100);
                         return true;
                     } catch (RuntimeException e) {
@@ -72,7 +77,10 @@ public class SignLoadingViewModel extends ViewModel {
     public Single<Boolean> loadDatabase() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
                     try {
-                        DatabaseConfiguration.getDatabase();
+                        if (!DatabaseConfiguration.isDatabaseOpened()) {
+                            DatabaseConfiguration.getDatabase();
+                        }
+                        // TODO (ML): Remove demonstration sleep
                         TimeUnit.MILLISECONDS.sleep(100);
                         return true;
                     } catch (RuntimeException e) {
@@ -88,9 +96,8 @@ public class SignLoadingViewModel extends ViewModel {
     public Single<Boolean> autoSignIn() throws SignViewModelFailedException {
         return Single.fromCallable(() -> {
             try {
-                final IUsersRepository mUsersRepository =
-                        RepositoryConfiguration.getUsersRepository();
-                mUsersRepository.refreshSessionToken();
+                RepositoryConfiguration.getUsersRepository().refreshSessionToken();
+                // TODO (ML): Remove demonstration sleep
                 TimeUnit.MILLISECONDS.sleep(100);
                 return true;
             } catch (UsersRepositoryNotFoundException | UsersRepositoryAccessDeniedException e) {

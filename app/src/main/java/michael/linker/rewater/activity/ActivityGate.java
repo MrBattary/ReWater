@@ -5,7 +5,6 @@ import android.content.Intent;
 
 import michael.linker.rewater.activity.intent.SignOutIntent;
 import michael.linker.rewater.activity.intent.SignOutIntentModel;
-import michael.linker.rewater.config.DatabaseConfiguration;
 
 public class ActivityGate {
     public static void moveToMainActivity(final Activity activity) {
@@ -25,8 +24,13 @@ public class ActivityGate {
         ActivityGate.moveToActivity(activity, intent);
     }
 
+    /**
+     * After executing the function, the activity will be closed, but the processes associated
+     * with the App will remain in the system, such as connecting to the database and so on.
+     *
+     * @param activity active activity
+     */
     public static void finishApplication(final Activity activity) {
-        DatabaseConfiguration.getDatabase().close();
         activity.finishAndRemoveTask();
     }
 

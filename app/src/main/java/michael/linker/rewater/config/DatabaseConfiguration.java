@@ -21,4 +21,12 @@ public class DatabaseConfiguration {
         }
         return sDatabase;
     }
+
+    public static boolean isDatabaseOpened() {
+        if (sDatabase != null) {
+            return sDatabase.isOpen();
+        } else {
+            return false;
+        }
+    }
 }

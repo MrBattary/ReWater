@@ -24,6 +24,7 @@ import michael.linker.rewater.activity.intent.SignOutIntent;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignLoadingViewModel;
+import michael.linker.rewater.ui.advanced.sign.viewmodel.SignLoadingViewModelFailedException;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignViewModelFailedException;
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
@@ -110,9 +111,13 @@ public class SignFirstLoadingFragment extends Fragment {
                         if (e instanceof SignViewModelFailedException) {
                             navController.navigate(
                                     R.id.navigation_action_sign_first_loading_to_sign_in);
-                        } else {
-                            ToastProvider.showLong(requireActivity(), e.getMessage());
+                        }
+                        if (e instanceof SignLoadingViewModelFailedException) {
                             mRetryButton.setVisibility(View.VISIBLE);
+                        } else {
+                            ToastProvider.showShort(requireActivity(), e.getMessage());
+                            mViewModel.postErrorStageMessage(
+                                    StringsProvider.getString(R.string.loading_stage_failure));
                         }
                     }
                 });

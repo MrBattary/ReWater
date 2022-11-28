@@ -63,10 +63,6 @@
         <action
             android:id="@+id/navigation_action_sign_first_loading_to_sign_in_loading"
             app:destination="@id/navigation_sign_in_loading"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@+id/navigation_sign_first_loading"
             app:popUpToInclusive="true" />
     </fragment>
