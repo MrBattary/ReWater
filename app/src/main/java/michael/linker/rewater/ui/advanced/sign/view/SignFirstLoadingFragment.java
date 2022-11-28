@@ -20,7 +20,6 @@ import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.R;
-import michael.linker.rewater.activity.ActivityGate;
 import michael.linker.rewater.activity.intent.SignOutIntent;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.StringsProvider;
@@ -32,7 +31,7 @@ import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class SignFirstLoadingFragment extends Fragment {
     private IStatusStyledTextView mStageTextView;
-    private MaterialButton mExitButton;
+    private MaterialButton mRetryButton;
 
     private SignLoadingViewModel mViewModel;
 
@@ -64,8 +63,8 @@ public class SignFirstLoadingFragment extends Fragment {
         mViewModel.setInitStageMessage(
                 StringsProvider.getString(R.string.loading_stage_internet_connection));
 
-        mExitButton = view.findViewById(R.id.sign_loading_exit_button);
-        mExitButton.setOnClickListener(l -> ActivityGate.finishApplication(requireActivity()));
+        mRetryButton = view.findViewById(R.id.sign_loading_retry_button);
+        mRetryButton.setOnClickListener(l -> this.firstLoading());
     }
 
     @Override
@@ -109,11 +108,11 @@ public class SignFirstLoadingFragment extends Fragment {
                     public void onError(
                             @io.reactivex.rxjava3.annotations.NonNull Throwable e) {
                         if (e instanceof SignViewModelFailedException) {
-                            ToastProvider.showShort(requireActivity(), e.getMessage());
                             navController.navigate(
                                     R.id.navigation_action_sign_first_loading_to_sign_in);
                         } else {
-                            mExitButton.setVisibility(View.VISIBLE);
+                            ToastProvider.showLong(requireActivity(), e.getMessage());
+                            mRetryButton.setVisibility(View.VISIBLE);
                         }
                     }
                 });

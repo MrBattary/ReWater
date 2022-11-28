@@ -8,13 +8,13 @@
     tools:context=".ui.advanced.sign.view.SignFirstLoadingFragment">
 
     <Button
-        android:id="@+id/sign_loading_exit_button"
+        android:id="@+id/sign_loading_retry_button"
         style="@style/TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_exit"
+        android:text="@string/button_retry"
         android:visibility="gone"
-        app:icon="@drawable/ic_exit"
+        app:icon="@drawable/ic_refresh"
         app:iconTint="@color/text_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

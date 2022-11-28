@@ -98,7 +98,7 @@
     <string name="loading_stage_server_connection">Checking the connection to the server</string>
     <string name="loading_stage_server_connection_failure">Unable to connect to the server, please restart the application.</string>
     <string name="loading_stage_database_connection">Connecting to the database</string>
-    <string name="loading_stage_database_connection_failure">The connection to the database could not be established, please try reinstalling the application.</string>
+    <string name="loading_stage_database_connection_failure">The connection to the internal database could not be established, please try to reinstall the application.</string>
     <string name="loading_stage_auto_login">Uploading user data</string>
     <string name="loading_stage_repository_installation">Establishing a connection with the repositories</string>
     <string name="loading_stage_repository_installation_failure">Failed to establish connections with repositories</string>
@@ -151,6 +151,7 @@
     <string name="button_sign_up">Sign up</string>
     <string name="button_sign_out">Sign out</string>
     <string name="button_exit">Exit</string>
+    <string name="button_retry">Retry</string>
     <string name="button_restore_password">Forgot password?</string>
 
     <!-- Descriptions. -->

@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.button.MaterialButton;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -28,6 +30,7 @@ import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class SignInLoadingFragment extends Fragment {
     private IStatusStyledTextView mStageTextView;
+    private MaterialButton mRetryButton;
 
     private SignLoadingViewModel mViewModel;
 
@@ -47,7 +50,6 @@ public class SignInLoadingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.initFields(view);
-
     }
 
     @Override
@@ -65,6 +67,9 @@ public class SignInLoadingFragment extends Fragment {
                 m -> mStageTextView.setText(m, Status.DEFECT));
         mViewModel.setInitStageMessage(
                 StringsProvider.getString(R.string.loading_stage_repository_installation));
+
+        mRetryButton = view.findViewById(R.id.sign_loading_retry_button);
+        mRetryButton.setOnClickListener(l -> this.loadUserData());
     }
 
     private void loadUserData() {
@@ -87,7 +92,8 @@ public class SignInLoadingFragment extends Fragment {
                     @Override
                     public void onError(
                             @io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                        ToastProvider.showShort(requireActivity(), e.getMessage());
+                        ToastProvider.showLong(requireActivity(), e.getMessage());
+                        mRetryButton.setVisibility(View.VISIBLE);
                     }
                 });
     }
