@@ -107,6 +107,7 @@
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>
+    <string name="title_exit">Exit</string>
 
     <!-- Dialogs. -->
     <string name="dialog_delete_network">You are going to delete this network. After this action, all watering schedules from this network will be erased. Are you sure?</string>
@@ -121,6 +122,7 @@
     <string name="dialog_manual_watering_overflow">Sensors showed high soil moisture of the plant. Are you sure you want to continue watering?</string>
     <string name="dialog_manual_watering_confirmation_1">Are you sure you want to do a\n</string>
     <string name="dialog_manual_watering_confirmation_2">\ watering?</string>
+    <string name="dialog_exit">Are you sure you want to exit the app?</string>
 
     <!-- Buttons. -->
     <string name="button_settings">Settings</string>

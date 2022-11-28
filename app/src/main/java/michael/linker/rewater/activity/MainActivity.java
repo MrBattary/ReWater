@@ -12,12 +12,17 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import michael.linker.rewater.R;
+import michael.linker.rewater.data.res.DrawablesProvider;
+import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.databinding.ActivityMainBinding;
 import michael.linker.rewater.ui.advanced.navigation.view.HomeNavigationView;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private NavController mNavController;
+    private TwoChoicesWarningDialog mExitDialog;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         this.initNavigation();
+        this.initExitDialog();
         new HomeNavigationView(this, binding);
     }
 
@@ -34,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
         final AppBarConfiguration appBarConfiguration = mAppBarConfiguration;
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!getOnBackPressedDispatcher().hasEnabledCallbacks()) {
+            mExitDialog.show();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void initNavigation() {
@@ -65,5 +80,19 @@ public class MainActivity extends AppCompatActivity {
                     "Activity " + this + " does not have a NavHostFragment");
         }
         return ((NavHostFragment) fragment).getNavController();
+    }
+
+    private void initExitDialog() {
+        mExitDialog = new TwoChoicesWarningDialog(this,
+                new TwoChoicesDialogModel(
+                        DrawablesProvider.getDrawable(R.drawable.ic_info),
+                        StringsProvider.getString(R.string.title_exit),
+                        StringsProvider.getString(R.string.dialog_exit),
+                        StringsProvider.getString(R.string.button_exit),
+                        StringsProvider.getString(R.string.button_cancel)
+                ),
+                (dialogInterface, i) -> ActivityGate.finishApplication(this),
+                (dialogInterface, i) -> dialogInterface.cancel()
+        );
     }
 }
