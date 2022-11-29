@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.rxjava3.core.Single;
 import michael.linker.rewater.R;
 import michael.linker.rewater.config.DatabaseConfiguration;
@@ -43,8 +41,6 @@ public class SignLoadingViewModel extends ViewModel {
     public Single<Boolean> checkInternetConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
                     try {
-                        // TODO (ML): Remove demonstration sleep
-                        TimeUnit.MILLISECONDS.sleep(100);
                         return true;
                     } catch (RuntimeException e) {
                         this.setErrorStageMessageAndThrowException(
@@ -61,8 +57,6 @@ public class SignLoadingViewModel extends ViewModel {
     public Single<Boolean> checkServerConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
                     try {
-                        // TODO (ML): Remove demonstration sleep
-                        TimeUnit.MILLISECONDS.sleep(100);
                         return true;
                     } catch (RuntimeException e) {
                         this.setErrorStageMessageAndThrowException(
@@ -80,8 +74,6 @@ public class SignLoadingViewModel extends ViewModel {
                         if (!DatabaseConfiguration.isDatabaseOpened()) {
                             DatabaseConfiguration.getDatabase();
                         }
-                        // TODO (ML): Remove demonstration sleep
-                        TimeUnit.MILLISECONDS.sleep(100);
                         return true;
                     } catch (RuntimeException e) {
                         this.setErrorStageMessageAndThrowException(
@@ -97,8 +89,6 @@ public class SignLoadingViewModel extends ViewModel {
         return Single.fromCallable(() -> {
             try {
                 RepositoryConfiguration.getUsersRepository().refreshSessionToken();
-                // TODO (ML): Remove demonstration sleep
-                TimeUnit.MILLISECONDS.sleep(100);
                 return true;
             } catch (UsersRepositoryNotFoundException | UsersRepositoryAccessDeniedException e) {
                 throw new SignViewModelFailedException(e.getMessage());
