@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/devices_add_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
+        android:paddingVertical="@dimen/fragment_content_vertical_spacing"
+        tools:context=".ui.advanced.devices.view.EditDeviceFragment">
+
+        <RelativeLayout
+            android:id="@+id/add_device_parents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_device_name">
+
+            <RelativeLayout
+                android:id="@+id/add_device_parents_names"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginHorizontal="@dimen/fragment_content_horizontal_spacing">
+
+                <include
+                    android:id="@+id/add_device_parents_network"
+                    layout="@layout/view_parent_entity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/add_device_parents_schedule"
+                    android:layout_marginStart="@dimen/fragment_content_horizontal_spacing" />
+
+                <include
+                    android:id="@+id/add_device_parents_schedule"
+                    layout="@layout/view_parent_entity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/add_device_parents_exists"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_device_parents_names"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing">
+
+                <Button
+                    android:id="@+id/add_device_detach_schedule_button"
+                    style="@style/OutlinedButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/add_device_schedule_information"
+                    android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+                    android:text="@string/button_detach_schedule"
+                    app:icon="@drawable/ic_detach"
+                    app:iconTint="@color/negative_color"
+                    app:strokeColor="@color/negative_color" />
+
+                <include
+                    android:id="@+id/add_device_schedule_information"
+                    layout="@layout/view_parent_schedule_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/add_device_parents_not_found"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_device_parents_names"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing">
+
+                <Button
+                    android:id="@+id/add_device_attach_schedule_button"
+                    style="@style/OutlinedButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_attach_schedule"
+                    app:icon="@drawable/ic_add"
+                    app:iconTint="@color/positive_color"
+                    app:strokeColor="@color/positive_color" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/add_device_controls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_device_parents"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/add_device_save_button"
+                style="@style/RegularButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_add"
+                app:icon="@drawable/ic_positive"
+                app:iconTint="@color/positive_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/add_device_back_button"
+                style="@style/RegularButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_back"
+                app:icon="@drawable/ic_right_arrow"
+                app:iconTint="@color/negative_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/add_device_cancel_button"
+                style="@style/RegularButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+                android:text="@string/button_cancel"
+                app:icon="@drawable/ic_cancel"
+                app:iconTint="@color/negative_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_device_back_button" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_device_name"
+            style="@style/TextInputCounterAndErrorLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:counterMaxLength="@integer/input_max_limit_header">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_device_name_input"
+                style="@style/EditTextNormalLimitedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_hint_name"
+                android:importantForAutofill="no"
+                android:maxLength="@integer/input_max_limit_header" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </RelativeLayout>
+</ScrollView>

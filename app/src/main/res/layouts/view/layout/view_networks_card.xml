@@ -9,8 +9,10 @@
         android:id="@+id/networks_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/card_horizontal_margin"
-        android:layout_marginVertical="@dimen/card_vertical_margin"
+        android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
+        android:layout_marginVertical="@dimen/card_vertical_spacing"
+        android:clickable="true"
+        android:foreground="@drawable/selectable_item_background"
         app:cardBackgroundColor="@color/background_secondary"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,25 +30,41 @@
                 android:id="@+id/networks_card_content_permanent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/card_content_horizontal_margin"
+                android:layout_marginStart="@dimen/card_content_horizontal_spacing"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0">
 
-                <ImageButton
-                    android:id="@+id/networks_card_expand_or_loose_button"
+
+                <RelativeLayout
+                    android:id="@+id/networks_card_content_permanent_controls"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:backgroundTint="@color/background_secondary"
-                    android:contentDescription="@string/description_expand_or_loose_card_button"
-                    android:padding="@dimen/card_horizontal_margin"
-                    android:src="@drawable/ic_button_expand"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_alignParentTop="true">
+
+                    <ImageButton
+                        android:id="@+id/networks_card_expand_or_loose_button"
+                        style="@style/RoundButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/networks_card_combined_status"
+                        android:backgroundTint="@color/background_secondary"
+                        android:contentDescription="@string/description_expand_or_loose_card_button"
+                        android:padding="@dimen/card_horizontal_spacing"
+                        android:src="@drawable/ic_button_expand" />
+
+                    <include
+                        android:id="@+id/networks_card_combined_status"
+                        layout="@layout/view_status_combined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
 
                 <TextView
                     android:id="@+id/networks_card_heading"
@@ -55,30 +73,17 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/networks_card_combined_status"
-                    android:text="@string/global_short_placeholder"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/networks_card_combined_status"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <include
-                    android:id="@+id/networks_card_combined_status"
-                    layout="@layout/view_status_combined"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/networks_card_expand_or_loose_button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/networks_card_expand_or_loose_button"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginEnd="@dimen/card_content_horizontal_spacing"
+                    android:layout_marginVertical="@dimen/card_vertical_spacing"
+                    android:layout_toStartOf="@id/networks_card_content_permanent_controls"
+                    android:text="@string/placeholder_global_short" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/networks_card_hidden_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/card_horizontal_margin"
+                android:layout_marginEnd="@dimen/card_horizontal_spacing"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -87,29 +92,25 @@
 
                 <Button
                     android:id="@+id/networks_card_settings_button"
-                    style="?android:attr/borderlessButtonStyle"
+                    style="@style/LeftBottomCornerRoundButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/networks_card_description"
                     android:layout_alignParentStart="true"
+                    android:layout_below="@id/networks_card_description"
+                    android:layout_marginBottom="@dimen/card_bottom_button_negative_margin"
                     android:backgroundTint="@color/background_secondary"
-                    android:paddingHorizontal="@dimen/card_horizontal_margin"
-                    android:paddingVertical="@dimen/card_vertical_margin"
+                    android:paddingHorizontal="@dimen/card_horizontal_spacing"
+                    android:paddingVertical="@dimen/card_vertical_spacing"
                     android:text="@string/button_settings"
-                    app:icon="@drawable/ic_settings"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/networks_card_description" />
+                    app:icon="@drawable/ic_settings" />
 
                 <TextView
                     android:id="@+id/networks_card_description"
                     style="@style/CustomTextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/card_horizontal_margin"
-                    android:text="@string/global_medium_placeholder"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginStart="@dimen/card_horizontal_spacing"
+                    android:text="@string/placeholder_global_medium" />
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

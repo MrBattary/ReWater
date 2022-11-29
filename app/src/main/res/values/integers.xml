@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="input_max_limit_header">50</integer>
+    <integer name="input_min_limit_header">4</integer>
+    <integer name="input_max_limit_description">200</integer>
+
+    <integer name="transition_animation_time">150</integer>
+</resources>

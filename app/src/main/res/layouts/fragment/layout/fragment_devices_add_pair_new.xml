@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/devices_add_pair_new"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
+    android:paddingVertical="@dimen/fragment_content_vertical_spacing"
+    tools:context=".ui.advanced.devices.view.AddPairNewDeviceFragment">
+
+    <RelativeLayout
+        android:id="@+id/add_device_pair_new_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:id="@+id/add_device_pair_new_bluetooth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+            <Button
+                android:id="@+id/add_device_pair_new_bluetooth_pair_button"
+                style="@style/OutlinedButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_device_pair_new_bluetooth_todo"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+                android:text="@string/button_devices_add_pair"
+                app:icon="@drawable/ic_bluetooth_pair"
+                app:iconTint="@color/positive_color"
+                app:strokeColor="@color/positive_color" />
+
+            <TextView
+                android:id="@+id/add_device_pair_new_bluetooth_todo"
+                style="@style/CustomText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="TODO:HERE SHOULD BE DRAGONS" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/add_device_pair_new_access"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_device_pair_new_bluetooth">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_device_pair_new_access_key"
+                style="@style/TextInputPasswordStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_device_pair_new_access_key_input"
+                    style="@style/EditTextPasswordStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/input_hint_key"
+                    android:importantForAutofill="no" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/add_device_pair_new_network"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_device_pair_new_access">
+
+            <TextView
+                android:id="@+id/add_device_pair_new_network_todo"
+                style="@style/CustomText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="TODO:HERE SHOULD BE DRAGONS" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/add_device_pair_new_message"
+        style="@style/CustomTextSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_device_pair_new_wrapper"
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small"
+        android:text="@string/button_devices_add_pair_connection_established" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_device_pair_new_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_device_pair_new_message"
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add_device_pair_new_control_next_button"
+            style="@style/OutlinedButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_next"
+            app:icon="@drawable/ic_left_arrow"
+            app:iconTint="@color/positive_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/add_device_pair_new_control_back_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_back"
+            app:icon="@drawable/ic_right_arrow"
+            app:iconTint="@color/negative_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/add_device_pair_new_control_cancel_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+            android:text="@string/button_cancel"
+            app:icon="@drawable/ic_cancel"
+            app:iconTint="@color/negative_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_device_pair_new_control_back_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

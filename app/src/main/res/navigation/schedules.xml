@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_navigation_schedules"
+    app:startDestination="@id/navigation_schedules">
+
+    <fragment
+        android:id="@+id/navigation_schedules"
+        android:name="michael.linker.rewater.ui.advanced.schedules.view.SchedulesFragment"
+        android:label="@string/navigation_title_schedules"
+        tools:layout="@layout/fragment_schedules">
+        <action
+            android:id="@+id/navigation_action_schedules_to_schedules_add"
+            app:destination="@id/navigation_schedules_add"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/navigation_action_schedules_to_schedules_edit"
+            app:destination="@id/navigation_schedules_edit"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_schedules_add"
+        android:name="michael.linker.rewater.ui.advanced.schedules.view.AddScheduleFragment"
+        android:label="@string/navigation_title_schedules_add"
+        tools:layout="@layout/fragment_schedules_add">
+        <action
+            android:id="@+id/navigation_action_schedules_add_to_schedules"
+            app:destination="@id/navigation_schedules"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/navigation_action_schedules_add_to_schedules_devices"
+            app:destination="@id/navigation_schedules_devices"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_schedules_edit"
+        android:name="michael.linker.rewater.ui.advanced.schedules.view.EditScheduleFragment"
+        android:label="@string/navigation_title_schedules_edit"
+        tools:layout="@layout/fragment_schedules_edit">
+        <action
+            android:id="@+id/navigation_action_schedules_edit_to_schedules"
+            app:destination="@id/navigation_schedules"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/navigation_action_schedules_edit_to_schedules_devices"
+            app:destination="@id/navigation_schedules_devices"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_schedules_devices"
+        android:name="michael.linker.rewater.ui.advanced.schedules.view.ScheduleDevicesFragment"
+        android:label="@string/navigation_title_schedules_devices"
+        tools:layout="@layout/fragment_schedules_devices">
+        <action
+            android:id="@+id/navigation_action_schedules_devices_to_schedules_add"
+            app:destination="@id/navigation_schedules_add"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/navigation_action_schedules_devices_to_schedules_edit"
+            app:destination="@id/navigation_schedules_edit"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+</navigation>

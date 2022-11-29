@@ -1,10 +1,31 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Theme.ReWater" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/background_primary</item>
+    <style name="Theme.ReWater.Base" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/background_primary</item>
+        <item name="colorPrimary">@color/background_select</item>
+        <item name="colorPrimaryVariant">@color/background_secondary</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/text_primary</item>
+        <item name="colorSecondaryVariant">@color/text_secondary</item>
+        <item name="colorOnSecondary">@color/text_secondary</item>
+
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/text_primary</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/background_primary</item>
+        <!-- Action bar custom styles. -->
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
+        <!-- Bottom navigation bar. -->
+        <item name="bottomNavigationStyle">@style/BottomNavigationViewStyle</item>
+    </style>
+
+    <style name="Theme.ReWater.Sign" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/background_primary</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/background_select</item>
         <item name="colorPrimaryVariant">@color/background_secondary</item>
         <item name="colorOnPrimary">@color/text_primary</item>
         <!-- Secondary brand color. -->
@@ -13,7 +34,5 @@
         <item name="colorOnSecondary">@color/text_secondary</item>
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/text_primary</item>
-        <!-- Bottom navigation bar. -->
-        <item name="bottomNavigationStyle">@style/BottomNavigationViewStyle</item>
     </style>
 </resources>

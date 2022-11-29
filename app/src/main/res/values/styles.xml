@@ -6,20 +6,11 @@
         <item name="itemTextColor">@color/bottom_navigation_color</item>
         <item name="itemIconTint">@color/bottom_navigation_color</item>
     </style>
-    <!-- Text styles -->
-    <style name="CustomText">
-        <item name="android:textColor">@color/text_primary</item>
-    </style>
 
-    <style name="CustomTextMedium" parent="CustomText">
-        <item name="android:textSize">@dimen/font_size_medium</item>
-    </style>
-
-    <style name="CustomTextLarge" parent="CustomText">
-        <item name="android:textSize">@dimen/font_size_large</item>
-    </style>
-
-    <style name="CustomTextSmall" parent="CustomText">
-        <item name="android:textSize">@dimen/font_size_small</item>
+    <!-- Action bar style. -->
+    <style name="ActionBarStyle" parent="@style/Widget.MaterialComponents.ActionBar.Primary">
+        <item name="background">@color/background_primary</item>
+        <item name="android:titleTextStyle">@style/CustomTextLarge</item>
+        <item name="titleTextStyle">@style/CustomTextLarge</item>
     </style>
 </resources>

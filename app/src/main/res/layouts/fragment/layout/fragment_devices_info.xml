@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/device_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
+        android:paddingVertical="@dimen/fragment_content_vertical_spacing"
+        tools:context=".ui.advanced.devices.view.DeviceInfoFragment">
+
+        <Button
+            android:id="@+id/device_info_manual_watering_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/device_info_status"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+            android:text="@string/button_manual_watering"
+            app:icon="@drawable/ic_manual_watering" />
+
+        <Button
+            android:id="@+id/device_info_back_button"
+            style="@style/RegularButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/device_info_manual_watering_button"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+            android:text="@string/button_back"
+            app:icon="@drawable/ic_right_arrow"
+            app:iconTint="@color/negative_color" />
+
+        <RelativeLayout
+            android:id="@+id/device_info_parents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/device_info_name">
+
+            <RelativeLayout
+                android:id="@+id/device_info_parents_names"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+                <include
+                    android:id="@+id/device_info_parents_network"
+                    layout="@layout/view_parent_entity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/device_info_parents_schedule"
+                    android:layout_marginStart="@dimen/fragment_content_horizontal_spacing" />
+
+                <include
+                    android:id="@+id/device_info_parents_schedule"
+                    layout="@layout/view_parent_entity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/device_info_schedule_information"
+                layout="@layout/view_parent_schedule_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/device_info_parents_names"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/device_info_name"
+            style="@style/CustomTextMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="@string/placeholder_global_medium" />
+
+        <include
+            android:id="@+id/device_info_status"
+            layout="@layout/view_status_described"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/device_info_parents"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing" />
+    </RelativeLayout>
+</ScrollView>

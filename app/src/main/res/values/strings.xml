@@ -1,21 +1,161 @@
 <resources>
     <string name="app_name">ReWater</string>
 
-    <!--Navigation bar-->
+    <!-- Navigation bar. -->
     <string name="navigation_title_home">Home</string>
     <string name="navigation_title_networks">Networks</string>
     <string name="navigation_title_devices">Devices</string>
     <string name="navigation_title_profile">Profile</string>
     <string name="navigation_title_settings">Settings</string>
+    <string name="navigation_title_devices_add_options">Ways to add</string>
+    <string name="navigation_title_devices_add_pair_new">Pair a new device</string>
+    <string name="navigation_title_devices_add_already_paired">Add the already paired</string>
+    <string name="navigation_title_devices_info">Device info</string>
+    <string name="navigation_title_devices_manual_watering">Manual watering</string>
+    <string name="navigation_title_devices_edit">Edit device</string>
+    <string name="navigation_title_devices_schedules">Choose schedule</string>
+    <string name="navigation_title_networks_add">Add new network</string>
+    <string name="navigation_title_networks_edit">Edit network</string>
+    <string name="navigation_title_devices_add">Setup new device</string>
+    <string name="navigation_title_schedules">Schedules</string>
+    <string name="navigation_title_schedules_add">Create schedule</string>
+    <string name="navigation_title_schedules_edit">Edit schedule</string>
+    <string name="navigation_title_schedules_devices">Attach devices</string>
+    <string name="navigation_title_sign_in">Sign In</string>
+    <string name="navigation_title_sign_up">Sign Up</string>
+    <string name="navigation_title_sign_loading">Loading</string>
 
-    <!--Texts-->
-    <string name="global_short_placeholder">Lorem ipsum vivamus.</string>
-    <string name="global_medium_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.</string>
+    <!-- Inputs. -->
+    <string name="input_hint_name">Name</string>
+    <string name="input_hint_key">Key</string>
+    <string name="input_hint_litres">Litres</string>
+    <string name="input_hint_millilitres">Millilitres</string>
+    <string name="input_hint_description">Description</string>
+    <string name="input_hint_days">Days</string>
+    <string name="input_hint_hours">Hours</string>
+    <string name="input_hint_minutes">Minutes</string>
+    <string name="input_hint_username">Username</string>
+    <string name="input_hint_email">Email</string>
+    <string name="input_hint_username_or_email">Username or Email</string>
+    <string name="input_hint_password">Password</string>
+    <string name="input_error_days">The value of days must be an integer from 0 to 99!</string>
+    <string name="input_error_hours">The value of hours must be an integer from 0 to 23!</string>
+    <string name="input_error_minutes">The value of minutes must be an integer from 0 to 59!</string>
+    <string name="input_error_litres">The value of litres must be an integer from 0 to 99!</string>
+    <string name="input_error_millilitres">The value of millilitres must be an integer from 0 to 999!</string>
+    <string name="input_error_heading_taken">The name is already taken!</string>
+    <string name="input_error_heading_overflow">The name is too long!</string>
+    <string name="input_error_heading_lack">The name is too short!</string>
+    <string name="input_error_key_overflow">The key is too long!</string>
+    <string name="input_error_description_overflow">The description is too long!</string>
+    <string name="input_error_number_not_found">Please enter an integer number!</string>
+    <string name="input_error_username_lack">The username is too short!</string>
+    <string name="input_error_password_min_length">The password length must be greater or equal to 6 characters.</string>
+    <string name="input_error_password_no_whitespace">The password must contain no whitespace character.</string>
+    <string name="input_error_password_digit">The password must contain at least one digit.</string>
+    <string name="input_error_password_lower_case">The password must contain at least one lower case character.</string>
+    <string name="input_error_password_upper_case">The password must contain at least one upper case character.</string>
 
-    <!--Buttons-->
+    <!-- Units of measurement. -->
+    <string name="unit_mouths_short">m</string>
+    <string name="unit_days_short">d</string>
+    <string name="unit_hours_short">h</string>
+    <string name="unit_minutes_short">min</string>
+    <string name="unit_litres_short">l</string>
+    <string name="unit_millilitres_short">ml</string>
+
+    <!-- Texts. -->
+    <string name="placeholder_global_short">!Lorem ipsum vivamus.!</string>
+    <string name="placeholder_global_medium">!Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.!</string>
+    <string name="placeholder_username">Username</string>
+    <string name="parent_schedule_not_found">No schedule set</string>
+    <string name="parent_network_not_found">No network set</string>
+    <string name="schedule_information">Schedule information:</string>
+    <string name="schedule_each">each</string>
+    <string name="list_selected">selected</string>
+    <string name="pair_device_connect_success">The Bluetooth connection was successfully established.</string>
+    <string name="pair_device_connect_failure">Unable to connect to the device via Bluetooth connection.</string>
+    <string name="pair_device_access_success">Access to the device configuration was obtained successfully.</string>
+    <string name="pair_device_access_failure">The device could not be accessed.</string>
+    <string name="pair_device_network_success">The device\'s network settings have been successfully updated.</string>
+    <string name="pair_device_network_failure">The device failed to update the network settings. Check the correctness of the entered data.</string>
+    <string name="pair_device_success">The device pairing has been successfully completed. Now it remains to setup your new device. To continue, click "next".</string>
+    <string name="status_battery_fine">High battery level</string>
+    <string name="status_battery_warning">The battery is partially discharged</string>
+    <string name="status_battery_defect">The battery is very low</string>
+    <string name="status_water_fine">High water level</string>
+    <string name="status_water_warning">The water was partially spent</string>
+    <string name="status_water_defect">There is very little water</string>
+    <string name="status_undefined">Status is undefined</string>
+    <string name="heading_attached_devices">Attached devices:</string>
+    <string name="home_greeting">Hello,</string>
+    <string name="sign_in_failure">Incorrect username or password was entered.</string>
+    <string name="sign_up_failure_username_used">The username is already taken.</string>
+    <string name="sign_up_failure_email_used">The user with this email is already registered.</string>
+    <string name="sign_failure_auth_token_not_accepted">The authorization token is not accepted.</string>
+    <string name="loading_stage_internet_connection">Checking the Internet connection</string>
+    <string name="loading_stage_internet_connection_failure">Unable to connect to the internet, please check your internet connection and restart the application.</string>
+    <string name="loading_stage_server_connection">Checking the connection to the server</string>
+    <string name="loading_stage_server_connection_failure">Unable to connect to the server, please restart the application.</string>
+    <string name="loading_stage_database_connection">Connecting to the database</string>
+    <string name="loading_stage_database_connection_failure">The connection to the internal database could not be established, please try to reinstall the application.</string>
+    <string name="loading_stage_auto_login">Uploading user data.</string>
+    <string name="loading_stage_repository_installation">Establishing a connection with the repositories.</string>
+    <string name="loading_stage_repository_installation_failure">Failed to establish connections with repositories, please restart the application.</string>
+    <string name="loading_stage_data_installation">Uploading internal data.</string>
+    <string name="loading_stage_data_installation_failure">Failed to upload internal data, please restart the application.</string>
+    <string name="loading_stage_failure">An error occurred during the download. Try restarting the application, if the error continues to appear, then reinstall the application.</string>
+
+    <!-- Titles. -->
+    <string name="title_warning">Warning!</string>
+    <string name="title_exit">Exit</string>
+
+    <!-- Dialogs. -->
+    <string name="dialog_delete_network">You are going to delete this network. After this action, all watering schedules from this network will be erased. Are you sure?</string>
+    <string name="dialog_delete_device">You are going to delete this device. After that you won\'t be able to control it and will disappear from the list of your devices. However, you will be able to add it again. Are you sure?</string>
+    <string name="dialog_delete_schedule">You are going to delete this schedule. After this action, all devices of this schedule will stop watering according to the schedule. Are you sure?</string>
+    <string name="dialog_no_attached_schedule_on_save">If you save this device without setting it a watering schedule, it will not perform automatic watering.</string>
+    <string name="dialog_no_attached_schedule_on_add">If you add this device without setting it a watering schedule, it will not perform automatic watering. However, you will be able to add a schedule later through the settings.</string>
+    <string name="dialog_insufficient_volume">Insufficient volume of water for manual watering, the volume should be more than 10 ml. Please enter the correct volume.</string>
+    <string name="dialog_insufficient_volume_or_period">Insufficient volume of water or period. The volume of water should be more than 10 ml and period of watering should be more than 1 minute. Please enter the correct values.</string>
+    <string name="dialog_no_attached_devices_on_save">If you save this schedule without attached devices, it will not be able to perform automatic watering.</string>
+    <string name="dialog_no_attached_devices_on_create">If you create this schedule without attached devices, it will not be able to perform automatic watering. However, you will be able to add a schedule later through the settings.</string>
+    <string name="dialog_manual_watering_overflow">Sensors showed high soil moisture of the plant. Are you sure you want to continue watering?</string>
+    <string name="dialog_manual_watering_confirmation_1">Are you sure you want to do a\n</string>
+    <string name="dialog_manual_watering_confirmation_2">\ watering?</string>
+    <string name="dialog_exit">Are you sure you want to exit the app?</string>
+
+    <!-- Buttons. -->
     <string name="button_settings">Settings</string>
+    <string name="button_create">Create</string>
+    <string name="button_create_anyway">Create anyway</string>
+    <string name="button_add">Add</string>
+    <string name="button_add_anyway">Add anyway</string>
+    <string name="button_save">Save</string>
+    <string name="button_save_anyway">Save anyway</string>
+    <string name="button_next">Next</string>
+    <string name="button_back">Back</string>
+    <string name="button_ok">OK</string>
+    <string name="button_delete">Delete</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_detach_schedule">Detach schedule</string>
+    <string name="button_attach_schedule">Attach schedule</string>
+    <string name="button_attach_devices">Attach devices</string>
+    <string name="button_devices_add_pair">Pair</string>
+    <string name="button_devices_add_pair_new">Pair a new device</string>
+    <string name="button_devices_add_pair_connection_established">The connection is established</string>
+    <string name="button_devices_add_already_paired">Add the already paired</string>
+    <string name="button_manual_watering">Manual watering</string>
+    <string name="button_force_watering">Force watering</string>
+    <string name="button_water">Water</string>
+    <string name="button_sign_in">Sign in</string>
+    <string name="button_sign_up">Sign up</string>
+    <string name="button_sign_out">Sign out</string>
+    <string name="button_exit">Exit</string>
+    <string name="button_retry">Retry</string>
+    <string name="button_restore_password">Forgot password?</string>
 
-    <!--Descriptions-->
+    <!-- Descriptions. -->
     <string name="description_back_button">Back to the previous screen</string>
     <string name="description_positive_button">OK or Save</string>
     <string name="description_add_button">Add new item</string>
@@ -25,5 +165,13 @@
     <string name="description_battery_status">Battery status</string>
     <string name="description_expand_or_loose_card_button">Expand or loose card</string>
     <string name="description_expand_card_button">Expand card</string>
+    <string name="description_detach_device_button">Detach device</string>
     <string name="description_loose_card_button">Loose card</string>
+    <string name="description_networks_add_fab">Create new network</string>
+    <string name="description_devices_add_fab">Add new device</string>
+    <string name="description_parent_schedule_or_network_icon">Icon of parent</string>
+    <string name="description_sign_logo">ReWater app logo</string>
+    <string name="description_profile_icon">User icon</string>
+    <string name="description_app_logo">A plant in a smart pot</string>
+    <string name="description_app_name">ReWater</string>
 </resources>

@@ -9,5 +9,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_overall_status"
-        android:src="@drawable/ic_overall_neutral"/>
+        android:src="@drawable/ic_overall_neutral" />
 </LinearLayout>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/schedules_edit_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
+        android:paddingVertical="@dimen/fragment_content_vertical_spacing"
+        tools:context=".ui.advanced.schedules.view.EditScheduleFragment">
+
+        <RelativeLayout
+            android:id="@+id/edit_schedule_devices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_schedule_volume_input"
+            android:paddingTop="@dimen/fragment_content_vertical_spacing">
+
+            <Button
+                android:id="@+id/edit_schedule_attach_device_button"
+                style="@style/OutlinedButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edit_schedule_devices_recycler_view"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small"
+                android:text="@string/button_attach_devices"
+                app:icon="@drawable/ic_add"
+                app:iconTint="@color/positive_color"
+                app:strokeColor="@color/positive_color" />
+
+            <TextView
+                android:id="@+id/edit_schedule_devices_heading"
+                style="@style/CustomTextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/heading_attached_devices" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/edit_schedule_devices_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/edit_schedule_devices_heading"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                app:layoutManager="LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/view_schedule_devices_card" />
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit_schedule_controls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_schedule_devices"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/edit_schedule_delete_button"
+                style="@style/OutlinedButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_delete"
+                app:icon="@drawable/ic_remove"
+                app:iconTint="@color/negative_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/negative_color" />
+
+            <Button
+                android:id="@+id/edit_schedule_create_button"
+                style="@style/RegularButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+                android:text="@string/button_save"
+                app:icon="@drawable/ic_positive"
+                app:iconTint="@color/positive_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_schedule_delete_button" />
+
+            <Button
+                android:id="@+id/edit_schedule_cancel_button"
+                style="@style/RegularButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+                android:text="@string/button_cancel"
+                app:icon="@drawable/ic_cancel"
+                app:iconTint="@color/negative_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_schedule_delete_button" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_schedule_name"
+            style="@style/TextInputCounterAndErrorLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:counterMaxLength="@integer/input_max_limit_header">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_schedule_name_input"
+                style="@style/EditTextNormalLimitedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_hint_name"
+                android:importantForAutofill="no"
+                android:maxLength="@integer/input_max_limit_header" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <include
+            android:id="@+id/edit_schedule_volume_input"
+            layout="@layout/view_input_water_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_schedule_period_input"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small" />
+
+        <include
+            android:id="@+id/edit_schedule_period_input"
+            layout="@layout/view_input_water_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_schedule_name"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small" />
+    </RelativeLayout>
+</ScrollView>

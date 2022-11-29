@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sign_loading"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.advanced.sign.view.SignFirstLoadingFragment">
+
+    <Button
+        android:id="@+id/sign_loading_retry_button"
+        style="@style/TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_retry"
+        android:visibility="gone"
+        app:icon="@drawable/ic_refresh"
+        app:iconTint="@color/text_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/sign_loading_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toTopOf="@id/sign_loading_stage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/sign_loading_app_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/description_app_logo"
+            android:src="@drawable/ic_app_logo_big" />
+
+        <ImageView
+            android:id="@+id/sign_loading_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sign_loading_app_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small"
+            android:contentDescription="@string/description_app_name"
+            android:src="@drawable/ic_app_name" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/sign_loading_stage"
+        style="@style/CustomTextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/fragment_loading_content_horizontal_spacing"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sign_loading_app" />
+</androidx.constraintlayout.widget.ConstraintLayout>

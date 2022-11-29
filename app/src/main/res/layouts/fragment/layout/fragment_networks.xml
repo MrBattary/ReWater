@@ -2,15 +2,31 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/networks_recycler_view_wrapper"
+    android:id="@+id/networks"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.screen.networks.NetworksFragment">
+    tools:context=".ui.advanced.networks.view.NetworksFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/networks_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/recycler_view_padding_for_bottom_fab"
         android:scrollbars="vertical"
         app:layoutManager="LinearLayoutManager" />
+
+    <!--app:backgroundTint is border color, app:tint is icon color-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/networks_add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/background_tertiary"
+        android:contentDescription="@string/description_networks_add_fab"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/background_tertiary"
+        app:fabSize="normal"
+        app:tint="@color/positive_color" />
 </FrameLayout>

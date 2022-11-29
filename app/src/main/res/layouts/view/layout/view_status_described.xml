@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/status_described"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/status_described_water"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2.5dp">
+
+        <ImageView
+            android:id="@+id/status_described_water_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/description_water_status"
+            android:src="@drawable/ic_water_neutral" />
+
+        <TextView
+            android:id="@+id/status_described_water_text"
+            style="@style/CustomTextSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/fragment_content_horizontal_spacing_small"
+            android:layout_toEndOf="@id/status_described_water_image"
+            android:text="@string/placeholder_global_short" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/status_described_battery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/status_described_water"
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small">
+
+        <ImageView
+            android:id="@+id/status_described_battery_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/description_battery_status"
+            android:src="@drawable/ic_battery_neutral" />
+
+        <TextView
+            android:id="@+id/status_described_battery_text"
+            style="@style/CustomTextSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/fragment_content_horizontal_spacing_small"
+            android:layout_toEndOf="@id/status_described_battery_image"
+            android:text="@string/placeholder_global_short" />
+    </RelativeLayout>
+</RelativeLayout>

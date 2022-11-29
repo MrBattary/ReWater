@@ -3,15 +3,41 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <!-- Card -->
-    <dimen name="card_horizontal_margin">20dp</dimen>
-    <dimen name="card_vertical_margin">10dp</dimen>
-    <dimen name="card_content_horizontal_margin">20dp</dimen>
-    <dimen name="card_content_vertical_margin">10dp</dimen>
+    <!-- Fragments dimensions. -->
+    <dimen name="fragment_content_horizontal_spacing">20dp</dimen>
+    <dimen name="fragment_content_horizontal_spacing_small">10dp</dimen>
+    <dimen name="fragment_content_vertical_spacing">20dp</dimen>
+    <dimen name="fragment_content_vertical_spacing_small">10dp</dimen>
+    <dimen name="fragment_loading_content_horizontal_spacing">50dp</dimen>
 
+    <!-- Dialogs dimensions. -->
+    <dimen name="dialog_corner_radius">15dp</dimen>
+
+    <!-- Input dimensions. -->
+    <dimen name="input_corner_radius">10dp</dimen>
+
+    <!-- Cards dimensions. -->
+    <dimen name="card_horizontal_spacing">20dp</dimen>
+    <dimen name="card_horizontal_spacing_small">10dp</dimen>
+    <dimen name="card_vertical_spacing">10dp</dimen>
     <dimen name="card_corner_radius">20dp</dimen>
+    <dimen name="card_corner_radius_small">15dp</dimen>
+    <dimen name="card_bottom_button_negative_margin">-3dp</dimen>
+    <dimen name="card_content_horizontal_spacing">20dp</dimen>
+    <dimen name="card_content_vertical_spacing">10dp</dimen>
+    <dimen name="card_between_spacing_small">5dp</dimen>
 
-    <!-- Custom dimensions. -->
+    <!-- Buttons dimensions. -->
+    <dimen name="fab_margin">18dp</dimen>
+    <dimen name="recycler_view_padding_for_bottom_fab">80dp</dimen>
+    <dimen name="button_corner_radius">10dp</dimen>
+    <dimen name="button_stroke_width">2dp</dimen>
+
+    <!-- Navigation dimensions. -->
     <dimen name="navigation_icon_size">26dp</dimen>
     <dimen name="navigation_home_icon_size">40dp</dimen>
+
+    <!-- Sign in/up dimensions. -->
+    <dimen name="sign_input_margin">30dp</dimen>
+    <dimen name="sign_top_right_corner_button_margin">5dp</dimen>
 </resources>

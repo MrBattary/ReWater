@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/devices"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.screen.devices.DevicesFragment">
+    tools:context=".ui.advanced.devices.view.DevicesFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/devices_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/recycler_view_padding_for_bottom_fab"
+        android:scrollbars="vertical"
+        app:layoutManager="LinearLayoutManager" />
+
+    <!--app:backgroundTint is border color, app:tint is icon color-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/devices_add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/background_tertiary"
+        android:contentDescription="@string/description_networks_add_fab"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/background_tertiary"
+        app:fabSize="normal"
+        app:tint="@color/positive_color" />
 
 </FrameLayout>
