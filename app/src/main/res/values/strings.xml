@@ -93,11 +93,13 @@
     <string name="sign_up_failure_username_used">The username is already taken.</string>
     <string name="sign_up_failure_email_used">The user with this email is already registered.</string>
     <string name="sign_failure_auth_token_not_accepted">The authorization token is not accepted.</string>
+    <string name="loading_stage_permissions">Checking the available permissions.</string>
+    <string name="loading_stage_permissions_failure">The application cannot work correctly due to the lack of necessary permissions. Please give the app the necessary permissions.</string>
     <string name="loading_stage_internet_connection">Checking the Internet connection</string>
     <string name="loading_stage_internet_connection_failure">Unable to connect to the internet, please check your internet connection and restart the application.</string>
-    <string name="loading_stage_server_connection">Checking the connection to the server</string>
+    <string name="loading_stage_server_connection">Checking the connection to the server.</string>
     <string name="loading_stage_server_connection_failure">Unable to connect to the server, please restart the application.</string>
-    <string name="loading_stage_database_connection">Connecting to the database</string>
+    <string name="loading_stage_database_connection">Connecting to the database.</string>
     <string name="loading_stage_database_connection_failure">The connection to the internal database could not be established, please try to reinstall the application.</string>
     <string name="loading_stage_auto_login">Uploading user data.</string>
     <string name="loading_stage_repository_installation">Establishing a connection with the repositories.</string>

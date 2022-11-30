@@ -1,4 +1,4 @@
-package michael.linker.rewater.util;
+package michael.linker.rewater.util.livedata;
 
 import androidx.core.util.Pair;
 import androidx.lifecycle.LiveData;

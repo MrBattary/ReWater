@@ -1,4 +1,4 @@
-package michael.linker.rewater.util;
+package michael.linker.rewater.util.communication;
 
 import android.os.Bundle;
 

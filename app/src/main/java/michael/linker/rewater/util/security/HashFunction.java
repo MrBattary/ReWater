@@ -20,14 +20,14 @@ public final class HashFunction {
     }
 
     public static String hash(final String msg, final HashFunction hashFunction)
-            throws SecurityHashRuntimeException {
+            throws SecurityHashFunctionException {
         if (hashFunction == SHA_256) {
             return DigestUtils.sha256Hex(msg);
         }
         if (hashFunction == SHA_512) {
             return DigestUtils.sha512Hex(msg);
         }
-        throw new SecurityHashRuntimeException("Hash function implementation not found!");
+        throw new SecurityHashFunctionException("Hash function implementation not found!");
     }
 
     public String getHashMethodName() {

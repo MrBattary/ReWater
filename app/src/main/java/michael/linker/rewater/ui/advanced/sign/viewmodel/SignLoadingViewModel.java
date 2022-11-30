@@ -12,6 +12,7 @@ import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.repository.user.UsersRepositoryAccessDeniedException;
 import michael.linker.rewater.data.repository.user.UsersRepositoryNotFoundException;
 import michael.linker.rewater.data.res.StringsProvider;
+import michael.linker.rewater.util.permission.Permissions;
 
 public class SignLoadingViewModel extends ViewModel {
     private final MutableLiveData<String> stageMessage, errorStageMessage;
@@ -35,6 +36,19 @@ public class SignLoadingViewModel extends ViewModel {
 
     public LiveData<String> getErrorStageMessage() {
         return errorStageMessage;
+    }
+
+    public Single<Boolean> checkPermissions() throws SignLoadingViewModelFailedException {
+        return Single.fromCallable(() -> {
+            if (Permissions.getAwaitedPermissions().size() > 0) {
+                this.setErrorStageMessage(
+                        R.string.loading_stage_permissions_failure);
+                throw new SignLoadingViewModelBlockedException(
+                        StringsProvider.getString(R.string.loading_stage_permissions_failure));
+            }
+            return true;
+        }).doOnSuccess(b -> stageMessage.postValue(
+                StringsProvider.getString(R.string.loading_stage_internet_connection)));
     }
 
     // TODO (ML): Add the internet connection check
@@ -130,6 +144,11 @@ public class SignLoadingViewModel extends ViewModel {
                 return false;
             }
         });
+    }
+
+    private void setErrorStageMessage(final int rId) {
+        final String errorMsg = StringsProvider.getString(rId);
+        errorStageMessage.postValue(errorMsg);
     }
 
     private void setErrorStageMessageAndThrowException(final int rId)
