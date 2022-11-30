@@ -107,9 +107,13 @@
     <string name="loading_stage_data_installation">Uploading internal data.</string>
     <string name="loading_stage_data_installation_failure">Failed to upload internal data, please restart the application.</string>
     <string name="loading_stage_failure">An error occurred during the download. Try restarting the application, if the error continues to appear, then reinstall the application.</string>
+    <string name="bluetooth_failure_device_not_support">This device does not support Bluetooth. Please install the application on a device with a Bluetooth module.</string>
+    <string name="bluetooth_failure_permission_not_found">The application does not have permissions to control Bluetooth. Please give the app permissions to control Bluetooth.</string>
+    <string name="bluetooth_failure_turn_on">An unexpected error occurred while turning on the Bluetooth.</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning!</string>
+    <string name="title_attention">Attention!</string>
     <string name="title_exit">Exit</string>
 
     <!-- Dialogs. -->
@@ -126,6 +130,8 @@
     <string name="dialog_manual_watering_confirmation_1">Are you sure you want to do a\n</string>
     <string name="dialog_manual_watering_confirmation_2">\ watering?</string>
     <string name="dialog_exit">Are you sure you want to exit the app?</string>
+    <string name="dialog_bluetooth_turn_on_to_pair">During the pairing of the new device, Bluetooth is required to be turned on, after pairing it can be turned off. Turn on Bluetooth?</string>
+
 
     <!-- Buttons. -->
     <string name="button_settings">Settings</string>
@@ -138,6 +144,7 @@
     <string name="button_next">Next</string>
     <string name="button_back">Back</string>
     <string name="button_ok">OK</string>
+    <string name="button_turn_on">Turn on</string>
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_detach_schedule">Detach schedule</string>

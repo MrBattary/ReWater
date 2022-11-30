@@ -6,6 +6,8 @@ import android.graphics.drawable.VectorDrawable;
 
 import androidx.core.content.res.ResourcesCompat;
 
+import michael.linker.rewater.core.App;
+
 public class DrawablesProvider {
     private static final Resources RESOURCES = App.getRes();
     private static final Resources.Theme THEME = App.getInstance().getTheme();

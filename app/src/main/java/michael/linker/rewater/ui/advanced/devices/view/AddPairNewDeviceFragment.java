@@ -1,11 +1,16 @@
 package michael.linker.rewater.ui.advanced.devices.view;
 
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,8 +30,8 @@ import michael.linker.rewater.data.res.ColorsProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
-import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
 import michael.linker.rewater.ui.advanced.devices.enums.UiRequestStatus;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.AddPairNewDeviceViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
@@ -34,6 +39,7 @@ import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.TextInputView;
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
+import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class AddPairNewDeviceFragment extends Fragment {
     private ViewGroup mBluetoothView, mAccessView, mNetworkView;
@@ -87,7 +93,8 @@ public class AddPairNewDeviceFragment extends Fragment {
             mViewModel.getBluetoothConnected().observe(getViewLifecycleOwner(), request -> {
                 this.enableButton(mPairButton);
                 if (currentLook == AddPairNewDeviceLook.BLUETOOTH) {
-                    this.setMessage(view, request, R.string.pair_device_connect_success,
+                    this.setSuccessAndFailureMessage(view, request,
+                            R.string.pair_device_connect_success,
                             R.string.pair_device_connect_failure);
                     if (request.getStatus() == UiRequestStatus.OK) {
                         this.disableButton(mPairButton);
@@ -97,7 +104,8 @@ public class AddPairNewDeviceFragment extends Fragment {
             });
             mViewModel.getAccessKeyAccepted().observe(getViewLifecycleOwner(), request -> {
                 if (currentLook == AddPairNewDeviceLook.ACCESS) {
-                    this.setMessage(view, request, R.string.pair_device_access_success,
+                    this.setSuccessAndFailureMessage(view, request,
+                            R.string.pair_device_access_success,
                             R.string.pair_device_access_failure);
                     if (request.getStatus() == UiRequestStatus.OK) {
                         this.allowProceedToTheNextLook();
@@ -106,7 +114,8 @@ public class AddPairNewDeviceFragment extends Fragment {
             });
             mViewModel.getNetworkUpdated().observe(getViewLifecycleOwner(), request -> {
                 if (currentLook == AddPairNewDeviceLook.NETWORK) {
-                    this.setMessage(view, request, R.string.pair_device_network_success,
+                    this.setSuccessAndFailureMessage(view, request,
+                            R.string.pair_device_network_success,
                             R.string.pair_device_network_failure);
                     if (request.getStatus() == UiRequestStatus.OK) {
                         this.allowProceedToTheNextLook();
@@ -135,7 +144,6 @@ public class AddPairNewDeviceFragment extends Fragment {
 
     private void initButtonsLogic(final View view) {
         NavController navController = Navigation.findNavController(view);
-        mPairButton.setOnClickListener(l -> mViewModel.connectToDevice());
         mBackButton.setOnClickListener(l -> mViewModel.previousLook());
         mCancelButton.setOnClickListener(
                 l -> {
@@ -200,7 +208,7 @@ public class AddPairNewDeviceFragment extends Fragment {
         mStatusStyledMessage.setVisibility(View.GONE);
     }
 
-    private void setMessage(final View view, final DeviceUiRequest request,
+    private void setSuccessAndFailureMessage(final View view, final DeviceUiRequest request,
             final int successId, final int failureId) {
         AutoTransition autoTransition = new AutoTransition();
         autoTransition.addTarget(view.findViewById(R.id.add_device_pair_new_controls));
@@ -248,5 +256,19 @@ public class AddPairNewDeviceFragment extends Fragment {
         mNextButton.setOnClickListener(l -> mViewModel.nextLook());
         mStatusStyledMessage.setVisibility(View.VISIBLE);
         this.enableButton(mNextButton);
+    }
+
+    private void turnOnBluetooth() {
+        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        ActivityResultLauncher<Intent> bluetoothResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() != Activity.RESULT_OK) {
+                        ToastProvider.showShort(requireContext(),
+                                "You need to grant a bluetooth permission!");
+                    }
+                }
+        );
+        bluetoothResultLauncher.launch(enableBtIntent);
     }
 }

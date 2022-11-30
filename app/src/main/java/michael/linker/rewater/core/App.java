@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.res;
+package michael.linker.rewater.core;
 
 import android.app.Application;
 import android.content.res.Resources;

@@ -33,7 +33,7 @@ import michael.linker.rewater.ui.advanced.sign.viewmodel.SignViewModelFailedExce
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.util.permission.Permissions;
+import michael.linker.rewater.core.permission.PermissionManager;
 
 public class SignFirstLoadingFragment extends Fragment {
     private Disposable mPrevDisposable;
@@ -140,7 +140,7 @@ public class SignFirstLoadingFragment extends Fragment {
     }
 
     private void checkAndRequestAwaitedPermissions() {
-        final List<String> awaitedPermissions = Permissions.getAwaitedPermissions();
+        final List<String> awaitedPermissions = PermissionManager.getAwaitedPermissions();
         if (awaitedPermissions.size() > 0) {
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
                     isGrantedMap -> {

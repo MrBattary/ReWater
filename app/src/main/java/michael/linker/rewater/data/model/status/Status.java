@@ -41,7 +41,7 @@ public final class Status {
     private final String mStatusName;
     private final Integer mStatusWeight;
 
-    public Status(final String statusName, final Integer statusWeight) {
+    private Status(final String statusName, final Integer statusWeight) {
         mStatusName = statusName;
         mStatusWeight = statusWeight;
     }

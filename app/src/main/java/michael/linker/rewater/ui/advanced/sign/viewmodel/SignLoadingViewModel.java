@@ -12,7 +12,7 @@ import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.repository.user.UsersRepositoryAccessDeniedException;
 import michael.linker.rewater.data.repository.user.UsersRepositoryNotFoundException;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.util.permission.Permissions;
+import michael.linker.rewater.core.permission.PermissionManager;
 
 public class SignLoadingViewModel extends ViewModel {
     private final MutableLiveData<String> stageMessage, errorStageMessage;
@@ -40,7 +40,7 @@ public class SignLoadingViewModel extends ViewModel {
 
     public Single<Boolean> checkPermissions() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
-            if (Permissions.getAwaitedPermissions().size() > 0) {
+            if (PermissionManager.getAwaitedPermissions().size() > 0) {
                 this.setErrorStageMessage(
                         R.string.loading_stage_permissions_failure);
                 throw new SignLoadingViewModelBlockedException(

@@ -32,7 +32,7 @@ import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.composite.WaterVolumeMetricInputView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.util.LiveDataUtils;
+import michael.linker.rewater.util.livedata.LiveDataUtils;
 
 public class DeviceManualWateringFragment extends Fragment {
     private WaterVolumeMetricInputView mWaterVolumeMetricInputView;

@@ -13,8 +13,8 @@ import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
 import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
 import michael.linker.rewater.ui.advanced.devices.enums.UiRequestStatus;
-import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceAfterPairingUiModel;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
 
 public class AddPairNewDeviceViewModel extends ViewModel {
     private final List<AddPairNewDeviceLook> mLookOrder;
@@ -25,7 +25,6 @@ public class AddPairNewDeviceViewModel extends ViewModel {
     private final MutableLiveData<DeviceUiRequest> mBluetoothConnected;
     private final MutableLiveData<DeviceUiRequest> mAccessKeyAccepted;
     private final MutableLiveData<DeviceUiRequest> mNetworkUpdated;
-
 
     public AddPairNewDeviceViewModel() {
         mLookOrder = List.of(

@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 
 import michael.linker.rewater.data.local.db.AppDatabase;
-import michael.linker.rewater.data.res.App;
+import michael.linker.rewater.core.App;
 
 public class DatabaseConfiguration {
     private static final String DATABASE_NAME = "database";

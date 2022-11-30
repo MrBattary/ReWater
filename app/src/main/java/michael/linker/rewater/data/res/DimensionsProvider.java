@@ -3,6 +3,8 @@ package michael.linker.rewater.data.res;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
+import michael.linker.rewater.core.App;
+
 public class DimensionsProvider {
     private static final Resources RESOURCES = App.getRes();
 
