@@ -198,7 +198,7 @@
         android:id="@+id/navigation_devices_add_pair_new_ble_device"
         android:name="michael.linker.rewater.ui.advanced.devices.view.PairNewBluetoothDeviceListFragment"
         android:label="@string/navigation_title_devices_add_pair_new_ble_device"
-        tools:layout="@layout/fragment_devices_add_pair_new_ble_device">
+        tools:layout="@layout/fragment_devices_add_pair_new_bluetooth_device">
         <action
             android:id="@+id/navigation_action_devices_add_pair_new_ble_device_to_devices_add_pair_new"
             app:destination="@id/navigation_devices_add_pair_new"

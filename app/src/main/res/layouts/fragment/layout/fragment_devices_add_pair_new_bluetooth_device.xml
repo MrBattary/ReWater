@@ -7,7 +7,7 @@
     tools:context=".ui.advanced.devices.view.PairNewBluetoothDeviceListFragment">
 
     <ListView
-        android:id="@+id/add_device_pair_new_ble_list"
+        android:id="@+id/add_device_pair_new_bluetooth_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice" />

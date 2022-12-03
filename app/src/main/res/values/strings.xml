@@ -119,6 +119,8 @@
     <string name="bluetooth_failure_connect">An unexpected error occurred when connecting the selected device. </string>
     <string name="bluetooth_scan">Searching devices…</string>
     <string name="bluetooth_scan_finished">Device search completed.</string>
+    <string name="bluetooth_device_info">Device name: %1$s\nDevice MAC: %2$s</string>
+    <string name="bluetooth_failure_transmit">The data could not be transmitted because the Bluetooth connection is not established.</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning</string>

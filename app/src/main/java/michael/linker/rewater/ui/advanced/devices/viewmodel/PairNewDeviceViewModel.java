@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.polidea.rxandroidble3.scan.ScanResult;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +21,6 @@ public class PairNewDeviceViewModel extends ViewModel {
     private final IDevicesRepository mDevicesRepository;
     private final MutableLiveData<DeviceAfterPairingUiModel> mDeviceAfterPairingUiModel;
 
-    private final MutableLiveData<ScanResult> mScannedDevices;
-
     private final MutableLiveData<AddPairNewDeviceLook> mCurrentLook;
     private final MutableLiveData<DeviceUiRequest> mBluetoothConnected;
     private final MutableLiveData<DeviceUiRequest> mAccessKeyAccepted;
@@ -38,8 +34,6 @@ public class PairNewDeviceViewModel extends ViewModel {
                 AddPairNewDeviceLook.FINISH);
         mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
         mDeviceAfterPairingUiModel = new MutableLiveData<>();
-
-        mScannedDevices = new MutableLiveData<>();
 
         mCurrentLook = new MutableLiveData<>();
         mBluetoothConnected = new MutableLiveData<>();
@@ -99,23 +93,19 @@ public class PairNewDeviceViewModel extends ViewModel {
         }
     }
 
-    public void connectToDevice() {
-        // TODO: STUB
+    public void setConnectedToDevice() {
         mBluetoothConnected.setValue(new DeviceUiRequest(UiRequestStatus.OK));
     }
 
-    public void sendKey(final String key) {
-        // TODO: STUB
+    public void sendProvidedDeviceHardwareId(final String hardwareId) {
         try {
-            final String deviceHardwareId = "STUB";
-            // TODO: Send hashed key to the device with bluetooth, and if it is OK, request
-            //       server for model by the provided hardware ID
+            // TODO: STUB
             final DeviceRepositoryModel deviceRepositoryModel =
-                    mDevicesRepository.getDeviceByHardware(deviceHardwareId);
+                    mDevicesRepository.getDeviceByHardware(hardwareId);
             // Parent schedule always null
             mDeviceAfterPairingUiModel.setValue(
                     new DeviceAfterPairingUiModel(
-                            deviceHardwareId,
+                            hardwareId,
                             deviceRepositoryModel.getId(),
                             deviceRepositoryModel.getName(),
                             null));
@@ -125,9 +115,11 @@ public class PairNewDeviceViewModel extends ViewModel {
         }
     }
 
-    // TODO: Provide model
-    public void updateNetworkData() {
-        // TODO: STUB
+    public void setNetworkDataUpdated() {
         mNetworkUpdated.setValue(new DeviceUiRequest(UiRequestStatus.OK));
+    }
+
+    public void setNetworkDataNotUpdated() {
+        mNetworkUpdated.setValue(new DeviceUiRequest(UiRequestStatus.ERROR));
     }
 }

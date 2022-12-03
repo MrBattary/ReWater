@@ -61,7 +61,7 @@ public class PairNewBluetoothDeviceListFragment extends Fragment {
         mBluetoothViewModel = new ViewModelProvider(viewModelStoreOwner).get(
                 PairNewDeviceBluetoothViewModel.class);
 
-        return inflater.inflate(R.layout.fragment_devices_add_pair_new_ble_device, container,
+        return inflater.inflate(R.layout.fragment_devices_add_pair_new_bluetooth_device, container,
                 false);
     }
 
@@ -78,7 +78,7 @@ public class PairNewBluetoothDeviceListFragment extends Fragment {
     }
 
     private void initViews(final View view) {
-        mListView = view.findViewById(R.id.add_device_pair_new_ble_list);
+        mListView = view.findViewById(R.id.add_device_pair_new_bluetooth_list);
         mAdapter = new ArrayAdapter<>(requireContext(),
                 R.layout.view_custom_list_item_multiple_choise,
                 new ArrayList<>());
@@ -143,6 +143,9 @@ public class PairNewBluetoothDeviceListFragment extends Fragment {
                 menuInflater.inflate(R.menu.list_menu, menu);
             }
 
+            // TODO (ML): STUB DEVICE CONNECT START
+            @SuppressLint("MissingPermission")
+            // TODO (ML): STUB DEVICE CONNECT END
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.list_done_button) {
@@ -151,13 +154,22 @@ public class PairNewBluetoothDeviceListFragment extends Fragment {
                     mBluetoothViewModel.stopScanning();
                     for (int i = 0; i < mListView.getCount(); i++) {
                         if (mListView.isItemChecked(i)) {
+                            mListView.setEnabled(false);
+                            mDeviceConnectionDialog.show();
                             final PairNewBluetoothDeviceListFragment.BluetoothDeviceListItemView
                                     chosenDevice =
                                     (PairNewBluetoothDeviceListFragment.BluetoothDeviceListItemView)
                                             mListView.getItemAtPosition(i);
-                            mDeviceConnectionDialog.show();
+
+                            // TODO (ML): STUB DEVICE CONNECT START
+                            mBluetoothViewModel.setConnectedDeviceData(
+                                    new BluetoothDeviceUiModel(
+                                            chosenDevice.mBluetoothDevice.getName(),
+                                            chosenDevice.mBluetoothDevice.getAddress()));
+                            mViewNavController.navigateUp();
+                            // TODO (ML): STUB DEVICE CONNECT END
+
                             mBluetoothViewModel.connectToDevice(chosenDevice.mBluetoothDevice);
-                            mListView.setEnabled(false);
                             return true;
                         }
                     }

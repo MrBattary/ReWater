@@ -1,16 +1,14 @@
 package michael.linker.rewater.ui.advanced.devices.view;
 
-import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothDevice;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,6 +22,7 @@ import androidx.transition.TransitionManager;
 
 import com.google.android.material.button.MaterialButton;
 
+import me.aflak.bluetooth.interfaces.DeviceCallback;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.ColorsProvider;
@@ -32,23 +31,28 @@ import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
 import michael.linker.rewater.ui.advanced.devices.enums.UiRequestStatus;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
-import michael.linker.rewater.ui.advanced.devices.viewmodel.PairNewDeviceViewModel;
+import michael.linker.rewater.ui.advanced.devices.model.bluetooth.BluetoothDeviceKeyResponseApiModel;
+import michael.linker.rewater.ui.advanced.devices.model.bluetooth.BluetoothDeviceNetworkResponseApiModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
-import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
-import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
-import michael.linker.rewater.ui.elementary.input.text.TextInputView;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.PairNewDeviceBluetoothViewModel;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.PairNewDeviceViewModel;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.PairNewDeviceViewModelNotFoundException;
+import michael.linker.rewater.ui.elementary.input.text.IPasswordTextInputView;
+import michael.linker.rewater.ui.elementary.input.text.PasswordTextInputView;
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class PairNewDeviceFragment extends Fragment {
     private ViewGroup mBluetoothView, mAccessView, mNetworkView;
-    private ITextInputView mAccessKeyInput;
+    private TextView mConnectedDeviceData;
+    private IPasswordTextInputView mAccessKeyInput;
     private IStatusStyledTextView mStatusStyledMessage;
     private MaterialButton mPairButton, mNextButton, mBackButton, mCancelButton;
 
     private PairNewDeviceViewModel mViewModel;
     private DevicesViewModel mParentViewModel;
+    private PairNewDeviceBluetoothViewModel mBluetoothViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -59,6 +63,9 @@ public class PairNewDeviceFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(PairNewDeviceViewModel.class);
         mParentViewModel = new ViewModelProvider(viewModelStoreOwner).get(DevicesViewModel.class);
+        mBluetoothViewModel = new ViewModelProvider(viewModelStoreOwner).get(
+                PairNewDeviceBluetoothViewModel.class);
+        mBluetoothViewModel.setDeviceCallback(mDeviceCallback);
 
         return inflater.inflate(R.layout.fragment_devices_add_pair_new, container, false);
     }
@@ -69,6 +76,52 @@ public class PairNewDeviceFragment extends Fragment {
 
         this.initFields(view);
         this.initButtonsLogic(view);
+        this.initObservers(view);
+    }
+
+    private void initFields(final View view) {
+        mConnectedDeviceData = view.findViewById(R.id.add_device_pair_new_bluetooth_device_data);
+        mBluetoothView = view.findViewById(R.id.add_device_pair_new_bluetooth);
+        mAccessView = view.findViewById(R.id.add_device_pair_new_access);
+        mNetworkView = view.findViewById(R.id.add_device_pair_new_network);
+
+        mAccessKeyInput = new PasswordTextInputView(
+                view.findViewById(R.id.add_device_pair_new_access_key),
+                view.findViewById(R.id.add_device_pair_new_access_key_input));
+        mStatusStyledMessage = new StatusStyledColoredTextView(
+                view.findViewById(R.id.add_device_pair_new_message));
+
+        mPairButton = view.findViewById(R.id.add_device_pair_new_bluetooth_pair_button);
+        mNextButton = view.findViewById(R.id.add_device_pair_new_control_next_button);
+        mBackButton = view.findViewById(R.id.add_device_pair_new_control_back_button);
+        mCancelButton = view.findViewById(R.id.add_device_pair_new_control_cancel_button);
+
+    }
+
+    private void initButtonsLogic(final View view) {
+        NavController navController = Navigation.findNavController(view);
+        mPairButton.setOnClickListener(l -> navController.navigate(
+                R.id.navigation_action_devices_add_pair_new_to_devices_add_pair_new_ble_device));
+        mBackButton.setOnClickListener(l -> mViewModel.previousLook());
+        mCancelButton.setOnClickListener(
+                l -> {
+                    navController.navigateUp();
+                    navController.navigateUp();
+                });
+    }
+
+    private void initObservers(final View view) {
+        mBluetoothViewModel.getConnectedDeviceData().observe(getViewLifecycleOwner(), model -> {
+            if (model != null) {
+                mConnectedDeviceData.setText(
+                        String.format(StringsProvider.getString(R.string.bluetooth_device_info),
+                                (model.getName() != null ? model.getName() : ""), model.getMac()));
+                mConnectedDeviceData.setVisibility(View.VISIBLE);
+                mViewModel.setConnectedToDevice();
+            } else {
+                mConnectedDeviceData.setVisibility(View.GONE);
+            }
+        });
 
         mViewModel.getDeviceAfterPairingUiModel().observe(getViewLifecycleOwner(),
                 deviceModel -> mParentViewModel.setDeviceDuringPairing(deviceModel));
@@ -97,7 +150,6 @@ public class PairNewDeviceFragment extends Fragment {
                             R.string.pair_device_connect_success,
                             R.string.pair_device_connect_failure);
                     if (request.getStatus() == UiRequestStatus.OK) {
-                        this.disableButton(mPairButton);
                         this.allowProceedToTheNextLook();
                     }
                 }
@@ -123,38 +175,6 @@ public class PairNewDeviceFragment extends Fragment {
                 }
             });
         });
-    }
-
-    private void initFields(final View view) {
-        mBluetoothView = view.findViewById(R.id.add_device_pair_new_bluetooth);
-        mAccessView = view.findViewById(R.id.add_device_pair_new_access);
-        mNetworkView = view.findViewById(R.id.add_device_pair_new_network);
-
-        mAccessKeyInput = new TextInputView(view.findViewById(R.id.add_device_pair_new_access_key),
-                view.findViewById(R.id.add_device_pair_new_access_key_input));
-        mStatusStyledMessage = new StatusStyledColoredTextView(
-                view.findViewById(R.id.add_device_pair_new_message));
-
-        mPairButton = view.findViewById(R.id.add_device_pair_new_bluetooth_pair_button);
-        mNextButton = view.findViewById(R.id.add_device_pair_new_control_next_button);
-        mBackButton = view.findViewById(R.id.add_device_pair_new_control_back_button);
-        mCancelButton = view.findViewById(R.id.add_device_pair_new_control_cancel_button);
-
-    }
-
-    private void initButtonsLogic(final View view) {
-        NavController navController = Navigation.findNavController(view);
-        mPairButton.setOnClickListener(l -> {
-            navController.navigate(
-                    R.id.navigation_action_devices_add_pair_new_to_devices_add_pair_new_ble_device);
-            //mViewModel.connectToDevice();
-        });
-        mBackButton.setOnClickListener(l -> mViewModel.previousLook());
-        mCancelButton.setOnClickListener(
-                l -> {
-                    navController.navigateUp();
-                    navController.navigateUp();
-                });
     }
 
     private void setVisibilityOfViewGroups(final AddPairNewDeviceLook look) {
@@ -194,14 +214,38 @@ public class PairNewDeviceFragment extends Fragment {
             this.disableButton(mNextButton);
         }
         if (look == AddPairNewDeviceLook.ACCESS) {
-            try {
-                mNextButton.setOnClickListener(
-                        l -> mViewModel.sendKey(mAccessKeyInput.getText()));
-            } catch (InputNotAllowedException ignored) {
-            }
+            mNextButton.setOnClickListener(
+                    l -> {
+                        // TODO (ML): STUB DEVICE SEND KEY START
+                        mViewModel.sendProvidedDeviceHardwareId("STUB");
+                        // TODO (ML): STUB DEVICE SEND KEY END
+                        /*try {
+                            mBluetoothViewModel.sendKey(
+                                    new BluetoothDeviceKeyApiModel(
+                                            mAccessKeyInput.getPasswordHash()));
+                        } catch (PairNewDeviceViewModelNotFoundException e) {
+                            ToastProvider.showShort(requireContext(),
+                                    StringsProvider.getString(
+                                            R.string.bluetooth_failure_transmit));
+                        }*/
+                    });
         }
         if (look == AddPairNewDeviceLook.NETWORK) {
-            mNextButton.setOnClickListener(l -> mViewModel.updateNetworkData());
+            mNextButton.setOnClickListener(
+                    l -> {
+                        // TODO (ML): STUB DEVICE SEND NETWORK SETTINGS START
+                        mViewModel.setNetworkDataUpdated();
+                        // TODO (ML): STUB DEVICE SEND NETWORK SETTINGS END
+                        /*try {
+                            // TODO (ML): Require data from fields
+                            mBluetoothViewModel.sendNetworkSettings(
+                                    new BluetoothDeviceNetworkApiModel());
+                        } catch (PairNewDeviceViewModelNotFoundException e) {
+                            ToastProvider.showShort(requireContext(),
+                                    StringsProvider.getString(
+                                            R.string.bluetooth_failure_transmit));
+                        }*/
+                    });
         }
         if (look == AddPairNewDeviceLook.FINISH) {
             mNextButton.setOnClickListener(l -> Navigation.findNavController(view).navigate(
@@ -263,17 +307,62 @@ public class PairNewDeviceFragment extends Fragment {
         this.enableButton(mNextButton);
     }
 
-    private void turnOnBluetooth() {
-        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        ActivityResultLauncher<Intent> bluetoothResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() != Activity.RESULT_OK) {
-                        ToastProvider.showShort(requireContext(),
-                                "You need to grant a bluetooth permission!");
-                    }
-                }
-        );
-        bluetoothResultLauncher.launch(enableBtIntent);
+    @Override
+    public void onStart() {
+        super.onStart();
+        mBluetoothViewModel.onStart();
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBluetoothViewModel.setConnectedDeviceData(null);
+        mBluetoothViewModel.removeCallbacks();
+        mBluetoothViewModel.onStop();
+    }
+
+    private final DeviceCallback mDeviceCallback = new DeviceCallback() {
+        @SuppressLint("MissingPermission")
+        @Override
+        public void onDeviceConnected(BluetoothDevice device) {
+        }
+
+        @Override
+        public void onDeviceDisconnected(BluetoothDevice device, String message) {
+            mBluetoothViewModel.setConnectedDeviceData(null);
+        }
+
+        @Override
+        public void onMessage(byte[] message) {
+            try {
+                BluetoothDeviceKeyResponseApiModel response = mBluetoothViewModel.getKeyResponse(
+                        message);
+                if (response.isSuccess()) {
+                    mViewModel.sendProvidedDeviceHardwareId(response.getHardwareId());
+                }
+            } catch (PairNewDeviceViewModelNotFoundException e) {
+                try {
+                    BluetoothDeviceNetworkResponseApiModel response =
+                            mBluetoothViewModel.getNetworkSettingsResponse(message);
+                    if (response.isSuccess()) {
+                        mViewModel.setNetworkDataUpdated();
+                    } else {
+                        mViewModel.setNetworkDataNotUpdated();
+                    }
+                } catch (PairNewDeviceViewModelNotFoundException ignored) {
+                }
+            }
+        }
+
+        @Override
+        public void onError(int errorCode) {
+            ToastProvider.showShort(requireContext(), String.valueOf(errorCode));
+        }
+
+        @Override
+        public void onConnectError(BluetoothDevice device, String message) {
+            ToastProvider.showShort(requireContext(),
+                    StringsProvider.getString(R.string.bluetooth_failure_connect));
+        }
+    };
 }
