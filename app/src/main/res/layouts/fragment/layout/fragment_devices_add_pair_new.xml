@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
     android:paddingVertical="@dimen/fragment_content_vertical_spacing"
-    tools:context=".ui.advanced.devices.view.AddPairNewDeviceFragment">
+    tools:context=".ui.advanced.devices.view.PairNewDeviceFragment">
 
     <RelativeLayout
         android:id="@+id/add_device_pair_new_wrapper"

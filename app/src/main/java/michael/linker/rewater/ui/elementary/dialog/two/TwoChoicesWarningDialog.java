@@ -30,4 +30,8 @@ public class TwoChoicesWarningDialog implements IDialog {
     public void show() {
         mDialogBuilder.show();
     }
+
+    @Override
+    public void dismiss() {
+    }
 }

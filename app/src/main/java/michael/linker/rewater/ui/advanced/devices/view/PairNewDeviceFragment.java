@@ -32,7 +32,7 @@ import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
 import michael.linker.rewater.ui.advanced.devices.enums.UiRequestStatus;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
-import michael.linker.rewater.ui.advanced.devices.viewmodel.AddPairNewDeviceViewModel;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.PairNewDeviceViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
@@ -41,13 +41,13 @@ import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
-public class AddPairNewDeviceFragment extends Fragment {
+public class PairNewDeviceFragment extends Fragment {
     private ViewGroup mBluetoothView, mAccessView, mNetworkView;
     private ITextInputView mAccessKeyInput;
     private IStatusStyledTextView mStatusStyledMessage;
     private MaterialButton mPairButton, mNextButton, mBackButton, mCancelButton;
 
-    private AddPairNewDeviceViewModel mViewModel;
+    private PairNewDeviceViewModel mViewModel;
     private DevicesViewModel mParentViewModel;
 
     @Override
@@ -57,7 +57,7 @@ public class AddPairNewDeviceFragment extends Fragment {
         ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
                 R.id.root_navigation_devices);
 
-        mViewModel = new ViewModelProvider(this).get(AddPairNewDeviceViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(PairNewDeviceViewModel.class);
         mParentViewModel = new ViewModelProvider(viewModelStoreOwner).get(DevicesViewModel.class);
 
         return inflater.inflate(R.layout.fragment_devices_add_pair_new, container, false);
@@ -144,6 +144,11 @@ public class AddPairNewDeviceFragment extends Fragment {
 
     private void initButtonsLogic(final View view) {
         NavController navController = Navigation.findNavController(view);
+        mPairButton.setOnClickListener(l -> {
+            navController.navigate(
+                    R.id.navigation_action_devices_add_pair_new_to_devices_add_pair_new_ble_device);
+            //mViewModel.connectToDevice();
+        });
         mBackButton.setOnClickListener(l -> mViewModel.previousLook());
         mCancelButton.setOnClickListener(
                 l -> {

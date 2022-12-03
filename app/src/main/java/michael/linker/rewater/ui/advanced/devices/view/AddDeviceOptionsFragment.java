@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
+import michael.linker.rewater.config.ConnectionConfiguration;
 import michael.linker.rewater.core.connection.bluetooth.Bluetooth;
 import michael.linker.rewater.core.connection.bluetooth.BluetoothFailedException;
 import michael.linker.rewater.core.connection.bluetooth.BluetoothNotFoundException;
@@ -59,6 +60,7 @@ public class AddDeviceOptionsFragment extends Fragment {
         NavController navController = Navigation.findNavController(view);
         mPairNewButton.setOnClickListener(l -> {
             if (Bluetooth.isBluetoothEnabled()) {
+                ConnectionConfiguration.buildBluetooth(requireActivity());
                 navController.navigate(
                         R.id.navigation_action_devices_add_options_to_devices_add_pair_new);
             } else {
@@ -80,6 +82,7 @@ public class AddDeviceOptionsFragment extends Fragment {
                 (dialogInterface, i) -> {
                     try {
                         Bluetooth.enableBluetooth();
+                        ConnectionConfiguration.buildBluetooth(requireActivity());
                         Navigation.findNavController(view).navigate(
                                 R.id.navigation_action_devices_add_options_to_devices_add_pair_new);
                     } catch (BluetoothFailedException | BluetoothNotFoundException e) {

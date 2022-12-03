@@ -20,7 +20,10 @@ public class PermissionManager {
     static {
         REQUIRED_PERMISSION_VERSION_MAP = Map.of(
                 Permission.INTERNET, Version.ANY,
-                Permission.BLUETOOTH_CONNECT, Version.S
+                Permission.FINE_LOCATION, Version.ANY,
+                Permission.COARSE_LOCATION, Version.ANY,
+                Permission.BLUETOOTH_CONNECT, Version.S,
+                Permission.BLUETOOTH_SCAN, Version.S
         );
     }
 
@@ -84,11 +87,19 @@ public class PermissionManager {
     }
 
     public static class Permission {
+        public static final Permission BLUETOOTH;
         public static final Permission BLUETOOTH_CONNECT;
+        public static final Permission BLUETOOTH_SCAN;
+        public static final Permission FINE_LOCATION;
+        public static final Permission COARSE_LOCATION;
         public static final Permission INTERNET;
 
         static {
+            BLUETOOTH = new Permission(Manifest.permission.BLUETOOTH);
             BLUETOOTH_CONNECT = new Permission(Manifest.permission.BLUETOOTH_CONNECT);
+            BLUETOOTH_SCAN = new Permission(Manifest.permission.BLUETOOTH_SCAN);
+            FINE_LOCATION = new Permission(Manifest.permission.ACCESS_FINE_LOCATION);
+            COARSE_LOCATION = new Permission(Manifest.permission.ACCESS_COARSE_LOCATION);
             INTERNET = new Permission(Manifest.permission.INTERNET);
         }
 

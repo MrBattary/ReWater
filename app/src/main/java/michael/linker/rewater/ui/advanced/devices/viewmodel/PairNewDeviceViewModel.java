@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.polidea.rxandroidble3.scan.ScanResult;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -16,17 +18,19 @@ import michael.linker.rewater.ui.advanced.devices.enums.UiRequestStatus;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceAfterPairingUiModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
 
-public class AddPairNewDeviceViewModel extends ViewModel {
+public class PairNewDeviceViewModel extends ViewModel {
     private final List<AddPairNewDeviceLook> mLookOrder;
     private final IDevicesRepository mDevicesRepository;
     private final MutableLiveData<DeviceAfterPairingUiModel> mDeviceAfterPairingUiModel;
+
+    private final MutableLiveData<ScanResult> mScannedDevices;
 
     private final MutableLiveData<AddPairNewDeviceLook> mCurrentLook;
     private final MutableLiveData<DeviceUiRequest> mBluetoothConnected;
     private final MutableLiveData<DeviceUiRequest> mAccessKeyAccepted;
     private final MutableLiveData<DeviceUiRequest> mNetworkUpdated;
 
-    public AddPairNewDeviceViewModel() {
+    public PairNewDeviceViewModel() {
         mLookOrder = List.of(
                 AddPairNewDeviceLook.BLUETOOTH,
                 AddPairNewDeviceLook.ACCESS,
@@ -34,6 +38,8 @@ public class AddPairNewDeviceViewModel extends ViewModel {
                 AddPairNewDeviceLook.FINISH);
         mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
         mDeviceAfterPairingUiModel = new MutableLiveData<>();
+
+        mScannedDevices = new MutableLiveData<>();
 
         mCurrentLook = new MutableLiveData<>();
         mBluetoothConnected = new MutableLiveData<>();

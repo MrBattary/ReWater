@@ -8,4 +8,9 @@ public interface IDialog {
      * Show dialog box.
      */
     void show();
+
+    /**
+     * Dismiss dialog box.
+     */
+    void dismiss();
 }
