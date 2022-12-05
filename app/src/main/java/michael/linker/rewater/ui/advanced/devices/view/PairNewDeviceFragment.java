@@ -26,10 +26,12 @@ import me.aflak.bluetooth.interfaces.DeviceCallback;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.ColorsProvider;
+import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
 import michael.linker.rewater.ui.advanced.devices.enums.UiRequestStatus;
+import michael.linker.rewater.ui.advanced.devices.model.BluetoothDeviceUiModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
 import michael.linker.rewater.ui.advanced.devices.model.bluetooth.BluetoothDeviceKeyResponseApiModel;
 import michael.linker.rewater.ui.advanced.devices.model.bluetooth.BluetoothDeviceNetworkResponseApiModel;
@@ -37,6 +39,9 @@ import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.PairNewDeviceBluetoothViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.PairNewDeviceViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.PairNewDeviceViewModelNotFoundException;
+import michael.linker.rewater.ui.elementary.dialog.IDialog;
+import michael.linker.rewater.ui.elementary.dialog.none.NoneChoiceDialogModel;
+import michael.linker.rewater.ui.elementary.dialog.none.NoneChoiceInfoDialog;
 import michael.linker.rewater.ui.elementary.input.text.IPasswordTextInputView;
 import michael.linker.rewater.ui.elementary.input.text.PasswordTextInputView;
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
@@ -48,6 +53,7 @@ public class PairNewDeviceFragment extends Fragment {
     private TextView mConnectedDeviceData;
     private IPasswordTextInputView mAccessKeyInput;
     private IStatusStyledTextView mStatusStyledMessage;
+    private IDialog mDeviceConnectionDialog;
     private MaterialButton mPairButton, mNextButton, mBackButton, mCancelButton;
 
     private PairNewDeviceViewModel mViewModel;
@@ -75,6 +81,7 @@ public class PairNewDeviceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.initFields(view);
+        this.initDialogs();
         this.initButtonsLogic(view);
         this.initObservers(view);
     }
@@ -98,6 +105,15 @@ public class PairNewDeviceFragment extends Fragment {
 
     }
 
+    private void initDialogs() {
+        mDeviceConnectionDialog = new NoneChoiceInfoDialog(requireContext(),
+                new NoneChoiceDialogModel(
+                        DrawablesProvider.getDrawable(R.drawable.ic_info),
+                        StringsProvider.getString(R.string.title_loading),
+                        StringsProvider.getString(
+                                R.string.dialog_bluetooth_connecting_in_progress)));
+    }
+
     private void initButtonsLogic(final View view) {
         NavController navController = Navigation.findNavController(view);
         mPairButton.setOnClickListener(l -> navController.navigate(
@@ -111,13 +127,12 @@ public class PairNewDeviceFragment extends Fragment {
     }
 
     private void initObservers(final View view) {
-        mBluetoothViewModel.getConnectedDeviceData().observe(getViewLifecycleOwner(), model -> {
+        mBluetoothViewModel.getBluetoothDeviceData().observe(getViewLifecycleOwner(), model -> {
             if (model != null) {
                 mConnectedDeviceData.setText(
                         String.format(StringsProvider.getString(R.string.bluetooth_device_info),
                                 (model.getName() != null ? model.getName() : ""), model.getMac()));
                 mConnectedDeviceData.setVisibility(View.VISIBLE);
-                mViewModel.setConnectedToDevice();
             } else {
                 mConnectedDeviceData.setVisibility(View.GONE);
             }
@@ -148,7 +163,7 @@ public class PairNewDeviceFragment extends Fragment {
                 if (currentLook == AddPairNewDeviceLook.BLUETOOTH) {
                     this.setSuccessAndFailureMessage(view, request,
                             R.string.pair_device_connect_success,
-                            R.string.pair_device_connect_failure);
+                            R.string.bluetooth_failure_connect);
                     if (request.getStatus() == UiRequestStatus.OK) {
                         this.allowProceedToTheNextLook();
                     }
@@ -201,11 +216,22 @@ public class PairNewDeviceFragment extends Fragment {
     }
 
     private void initBackButtonLogic(final View view, final AddPairNewDeviceLook look) {
-        if (look == AddPairNewDeviceLook.BLUETOOTH) {
-            mBackButton.setOnClickListener(l -> Navigation.findNavController(view).navigateUp());
-        } else {
-            mBackButton.setOnClickListener(l -> mViewModel.previousLook());
-        }
+        mBackButton.setOnClickListener(l -> {
+            if (look == AddPairNewDeviceLook.BLUETOOTH) {
+                Navigation.findNavController(view).navigateUp();
+            } else {
+                // TODO (ML): STUB DEVICE DISCONNECT START
+                if (look == AddPairNewDeviceLook.NETWORK) {
+                    mBluetoothViewModel.setConnectableBluetoothDevice(null);
+                    mBluetoothViewModel.setBluetoothDeviceData(null);
+                }
+                // TODO (ML): STUB DEVICE DISCONNECT END
+                /*if (look == AddPairNewDeviceLook.NETWORK) {
+                    mBluetoothViewModel.disconnectFromDevice();
+                }*/
+                mViewModel.previousLook();
+            }
+        });
     }
 
     private void initNextButtonLogic(final View view, final AddPairNewDeviceLook look) {
@@ -216,6 +242,7 @@ public class PairNewDeviceFragment extends Fragment {
         if (look == AddPairNewDeviceLook.ACCESS) {
             mNextButton.setOnClickListener(
                     l -> {
+                        // TODO (ML): Should raise error if device already paired
                         // TODO (ML): STUB DEVICE SEND KEY START
                         mViewModel.sendProvidedDeviceHardwareId("STUB");
                         // TODO (ML): STUB DEVICE SEND KEY END
@@ -267,6 +294,9 @@ public class PairNewDeviceFragment extends Fragment {
         TransitionManager.beginDelayedTransition(view.findViewById(R.id.devices_add_pair_new),
                 autoTransition);
 
+        if (request.getStatus() != UiRequestStatus.UNDEFINED) {
+            mStatusStyledMessage.setVisibility(View.VISIBLE);
+        }
         if (request.getStatus() == UiRequestStatus.OK) {
             mStatusStyledMessage.setText(StringsProvider.getString(successId), Status.OK);
         }
@@ -303,20 +333,38 @@ public class PairNewDeviceFragment extends Fragment {
 
     private void allowProceedToTheNextLook() {
         mNextButton.setOnClickListener(l -> mViewModel.nextLook());
-        mStatusStyledMessage.setVisibility(View.VISIBLE);
         this.enableButton(mNextButton);
     }
 
+    // TODO (ML): STUB DEVICE CONNECT START
+    @SuppressLint("MissingPermission")
+    // TODO (ML): STUB DEVICE CONNECT END
     @Override
     public void onStart() {
         super.onStart();
         mBluetoothViewModel.onStart();
+        final BluetoothDevice bluetoothDevice = mBluetoothViewModel.getConnectableBluetoothDevice();
+        // TODO (ML): STUB DEVICE CONNECT START
+        if (bluetoothDevice != null) {
+            mDeviceConnectionDialog.show();
+            mBluetoothViewModel.setBluetoothDeviceData(
+                    new BluetoothDeviceUiModel(
+                            bluetoothDevice.getName(),
+                            bluetoothDevice.getAddress()));
+            mViewModel.setConnectedToDevice();
+        }
+        // TODO (ML): STUB DEVICE CONNECT END
+        /*if (bluetoothDevice != null && !mBluetoothViewModel.isConnectedToDevice()) {
+            mDeviceConnectionDialog.show();
+            mBluetoothViewModel.connectToDevice(bluetoothDevice);
+        }*/
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mBluetoothViewModel.setConnectedDeviceData(null);
+        mBluetoothViewModel.setBluetoothDeviceData(null);
+        mBluetoothViewModel.setConnectableBluetoothDevice(null);
         mBluetoothViewModel.removeCallbacks();
         mBluetoothViewModel.onStop();
     }
@@ -325,11 +373,18 @@ public class PairNewDeviceFragment extends Fragment {
         @SuppressLint("MissingPermission")
         @Override
         public void onDeviceConnected(BluetoothDevice device) {
+            mBluetoothViewModel.setBluetoothDeviceData(
+                    new BluetoothDeviceUiModel(
+                            device.getName(),
+                            device.getAddress()));
+            mDeviceConnectionDialog.dismiss();
+            mViewModel.setConnectedToDevice();
         }
 
         @Override
         public void onDeviceDisconnected(BluetoothDevice device, String message) {
-            mBluetoothViewModel.setConnectedDeviceData(null);
+            mBluetoothViewModel.setConnectableBluetoothDevice(null);
+            mBluetoothViewModel.setBluetoothDeviceData(null);
         }
 
         @Override
@@ -363,6 +418,8 @@ public class PairNewDeviceFragment extends Fragment {
         public void onConnectError(BluetoothDevice device, String message) {
             ToastProvider.showShort(requireContext(),
                     StringsProvider.getString(R.string.bluetooth_failure_connect));
+            mDeviceConnectionDialog.dismiss();
+            mViewModel.setNotConnectedToDevice();
         }
     };
 }

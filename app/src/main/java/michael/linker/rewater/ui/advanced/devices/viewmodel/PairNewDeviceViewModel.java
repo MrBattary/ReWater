@@ -97,6 +97,10 @@ public class PairNewDeviceViewModel extends ViewModel {
         mBluetoothConnected.setValue(new DeviceUiRequest(UiRequestStatus.OK));
     }
 
+    public void setNotConnectedToDevice() {
+        mBluetoothConnected.setValue(new DeviceUiRequest(UiRequestStatus.ERROR));
+    }
+
     public void sendProvidedDeviceHardwareId(final String hardwareId) {
         try {
             // TODO: STUB

@@ -27,22 +27,32 @@ public class PairNewDeviceBluetoothViewModel extends ViewModel {
     private final Bluetooth mBluetooth;
     private boolean mIsScanning;
 
-    private final MutableLiveData<BluetoothDeviceUiModel> mConnectedDeviceData;
+    private final MutableLiveData<BluetoothDeviceUiModel> mBluetoothDeviceData;
+    private BluetoothDevice mConnectableBluetoothDevice;
 
     public PairNewDeviceBluetoothViewModel() {
         mGson = new Gson();
         mBluetooth = ConnectionConfiguration.getBluetooth();
         mIsScanning = false;
 
-        mConnectedDeviceData = new MutableLiveData<>();
+        mBluetoothDeviceData = new MutableLiveData<>();
+        mConnectableBluetoothDevice = null;
     }
 
-    public LiveData<BluetoothDeviceUiModel> getConnectedDeviceData() {
-        return mConnectedDeviceData;
+    public BluetoothDevice getConnectableBluetoothDevice() {
+        return mConnectableBluetoothDevice;
     }
 
-    public void setConnectedDeviceData(final BluetoothDeviceUiModel model) {
-        mConnectedDeviceData.postValue(model);
+    public LiveData<BluetoothDeviceUiModel> getBluetoothDeviceData() {
+        return mBluetoothDeviceData;
+    }
+
+    public void setConnectableBluetoothDevice(BluetoothDevice connectableBluetoothDevice) {
+        mConnectableBluetoothDevice = connectableBluetoothDevice;
+    }
+
+    public void setBluetoothDeviceData(final BluetoothDeviceUiModel model) {
+        mBluetoothDeviceData.postValue(model);
     }
 
     public void setBluetoothCallback(final BluetoothCallback callback) {
@@ -72,14 +82,14 @@ public class PairNewDeviceBluetoothViewModel extends ViewModel {
     }
 
     public void startScanning() {
-        if (!mIsScanning) {
+        if (!isScanning()) {
             mBluetooth.startScanning();
             mIsScanning = true;
         }
     }
 
     public void stopScanning() {
-        if (mIsScanning) {
+        if (isScanning()) {
             mBluetooth.stopScanning();
             mIsScanning = false;
         }
