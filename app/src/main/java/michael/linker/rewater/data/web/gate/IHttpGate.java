@@ -15,7 +15,7 @@ public interface IHttpGate {
      *
      * @param url url
      * @return response object, if response has code 200-299
-     * @throws FailureHttpException     critical error
+     * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
      * @throws BadRequestHttpException  400
@@ -34,7 +34,7 @@ public interface IHttpGate {
      * @param url  url
      * @param json Json object as String
      * @return response object, if response has code 200-299
-     * @throws FailureHttpException     critical error
+     * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
      * @throws BadRequestHttpException  400
@@ -53,7 +53,7 @@ public interface IHttpGate {
      * @param url  url
      * @param json Json object as String
      * @return response object, if response has code 200-299
-     * @throws FailureHttpException     critical error
+     * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
      * @throws BadRequestHttpException  400
@@ -71,7 +71,7 @@ public interface IHttpGate {
      *
      * @param url url
      * @return response object, if response has code 200-299
-     * @throws FailureHttpException     critical error
+     * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
      * @throws BadRequestHttpException  400

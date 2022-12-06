@@ -1,4 +1,6 @@
 package michael.linker.rewater.data.web.gate.exceptions.status;
 
-public class BadRequestHttpException extends RuntimeException {
+import michael.linker.rewater.data.web.gate.exceptions.group.ClientErrorException;
+
+public class BadRequestHttpException extends ClientErrorException {
 }

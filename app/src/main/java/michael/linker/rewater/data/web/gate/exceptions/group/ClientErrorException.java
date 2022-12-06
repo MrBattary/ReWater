@@ -1,4 +1,6 @@
 package michael.linker.rewater.data.web.gate.exceptions.group;
 
-public class ClientErrorException extends RuntimeException {
+import michael.linker.rewater.data.web.gate.exceptions.FailureHttpException;
+
+public class ClientErrorException extends FailureHttpException {
 }

@@ -13,11 +13,15 @@ import michael.linker.rewater.data.repository.user.UsersRepositoryAccessDeniedEx
 import michael.linker.rewater.data.repository.user.UsersRepositoryNotFoundException;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.core.permission.PermissionManager;
+import michael.linker.rewater.data.web.api.CommonApi;
 
 public class SignLoadingViewModel extends ViewModel {
+    private final CommonApi mCommonApi;
     private final MutableLiveData<String> stageMessage, errorStageMessage;
 
     public SignLoadingViewModel() {
+        mCommonApi = new CommonApi();
+
         stageMessage = new MutableLiveData<>();
         errorStageMessage = new MutableLiveData<>();
     }
@@ -51,10 +55,10 @@ public class SignLoadingViewModel extends ViewModel {
                 StringsProvider.getString(R.string.loading_stage_internet_connection)));
     }
 
-    // TODO (ML): Add the internet connection check
     public Single<Boolean> checkInternetConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
                     try {
+                        mCommonApi.pingInternet();
                         return true;
                     } catch (RuntimeException e) {
                         this.setErrorStageMessageAndThrowException(
@@ -67,10 +71,11 @@ public class SignLoadingViewModel extends ViewModel {
 
     }
 
-    // TODO (ML): Add the server connection check
+
     public Single<Boolean> checkServerConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
                     try {
+                        mCommonApi.pingServer();
                         return true;
                     } catch (RuntimeException e) {
                         this.setErrorStageMessageAndThrowException(
