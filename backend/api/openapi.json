@@ -1,0 +1,1182 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Control Server",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/api/devices": {
+            "get": {
+                "tags": [
+                    "devices"
+                ],
+                "summary": "Get All Devices",
+                "operationId": "get_all_devices_api_devices_get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Full Info",
+                            "type": "boolean"
+                        },
+                        "name": "full_info",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "devices"
+                ],
+                "summary": "Create Device",
+                "operationId": "create_device_api_devices_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateDeviceRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/devices/{device_id}": {
+            "get": {
+                "tags": [
+                    "devices"
+                ],
+                "summary": "Get Device",
+                "operationId": "get_device_api_devices__device_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Device Id",
+                            "type": "string"
+                        },
+                        "name": "device_id",
+                        "in": "path"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Hardcoded Id",
+                            "type": "boolean"
+                        },
+                        "name": "hardcoded_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeviceInfoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "devices"
+                ],
+                "summary": "Edit Device",
+                "operationId": "edit_device_api_devices__device_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Device Id",
+                            "type": "string"
+                        },
+                        "name": "device_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EditDeviceRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "devices"
+                ],
+                "summary": "Force Watering",
+                "operationId": "force_watering_api_devices__device_id__post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Device Id",
+                            "type": "string"
+                        },
+                        "name": "device_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Volume"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "devices"
+                ],
+                "summary": "Delete Device",
+                "operationId": "delete_device_api_devices__device_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Device Id",
+                            "type": "string"
+                        },
+                        "name": "device_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/networks": {
+            "get": {
+                "tags": [
+                    "networks"
+                ],
+                "summary": "Get All Networks",
+                "operationId": "get_all_networks_api_networks_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "networks"
+                ],
+                "summary": "Create Network",
+                "operationId": "create_network_api_networks_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NetworkInfoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/networks/{network_id}": {
+            "get": {
+                "tags": [
+                    "networks"
+                ],
+                "summary": "Get Network",
+                "operationId": "get_network_api_networks__network_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Network Id",
+                            "type": "string"
+                        },
+                        "name": "network_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NetworkInfoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "networks"
+                ],
+                "summary": "Edit Network",
+                "operationId": "edit_network_api_networks__network_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Network Id",
+                            "type": "string"
+                        },
+                        "name": "network_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NetworkInfoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "networks"
+                ],
+                "summary": "Delete Network",
+                "operationId": "delete_network_api_networks__network_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Network Id",
+                            "type": "string"
+                        },
+                        "name": "network_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/schedules": {
+            "get": {
+                "tags": [
+                    "schedules"
+                ],
+                "summary": "Get All Schedules",
+                "operationId": "get_all_schedules_api_schedules_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "schedules"
+                ],
+                "summary": "Create Schedule",
+                "operationId": "create_schedule_api_schedules_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateScheduleRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/schedules/{schedule_id}": {
+            "get": {
+                "tags": [
+                    "schedules"
+                ],
+                "summary": "Get Schedule",
+                "operationId": "get_schedule_api_schedules__schedule_id__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Schedule Id",
+                            "type": "string"
+                        },
+                        "name": "schedule_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduleInfoResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "schedules"
+                ],
+                "summary": "Edit Schedule",
+                "operationId": "edit_schedule_api_schedules__schedule_id__put",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Schedule Id",
+                            "type": "string"
+                        },
+                        "name": "schedule_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateScheduleRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "schedules"
+                ],
+                "summary": "Delete Schedule",
+                "operationId": "delete_schedule_api_schedules__schedule_id__delete",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Schedule Id",
+                            "type": "string"
+                        },
+                        "name": "schedule_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string",
+                                    "default": "Error during service work"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BaseInfo": {
+                "title": "BaseInfo",
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateDeviceRequest": {
+                "title": "CreateDeviceRequest",
+                "required": [
+                    "name",
+                    "parentScheduleId",
+                    "deviceHardcodedId"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "parentScheduleId": {
+                        "title": "Parentscheduleid",
+                        "type": "string"
+                    },
+                    "deviceHardcodedId": {
+                        "title": "Devicehardcodedid",
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateScheduleRequest": {
+                "title": "CreateScheduleRequest",
+                "required": [
+                    "name",
+                    "period",
+                    "volume",
+                    "deviceIds",
+                    "networkId"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "period": {
+                        "$ref": "#/components/schemas/Period"
+                    },
+                    "volume": {
+                        "$ref": "#/components/schemas/Volume"
+                    },
+                    "deviceIds": {
+                        "title": "Deviceids",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "networkId": {
+                        "title": "Networkid",
+                        "type": "string"
+                    }
+                }
+            },
+            "DeviceInfo": {
+                "title": "DeviceInfo",
+                "required": [
+                    "id",
+                    "name",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/Status"
+                    }
+                }
+            },
+            "DeviceInfoResponse": {
+                "title": "DeviceInfoResponse",
+                "required": [
+                    "id",
+                    "name",
+                    "status",
+                    "parentSchedule",
+                    "parentNetwork"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/Status"
+                    },
+                    "parentSchedule": {
+                        "$ref": "#/components/schemas/BaseInfo"
+                    },
+                    "parentNetwork": {
+                        "$ref": "#/components/schemas/BaseInfo"
+                    }
+                }
+            },
+            "EditDeviceRequest": {
+                "title": "EditDeviceRequest",
+                "required": [
+                    "name",
+                    "parentScheduleId"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "parentScheduleId": {
+                        "title": "Parentscheduleid",
+                        "type": "string"
+                    }
+                }
+            },
+            "HTTPValidationError": {
+                "title": "HTTPValidationError",
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        }
+                    }
+                }
+            },
+            "NetworkInfoRequest": {
+                "title": "NetworkInfoRequest",
+                "required": [
+                    "name",
+                    "description"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "type": "string"
+                    }
+                }
+            },
+            "NetworkInfoResponse": {
+                "title": "NetworkInfoResponse",
+                "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "type": "string"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/Status"
+                    }
+                }
+            },
+            "Period": {
+                "title": "Period",
+                "required": [
+                    "days",
+                    "hours",
+                    "minutes"
+                ],
+                "type": "object",
+                "properties": {
+                    "days": {
+                        "title": "Days",
+                        "minimum": 0,
+                        "type": "integer"
+                    },
+                    "hours": {
+                        "title": "Hours",
+                        "exclusiveMaximum": 24,
+                        "minimum": 0,
+                        "type": "integer"
+                    },
+                    "minutes": {
+                        "title": "Minutes",
+                        "exclusiveMaximum": 60,
+                        "minimum": 0,
+                        "type": "integer"
+                    }
+                }
+            },
+            "ScheduleInfoResponse": {
+                "title": "ScheduleInfoResponse",
+                "required": [
+                    "id",
+                    "name",
+                    "period",
+                    "volume",
+                    "devices"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "period": {
+                        "$ref": "#/components/schemas/Period"
+                    },
+                    "volume": {
+                        "$ref": "#/components/schemas/Volume"
+                    },
+                    "devices": {
+                        "title": "Devices",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DeviceInfo"
+                        }
+                    }
+                }
+            },
+            "Status": {
+                "title": "Status",
+                "type": "object",
+                "properties": {
+                    "water": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusValue"
+                            }
+                        ],
+                        "default": "UNDEFINED"
+                    },
+                    "battery": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StatusValue"
+                            }
+                        ],
+                        "default": "UNDEFINED"
+                    }
+                }
+            },
+            "StatusValue": {
+                "title": "StatusValue",
+                "enum": [
+                    "UNDEFINED",
+                    "OK",
+                    "WARNING",
+                    "DEFECT"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "UpdateScheduleRequest": {
+                "title": "UpdateScheduleRequest",
+                "required": [
+                    "name",
+                    "period",
+                    "volume",
+                    "deviceIds"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "period": {
+                        "$ref": "#/components/schemas/Period"
+                    },
+                    "volume": {
+                        "$ref": "#/components/schemas/Volume"
+                    },
+                    "deviceIds": {
+                        "title": "Deviceids",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "loc": {
+                        "title": "Location",
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        }
+                    },
+                    "msg": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error Type",
+                        "type": "string"
+                    }
+                }
+            },
+            "Volume": {
+                "title": "Volume",
+                "required": [
+                    "l",
+                    "ml"
+                ],
+                "type": "object",
+                "properties": {
+                    "l": {
+                        "title": "L",
+                        "minimum": 0,
+                        "type": "integer"
+                    },
+                    "ml": {
+                        "title": "Ml",
+                        "exclusiveMaximum": 1000,
+                        "minimum": 0,
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "networks"
+        },
+        {
+            "name": "schedules"
+        },
+        {
+            "name": "devices"
+        }
+    ]
+}

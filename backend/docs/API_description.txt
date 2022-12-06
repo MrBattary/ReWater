@@ -1,0 +1,258 @@
+REST
+
+NETWORKS
+Get all networks
+Request: none
+Response: [
+	{
+		id: string,
+		name:string,
+		description:string,
+		status: {
+			water: string
+			battery: string
+		}
+	}
+]
+
+Get network
+Request: network ID
+Response: {
+	id: string,
+	name:string,
+	description:string,
+	status: {
+		water: string
+		battery: string
+	}
+}
+
+Create network
+Request:
+{
+	name:string,
+	description:string,
+}
+
+Delete network:
+Request: network ID
+Response: 
+
+Edit network:
+Request: network ID
+{
+	name:string,
+	description:string,
+}
+
+
+DEVICES:
+Get all devices
+Request: network ID
+Response: [
+	{
+		id: string,
+		name:string,
+		parentSchedule: {
+			id: string,
+			name:string,
+		}
+		parentNetwork: {
+			id: string,
+			name:string,
+		}
+		status: {
+			water: string
+			battery: string
+		}
+	}
+]
+
+Get list of all devices for choosing:
+Request:
+Response: 
+[
+	{
+		id: string,
+		name:string,
+	}
+]
+
+Get device
+Request: device ID
+{
+	id: string,
+	name:string,
+	parentSchedule: {
+		id: string,
+		name:string,
+	}
+	parentNetwork: {
+		id: string,
+		name:string,
+	}
+	status: {
+		water: string
+		battery: string
+	}
+}
+
+Get device by hardcoded ID
+Request: device hardcoded ID
+Response: {
+	id: string,
+	name:string,
+	parentSchedule: {
+		id: string,
+		name:string,
+	}
+	parentNetwork: {
+		id: string,
+		name:string,
+	}
+	status: {
+		water: string
+		battery: string
+	}
+}
+Response: 400
+
+Edit device
+Request: device ID
+{
+	name:string,
+	parentScheduleId: string
+}
+
+Create device
+Request:
+{
+	name:string,
+	deviceHardcodedId: string,
+	parentScheduleId: string
+}
+
+Delete device:
+Request: device ID
+Response: 
+
+Forse watering
+Request: device ID
+{
+	volume {
+		l: integer,
+		ml: integer
+	}
+}
+
+
+SCHEDULES:
+Get all schedules
+Request: network ID
+Response: [
+	{
+		id: string,
+		name:string,
+		period: {
+			days: integer,
+			hours: integer,
+			minutes: integer
+		}
+		volume {
+			l: integer,
+			ml: integer
+		}
+		devices: [
+			{
+				id: string,
+				name:string,
+				status: {
+					water: string
+					battery: string
+				}
+			}
+		]
+	}
+]
+
+
+Get list of all schedules for choosing:
+Request: none
+Response: 
+[
+	{
+		parentSchedule: {
+			id: string,
+			name:string,
+		}
+		parentNetwork: {
+			id: string,
+			name:string,
+		}
+	}
+]
+
+Get schedule by ID 
+Request: schedule ID 
+Response: 
+{
+	id: string,
+	name:string,
+	period: {
+		days: integer,
+		hours: integer,
+		minutes: integer
+	}
+	volume {
+		l: integer,
+		ml: integer
+	}
+	devices: [
+		{
+			id: string,
+			name:string,
+			status: {
+				water: string
+				battery: string
+			}
+		}
+	]
+}
+
+Update schedule by ID 
+Request: schedule ID 
+{
+	name:string,
+	period: {
+		days: integer,
+		hours: integer,
+		minutes: integer
+	}
+	volume {
+		l: integer,
+		ml: integer
+	}
+	devicesId: [string]
+}
+Response: 
+
+Create schedule
+Request:
+{
+	networkId: string,
+	name:string,
+	period: {
+		days: integer,
+		hours: integer,
+		minutes: integer
+	}
+	volume {
+		l: integer,
+		ml: integer
+	}
+	devicesId: [string]
+}
+
+Delete schedule:
+Request: device ID
+Response: 
