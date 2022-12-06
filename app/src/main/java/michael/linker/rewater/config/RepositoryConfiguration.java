@@ -4,6 +4,7 @@ import michael.linker.rewater.data.repository.devices.DevicesLocalRepository;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.NetworksLocalRepository;
+import michael.linker.rewater.data.repository.networks.NetworksWebRepository;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
 import michael.linker.rewater.data.repository.schedules.SchedulesLocalRepository;
 import michael.linker.rewater.data.repository.user.UsersLocalRepository;
@@ -18,6 +19,7 @@ public class RepositoryConfiguration {
     public static INetworksRepository getNetworksRepository() {
         if (sNetworksRepository == null) {
             sNetworksRepository = new NetworksLocalRepository();
+            sNetworksRepository = new NetworksWebRepository();
         }
         return sNetworksRepository;
     }

@@ -25,13 +25,10 @@ public class HttpGate implements IHttpGate {
     }
 
     @Override
-    public Response get(final String url) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
-            BadRequestHttpException, ForbiddenHttpException,
-            NotFoundHttpException, ServerErrorHttpException {
+    public Response get(final String url) throws FailureHttpException {
         Request request = new Request.Builder()
                 .get()
-                .url(mSettings.getConstructedUrl() + url)
+                .url(url)
                 .build();
         Response response = makeRequest(request);
         validateResponse(response);
@@ -39,14 +36,17 @@ public class HttpGate implements IHttpGate {
     }
 
     @Override
-    public Response post(final String url, final String json) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
-            BadRequestHttpException, ForbiddenHttpException,
-            NotFoundHttpException, ServerErrorHttpException {
+    public Response getWithSettings(String url)
+            throws FailureHttpException {
+        return get(mSettings.getConstructedUrl() + url);
+    }
+
+    @Override
+    public Response post(final String url, final String json) throws FailureHttpException {
         RequestBody requestBody = RequestBody.create(json, HttpGateMediaType.JSON);
         Request request = new Request.Builder()
                 .post(requestBody)
-                .url(mSettings.getConstructedUrl() + url)
+                .url(url)
                 .build();
         Response response = makeRequest(request);
         validateResponse(response);
@@ -54,11 +54,16 @@ public class HttpGate implements IHttpGate {
     }
 
     @Override
-    public Response put(final String url, final String json) {
+    public Response postWithSettings(String url, String json) throws FailureHttpException {
+        return post(mSettings.getConstructedUrl() + url, json);
+    }
+
+    @Override
+    public Response put(final String url, final String json) throws FailureHttpException {
         RequestBody requestBody = RequestBody.create(json, HttpGateMediaType.JSON);
         Request request = new Request.Builder()
                 .put(requestBody)
-                .url(mSettings.getConstructedUrl() + url)
+                .url(url)
                 .build();
         Response response = makeRequest(request);
         validateResponse(response);
@@ -66,7 +71,13 @@ public class HttpGate implements IHttpGate {
     }
 
     @Override
-    public Response delete(final String url) {
+    public Response putWithSettings(String url, String json)
+            throws FailureHttpException {
+        return put(mSettings.getConstructedUrl() + url, json);
+    }
+
+    @Override
+    public Response delete(final String url) throws FailureHttpException {
         Request request = new Request.Builder()
                 .delete()
                 .url(mSettings.getConstructedUrl() + url)
@@ -74,6 +85,11 @@ public class HttpGate implements IHttpGate {
         Response response = makeRequest(request);
         validateResponse(response);
         return response;
+    }
+
+    @Override
+    public Response deleteWithSettings(String url) throws FailureHttpException {
+        return delete(mSettings.getConstructedUrl() + url);
     }
 
     @Override
@@ -120,6 +136,7 @@ public class HttpGate implements IHttpGate {
                 }
                 throw new ServerErrorException();
             }
+            response.close();
         }
     }
 }

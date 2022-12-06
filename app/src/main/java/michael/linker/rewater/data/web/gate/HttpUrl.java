@@ -2,7 +2,14 @@ package michael.linker.rewater.data.web.gate;
 
 import androidx.annotation.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HttpUrl {
+    public static ProtocolBuilder Builder(Protocol protocol) {
+        return new ProtocolBuilder(protocol.mProtocol);
+    }
+
     public static class Protocol {
         public static final Protocol HTTP;
         public static final Protocol HTTPS;
@@ -15,7 +22,7 @@ public class HttpUrl {
             HTTPS = new Protocol(HTTPS_PROTOCOL);
         }
 
-        private final String mProtocol;
+        protected final String mProtocol;
 
         private Protocol(String protocol) {
             mProtocol = protocol;
@@ -25,6 +32,17 @@ public class HttpUrl {
         @Override
         public String toString() {
             return mProtocol;
+        }
+    }
+
+    public static class ProtocolBuilder extends Protocol {
+
+        public ProtocolBuilder(String protocol) {
+            super(protocol);
+        }
+
+        public CoreBuilder addCore(Core core) {
+            return new CoreBuilder(this.mProtocol + core.mCore);
         }
     }
 
@@ -41,7 +59,7 @@ public class HttpUrl {
             GOOGLE = new Core(GOOGLE_URL);
         }
 
-        private final String mCore;
+        protected final String mCore;
 
         public Core(String core) {
             mCore = core;
@@ -51,6 +69,27 @@ public class HttpUrl {
         @Override
         public String toString() {
             return mCore;
+        }
+    }
+
+    public static class CoreBuilder extends Core {
+        private final QueryParams mQueryParams;
+
+        public CoreBuilder(String core) {
+            super(core);
+            mQueryParams = new QueryParams();
+        }
+
+        public GroupBuilder addGroup(Group group) {
+            return new GroupBuilder(this.mCore + group, mQueryParams);
+        }
+
+        public void addQueryParameter(Object key, Object value) {
+            mQueryParams.addQueryParameter(key, value);
+        }
+
+        public String buildUrl() {
+            return mCore + mQueryParams.toString();
         }
     }
 
@@ -69,7 +108,7 @@ public class HttpUrl {
             DEVICES = new Group(DEVICES_GROUP);
         }
 
-        private final String mGroup;
+        protected final String mGroup;
 
         private Group(String group) {
             mGroup = group;
@@ -79,6 +118,51 @@ public class HttpUrl {
         @Override
         public String toString() {
             return mGroup;
+        }
+    }
+
+    public static class GroupBuilder extends Group {
+        private final QueryParams mQueryParams;
+
+        public GroupBuilder(String group, QueryParams queryParams) {
+            super(group);
+            mQueryParams = queryParams;
+        }
+
+        public String buildUrl() {
+            return mGroup;
+        }
+
+        public void addQueryParameter(Object key, Object value) {
+            mQueryParams.addQueryParameter(key, value);
+        }
+    }
+
+    public static class QueryParams {
+        private final Map<String, String> queryParams;
+
+        public QueryParams() {
+            queryParams = new HashMap<>();
+        }
+
+        public void addQueryParameter(Object key, Object value) {
+            queryParams.put(key.toString(), value.toString());
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("?");
+            for (var queryEntry : queryParams.entrySet()) {
+                stringBuilder
+                        .append(queryEntry.getKey())
+                        .append("=")
+                        .append(queryEntry.getValue())
+                        .append("&");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            return stringBuilder.toString();
         }
     }
 }
