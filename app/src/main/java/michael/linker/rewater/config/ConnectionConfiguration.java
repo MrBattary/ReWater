@@ -6,10 +6,12 @@ import com.polidea.rxandroidble3.RxBleClient;
 
 import me.aflak.bluetooth.Bluetooth;
 import michael.linker.rewater.core.App;
+import okhttp3.OkHttpClient;
 
 public class ConnectionConfiguration {
     private static RxBleClient sRxBleClient;
     private static Bluetooth sBluetooth;
+    private static OkHttpClient sOkHttpClient;
 
     public static RxBleClient getRxBleClient() {
         if (sRxBleClient == null) {
@@ -30,5 +32,12 @@ public class ConnectionConfiguration {
             throw new ConfigurationNotFoundException();
         }
         return sBluetooth;
+    }
+
+    public static OkHttpClient getOkHttpClient() {
+        if (sOkHttpClient == null) {
+            sOkHttpClient = new OkHttpClient();
+        }
+        return sOkHttpClient;
     }
 }
