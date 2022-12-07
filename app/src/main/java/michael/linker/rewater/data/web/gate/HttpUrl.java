@@ -75,17 +75,32 @@ public class HttpUrl {
     public static class CoreBuilder extends Core {
         private final QueryParams mQueryParams;
 
+        public CoreBuilder(Core core) {
+            super(core.mCore);
+            mQueryParams = new QueryParams();
+        }
+
         public CoreBuilder(String core) {
             super(core);
             mQueryParams = new QueryParams();
         }
 
-        public GroupBuilder addGroup(Group group) {
-            return new GroupBuilder(this.mCore + group, mQueryParams);
+        public CoreBuilder(String core, QueryParams queryParams) {
+            super(core);
+            mQueryParams = queryParams;
         }
 
-        public void addQueryParameter(Object key, Object value) {
+        public CoreBuilder addCore(Core core) {
+            return new CoreBuilder(this.mCore + core.mCore, mQueryParams);
+        }
+
+        public GroupBuilder addGroup(Group group) {
+            return new GroupBuilder(this.mCore + group.mGroup, mQueryParams);
+        }
+
+        public CoreBuilder addQueryParameter(Object key, Object value) {
             mQueryParams.addQueryParameter(key, value);
+            return this;
         }
 
         public String buildUrl() {
@@ -124,17 +139,23 @@ public class HttpUrl {
     public static class GroupBuilder extends Group {
         private final QueryParams mQueryParams;
 
+        public GroupBuilder(Group group) {
+            super(group.mGroup);
+            mQueryParams = new QueryParams();
+        }
+
         public GroupBuilder(String group, QueryParams queryParams) {
             super(group);
             mQueryParams = queryParams;
         }
 
         public String buildUrl() {
-            return mGroup;
+            return mGroup + mQueryParams.toString();
         }
 
-        public void addQueryParameter(Object key, Object value) {
+        public GroupBuilder addQueryParameter(Object key, Object value) {
             mQueryParams.addQueryParameter(key, value);
+            return this;
         }
     }
 
