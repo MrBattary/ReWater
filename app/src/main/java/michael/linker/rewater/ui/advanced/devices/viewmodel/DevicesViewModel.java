@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
@@ -190,18 +193,28 @@ public class DevicesViewModel extends ViewModel {
     }
 
     public void updateListsFromRepositories() {
-        mNetworksRepository.updateNetworkList();
-        final List<DeviceRepositoryModel> deviceList = mDevicesRepository.getDeviceList();
-        final List<DeviceCardUiModel> cardModelList = this.buildDeviceCardModelList(deviceList);
-
-        mDeviceCardModels.setValue(cardModelList);
-        mAlreadyTakenDeviceNames.setValue(deviceList.stream()
-                .map(DeviceRepositoryModel::getName)
-                .collect(Collectors.toList()));
-        mSchedulesModels.setValue(
-                mSchedulesRepository.getAllSchedules().stream()
-                        .map(ScheduleUiModel::new)
-                        .collect(Collectors.toList()));
+        Single.fromCallable(() -> {
+                    mNetworksRepository.updateNetworkList();
+                    return true;
+                }).doOnSuccess(b ->
+                        Single.fromCallable(mDevicesRepository::getDeviceList)
+                                .doOnSuccess(deviceList -> {
+                                    final List<DeviceCardUiModel> cardModelList =
+                                            this.buildDeviceCardModelList(deviceList);
+                                    mDeviceCardModels.postValue(cardModelList);
+                                    mAlreadyTakenDeviceNames.postValue(deviceList.stream()
+                                            .map(DeviceRepositoryModel::getName)
+                                            .collect(Collectors.toList()));
+                                    mSchedulesModels.postValue(
+                                            mSchedulesRepository.getAllSchedules().stream()
+                                                    .map(ScheduleUiModel::new)
+                                                    .collect(Collectors.toList()));
+                                })
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     private List<DeviceCardUiModel> buildDeviceCardModelList(

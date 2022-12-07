@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 
 public class SchedulesViewModel extends ViewModel {
@@ -27,10 +29,13 @@ public class SchedulesViewModel extends ViewModel {
     }
 
     public void setParentNetworkIdAndLoadSchedules(final String networkId) {
-        final List<ScheduleRepositoryModel> schedules =
-                mSchedulesRepository.getScheduleListByNetworkId(networkId);
-        mScheduleUiModels.setValue(schedules.stream()
-                .map(ScheduleUiModel::new)
-                .collect(Collectors.toList()));
+        Single.fromCallable(() -> mSchedulesRepository.getScheduleListByNetworkId(networkId))
+                .doOnSuccess(schedules ->
+                        mScheduleUiModels.postValue(schedules.stream()
+                                .map(ScheduleUiModel::new)
+                                .collect(Collectors.toList())))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }
