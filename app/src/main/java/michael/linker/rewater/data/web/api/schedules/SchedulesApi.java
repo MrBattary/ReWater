@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.web.api;
+package michael.linker.rewater.data.web.api.schedules;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -7,9 +7,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import michael.linker.rewater.data.web.api.model.request.CreateScheduleRequest;
-import michael.linker.rewater.data.web.api.model.request.UpdateScheduleRequest;
-import michael.linker.rewater.data.web.api.model.response.GetScheduleResponse;
+import michael.linker.rewater.data.web.api.schedules.request.CreateScheduleRequest;
+import michael.linker.rewater.data.web.api.schedules.request.UpdateScheduleRequest;
+import michael.linker.rewater.data.web.api.schedules.response.GetScheduleResponse;
 import michael.linker.rewater.data.web.gate.HttpGateProvider;
 import michael.linker.rewater.data.web.gate.HttpUrl;
 import michael.linker.rewater.data.web.gate.IHttpGate;

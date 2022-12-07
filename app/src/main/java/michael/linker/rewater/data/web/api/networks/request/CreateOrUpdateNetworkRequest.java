@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.web.api.model.request;
+package michael.linker.rewater.data.web.api.networks.request;
 
 public class CreateOrUpdateNetworkRequest {
     public final String name;

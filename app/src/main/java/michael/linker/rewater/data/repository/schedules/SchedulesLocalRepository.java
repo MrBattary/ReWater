@@ -6,26 +6,21 @@ import java.util.UUID;
 
 import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.local.stub.IDevicesData;
-import michael.linker.rewater.data.local.stub.INetworksData;
 import michael.linker.rewater.data.local.stub.ISchedulesData;
 import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
 import michael.linker.rewater.data.local.stub.model.FullDeviceModel;
-import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
 import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceWithoutParentsRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkIdNameRepositoryModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceWithoutParentsRepositoryModel;
 
 public class SchedulesLocalRepository implements ISchedulesRepository {
-    private final INetworksData mNetworksData;
     private final ISchedulesData mSchedulesData;
     private final IDevicesData mDevicesData;
     private final IOneToManyDataLink mScheduleToDevicesDataLink;
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
 
     public SchedulesLocalRepository() {
-        mNetworksData = StubDataConfiguration.getNetworksData();
         mSchedulesData = StubDataConfiguration.getSchedulesData();
         mDevicesData = StubDataConfiguration.getDevicesData();
         mScheduleToDevicesDataLink = StubDataConfiguration.getScheduleToDevicesDataLink();
@@ -33,25 +28,38 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
     }
 
     @Override
-    public List<ScheduleWithNetworkIdNameRepositoryModel> getScheduleWithNetworkList() {
-        final List<FullScheduleModel> scheduleModelList =
-                mSchedulesData.getScheduleList();
-        final List<ScheduleWithNetworkIdNameRepositoryModel> resultList = new ArrayList<>();
-        for (FullScheduleModel scheduleModel : scheduleModelList) {
+    public List<ScheduleRepositoryModel> getAllSchedules() {
+        final List<ScheduleRepositoryModel> modelList = new ArrayList<>();
+        final List<FullScheduleModel> dataModelList = mSchedulesData.getScheduleList();
+        for (FullScheduleModel scheduleModel : dataModelList) {
             final String parentNetworkId =
                     mNetworkToSchedulesDataLink.getLeftEntityIdByRightEntityId(
                             scheduleModel.getId());
-            final FullNetworkModel parentNetworkModel =
-                    mNetworksData.getNetworkById(parentNetworkId);
 
-            resultList.add(new ScheduleWithNetworkIdNameRepositoryModel(
+            final List<String> scheduleDeviceIdList =
+                    mScheduleToDevicesDataLink.getRightEntityIdListByLeftEntityId(
+                            scheduleModel.getId());
+            final List<DeviceWithoutParentsRepositoryModel> scheduleDeviceList = new ArrayList<>();
+            for (String deviceId : scheduleDeviceIdList) {
+                final FullDeviceModel deviceModel = mDevicesData.getDeviceById(deviceId);
+                scheduleDeviceList.add(
+                        new DeviceWithoutParentsRepositoryModel(
+                                deviceId,
+                                deviceModel.getName(),
+                                deviceModel.getStatus()
+                        )
+                );
+            }
+
+            modelList.add(new ScheduleRepositoryModel(
                     scheduleModel.getId(),
                     scheduleModel.getName(),
-                    parentNetworkModel.getId(),
-                    parentNetworkModel.getName()
-            ));
+                    parentNetworkId,
+                    scheduleModel.getPeriod(),
+                    scheduleModel.getVolume(),
+                    scheduleDeviceList));
         }
-        return resultList;
+        return modelList;
     }
 
     @Override
@@ -67,7 +75,8 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
                         mScheduleToDevicesDataLink.getRightEntityIdListByLeftEntityId(
                                 scheduleModel.getId());
 
-                final List<DeviceWithoutParentsRepositoryModel> scheduleDeviceList = new ArrayList<>();
+                final List<DeviceWithoutParentsRepositoryModel> scheduleDeviceList =
+                        new ArrayList<>();
                 for (String deviceId : scheduleDeviceIdList) {
                     final FullDeviceModel deviceModel = mDevicesData.getDeviceById(deviceId);
                     scheduleDeviceList.add(
@@ -82,6 +91,7 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
                 modelList.add(new ScheduleRepositoryModel(
                         scheduleModel.getId(),
                         scheduleModel.getName(),
+                        networkId,
                         scheduleModel.getPeriod(),
                         scheduleModel.getVolume(),
                         scheduleDeviceList
@@ -92,16 +102,18 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
     }
 
     @Override
-    public ScheduleRepositoryModel getScheduleById(final String id)
+    public ScheduleRepositoryModel getScheduleById(final String scheduleId)
             throws SchedulesRepositoryNotFoundException {
-        final FullScheduleModel scheduleModel = mSchedulesData.getScheduleById(id);
+        final FullScheduleModel scheduleModel = mSchedulesData.getScheduleById(scheduleId);
         if (scheduleModel == null) {
             throw new SchedulesRepositoryNotFoundException(
-                    "Requested schedule with id: " + id + " was not found!");
+                    "Requested schedule with id: " + scheduleId + " was not found!");
         }
         final List<String> scheduleDeviceIdList =
                 mScheduleToDevicesDataLink.getRightEntityIdListByLeftEntityId(
                         scheduleModel.getId());
+        final String parentNetworkId =
+                mNetworkToSchedulesDataLink.getLeftEntityIdByRightEntityId(scheduleId);
 
         final List<DeviceWithoutParentsRepositoryModel> scheduleDeviceList = new ArrayList<>();
         for (String deviceId : scheduleDeviceIdList) {
@@ -118,7 +130,7 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
         return new ScheduleRepositoryModel(
                 scheduleModel.getId(),
                 scheduleModel.getName(),
-                scheduleModel.getPeriod(),
+                parentNetworkId, scheduleModel.getPeriod(),
                 scheduleModel.getVolume(),
                 scheduleDeviceList
         );

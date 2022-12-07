@@ -1,9 +1,10 @@
-package michael.linker.rewater.data.web.api.model.request;
+package michael.linker.rewater.data.web.api.schedules.request;
 
 import java.util.List;
 
-import michael.linker.rewater.data.web.api.model.PeriodPart;
-import michael.linker.rewater.data.web.api.model.VolumePart;
+import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
+import michael.linker.rewater.data.web.api.part.PeriodPart;
+import michael.linker.rewater.data.web.api.part.VolumePart;
 
 public class UpdateScheduleRequest {
     private final String name;
@@ -15,12 +16,18 @@ public class UpdateScheduleRequest {
             String name,
             PeriodPart period,
             VolumePart volume,
-            List<String> deviceIds,
-            String networkId) {
+            List<String> deviceIds) {
         this.name = name;
         this.period = period;
         this.volume = volume;
         this.deviceIds = deviceIds;
+    }
+
+    public UpdateScheduleRequest(final CreateOrUpdateScheduleRepositoryModel model) {
+        name = model.getName();
+        period = new PeriodPart(model.getPeriod());
+        volume = new VolumePart(model.getVolume());
+        deviceIds = model.getDeviceModelIds();
     }
 
     public String getName() {

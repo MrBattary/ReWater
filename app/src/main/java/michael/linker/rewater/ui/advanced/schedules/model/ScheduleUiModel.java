@@ -9,7 +9,7 @@ import michael.linker.rewater.data.repository.schedules.model.ScheduleRepository
 import michael.linker.rewater.ui.advanced.devices.model.DeviceWithoutParentsUiModel;
 
 public class ScheduleUiModel {
-    private final String mId, mName;
+    private final String mId, mName, mParentNetworkId;
     private final WateringPeriodModel mPeriod;
     private final WaterVolumeMetricModel mVolume;
     private final List<DeviceWithoutParentsUiModel> mDeviceModels;
@@ -17,11 +17,13 @@ public class ScheduleUiModel {
     public ScheduleUiModel(
             final String id,
             final String name,
+            final String parentNetworkId,
             final WateringPeriodModel period,
             final WaterVolumeMetricModel volume,
             final List<DeviceWithoutParentsUiModel> deviceModels) {
         mId = id;
         mName = name;
+        mParentNetworkId = parentNetworkId;
         mPeriod = period;
         mVolume = volume;
         mDeviceModels = deviceModels;
@@ -30,6 +32,7 @@ public class ScheduleUiModel {
     public ScheduleUiModel(final ScheduleRepositoryModel repositoryModel) {
         mId = repositoryModel.getId();
         mName = repositoryModel.getName();
+        mParentNetworkId = repositoryModel.getParentNetworkId();
         mPeriod = repositoryModel.getPeriod();
         mVolume = repositoryModel.getVolume();
         mDeviceModels = repositoryModel.getDeviceModels().stream()
@@ -43,6 +46,10 @@ public class ScheduleUiModel {
 
     public String getName() {
         return mName;
+    }
+
+    public String getParentNetworkId() {
+        return mParentNetworkId;
     }
 
     public WateringPeriodModel getPeriod() {

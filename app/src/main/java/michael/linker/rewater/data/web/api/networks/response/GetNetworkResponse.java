@@ -1,18 +1,18 @@
-package michael.linker.rewater.data.web.api.model.response;
+package michael.linker.rewater.data.web.api.networks.response;
 
-import michael.linker.rewater.data.web.api.model.StatusResponsePart;
+import michael.linker.rewater.data.web.api.part.StatusPart;
 
 public class GetNetworkResponse {
     private final String id;
     private final String name;
     private final String description;
-    private final StatusResponsePart status;
+    private final StatusPart status;
 
     public GetNetworkResponse(
             String id,
             String name,
             String description,
-            StatusResponsePart status) {
+            StatusPart status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -31,7 +31,7 @@ public class GetNetworkResponse {
         return description;
     }
 
-    public StatusResponsePart getStatus() {
+    public StatusPart getStatus() {
         return status;
     }
 }

@@ -276,8 +276,8 @@ public class UpdateScheduleViewModel extends ViewModel {
                                 deviceModel.getName()))
                 .collect(Collectors.toList()));
         mAlreadyTakenSchedulesNames.setValue(
-                mSchedulesRepository.getScheduleWithNetworkList().stream()
-                        .map(model -> model.getScheduleIdNameModel().getName())
+                mSchedulesRepository.getAllSchedules().stream()
+                        .map(ScheduleRepositoryModel::getName)
                         .collect(Collectors.toList()));
     }
 }

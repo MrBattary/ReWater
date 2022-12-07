@@ -1,4 +1,6 @@
-package michael.linker.rewater.data.web.api.model;
+package michael.linker.rewater.data.web.api.part;
+
+import michael.linker.rewater.data.model.unit.WateringPeriodModel;
 
 public class PeriodPart {
     private final Integer days;
@@ -9,6 +11,12 @@ public class PeriodPart {
         this.days = days;
         this.hours = hours;
         this.minutes = minutes;
+    }
+
+    public PeriodPart(WateringPeriodModel periodModel) {
+        days = periodModel.getDays();
+        hours = periodModel.getHours();
+        minutes = periodModel.getMinutes();
     }
 
     public Integer getDays() {

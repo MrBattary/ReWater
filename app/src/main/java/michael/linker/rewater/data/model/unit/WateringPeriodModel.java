@@ -2,6 +2,7 @@ package michael.linker.rewater.data.model.unit;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.StringsProvider;
+import michael.linker.rewater.data.web.api.part.PeriodPart;
 
 public class WateringPeriodModel implements IUnit {
     private static final int MIN_WATERING_PERIOD_IN_MIN = 1;
@@ -15,6 +16,12 @@ public class WateringPeriodModel implements IUnit {
         mDays = days;
         mHours = hours;
         mMinutes = minutes;
+    }
+
+    public WateringPeriodModel(final PeriodPart periodPart) {
+        mDays = periodPart.getDays();
+        mHours = periodPart.getHours();
+        mMinutes = periodPart.getMinutes();
     }
 
     public Integer getDays() {

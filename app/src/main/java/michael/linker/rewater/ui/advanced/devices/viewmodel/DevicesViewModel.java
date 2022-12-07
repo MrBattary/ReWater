@@ -19,7 +19,6 @@ import michael.linker.rewater.data.repository.devices.model.UpdateDeviceReposito
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
 import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryNotFoundException;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkIdNameRepositoryModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceAfterPairingUiModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceCardUiModel;
 import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
@@ -31,8 +30,7 @@ public class DevicesViewModel extends ViewModel {
     private final INetworksRepository mNetworksRepository;
 
     private final MutableLiveData<List<DeviceCardUiModel>> mDeviceCardModels;
-    private final MutableLiveData<List<ScheduleWithNetworkIdNameRepositoryModel>>
-            mScheduleWithNetworkModels;
+    private final MutableLiveData<List<ScheduleUiModel>> mSchedulesModels;
     private final MutableLiveData<List<String>> mAlreadyTakenDeviceNames;
 
     private String mDeviceHardwareId;
@@ -48,7 +46,7 @@ public class DevicesViewModel extends ViewModel {
         mSchedulesRepository = RepositoryConfiguration.getSchedulesRepository();
 
         mDeviceCardModels = new MutableLiveData<>();
-        mScheduleWithNetworkModels = new MutableLiveData<>();
+        mSchedulesModels = new MutableLiveData<>();
         mAlreadyTakenDeviceNames = new MutableLiveData<>();
 
         mDeviceId = new MutableLiveData<>();
@@ -64,8 +62,8 @@ public class DevicesViewModel extends ViewModel {
         return mDeviceCardModels;
     }
 
-    public LiveData<List<ScheduleWithNetworkIdNameRepositoryModel>> getScheduleWithNetworkModels() {
-        return mScheduleWithNetworkModels;
+    public LiveData<List<ScheduleUiModel>> getSchedulesModels() {
+        return mSchedulesModels;
     }
 
     public MutableLiveData<List<String>> getAlreadyTakenDeviceNames() {
@@ -200,7 +198,10 @@ public class DevicesViewModel extends ViewModel {
         mAlreadyTakenDeviceNames.setValue(deviceList.stream()
                 .map(DeviceRepositoryModel::getName)
                 .collect(Collectors.toList()));
-        mScheduleWithNetworkModels.setValue(mSchedulesRepository.getScheduleWithNetworkList());
+        mSchedulesModels.setValue(
+                mSchedulesRepository.getAllSchedules().stream()
+                        .map(ScheduleUiModel::new)
+                        .collect(Collectors.toList()));
     }
 
     private List<DeviceCardUiModel> buildDeviceCardModelList(
