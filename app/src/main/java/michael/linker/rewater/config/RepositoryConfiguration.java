@@ -4,11 +4,10 @@ import michael.linker.rewater.data.repository.devices.DevicesLocalRepository;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.NetworksLocalRepository;
-import michael.linker.rewater.data.repository.networks.NetworksWebRepository;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
 import michael.linker.rewater.data.repository.schedules.SchedulesLocalRepository;
-import michael.linker.rewater.data.repository.user.UsersLocalRepository;
 import michael.linker.rewater.data.repository.user.IUsersRepository;
+import michael.linker.rewater.data.repository.user.UsersLocalRepository;
 
 public class RepositoryConfiguration {
     private static INetworksRepository sNetworksRepository;
@@ -19,7 +18,7 @@ public class RepositoryConfiguration {
     public static INetworksRepository getNetworksRepository() {
         if (sNetworksRepository == null) {
             sNetworksRepository = new NetworksLocalRepository();
-            sNetworksRepository = new NetworksWebRepository();
+            //sNetworksRepository = new NetworksWebRepository();
         }
         return sNetworksRepository;
     }
@@ -34,6 +33,7 @@ public class RepositoryConfiguration {
     public static ISchedulesRepository getSchedulesRepository() {
         if (sSchedulesRepository == null) {
             sSchedulesRepository = new SchedulesLocalRepository();
+            //sSchedulesRepository = new SchedulesWebRepository();
         }
         return sSchedulesRepository;
     }

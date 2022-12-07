@@ -135,13 +135,13 @@ public class NetworksLocalRepository implements INetworksRepository {
                 .stream()
                 .map(FullNetworkModel::getName)
                 .collect(Collectors.toList());
-        if (alreadyUsedNames.contains(model.getHeading())) {
+        if (alreadyUsedNames.contains(model.getName())) {
             throw new NetworksRepositoryAlreadyExistsException(
-                    "Network with heading: " + model.getHeading() + " already exists!");
+                    "Network with heading: " + model.getName() + " already exists!");
         }
         mNetworksData.addNetwork(
                 new FullNetworkModel(
-                        null, model.getHeading(), model.getDescription()
+                        null, model.getName(), model.getDescription()
                 ));
     }
 
@@ -156,7 +156,7 @@ public class NetworksLocalRepository implements INetworksRepository {
         mNetworksData.updateNetwork(id,
                 new FullNetworkModel(
                         dataNetworkModel.getId(),
-                        model.getHeading(),
+                        model.getName(),
                         model.getDescription()));
     }
 

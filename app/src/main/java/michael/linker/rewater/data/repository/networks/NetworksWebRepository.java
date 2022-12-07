@@ -8,13 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.data.web.api.networks.NetworksApi;
 import michael.linker.rewater.data.web.api.networks.request.CreateOrUpdateNetworkRequest;
-import michael.linker.rewater.data.web.api.networks.response.GetNetworkResponse;
 import michael.linker.rewater.data.web.gate.exceptions.group.ClientErrorException;
 import michael.linker.rewater.data.web.gate.exceptions.status.BadRequestHttpException;
 import michael.linker.rewater.data.web.gate.exceptions.status.NotFoundHttpException;
@@ -41,20 +39,9 @@ public class NetworksWebRepository implements INetworksRepository {
     @Override
     public void updateNetworkList() {
         try {
-            List<GetNetworkResponse> networkListResponse = mApi.getAllNetworks();
-            final List<NetworkRepositoryModel> modelList = new ArrayList<>();
-            for (GetNetworkResponse networkResponse : networkListResponse) {
-                modelList.add(new NetworkRepositoryModel(
-                        networkResponse.getId(),
-                        networkResponse.getName(),
-                        networkResponse.getDescription(),
-                        new DetailedStatusModel(
-                                Status.valueOf(networkResponse.getStatus().getWater()),
-                                Status.valueOf(networkResponse.getStatus().getBattery())
-                        )
-                ));
-            }
-            mInternalNetworkList = modelList;
+            mInternalNetworkList = mApi.getAllNetworks().stream()
+                    .map(NetworkRepositoryModel::new)
+                    .collect(Collectors.toList());
         } catch (ClientErrorException e) {
             mInternalNetworkList = new ArrayList<>();
         }
@@ -80,15 +67,7 @@ public class NetworksWebRepository implements INetworksRepository {
     public NetworkRepositoryModel getNetworkById(String id)
             throws NetworksRepositoryNotFoundException {
         try {
-            GetNetworkResponse response = mApi.getNetworkById(id);
-            return new NetworkRepositoryModel(
-                    response.getId(),
-                    response.getName(),
-                    response.getDescription(),
-                    new DetailedStatusModel(
-                            Status.valueOf(response.getStatus().getWater()),
-                            Status.valueOf(response.getStatus().getBattery())
-                    ));
+            return new NetworkRepositoryModel(mApi.getNetworkById(id));
         } catch (NotFoundHttpException e) {
             throw new NetworksRepositoryNotFoundException(
                     "Requested network with id: " + id + " was not found!");
@@ -99,14 +78,10 @@ public class NetworksWebRepository implements INetworksRepository {
     public void addNetwork(CreateOrUpdateNetworkRepositoryModel model)
             throws NetworksRepositoryAlreadyExistsException {
         try {
-            mApi.createNetwork(
-                    new CreateOrUpdateNetworkRequest(
-                            model.getHeading(),
-                            model.getDescription()
-                    ));
+            mApi.createNetwork(new CreateOrUpdateNetworkRequest(model));
         } catch (BadRequestHttpException e) {
             throw new NetworksRepositoryAlreadyExistsException(
-                    "Network with heading: " + model.getHeading() + " already exists!");
+                    "Network with heading: " + model.getName() + " already exists!");
         }
     }
 
@@ -114,12 +89,7 @@ public class NetworksWebRepository implements INetworksRepository {
     public void updateNetwork(String id, CreateOrUpdateNetworkRepositoryModel model)
             throws NetworksRepositoryNotFoundException {
         try {
-            mApi.updateNetwork(
-                    id,
-                    new CreateOrUpdateNetworkRequest(
-                            model.getHeading(),
-                            model.getDescription()
-                    ));
+            mApi.updateNetwork(id, new CreateOrUpdateNetworkRequest(model));
         } catch (NotFoundHttpException e) {
             throw new NetworksRepositoryNotFoundException(
                     "Requested network with id: " + id + " was not found and can't be updated!");
