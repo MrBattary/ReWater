@@ -17,6 +17,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class NetworksApi {
+    private static final HttpUrl.Group GROUP = HttpUrl.Group.NETWORKS;
     private final IHttpGate mHttpGate;
     private final Gson mGson;
 
@@ -26,7 +27,7 @@ public class NetworksApi {
     }
 
     public List<GetNetworkResponse> getAllNetworks() throws FailureHttpException {
-        Response response = mHttpGate.getWithSettings(HttpUrl.Group.NETWORKS.toString());
+        Response response = mHttpGate.getWithSettings(GROUP.toString());
         Type networksListType = new TypeToken<ArrayList<GetNetworkResponse>>() {
         }.getType();
         try (ResponseBody responseBody = response.body()) {
@@ -35,8 +36,7 @@ public class NetworksApi {
     }
 
     public GetNetworkResponse getNetworkById(final String networkId) throws FailureHttpException {
-        Response response = mHttpGate.getWithSettings(
-                HttpUrl.Group.NETWORKS.toString() + networkId);
+        Response response = mHttpGate.getWithSettings(GROUP.toString() + networkId);
         try (ResponseBody responseBody = response.body()) {
             return mGson.fromJson(responseBody.charStream(), GetNetworkResponse.class);
         }
@@ -44,17 +44,15 @@ public class NetworksApi {
 
     public void createNetwork(final CreateOrUpdateNetworkRequest request)
             throws FailureHttpException {
-        mHttpGate.postWithSettings(HttpUrl.Group.NETWORKS.toString(),
-                mGson.toJson(request)).close();
+        mHttpGate.postWithSettings(GROUP.toString(), mGson.toJson(request)).close();
     }
 
     public void updateNetwork(final String networkId, final CreateOrUpdateNetworkRequest request)
             throws FailureHttpException {
-        mHttpGate.putWithSettings(HttpUrl.Group.NETWORKS.toString() + networkId,
-                mGson.toJson(request)).close();
+        mHttpGate.putWithSettings(GROUP.toString() + networkId, mGson.toJson(request)).close();
     }
 
     public void deleteNetworkById(final String networkId) throws FailureHttpException {
-        mHttpGate.deleteWithSettings(HttpUrl.Group.NETWORKS.toString() + networkId).close();
+        mHttpGate.deleteWithSettings(GROUP.toString() + networkId).close();
     }
 }
