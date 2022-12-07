@@ -132,13 +132,13 @@ public class UpdateScheduleViewModel extends ViewModel {
                 .doOnSuccess(schedule -> {
                     mParentNetworkId = null;
                     mScheduleId = schedule.getId();
-                    mScheduleName.setValue(schedule.getName());
-                    mDays.setValue(schedule.getPeriod().getDays());
-                    mHours.setValue(schedule.getPeriod().getHours());
-                    mMinutes.setValue(schedule.getPeriod().getMinutes());
-                    mLitres.setValue(schedule.getVolume().getLitres());
-                    mMillilitres.setValue(schedule.getVolume().getMillilitres());
-                    mAttachedDeviceList.setValue(
+                    mScheduleName.postValue(schedule.getName());
+                    mDays.postValue(schedule.getPeriod().getDays());
+                    mHours.postValue(schedule.getPeriod().getHours());
+                    mMinutes.postValue(schedule.getPeriod().getMinutes());
+                    mLitres.postValue(schedule.getVolume().getLitres());
+                    mMillilitres.postValue(schedule.getVolume().getMillilitres());
+                    mAttachedDeviceList.postValue(
                             schedule.getDeviceModels().stream()
                                     .map(deviceModel ->
                                             new DeviceIdNameUiModel(
