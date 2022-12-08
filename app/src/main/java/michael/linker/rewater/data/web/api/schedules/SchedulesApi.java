@@ -40,7 +40,9 @@ public class SchedulesApi {
             throws FailureHttpException {
         Response response = mHttpGate.getWithSettings(
                 new HttpUrl.GroupBuilder(GROUP)
-                        .addQueryParameter(HttpUrl.Query.Param.NETWORK_ID, networkId)
+                        .addQueryParameter(
+                                HttpUrl.Query.Param.NETWORK_ID,
+                                new HttpUrl.Query.Value(networkId))
                         .buildUrl());
         Type scheduleListType = new TypeToken<ArrayList<GetScheduleResponse>>() {
         }.getType();

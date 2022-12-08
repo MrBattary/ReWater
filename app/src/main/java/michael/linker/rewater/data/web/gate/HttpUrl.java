@@ -98,7 +98,7 @@ public class HttpUrl {
             return new GroupBuilder(this.mCore + group.mGroup, mQuery);
         }
 
-        public CoreBuilder addQueryParameter(Query.Param key, Object value) {
+        public CoreBuilder addQueryParameter(Query.Param key, Query.Value value) {
             mQuery.addQueryParameter(key, value);
             return this;
         }
@@ -153,7 +153,7 @@ public class HttpUrl {
             return mGroup + mQuery.toString();
         }
 
-        public GroupBuilder addQueryParameter(Query.Param key, Object value) {
+        public GroupBuilder addQueryParameter(Query.Param key, Query.Value value) {
             mQuery.addQueryParameter(key, value);
             return this;
         }
@@ -167,8 +167,9 @@ public class HttpUrl {
             queryParams = new HashMap<>();
         }
 
-        public void addQueryParameter(Param key, Object value) {
+        public Query addQueryParameter(Param key, Value value) {
             queryParams.put(key.toString(), value.toString());
+            return this;
         }
 
         @NonNull
@@ -189,11 +190,23 @@ public class HttpUrl {
 
         public static class Param {
             public static final Param NETWORK_ID;
+            public static final Param DEVICE_ID;
+            public static final Param DEVICE_HARDCODED_ID;
+            public static final Param DEVICES_FULL_INFO;
+            public static final Param DEVICES_ATTACHABLE;
 
             private static final String NETWORK_ID_PARAM = "network_id";
+            private static final String DEVICE_ID_PARAM = "device_id";
+            private static final String DEVICE_HARDCODED_ID_PARAM = "hardcoded_id";
+            private static final String DEVICES_FULL_INFO_PARAM = "full_info";
+            private static final String DEVICES_ATTACHABLE_PARAM = "attachable";
 
             static {
                 NETWORK_ID = new Param(NETWORK_ID_PARAM);
+                DEVICE_ID = new Param(DEVICE_ID_PARAM);
+                DEVICE_HARDCODED_ID = new Param(DEVICE_HARDCODED_ID_PARAM);
+                DEVICES_FULL_INFO = new Param(DEVICES_FULL_INFO_PARAM);
+                DEVICES_ATTACHABLE = new Param(DEVICES_ATTACHABLE_PARAM);
             }
 
             private final String mParam;
@@ -206,6 +219,31 @@ public class HttpUrl {
             @Override
             public String toString() {
                 return mParam;
+            }
+        }
+
+        public static class Value {
+            public static final Value BOOL_TRUE;
+            public static final Value BOOL_FALSE;
+
+            private static final String BOOL_TRUE_VALUE = "true";
+            private static final String BOOL_FALSE_VALUE = "false";
+
+            static {
+                BOOL_TRUE = new Value(BOOL_TRUE_VALUE);
+                BOOL_FALSE = new Value(BOOL_FALSE_VALUE);
+            }
+
+            private final String mValue;
+
+            public Value(String value) {
+                mValue = value;
+            }
+
+            @NonNull
+            @Override
+            public String toString() {
+                return mValue;
             }
         }
     }
