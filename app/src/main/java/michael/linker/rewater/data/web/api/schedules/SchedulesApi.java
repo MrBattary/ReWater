@@ -36,11 +36,12 @@ public class SchedulesApi {
         }
     }
 
-    // TODO (ML): Wait for implementation
     public List<GetScheduleResponse> getSchedulesOfNetworkWithId(final String networkId)
             throws FailureHttpException {
         Response response = mHttpGate.getWithSettings(
-                GROUP.toString() + HttpUrl.Group.NETWORKS + networkId);
+                new HttpUrl.GroupBuilder(GROUP)
+                        .addQueryParameter(HttpUrl.Query.Param.NETWORK_ID, networkId)
+                        .buildUrl());
         Type scheduleListType = new TypeToken<ArrayList<GetScheduleResponse>>() {
         }.getType();
         try (ResponseBody responseBody = response.body()) {

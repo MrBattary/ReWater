@@ -51,7 +51,7 @@ public class HttpUrl {
         public static Core CORE;
 
         private static final String GOOGLE_URL = "google.com/";
-        public static final String ANDROID_CORE_URL = "10.0.2.2/";
+        public static final String ANDROID_LOCAL_URL = "10.0.2.2/";
         public static final String LOCAL_CORE_URL = "rewater.local/";
         public static final String API_URL = "api/";
 
@@ -73,38 +73,38 @@ public class HttpUrl {
     }
 
     public static class CoreBuilder extends Core {
-        private final QueryParams mQueryParams;
+        private final Query mQuery;
 
         public CoreBuilder(Core core) {
             super(core.mCore);
-            mQueryParams = new QueryParams();
+            mQuery = new Query();
         }
 
         public CoreBuilder(String core) {
             super(core);
-            mQueryParams = new QueryParams();
+            mQuery = new Query();
         }
 
-        public CoreBuilder(String core, QueryParams queryParams) {
+        public CoreBuilder(String core, Query query) {
             super(core);
-            mQueryParams = queryParams;
+            mQuery = query;
         }
 
         public CoreBuilder addCore(Core core) {
-            return new CoreBuilder(this.mCore + core.mCore, mQueryParams);
+            return new CoreBuilder(this.mCore + core.mCore, mQuery);
         }
 
         public GroupBuilder addGroup(Group group) {
-            return new GroupBuilder(this.mCore + group.mGroup, mQueryParams);
+            return new GroupBuilder(this.mCore + group.mGroup, mQuery);
         }
 
-        public CoreBuilder addQueryParameter(Object key, Object value) {
-            mQueryParams.addQueryParameter(key, value);
+        public CoreBuilder addQueryParameter(Query.Param key, Object value) {
+            mQuery.addQueryParameter(key, value);
             return this;
         }
 
         public String buildUrl() {
-            return mCore + mQueryParams.toString();
+            return mCore + mQuery.toString();
         }
     }
 
@@ -137,36 +137,37 @@ public class HttpUrl {
     }
 
     public static class GroupBuilder extends Group {
-        private final QueryParams mQueryParams;
+        private final Query mQuery;
 
         public GroupBuilder(Group group) {
             super(group.mGroup);
-            mQueryParams = new QueryParams();
+            mQuery = new Query();
         }
 
-        public GroupBuilder(String group, QueryParams queryParams) {
+        public GroupBuilder(String group, Query query) {
             super(group);
-            mQueryParams = queryParams;
+            mQuery = query;
         }
 
         public String buildUrl() {
-            return mGroup + mQueryParams.toString();
+            return mGroup + mQuery.toString();
         }
 
-        public GroupBuilder addQueryParameter(Object key, Object value) {
-            mQueryParams.addQueryParameter(key, value);
+        public GroupBuilder addQueryParameter(Query.Param key, Object value) {
+            mQuery.addQueryParameter(key, value);
             return this;
         }
     }
 
-    public static class QueryParams {
+    public static class Query {
+
         private final Map<String, String> queryParams;
 
-        public QueryParams() {
+        public Query() {
             queryParams = new HashMap<>();
         }
 
-        public void addQueryParameter(Object key, Object value) {
+        public void addQueryParameter(Param key, Object value) {
             queryParams.put(key.toString(), value.toString());
         }
 
@@ -184,6 +185,28 @@ public class HttpUrl {
             }
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
             return stringBuilder.toString();
+        }
+
+        public static class Param {
+            public static final Param NETWORK_ID;
+
+            private static final String NETWORK_ID_PARAM = "network_id";
+
+            static {
+                NETWORK_ID = new Param(NETWORK_ID_PARAM);
+            }
+
+            private final String mParam;
+
+            private Param(String param) {
+                mParam = param;
+            }
+
+            @NonNull
+            @Override
+            public String toString() {
+                return mParam;
+            }
         }
     }
 }
