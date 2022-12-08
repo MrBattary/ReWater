@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse, PlainTextResponse, Response
 
@@ -15,8 +17,10 @@ router = APIRouter(prefix="/api/schedules", responses=ERROR_RESPONSES)
     tags=["schedules"],
 )
 @_service_errors_handler
-def get_all_schedules():
-    schedules = services.mongo_driver.get_schedules()
+def get_all_schedules(network_id: Optional[str] = None):
+    schedules = services.mongo_driver.get_schedules(
+        {"networkId": network_id} if network_id else {}
+    )
     res = []
 
     for schedule in schedules:
@@ -39,6 +43,7 @@ def get_all_schedules():
         data = {
             "id": schedule.id,
             "name": schedule.name,
+            "networkId": schedule.networkId,
             "period": {
                 "days": schedule.days,
                 "hours": schedule.hours,

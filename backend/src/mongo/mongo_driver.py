@@ -1,6 +1,7 @@
 from bson import ObjectId
 
 from . import structures as struct
+from .addresses_driver import AddressDriver
 from .devices_driver import DeviceDriver
 from .networks_driver import NetworkDriver
 from .schedules_driver import ScheduleDriver
@@ -11,10 +12,11 @@ class MongoDriver:
         self._devdriver = DeviceDriver(host, port, db_name)
         self._netdriver = NetworkDriver(host, port, db_name)
         self._schdriver = ScheduleDriver(host, port, db_name)
+        self._addrdriver = AddressDriver(host, port, db_name)
 
     # DEVICES
-    def get_devices(self) -> list[struct.MongoDevice]:
-        return self._devdriver.get_devices()
+    def get_devices(self, filter: dict = {}) -> list[struct.MongoDevice]:
+        return self._devdriver.get_devices(filter)
 
     def get_device(self, device_id: str, hardcoded_id: bool) -> struct.MongoDevice:
         return self._devdriver.get_device(device_id, hardcoded_id)
@@ -95,8 +97,8 @@ class MongoDriver:
         self._netdriver.delete_doc({"_id": ObjectId(network_id)})
 
     # SCHEDULES
-    def get_schedules(self) -> list[struct.MongoSchedule]:
-        return self._schdriver.get_schedules()
+    def get_schedules(self, filter: dict = {}) -> list[struct.MongoSchedule]:
+        return self._schdriver.get_schedules(filter)
 
     def get_schedule(self, schedule_id: str) -> struct.MongoSchedule:
         return self._schdriver.get_schedule(schedule_id)

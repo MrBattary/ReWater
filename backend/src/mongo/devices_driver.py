@@ -13,8 +13,8 @@ class DeviceDriver(BaseDriver):
             coll_name="devices",
         )
 
-    def get_devices(self) -> list[MongoDevice]:
-        device_docs = self.get_docs()
+    def get_devices(self, filter: dict = {}) -> list[MongoDevice]:
+        device_docs = self.get_docs(filter)
         return list(map(MongoDevice.from_dict, device_docs))
 
     def get_device(self, device_id: str, hardcoded_id: bool) -> MongoDevice:

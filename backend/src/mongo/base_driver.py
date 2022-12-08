@@ -18,8 +18,8 @@ class BaseDriver:
         db = client[db_name]
         self._coll = db[coll_name]
 
-    def get_docs(self) -> list[dict]:
-        return self._coll.find({})
+    def get_docs(self, filter: dict = {}) -> list[dict]:
+        return self._coll.find(filter)
 
     def get_doc(self, filter) -> dict:
         return self._coll.find_one(filter)

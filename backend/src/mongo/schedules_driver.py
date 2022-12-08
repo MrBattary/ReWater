@@ -13,8 +13,8 @@ class ScheduleDriver(BaseDriver):
             coll_name="schedules",
         )
 
-    def get_schedules(self) -> list[MongoSchedule]:
-        schedule_docs = self.get_docs()
+    def get_schedules(self, filter: dict = {}) -> list[MongoSchedule]:
+        schedule_docs = self.get_docs(filter)
         return list(map(MongoSchedule.from_dict, schedule_docs))
 
     def get_schedule(self, schedule_id: str) -> MongoSchedule:

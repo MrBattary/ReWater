@@ -3,6 +3,20 @@ from dataclasses import asdict, dataclass, field
 
 
 @dataclass
+class MongoAddress:
+    IP: str
+    deviceHardcodedId: str
+
+    @classmethod
+    def from_dict(cls, raw_data: dict) -> "MongoAddress":
+        _ = str(raw_data.pop("_id", ""))
+        return cls(**raw_data)
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+
+@dataclass
 class MongoDevice:
     id: str
     deviceHardcodedId: str

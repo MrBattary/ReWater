@@ -21,6 +21,16 @@
                         },
                         "name": "full_info",
                         "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Attachable",
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "name": "attachable",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -558,12 +568,33 @@
                 ],
                 "summary": "Get All Schedules",
                 "operationId": "get_all_schedules_api_schedules_get",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Network Id",
+                            "type": "string"
+                        },
+                        "name": "network_id",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
                                 "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
                             }
                         }
                     },

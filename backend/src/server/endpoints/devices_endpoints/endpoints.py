@@ -16,34 +16,50 @@ router = APIRouter(prefix="/api/devices", responses=ERROR_RESPONSES)
     tags=["devices"],
 )
 @_service_errors_handler
-def get_all_devices(full_info: bool):
-    devices = services.mongo_driver.get_devices()
-    if not full_info:
-        return JSONResponse(
-            [{"id": device.id, "name": device.name} for device in devices]
-        )
+def get_all_devices(full_info: bool, attachable: bool = True):
+    devices = services.mongo_driver.get_devices(
+        {"parentScheduleId": None} if attachable else {}
+    )
 
     res = []
     for device in devices:
-        network = services.mongo_driver.get_network(device.parentNetworkId)
-        schedule = services.mongo_driver.get_schedule(device.parentScheduleId)
 
         device_info = {
             "id": device.id,
             "name": device.name,
-            "parentSchedule": {
-                "id": schedule.id,
-                "name": schedule.name,
-            },
-            "parentNetwork": {
-                "id": network.id,
-                "name": network.name,
-            },
-            "status": {
-                "water": device.water,
-                "battery": device.battery,
-            },
         }
+        if full_info:
+            device_info.update(
+                {
+                    "parentNetwork": {"id": "", "name": ""},
+                    "parentSchedule": {"id": "", "name": ""},
+                    "status": {
+                        "water": device.water,
+                        "battery": device.battery,
+                    },
+                }
+            )
+        if device.parentNetworkId:
+            network = services.mongo_driver.get_network(device.parentNetworkId)
+            device_info.update(
+                {
+                    "parentNetwork": {
+                        "id": network.id,
+                        "name": network.name,
+                    },
+                }
+            )
+        if device.parentScheduleId:
+            schedule = services.mongo_driver.get_schedule(device.parentScheduleId)
+            device_info.update(
+                {
+                    "parentSchedule": {
+                        "id": schedule.id,
+                        "name": schedule.name,
+                    }
+                }
+            )
+
         res.append(device_info)
 
     return JSONResponse(res)
@@ -58,25 +74,36 @@ def get_all_devices(full_info: bool):
 def get_device(device_id: str, hardcoded_id: bool):
     device = services.mongo_driver.get_device(device_id, hardcoded_id)
 
-    network = services.mongo_driver.get_network(device.parentNetworkId)
-    schedule = services.mongo_driver.get_schedule(device.parentScheduleId)
-
     device_info = {
         "id": device.id,
         "name": device.name,
-        "parentSchedule": {
-            "id": schedule.id,
-            "name": schedule.name,
-        },
-        "parentNetwork": {
-            "id": network.id,
-            "name": network.name,
-        },
+        "parentNetwork": {"id": "", "name": ""},
+        "parentSchedule": {"id": "", "name": ""},
         "status": {
             "water": device.water,
             "battery": device.battery,
         },
     }
+    if device.parentNetworkId:
+        network = services.mongo_driver.get_network(device.parentNetworkId)
+        device_info.update(
+            {
+                "parentNetwork": {
+                    "id": network.id,
+                    "name": network.name,
+                },
+            }
+        )
+    if device.parentScheduleId:
+        schedule = services.mongo_driver.get_schedule(device.parentScheduleId)
+        device_info.update(
+            {
+                "parentSchedule": {
+                    "id": schedule.id,
+                    "name": schedule.name,
+                }
+            }
+        )
 
     return models.DeviceInfoResponse(**device_info)
 
