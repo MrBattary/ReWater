@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
+import michael.linker.rewater.data.repository.devices.DevicesRepositoryFailedException;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
+import michael.linker.rewater.data.repository.devices.model.ManualWateringDeviceRepositoryModel;
 
 public class DeviceManualWateringViewModel extends ViewModel {
     private final IDevicesRepository mDevicesRepository;
@@ -61,12 +63,26 @@ public class DeviceManualWateringViewModel extends ViewModel {
         return new WaterVolumeMetricModel(litres, millilitres).isDataCorrect();
     }
 
-    public void waterWithProvidedModel()
+    public void wateringWithProvidedModel()
             throws DevicesViewModelFailedException {
-        // TODO: Send request for the watering with the provided id
+        try {
+            this.water(false);
+        } catch (DevicesRepositoryFailedException e) {
+            throw new DevicesViewModelFailedException(e.getMessage());
+        }
     }
 
-    public void forceWaterWithProvidedModel() {
-        // TODO: Send request for the force watering
+    public void forceWateringWithProvidedModel() {
+        this.water(true);
+    }
+
+    private void water(boolean isForceWatering) throws DevicesRepositoryFailedException {
+        mDevicesRepository.manualWatering(mDeviceId.getValue(),
+                new ManualWateringDeviceRepositoryModel(
+                        new WaterVolumeMetricModel(
+                                mLitresValue.getValue(),
+                                mMillilitresValue.getValue()
+                        ),
+                        isForceWatering));
     }
 }

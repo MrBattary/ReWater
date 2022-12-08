@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import michael.linker.rewater.data.repository.networks.NetworksRepositoryAlreadyExistsException;
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.data.web.api.schedules.SchedulesApi;
@@ -60,8 +59,8 @@ public class SchedulesWebRepository implements ISchedulesRepository {
         try {
             mApi.createSchedule(new CreateScheduleRequest(networkId, model));
         } catch (BadRequestHttpException e) {
-            throw new NetworksRepositoryAlreadyExistsException(
-                    "Network with name: " + model.getName() + " already exists!");
+            throw new SchedulesRepositoryAlreadyExistsException(
+                    "Schedule with name: " + model.getName() + " already exists!");
         }
     }
 
@@ -71,7 +70,7 @@ public class SchedulesWebRepository implements ISchedulesRepository {
         try {
             mApi.updateSchedule(scheduleId, new UpdateScheduleRequest(model));
         } catch (NotFoundHttpException e) {
-            throw new NetworksRepositoryAlreadyExistsException(
+            throw new SchedulesRepositoryNotFoundException(
                     "Requested schedule with id: " + scheduleId + " was not found!");
         }
     }

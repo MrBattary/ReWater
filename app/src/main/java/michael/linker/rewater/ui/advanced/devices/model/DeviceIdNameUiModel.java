@@ -1,6 +1,6 @@
 package michael.linker.rewater.ui.advanced.devices.model;
 
-import michael.linker.rewater.data.repository.devices.model.DeviceIdNameRepositoryModel;
+import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
 
 public class DeviceIdNameUiModel {
     private final String mId, mName;
@@ -12,7 +12,7 @@ public class DeviceIdNameUiModel {
         mName = name;
     }
 
-    public DeviceIdNameUiModel(final DeviceIdNameRepositoryModel repositoryModel) {
+    public DeviceIdNameUiModel(DeviceRepositoryModel repositoryModel) {
         mId = repositoryModel.getId();
         mName = repositoryModel.getName();
     }
