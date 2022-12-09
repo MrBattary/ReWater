@@ -38,13 +38,9 @@ public class NetworksWebRepository implements INetworksRepository {
 
     @Override
     public void updateNetworkList() {
-        try {
-            mInternalNetworkList = mApi.getAllNetworks().stream()
-                    .map(NetworkRepositoryModel::new)
-                    .collect(Collectors.toList());
-        } catch (ClientErrorException e) {
-            mInternalNetworkList = new ArrayList<>();
-        }
+        mInternalNetworkList = mApi.getAllNetworks().stream()
+                .map(NetworkRepositoryModel::new)
+                .collect(Collectors.toList());
 
         final Status networksWaterStatus = Status.getWorstStatus(
                 mInternalNetworkList.stream()
