@@ -23,6 +23,7 @@ public class TwoChoicesWarningDialog implements IDialog {
         mDialogBuilder.setMessage(dialogModel.getMessage());
         mDialogBuilder.setNegativeButton(dialogModel.getAcceptButtonText(), acceptListener);
         mDialogBuilder.setPositiveButton(dialogModel.getRejectButtonText(), rejectListener);
+        mDialogBuilder.setCancelable(false);
         mDialogBuilder.create();
     }
 

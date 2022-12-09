@@ -15,6 +15,7 @@ public interface IHttpGate {
      *
      * @param url url
      * @return response object, if response has code 200-299
+     * @throws HttpGateFailureException Internal error of the Gate, e.g. lost connection
      * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
@@ -24,7 +25,8 @@ public interface IHttpGate {
      * @throws ServerErrorHttpException 500
      */
     Response get(final String url) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
+            HttpGateFailureException, FailureHttpException,
+            ClientErrorException, ServerErrorException,
             BadRequestHttpException, ForbiddenHttpException,
             NotFoundHttpException, ServerErrorHttpException;
 
@@ -33,6 +35,7 @@ public interface IHttpGate {
      *
      * @param url url
      * @return response object, if response has code 200-299
+     * @throws HttpGateFailureException Internal error of the Gate, e.g. lost connection
      * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
@@ -42,7 +45,8 @@ public interface IHttpGate {
      * @throws ServerErrorHttpException 500
      */
     Response getWithSettings(final String url) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
+            HttpGateFailureException, FailureHttpException,
+            ClientErrorException, ServerErrorException,
             BadRequestHttpException, ForbiddenHttpException,
             NotFoundHttpException, ServerErrorHttpException;
 
@@ -52,6 +56,7 @@ public interface IHttpGate {
      * @param url  url
      * @param json Json object as String
      * @return response object, if response has code 200-299
+     * @throws HttpGateFailureException Internal error of the Gate, e.g. lost connection
      * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
@@ -61,7 +66,8 @@ public interface IHttpGate {
      * @throws ServerErrorHttpException 500
      */
     Response post(String url, String json) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
+            HttpGateFailureException, FailureHttpException,
+            ClientErrorException, ServerErrorException,
             BadRequestHttpException, ForbiddenHttpException,
             NotFoundHttpException, ServerErrorHttpException;
 
@@ -72,6 +78,7 @@ public interface IHttpGate {
      * @param url  url
      * @param json Json object as String
      * @return response object, if response has code 200-299
+     * @throws HttpGateFailureException Internal error of the Gate, e.g. lost connection
      * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
@@ -81,7 +88,8 @@ public interface IHttpGate {
      * @throws ServerErrorHttpException 500
      */
     Response postWithSettings(String url, String json) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
+            HttpGateFailureException, FailureHttpException,
+            ClientErrorException, ServerErrorException,
             BadRequestHttpException, ForbiddenHttpException,
             NotFoundHttpException, ServerErrorHttpException;
 
@@ -91,6 +99,7 @@ public interface IHttpGate {
      * @param url  url
      * @param json Json object as String
      * @return response object, if response has code 200-299
+     * @throws HttpGateFailureException Internal error of the Gate, e.g. lost connection
      * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
@@ -100,7 +109,8 @@ public interface IHttpGate {
      * @throws ServerErrorHttpException 500
      */
     Response put(String url, String json) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
+            HttpGateFailureException, FailureHttpException,
+            ClientErrorException, ServerErrorException,
             BadRequestHttpException, ForbiddenHttpException,
             NotFoundHttpException, ServerErrorHttpException;
 
@@ -111,6 +121,7 @@ public interface IHttpGate {
      * @param url  url
      * @param json Json object as String
      * @return response object, if response has code 200-299
+     * @throws HttpGateFailureException Internal error of the Gate, e.g. lost connection
      * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
@@ -120,7 +131,8 @@ public interface IHttpGate {
      * @throws ServerErrorHttpException 500
      */
     Response putWithSettings(String url, String json) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
+            HttpGateFailureException, FailureHttpException,
+            ClientErrorException, ServerErrorException,
             BadRequestHttpException, ForbiddenHttpException,
             NotFoundHttpException, ServerErrorHttpException;
 
@@ -129,6 +141,7 @@ public interface IHttpGate {
      *
      * @param url url
      * @return response object, if response has code 200-299
+     * @throws HttpGateFailureException Internal error of the Gate, e.g. lost connection
      * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
@@ -138,7 +151,8 @@ public interface IHttpGate {
      * @throws ServerErrorHttpException 500
      */
     Response delete(String url) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
+            HttpGateFailureException, FailureHttpException,
+            ClientErrorException, ServerErrorException,
             BadRequestHttpException, ForbiddenHttpException,
             NotFoundHttpException, ServerErrorHttpException;
 
@@ -147,6 +161,7 @@ public interface IHttpGate {
      *
      * @param url url
      * @return response object, if response has code 200-299
+     * @throws HttpGateFailureException Internal error of the Gate, e.g. lost connection
      * @throws FailureHttpException     Any error
      * @throws ClientErrorException     400-499 errors
      * @throws ServerErrorException     500-599 errors
@@ -156,7 +171,8 @@ public interface IHttpGate {
      * @throws ServerErrorHttpException 500
      */
     Response deleteWithSettings(String url) throws
-            FailureHttpException, ClientErrorException, ServerErrorException,
+            HttpGateFailureException, FailureHttpException,
+            ClientErrorException, ServerErrorException,
             BadRequestHttpException, ForbiddenHttpException,
             NotFoundHttpException, ServerErrorHttpException;
 

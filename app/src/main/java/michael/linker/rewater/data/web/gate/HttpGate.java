@@ -110,12 +110,12 @@ public class HttpGate implements IHttpGate {
         return mStatus;
     }
 
-    private Response makeRequest(Request request) throws FailureHttpException {
+    private Response makeRequest(Request request) throws HttpGateFailureException {
         try {
             return mOkHttpClient.newCall(request).execute();
         } catch (IOException e) {
             mStatus.notifyInternetNotAccessible();
-            throw new FailureHttpException();
+            throw new HttpGateFailureException();
         }
     }
 

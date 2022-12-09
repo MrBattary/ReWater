@@ -123,7 +123,7 @@ public class DeviceManualWateringFragment extends Fragment {
                     } catch (InputNotAllowedException ignored) {
                     }
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 
     private void initDialogs(final View view) {
@@ -134,7 +134,7 @@ public class DeviceManualWateringFragment extends Fragment {
                         StringsProvider.getString(R.string.dialog_insufficient_volume),
                         StringsProvider.getString(R.string.button_ok)
                 ),
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
 
         mForceWateringDialog = new TwoChoicesWarningDialog(requireContext(),
                 new TwoChoicesDialogModel(
@@ -148,7 +148,7 @@ public class DeviceManualWateringFragment extends Fragment {
                     mViewModel.forceWateringWithProvidedModel();
                     Navigation.findNavController(view).navigateUp();
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 
     private void initButtons(final View view) {

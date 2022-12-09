@@ -21,6 +21,7 @@ public class SingleChoiceInfoDialog implements IDialog {
         mDialogBuilder.setTitle(dialogModel.getTitle());
         mDialogBuilder.setMessage(dialogModel.getMessage());
         mDialogBuilder.setPositiveButton(dialogModel.getAcceptButtonText(), acceptListener);
+        mDialogBuilder.setCancelable(false);
         mDialogBuilder.create();
     }
 

@@ -177,7 +177,7 @@ public class EditScheduleFragment extends Fragment {
                                 R.string.dialog_insufficient_volume_or_period),
                         StringsProvider.getString(R.string.button_ok)
                 ),
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
 
         mNoAttachedDevicesDialog = new TwoChoicesWarningDialog(requireContext(),
                 new TwoChoicesDialogModel(
@@ -195,7 +195,7 @@ public class EditScheduleFragment extends Fragment {
                         ToastProvider.showShort(requireContext(), e.getMessage());
                     }
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
 
         mOnDeleteDialog = new TwoChoicesWarningDialog(requireContext(),
                 new TwoChoicesDialogModel(
@@ -209,7 +209,7 @@ public class EditScheduleFragment extends Fragment {
                     mViewModel.commitAndDeleteSchedule();
                     navController.navigateUp();
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 
     private void initButtons(final View view) {

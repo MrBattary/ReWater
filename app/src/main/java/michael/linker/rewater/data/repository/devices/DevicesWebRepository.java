@@ -1,6 +1,5 @@
 package michael.linker.rewater.data.repository.devices;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +13,6 @@ import michael.linker.rewater.data.web.api.devices.DevicesApi;
 import michael.linker.rewater.data.web.api.devices.request.CreateDeviceRequest;
 import michael.linker.rewater.data.web.api.devices.request.ManualWateringDeviceRequest;
 import michael.linker.rewater.data.web.api.devices.request.UpdateDeviceRequest;
-import michael.linker.rewater.data.web.gate.exceptions.group.ClientErrorException;
 import michael.linker.rewater.data.web.gate.exceptions.status.BadRequestHttpException;
 import michael.linker.rewater.data.web.gate.exceptions.status.NotFoundHttpException;
 
@@ -27,24 +25,16 @@ public class DevicesWebRepository implements IDevicesRepository {
 
     @Override
     public List<DeviceRepositoryModel> getDeviceList() {
-        try {
-            return mApi.getAllDevices().stream()
-                    .map(DeviceRepositoryModel::new)
-                    .collect(Collectors.toList());
-        } catch (ClientErrorException e) {
-            return new ArrayList<>();
-        }
+        return mApi.getAllDevices().stream()
+                .map(DeviceRepositoryModel::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<DeviceRepositoryModel> getDeviceAttachList() {
-        try {
-            return mApi.getAttachableDevices().stream()
-                    .map(DeviceRepositoryModel::new)
-                    .collect(Collectors.toList());
-        } catch (ClientErrorException e) {
-            return new ArrayList<>();
-        }
+        return mApi.getAttachableDevices().stream()
+                .map(DeviceRepositoryModel::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -71,10 +61,7 @@ public class DevicesWebRepository implements IDevicesRepository {
 
     @Override
     public void removeDevice(String deviceId) {
-        try {
             mApi.deleteDevice(deviceId);
-        } catch (ClientErrorException ignored) {
-        }
     }
 
     @Override
@@ -93,7 +80,7 @@ public class DevicesWebRepository implements IDevicesRepository {
             throws DevicesRepositoryAlreadyExistsException {
         try {
             mApi.createDevice(new CreateDeviceRequest(model));
-        } catch (NotFoundHttpException e) {
+        } catch (BadRequestHttpException e) {
             throw new DevicesRepositoryAlreadyExistsException(
                     "Device with name: " + model.getName() + " already exists!");
         }

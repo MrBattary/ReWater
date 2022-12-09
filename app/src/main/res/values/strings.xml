@@ -126,6 +126,7 @@
     <!-- Titles. -->
     <string name="title_warning">Warning</string>
     <string name="title_attention">Attention</string>
+    <string name="title_error">Error</string>
     <string name="title_loading">Loading</string>
     <string name="title_exit">Exit</string>
 
@@ -145,6 +146,8 @@
     <string name="dialog_exit">Are you sure you want to exit the app?</string>
     <string name="dialog_bluetooth_turn_on_to_pair">During the pairing of the new device, Bluetooth is required to be turned on, after pairing it can be turned off. Turn on Bluetooth?</string>
     <string name="dialog_bluetooth_connecting_in_progress">We are establishing a connection with the device, please wait, it won\'t take much time.</string>
+    <string name="dialog_internet_connection_lost">The internet connection is lost. The application cannot work without the Internet. Please turn on the Internet.</string>
+    <string name="dialog_server_connection_lost">The connection to the server is lost. The application cannot work without a connection to the server.</string>
 
 
     <!-- Buttons. -->
@@ -177,6 +180,7 @@
     <string name="button_exit">Exit</string>
     <string name="button_retry">Retry</string>
     <string name="button_restore_password">Forgot password?</string>
+    <string name="button_reconnect">Reconnect</string>
 
     <!-- Descriptions. -->
     <string name="description_back_button">Back to the previous screen</string>

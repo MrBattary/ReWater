@@ -11,9 +11,15 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.StringsProvider;
+import michael.linker.rewater.data.web.api.CommonApi;
+import michael.linker.rewater.data.web.gate.HttpGateProvider;
+import michael.linker.rewater.data.web.gate.IHttpGate;
 import michael.linker.rewater.databinding.ActivityMainBinding;
 import michael.linker.rewater.ui.advanced.navigation.view.HomeNavigationView;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
@@ -22,15 +28,24 @@ import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private NavController mNavController;
-    private TwoChoicesWarningDialog mExitDialog;
+
+    private IHttpGate mHttpGate;
+    private CommonApi mApi;
+
+    private TwoChoicesWarningDialog mExitDialog, mInternetLostDialog, mServerLostDialog;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        mHttpGate = HttpGateProvider.getHttpGate();
+        mApi = new CommonApi();
+
         this.initNavigation();
-        this.initExitDialog();
+        this.initDialogs();
+        this.observeStatus();
         new HomeNavigationView(this, binding);
     }
 
@@ -82,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         return ((NavHostFragment) fragment).getNavController();
     }
 
-    private void initExitDialog() {
+    private void initDialogs() {
         mExitDialog = new TwoChoicesWarningDialog(this,
                 new TwoChoicesDialogModel(
                         DrawablesProvider.getDrawable(R.drawable.ic_info),
@@ -92,7 +107,60 @@ public class MainActivity extends AppCompatActivity {
                         StringsProvider.getString(R.string.button_cancel)
                 ),
                 (dialogInterface, i) -> ActivityGate.finishApplication(this),
-                (dialogInterface, i) -> dialogInterface.cancel()
+                (dialogInterface, i) -> dialogInterface.dismiss()
         );
+        mInternetLostDialog = new TwoChoicesWarningDialog(this,
+                new TwoChoicesDialogModel(
+                        DrawablesProvider.getDrawable(R.drawable.ic_warning),
+                        StringsProvider.getString(R.string.title_error),
+                        StringsProvider.getString(R.string.dialog_internet_connection_lost),
+                        StringsProvider.getString(R.string.button_reconnect),
+                        StringsProvider.getString(R.string.button_exit)
+                ),
+                (dialogInterface, i) -> Single.fromCallable(() -> {
+                            mApi.pingInternet();
+                            return true;
+                        })
+                        .doOnSuccess(b -> dialogInterface.dismiss())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(b -> {
+                        }, e -> {
+                        }),
+                (dialogInterface, i) -> ActivityGate.finishApplication(this)
+        );
+        mServerLostDialog = new TwoChoicesWarningDialog(this,
+                new TwoChoicesDialogModel(
+                        DrawablesProvider.getDrawable(R.drawable.ic_warning),
+                        StringsProvider.getString(R.string.title_error),
+                        StringsProvider.getString(R.string.dialog_server_connection_lost),
+                        StringsProvider.getString(R.string.button_reconnect),
+                        StringsProvider.getString(R.string.button_exit)
+                ),
+                (dialogInterface, i) -> Single.fromCallable(() -> {
+                            mApi.pingServer();
+                            return true;
+                        })
+                        .doOnSuccess(b -> dialogInterface.dismiss())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(b -> {
+                        }, e -> {
+                        }),
+                (dialogInterface, i) -> ActivityGate.finishApplication(this)
+        );
+    }
+
+    private void observeStatus() {
+        mHttpGate.getStatusObserver().isInternetAccessible().observe(this, isConnected -> {
+            if (!isConnected) {
+                mInternetLostDialog.show();
+            }
+        });
+        mHttpGate.getStatusObserver().isServerAccessible().observe(this, isConnected -> {
+            if (!isConnected) {
+                mServerLostDialog.show();
+            }
+        });
     }
 }

@@ -21,6 +21,7 @@ public class NoneChoiceInfoDialog implements IDialog {
         mDialogBuilder.setIcon(dialogModel.getIconDrawable());
         mDialogBuilder.setTitle(dialogModel.getTitle());
         mDialogBuilder.setMessage(dialogModel.getMessage());
+        mDialogBuilder.setCancelable(false);
         mAlertDialog = mDialogBuilder.create();
     }
 

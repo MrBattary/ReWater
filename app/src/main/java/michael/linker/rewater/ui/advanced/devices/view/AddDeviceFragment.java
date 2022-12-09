@@ -167,7 +167,7 @@ public class AddDeviceFragment extends Fragment {
                     } catch (InputNotAllowedException ignored) {
                     }
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 
     private void initButtons(final View view, final ScheduleUiModel scheduleModel) {
