@@ -54,12 +54,12 @@ public class NetworksViewModel extends ViewModel {
                     mEditableNetworkModel.postValue(new NetworkUiModel(model));
                     mEditableNetworkId.postValue(id);
                 })
-                .doOnError(e -> {
-                    throw new NetworksViewModelFailedException(e.getMessage());
-                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(m -> {
+                }, e -> {
+                    throw new NetworksViewModelFailedException(e.getMessage());
+                });
     }
 
     public void updateNetwork(final String id, final CreateOrUpdateNetworkRepositoryModel model)
@@ -69,12 +69,12 @@ public class NetworksViewModel extends ViewModel {
                     return true;
                 })
                 .doOnSuccess(b -> this.updateListsFromRepositories())
-                .doOnError(e -> {
-                    throw new NetworksViewModelFailedException(e.getMessage());
-                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(m -> {
+                }, e -> {
+                    throw new NetworksViewModelFailedException(e.getMessage());
+                });
     }
 
     public void removeNetwork(final String id) {
@@ -94,12 +94,12 @@ public class NetworksViewModel extends ViewModel {
                     return true;
                 })
                 .doOnSuccess(b -> this.updateListsFromRepositories())
-                .doOnError(e -> {
-                    throw new NetworksViewModelFailedException(e.getMessage());
-                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(m -> {
+                }, e -> {
+                    throw new NetworksViewModelFailedException(e.getMessage());
+                });
     }
 
     public void updateListsFromRepositories() {

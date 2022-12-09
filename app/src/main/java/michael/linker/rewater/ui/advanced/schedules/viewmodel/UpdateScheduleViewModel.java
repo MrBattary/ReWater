@@ -147,12 +147,13 @@ public class UpdateScheduleViewModel extends ViewModel {
                                     .collect(Collectors.toList())
                     );
                     this.updateListsFromRepositories();
-                }).doOnError(e -> {
-                    throw new SchedulesViewModelFailedException(e);
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(m -> {
+                }, e -> {
+                    throw new SchedulesViewModelFailedException(e);
+                });
     }
 
     public void attachMultipleDevicesToSchedule(final List<String> deviceIdList) {
@@ -236,12 +237,12 @@ public class UpdateScheduleViewModel extends ViewModel {
                     return true;
                 })
                 .doOnSuccess(b -> this.updateListsFromRepositories())
-                .doOnError(e -> {
-                    throw new SchedulesViewModelFailedException(e);
-                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(m -> {
+                }, e -> {
+                    throw new SchedulesViewModelFailedException(e);
+                });
     }
 
     public void commitAndUpdateSchedule() throws SchedulesViewModelFailedException {
@@ -252,12 +253,12 @@ public class UpdateScheduleViewModel extends ViewModel {
                     return true;
                 })
                 .doOnSuccess(b -> this.updateListsFromRepositories())
-                .doOnError(e -> {
-                    throw new SchedulesViewModelFailedException(e);
-                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(m -> {
+                }, e -> {
+                    throw new SchedulesViewModelFailedException(e);
+                });
     }
 
     public void commitAndDeleteSchedule() {

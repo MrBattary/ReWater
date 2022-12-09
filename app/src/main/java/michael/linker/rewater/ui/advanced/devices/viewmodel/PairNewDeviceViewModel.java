@@ -115,11 +115,10 @@ public class PairNewDeviceViewModel extends ViewModel {
 
                     mAccessKeyAccepted.postValue(new DeviceUiRequest(UiRequestStatus.OK));
                 })
-                .doOnError(e -> mAccessKeyAccepted.postValue(
-                        new DeviceUiRequest(UiRequestStatus.ERROR)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(repositoryModel -> {
+                }, e -> mAccessKeyAccepted.postValue(new DeviceUiRequest(UiRequestStatus.ERROR)));
     }
 
     public void setNetworkDataUpdated() {

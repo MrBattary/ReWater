@@ -114,12 +114,13 @@ public class DevicesViewModel extends ViewModel {
                                 mParentNetworkModel.postValue(null);
                             }
                         }
-                ).doOnError(e -> {
-                    throw new DevicesViewModelFailedException(e.getMessage());
-                })
+                )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(m -> {
+                }, e -> {
+                    throw new DevicesViewModelFailedException(e.getMessage());
+                });
     }
 
     public void setDeviceDuringPairing(final DeviceAfterPairingUiModel model) {
@@ -162,12 +163,12 @@ public class DevicesViewModel extends ViewModel {
                     return true;
                 })
                 .doOnSuccess(b -> this.updateListsFromRepositories())
-                .doOnError(e -> {
-                    throw new DevicesViewModelFailedException(e.getMessage());
-                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(m -> {
+                }, e -> {
+                    throw new DevicesViewModelFailedException(e.getMessage());
+                });
     }
 
     public void commitAndCreateNewDevice()
@@ -184,12 +185,12 @@ public class DevicesViewModel extends ViewModel {
                     return true;
                 })
                 .doOnSuccess(b -> this.updateListsFromRepositories())
-                .doOnError(e -> {
-                    throw new DevicesViewModelFailedException(e.getMessage());
-                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(m -> {
+                }, e -> {
+                    throw new DevicesViewModelFailedException(e.getMessage());
+                });
     }
 
     public void detachParents() {

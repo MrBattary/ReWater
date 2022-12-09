@@ -80,7 +80,7 @@ public class HttpGate implements IHttpGate {
     public Response delete(final String url) throws FailureHttpException {
         Request request = new Request.Builder()
                 .delete()
-                .url(mSettings.getConstructedUrl() + url)
+                .url(url)
                 .build();
         Response response = makeRequest(request);
         validateResponse(response);

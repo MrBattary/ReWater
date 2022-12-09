@@ -62,7 +62,7 @@ public class DevicesWebRepository implements IDevicesRepository {
     public DeviceRepositoryModel getDeviceByHardware(String hardwareId)
             throws DevicesRepositoryNotFoundException {
         try {
-            return new DeviceRepositoryModel(mApi.getDeviceById(hardwareId));
+            return new DeviceRepositoryModel(mApi.getDeviceByHardwareId(hardwareId));
         } catch (NotFoundHttpException e) {
             throw new DevicesRepositoryNotFoundException(
                     "Requested device with hardware id: " + hardwareId + " was not found!");

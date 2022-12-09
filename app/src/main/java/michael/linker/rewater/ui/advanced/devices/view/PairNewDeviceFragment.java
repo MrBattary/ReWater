@@ -220,15 +220,15 @@ public class PairNewDeviceFragment extends Fragment {
             if (look == AddPairNewDeviceLook.BLUETOOTH) {
                 Navigation.findNavController(view).navigateUp();
             } else {
-                // TODO (ML): STUB DEVICE DISCONNECT START
-                if (look == AddPairNewDeviceLook.NETWORK) {
+                /*// TODO (ML): STUB DEVICE DISCONNECT START
+                if (look == AddPairNewDeviceLook.NETWORK || look == AddPairNewDeviceLook.ACCESS) {
                     mBluetoothViewModel.setConnectableBluetoothDevice(null);
                     mBluetoothViewModel.setBluetoothDeviceData(null);
                 }
-                // TODO (ML): STUB DEVICE DISCONNECT END
-                /*if (look == AddPairNewDeviceLook.NETWORK) {
+                // TODO (ML): STUB DEVICE DISCONNECT END*/
+                if (look == AddPairNewDeviceLook.NETWORK || look == AddPairNewDeviceLook.ACCESS) {
                     mBluetoothViewModel.disconnectFromDevice();
-                }*/
+                }
                 mViewModel.previousLook();
             }
         });
@@ -352,6 +352,7 @@ public class PairNewDeviceFragment extends Fragment {
                             bluetoothDevice.getName(),
                             bluetoothDevice.getAddress()));
             mViewModel.setConnectedToDevice();
+            mDeviceConnectionDialog.dismiss();
         }
         // TODO (ML): STUB DEVICE CONNECT END
         /*if (bluetoothDevice != null && !mBluetoothViewModel.isConnectedToDevice()) {
@@ -389,13 +390,19 @@ public class PairNewDeviceFragment extends Fragment {
 
         @Override
         public void onMessage(byte[] message) {
-            try {
-                BluetoothDeviceKeyResponseApiModel response = mBluetoothViewModel.getKeyResponse(
-                        message);
-                if (response.isSuccess()) {
-                    mViewModel.sendProvidedDeviceHardwareId(response.getHardwareId());
+
+            if (mViewModel.getCurrentLook().getValue() == AddPairNewDeviceLook.ACCESS) {
+                try {
+                    BluetoothDeviceKeyResponseApiModel response =
+                            mBluetoothViewModel.getKeyResponse(message);
+
+                    if (response.isSuccess()) {
+                        mViewModel.sendProvidedDeviceHardwareId(response.getHardwareId());
+                    }
+                } catch (PairNewDeviceViewModelNotFoundException ignored) {
                 }
-            } catch (PairNewDeviceViewModelNotFoundException e) {
+            }
+            if (mViewModel.getCurrentLook().getValue() == AddPairNewDeviceLook.NETWORK) {
                 try {
                     BluetoothDeviceNetworkResponseApiModel response =
                             mBluetoothViewModel.getNetworkSettingsResponse(message);
