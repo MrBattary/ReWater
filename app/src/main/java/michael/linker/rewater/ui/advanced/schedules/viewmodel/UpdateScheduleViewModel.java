@@ -290,14 +290,27 @@ public class UpdateScheduleViewModel extends ViewModel {
                 })
                 .doOnSuccess(
                         b -> {
-                            mUnattachedDeviceList.postValue(
-                                    mDevicesRepository.getDeviceAttachList().stream()
-                                            .map(DeviceIdNameUiModel::new)
-                                            .collect(Collectors.toList()));
-                            mAlreadyTakenSchedulesNames.postValue(
-                                    mSchedulesRepository.getAllSchedules().stream()
-                                            .map(ScheduleRepositoryModel::getName)
-                                            .collect(Collectors.toList()));
+                            Single.fromCallable(mDevicesRepository::getDeviceAttachList)
+                                    .doOnSuccess(deviceRepositoryModels ->
+                                            mUnattachedDeviceList.postValue(
+                                                    deviceRepositoryModels.stream()
+                                                            .map(DeviceIdNameUiModel::new)
+                                                            .collect(Collectors.toList())))
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe();
+
+                            Single.fromCallable(mSchedulesRepository::getAllSchedules)
+                                    .doOnSuccess(scheduleRepositoryModels ->
+                                            mAlreadyTakenSchedulesNames.postValue(
+                                                    scheduleRepositoryModels.stream()
+                                                            .map(ScheduleRepositoryModel::getName)
+                                                            .collect(Collectors.toList())
+                                            )
+                                    )
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe();
                         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

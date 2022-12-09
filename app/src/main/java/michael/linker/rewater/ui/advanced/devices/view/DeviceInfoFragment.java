@@ -18,10 +18,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
+import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
-import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
 import michael.linker.rewater.ui.elementary.parententity.ParentScheduleInfoView;
@@ -59,7 +59,7 @@ public class DeviceInfoFragment extends Fragment {
         mViewModel.getDeviceStatus().observe(getViewLifecycleOwner(), this::initDeviceStatus);
         mViewModel.getParentScheduleModel().observe(getViewLifecycleOwner(),
                 this::initParentScheduleData);
-        mViewModel.getParentNetworkModel().observe(getViewLifecycleOwner(),
+        mViewModel.getParentNetworkIdNameModel().observe(getViewLifecycleOwner(),
                 this::initParentNetworkData);
 
         this.initButtons(view);
@@ -94,7 +94,7 @@ public class DeviceInfoFragment extends Fragment {
         }
     }
 
-    private void initParentNetworkData(final NetworkUiModel networkModel) {
+    private void initParentNetworkData(final IdNameModel networkModel) {
         if (networkModel != null) {
             mParentNetworkView.setParentEntity(networkModel.getName());
         } else {

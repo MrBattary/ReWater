@@ -14,17 +14,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
-import michael.linker.rewater.data.repository.devices.DevicesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.devices.model.CreateDeviceRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceRepositoryModel;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
-import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryNotFoundException;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceAfterPairingUiModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceCardUiModel;
-import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 
 public class DevicesViewModel extends ViewModel {
@@ -41,7 +38,7 @@ public class DevicesViewModel extends ViewModel {
     private final MutableLiveData<String> mDeviceName;
     private final MutableLiveData<DetailedStatusModel> mDeviceStatus;
     private final MutableLiveData<ScheduleUiModel> mParentScheduleModel;
-    private final MutableLiveData<NetworkUiModel> mParentNetworkModel;
+    private final MutableLiveData<IdNameModel> mParentNetworkModel;
 
     public DevicesViewModel() {
         mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
@@ -93,34 +90,36 @@ public class DevicesViewModel extends ViewModel {
         return mParentScheduleModel;
     }
 
-    public LiveData<NetworkUiModel> getParentNetworkModel() {
+    public LiveData<IdNameModel> getParentNetworkIdNameModel() {
         return mParentNetworkModel;
     }
 
     public void setDeviceId(final String deviceId)
-            throws DevicesRepositoryNotFoundException {
-        try {
-            final DeviceRepositoryModel model = mDevicesRepository.getDeviceById(deviceId);
-            mDeviceId.setValue(deviceId);
-            mDeviceName.setValue(model.getName());
-            mDeviceStatus.setValue(model.getStatus());
+            throws DevicesViewModelFailedException {
+        Single.fromCallable(() -> mDevicesRepository.getDeviceById(deviceId))
+                .doOnSuccess(device ->
+                        {
+                            mDeviceId.postValue(deviceId);
+                            mDeviceName.postValue(device.getName());
+                            mDeviceStatus.postValue(device.getStatus());
 
-            if (model.getParentSchedule() != null && model.getParentSchedule().getId() != null) {
-                try {
-                    mParentScheduleModel.setValue(new ScheduleUiModel(
-                            mSchedulesRepository.getScheduleById(
-                                    model.getParentSchedule().getId())));
-                    mParentNetworkModel.setValue(new NetworkUiModel(
-                            mNetworksRepository.getNetworkById(model.getParentNetwork().getId())));
+                            if (device.getParentSchedule() != null &&
+                                    device.getParentSchedule().getId() != null) {
 
-                } catch (SchedulesRepositoryNotFoundException ignored) {
-                    mParentScheduleModel.setValue(null);
-                    mParentNetworkModel.setValue(null);
-                }
-            }
-        } catch (DevicesRepositoryNotFoundException | SchedulesRepositoryNotFoundException e) {
-            throw new DevicesViewModelFailedException(e.getMessage());
-        }
+                                this.requestParentScheduleFromRepositoryById(
+                                        device.getParentSchedule().getId());
+                                mParentNetworkModel.postValue(device.getParentNetwork());
+                            } else {
+                                mParentScheduleModel.postValue(null);
+                                mParentNetworkModel.postValue(null);
+                            }
+                        }
+                ).doOnError(e -> {
+                    throw new DevicesViewModelFailedException(e.getMessage());
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void setDeviceDuringPairing(final DeviceAfterPairingUiModel model) {
@@ -133,49 +132,64 @@ public class DevicesViewModel extends ViewModel {
         mParentNetworkModel.setValue(null);
     }
 
-    public void attachParentsByScheduleId(final String scheduleId, final String parentNetworkId)
+    public void attachParentsByScheduleId(
+            final String parentScheduleId, final String parentNetworkId)
             throws DevicesViewModelFailedException {
-        try {
-            mParentScheduleModel.setValue(new ScheduleUiModel(
-                    mSchedulesRepository.getScheduleById(scheduleId)));
-            mParentNetworkModel.setValue(new NetworkUiModel(
-                    mNetworksRepository.getNetworkById(parentNetworkId)));
-        } catch (DevicesRepositoryNotFoundException | SchedulesRepositoryNotFoundException e) {
-            throw new DevicesViewModelFailedException(e.getMessage());
-        }
+        this.requestParentScheduleFromRepositoryById(parentScheduleId);
+        Single.fromCallable(() -> mNetworksRepository.getNetworkById(parentNetworkId))
+                .doOnSuccess(parentNetwork ->
+                        mParentNetworkModel.postValue(
+                                new IdNameModel(
+                                        parentNetwork.getId(),
+                                        parentNetwork.getName()
+                                )
+                        )
+                )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
-    public void commitAndUpdateDevice()
-            throws DevicesViewModelFailedException {
-        try {
-            mDevicesRepository.updateDevice(mDeviceId.getValue(),
-                    new UpdateDeviceRepositoryModel(
-                            mDeviceName.getValue(),
-                            mParentScheduleModel.getValue() != null ?
-                                    mParentScheduleModel.getValue().getId() : null
-                    )
-            );
-            this.updateListsFromRepositories();
-        } catch (DevicesRepositoryNotFoundException e) {
-            throw new DevicesViewModelFailedException(e.getMessage());
-        }
+    public void commitAndUpdateDevice() throws DevicesViewModelFailedException {
+        Single.fromCallable(() -> {
+                    mDevicesRepository.updateDevice(mDeviceId.getValue(),
+                            new UpdateDeviceRepositoryModel(
+                                    mDeviceName.getValue(),
+                                    mParentScheduleModel.getValue() != null ?
+                                            mParentScheduleModel.getValue().getId() : null
+                            )
+                    );
+                    return true;
+                })
+                .doOnSuccess(b -> this.updateListsFromRepositories())
+                .doOnError(e -> {
+                    throw new DevicesViewModelFailedException(e.getMessage());
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void commitAndCreateNewDevice()
             throws DevicesViewModelFailedException {
-        try {
-            mDevicesRepository.createDevice(
-                    new CreateDeviceRepositoryModel(
-                            mDeviceHardwareId,
-                            mDeviceName.getValue(),
-                            mParentScheduleModel.getValue() != null ?
-                                    mParentScheduleModel.getValue().getId() : null
-                    )
-            );
-            this.updateListsFromRepositories();
-        } catch (DevicesRepositoryNotFoundException e) {
-            throw new DevicesViewModelFailedException(e.getMessage());
-        }
+        Single.fromCallable(() -> {
+                    mDevicesRepository.createDevice(
+                            new CreateDeviceRepositoryModel(
+                                    mDeviceHardwareId,
+                                    mDeviceName.getValue(),
+                                    mParentScheduleModel.getValue() != null ?
+                                            mParentScheduleModel.getValue().getId() : null
+                            )
+                    );
+                    return true;
+                })
+                .doOnSuccess(b -> this.updateListsFromRepositories())
+                .doOnError(e -> {
+                    throw new DevicesViewModelFailedException(e.getMessage());
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void detachParents() {
@@ -188,8 +202,14 @@ public class DevicesViewModel extends ViewModel {
     }
 
     public void removeDevice() {
-        mDevicesRepository.removeDevice(mDeviceId.getValue());
-        this.updateListsFromRepositories();
+        Single.fromCallable(() -> {
+                    mDevicesRepository.removeDevice(mDeviceId.getValue());
+                    return true;
+                })
+                .doOnSuccess(b -> this.updateListsFromRepositories())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void updateListsFromRepositories() {
@@ -212,7 +232,8 @@ public class DevicesViewModel extends ViewModel {
                                 })
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe()).subscribeOn(Schedulers.io())
+                                .subscribe())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe();
     }
@@ -240,5 +261,16 @@ public class DevicesViewModel extends ViewModel {
             );
         }
         return cardModelList;
+    }
+
+    private void requestParentScheduleFromRepositoryById(final String scheduleId) {
+        Single.fromCallable(() -> mSchedulesRepository.getScheduleById(scheduleId))
+                .doOnSuccess(parentSchedule ->
+                        mParentScheduleModel.postValue(
+                                new ScheduleUiModel(parentSchedule))
+                )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }

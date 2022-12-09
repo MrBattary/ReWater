@@ -7,10 +7,11 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 import java.util.Objects;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.config.RepositoryConfiguration;
-import michael.linker.rewater.data.repository.devices.DevicesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
-import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
 import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
 import michael.linker.rewater.ui.advanced.devices.enums.UiRequestStatus;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceAfterPairingUiModel;
@@ -102,21 +103,23 @@ public class PairNewDeviceViewModel extends ViewModel {
     }
 
     public void sendProvidedDeviceHardwareId(final String hardwareId) {
-        try {
-            // TODO: STUB
-            final DeviceRepositoryModel deviceRepositoryModel =
-                    mDevicesRepository.getDeviceByHardware(hardwareId);
-            // Parent schedule always null
-            mDeviceAfterPairingUiModel.setValue(
-                    new DeviceAfterPairingUiModel(
-                            hardwareId,
-                            deviceRepositoryModel.getId(),
-                            deviceRepositoryModel.getName(),
-                            null));
-            mAccessKeyAccepted.setValue(new DeviceUiRequest(UiRequestStatus.OK));
-        } catch (DevicesRepositoryNotFoundException e) {
-            mAccessKeyAccepted.setValue(new DeviceUiRequest(UiRequestStatus.ERROR));
-        }
+        Single.fromCallable(() -> mDevicesRepository.getDeviceByHardware(hardwareId))
+                .doOnSuccess(device -> {
+                    // Parent schedule always null
+                    mDeviceAfterPairingUiModel.postValue(
+                            new DeviceAfterPairingUiModel(
+                                    hardwareId,
+                                    device.getId(),
+                                    device.getName(),
+                                    null));
+
+                    mAccessKeyAccepted.postValue(new DeviceUiRequest(UiRequestStatus.OK));
+                })
+                .doOnError(e -> mAccessKeyAccepted.postValue(
+                        new DeviceUiRequest(UiRequestStatus.ERROR)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void setNetworkDataUpdated() {

@@ -15,7 +15,7 @@ import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceCardUiModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
-import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
+import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
@@ -88,7 +88,7 @@ public class DevicesCardView {
         mCardView.setOnClickListener(l -> {
             try {
                 parentViewModel.setDeviceId(mId);
-            } catch (NetworksViewModelFailedException e) {
+            } catch (DevicesViewModelFailedException e) {
                 ToastProvider.showShort(mParentContext, e.getMessage());
             }
             Navigation.findNavController(mCardView).navigate(
@@ -112,7 +112,7 @@ public class DevicesCardView {
         mSettingsButton.setOnClickListener(l -> {
             try {
                 parentViewModel.setDeviceId(mId);
-            } catch (NetworksViewModelFailedException e) {
+            } catch (DevicesViewModelFailedException e) {
                 ToastProvider.showShort(mParentContext, e.getMessage());
             }
             Navigation.findNavController(mCardView).navigate(

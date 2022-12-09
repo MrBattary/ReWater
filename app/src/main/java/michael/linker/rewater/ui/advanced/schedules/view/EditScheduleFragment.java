@@ -69,11 +69,11 @@ public class EditScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.initFields(view);
-        this.initFieldsData();
-        this.initTransition();
         this.initInputLogics();
+        this.initTransition();
         this.initDialogs(view);
         this.initButtons(view);
+        this.initFieldsData();
         mViewModel.getAttachedDeviceList().observe(getViewLifecycleOwner(),
                 attachedDeviceList -> initAttachedDeviceList(attachedDeviceList, view));
     }
@@ -94,7 +94,10 @@ public class EditScheduleFragment extends Fragment {
 
     private void initFieldsData() {
         mViewModel.getScheduleName().observe(getViewLifecycleOwner(),
-                name -> mNameInput.setText(name));
+                name -> {
+                    mNameInput.setText(name);
+                    mNameInput.removeFromBlackList(name);
+                });
         mViewModel.getLitres().observe(getViewLifecycleOwner(),
                 l -> mVolumeInputView.setLitresVolume(l));
         mViewModel.getMillilitres().observe(getViewLifecycleOwner(),
@@ -215,36 +218,39 @@ public class EditScheduleFragment extends Fragment {
         mAttachDeviceButton.setOnClickListener(l -> navController.navigate(
                 R.id.navigation_action_schedules_edit_to_schedules_devices));
         mCreateButton.setOnClickListener(l -> {
-            this.saveData();
-            if (mViewModel.isProvidedDataCorrect()) {
-                if (mViewModel.getAttachedDeviceList().getValue() != null
-                        && mViewModel.getAttachedDeviceList().getValue().size() == 0) {
-                    mNoAttachedDevicesDialog.show();
-                } else {
-                    try {
-                        mViewModel.commitAndUpdateSchedule();
-                        navController.navigateUp();
-                    } catch (SchedulesViewModelFailedException e) {
-                        ToastProvider.showShort(requireContext(), e.getMessage());
+            try {
+                this.saveData();
+                if (mViewModel.isProvidedDataCorrect()) {
+                    if (mViewModel.getAttachedDeviceList().getValue() != null
+                            && mViewModel.getAttachedDeviceList().getValue().size() == 0) {
+                        mNoAttachedDevicesDialog.show();
+                    } else {
+                        try {
+                            mViewModel.commitAndUpdateSchedule();
+                            navController.navigateUp();
+                        } catch (SchedulesViewModelFailedException e) {
+                            ToastProvider.showShort(requireContext(), e.getMessage());
+                        }
                     }
+                } else {
+                    mNotAllowedScheduleDialog.show();
                 }
-            } else {
-                mNotAllowedScheduleDialog.show();
+            } catch (InputNotAllowedException ignored) {
             }
         });
         mDeleteButton.setOnClickListener(l -> mOnDeleteDialog.show());
         mCancelButton.setOnClickListener(l -> navController.navigateUp());
     }
 
-    private void saveData() {
-        this.saveName();
+    private void saveData() throws InputNotAllowedException {
+        mViewModel.setScheduleName(mNameInput.getText());
 
-        this.saveLitres();
-        this.saveMillilitres();
+        mViewModel.setLitres(mVolumeInputView.getLitresVolume());
+        mViewModel.setMillilitres(mVolumeInputView.getMillilitresVolume());
 
-        this.saveDays();
-        this.saveHours();
-        this.saveMinutes();
+        mViewModel.setDays(mPeriodInputView.getDaysPeriod());
+        mViewModel.setHours(mPeriodInputView.getHoursPeriod());
+        mViewModel.setMinutes(mPeriodInputView.getMinutesPeriod());
     }
 
     private void saveName() {

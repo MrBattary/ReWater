@@ -81,7 +81,7 @@ public class ScheduleListDeviceFragment extends Fragment {
                                     (ScheduleListItemModel) mListView.getItemAtPosition(i);
                             try {
                                 mViewModel.attachParentsByScheduleId(
-                                        chosenSchedule.getId(),
+                                        chosenSchedule.getScheduleId(),
                                         chosenSchedule.getNetworkId());
                                 Navigation.findNavController(view).navigateUp();
                             } catch (DevicesViewModelFailedException e) {
@@ -111,7 +111,7 @@ public class ScheduleListDeviceFragment extends Fragment {
             return mScheduleName;
         }
 
-        public String getId() {
+        public String getScheduleId() {
             return mScheduleId;
         }
 
