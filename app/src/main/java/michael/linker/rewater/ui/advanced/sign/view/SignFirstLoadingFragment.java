@@ -24,6 +24,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.R;
 import michael.linker.rewater.activity.intent.SignOutIntent;
+import michael.linker.rewater.core.permission.PermissionManager;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignLoadingViewModel;
@@ -33,7 +34,6 @@ import michael.linker.rewater.ui.advanced.sign.viewmodel.SignViewModelFailedExce
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.core.permission.PermissionManager;
 
 public class SignFirstLoadingFragment extends Fragment {
     private Disposable mPrevDisposable;

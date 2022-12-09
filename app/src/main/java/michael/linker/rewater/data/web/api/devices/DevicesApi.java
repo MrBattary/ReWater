@@ -107,7 +107,7 @@ public class DevicesApi {
             throws NotFoundHttpException {
         try {
             Response response = mHttpGate.getWithSettings(
-                    GROUP.toString() + deviceHardwareId
+                    GROUP.toString() + "/" + deviceHardwareId
                             + new HttpUrl.Query()
                             .addQueryParameter(
                                     HttpUrl.Query.Param.DEVICE_HARDCODED_ID,

@@ -22,6 +22,7 @@ import michael.linker.rewater.data.web.gate.HttpGateProvider;
 import michael.linker.rewater.data.web.gate.IHttpGate;
 import michael.linker.rewater.databinding.ActivityMainBinding;
 import michael.linker.rewater.ui.advanced.navigation.view.HomeNavigationView;
+import michael.linker.rewater.ui.elementary.dialog.IDialog;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private IHttpGate mHttpGate;
     private CommonApi mApi;
 
-    private TwoChoicesWarningDialog mExitDialog, mInternetLostDialog, mServerLostDialog;
+    private IDialog mExitDialog, mInternetLostDialog, mServerLostDialog;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -117,10 +118,7 @@ public class MainActivity extends AppCompatActivity {
                         StringsProvider.getString(R.string.button_reconnect),
                         StringsProvider.getString(R.string.button_exit)
                 ),
-                (dialogInterface, i) -> Single.fromCallable(() -> {
-                            mApi.pingInternet();
-                            return true;
-                        })
+                (dialogInterface, i) -> Single.fromCallable(() -> mApi.pingInternet())
                         .doOnSuccess(b -> dialogInterface.dismiss())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -137,10 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         StringsProvider.getString(R.string.button_reconnect),
                         StringsProvider.getString(R.string.button_exit)
                 ),
-                (dialogInterface, i) -> Single.fromCallable(() -> {
-                            mApi.pingServer();
-                            return true;
-                        })
+                (dialogInterface, i) -> Single.fromCallable(() -> mApi.pingServer())
                         .doOnSuccess(b -> dialogInterface.dismiss())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

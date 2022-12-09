@@ -57,31 +57,26 @@ public class SignLoadingViewModel extends ViewModel {
 
     public Single<Boolean> checkInternetConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
-                    try {
-                        mCommonApi.pingInternet();
-                        return true;
-                    } catch (RuntimeException e) {
+                    if (!mCommonApi.pingInternet()) {
                         this.setErrorStageMessageAndThrowException(
                                 R.string.loading_stage_internet_connection_failure);
                         return false;
                     }
+                    return true;
                 })
                 .doOnSuccess(b -> stageMessage.postValue(
                         StringsProvider.getString(R.string.loading_stage_server_connection)));
-
     }
 
 
     public Single<Boolean> checkServerConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
-                    try {
-                        mCommonApi.pingServer();
-                        return true;
-                    } catch (RuntimeException e) {
+                    if (!mCommonApi.pingServer()) {
                         this.setErrorStageMessageAndThrowException(
                                 R.string.loading_stage_server_connection_failure);
                         return false;
                     }
+                    return true;
                 })
                 .doOnSuccess(b -> stageMessage.postValue(
                         StringsProvider.getString(R.string.loading_stage_database_connection)));

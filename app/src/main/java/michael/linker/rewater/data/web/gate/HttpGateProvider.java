@@ -8,7 +8,7 @@ public class HttpGateProvider {
             sHttpGate = new HttpGate(
                     new HttpGateSettings(
                             HttpUrl.Protocol.HTTP,
-                            new HttpUrl.Core(HttpUrl.Core.ANDROID_LOCAL_URL + HttpUrl.Core.API_URL)
+                            new HttpUrl.Core(HttpUrl.Core.LOCAL_URL + HttpUrl.Core.API_URL)
                     ));
         }
         return sHttpGate;
