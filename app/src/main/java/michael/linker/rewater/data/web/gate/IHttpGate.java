@@ -173,4 +173,11 @@ public interface IHttpGate {
      * @return model with current settings
      */
     HttpGateSettings getSettings();
+
+    /**
+     * Returns status of the http gate.
+     *
+     * @return status object
+     */
+    HttpGateStatusObserver getStatusObserver();
 }

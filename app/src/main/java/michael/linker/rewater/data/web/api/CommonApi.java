@@ -13,13 +13,25 @@ public class CommonApi {
     }
 
     public void pingInternet() throws FailureHttpException {
-        mHttpGate.get(
-                HttpUrl.Builder(HttpUrl.Protocol.HTTP)
-                        .addCore(HttpUrl.Core.GOOGLE).buildUrl()
-        ).close();
+        try {
+            mHttpGate.get(
+                    HttpUrl.Builder(HttpUrl.Protocol.HTTP)
+                            .addCore(HttpUrl.Core.GOOGLE).buildUrl()
+            ).close();
+            mHttpGate.getStatusObserver().notifyInternetAccessible();
+        } catch (FailureHttpException e) {
+            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
+            throw e;
+        }
     }
 
     public void pingServer() throws FailureHttpException {
-        mHttpGate.getWithSettings(HttpUrl.Group.NETWORKS.toString()).close();
+        try {
+            mHttpGate.getWithSettings(HttpUrl.Group.NETWORKS.toString()).close();
+            mHttpGate.getStatusObserver().notifyServerAccessible();
+        } catch (FailureHttpException e) {
+            mHttpGate.getStatusObserver().notifyServerNotAccessible();
+            throw e;
+        }
     }
 }

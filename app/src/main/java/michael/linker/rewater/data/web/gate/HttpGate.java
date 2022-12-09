@@ -6,6 +6,7 @@ import michael.linker.rewater.config.ConnectionConfiguration;
 import michael.linker.rewater.data.web.gate.exceptions.FailureHttpException;
 import michael.linker.rewater.data.web.gate.exceptions.group.ClientErrorException;
 import michael.linker.rewater.data.web.gate.exceptions.group.ServerErrorException;
+import michael.linker.rewater.data.web.gate.exceptions.group.UnrecognizedErrorException;
 import michael.linker.rewater.data.web.gate.exceptions.status.BadRequestHttpException;
 import michael.linker.rewater.data.web.gate.exceptions.status.ForbiddenHttpException;
 import michael.linker.rewater.data.web.gate.exceptions.status.NotFoundHttpException;
@@ -17,10 +18,12 @@ import okhttp3.Response;
 
 public class HttpGate implements IHttpGate {
     private final OkHttpClient mOkHttpClient;
+    private final HttpGateStatusObserver mStatus;
     private HttpGateSettings mSettings;
 
     protected HttpGate(final HttpGateSettings settings) {
         mOkHttpClient = ConnectionConfiguration.getOkHttpClient();
+        mStatus = new HttpGateStatusObserver();
         mSettings = settings;
     }
 
@@ -102,15 +105,22 @@ public class HttpGate implements IHttpGate {
         return mSettings;
     }
 
+    @Override
+    public HttpGateStatusObserver getStatusObserver() {
+        return mStatus;
+    }
+
     private Response makeRequest(Request request) throws FailureHttpException {
         try {
             return mOkHttpClient.newCall(request).execute();
         } catch (IOException e) {
+            mStatus.notifyInternetNotAccessible();
             throw new FailureHttpException();
         }
     }
 
     private void validateResponse(Response response) throws
+            UnrecognizedErrorException,
             ClientErrorException, ServerErrorException,
             BadRequestHttpException, ForbiddenHttpException,
             NotFoundHttpException, ServerErrorHttpException {
@@ -118,6 +128,7 @@ public class HttpGate implements IHttpGate {
                 response.code());
 
         if (!HttpResponseStatusGroup.isStatusSuccess(responseStatus)) {
+            response.close();
             if (HttpResponseStatusGroup.isStatusClientError(responseStatus)) {
                 if (responseStatus.getCode() == HttpResponseStatus.BAD_REQUEST_CODE) {
                     throw new BadRequestHttpException();
@@ -136,7 +147,7 @@ public class HttpGate implements IHttpGate {
                 }
                 throw new ServerErrorException();
             }
-            response.close();
+            throw new UnrecognizedErrorException();
         }
     }
 }
