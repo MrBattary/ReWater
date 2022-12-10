@@ -9,6 +9,7 @@
         style="@style/CustomTextMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/fragment_content_horizontal_spacing_small"
         android:justificationMode="inter_word"
-        android:text="@string/license"/>
+        android:text="@string/license" />
 </ScrollView>
