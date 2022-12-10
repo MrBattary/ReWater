@@ -82,6 +82,7 @@ public class SignFirstLoadingFragment extends Fragment {
                 requireActivity().getIntent()).getExpectedSignOutValue()) {
             NavHostFragment.findNavController(this).navigate(
                     R.id.navigation_action_sign_first_loading_to_sign_in);
+            isNavigatedOut = true;
         }
     }
 
@@ -92,72 +93,75 @@ public class SignFirstLoadingFragment extends Fragment {
     }
 
     private void firstLoading() {
-        NavController navController = NavHostFragment.findNavController(this);
-        mViewModel.setInitStageMessage(
-                StringsProvider.getString(R.string.loading_stage_permissions));
-        mViewModel.checkPermissions()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<>() {
-                    @Override
-                    public void onSubscribe(
-                            @io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                    }
+        if (!isNavigatedOut) {
+            NavController navController = NavHostFragment.findNavController(this);
+            mViewModel.setInitStageMessage(
+                    StringsProvider.getString(R.string.loading_stage_permissions));
+            mViewModel.checkPermissions()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<>() {
+                        @Override
+                        public void onSubscribe(
+                                @io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                        }
 
-                    @Override
-                    public void onSuccess(
-                            @io.reactivex.rxjava3.annotations.NonNull Boolean aBoolean) {
-                        mViewModel.checkInternetConnection()
-                                .flatMap(ic -> mViewModel.checkServerConnection())
-                                .flatMap(sc -> mViewModel.loadDatabase())
-                                .flatMap(d -> mViewModel.autoSignIn())
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new SingleObserver<>() {
-                                    @Override
-                                    public void onSubscribe(
-                                            @io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                                    }
-
-                                    @Override
-                                    public void onSuccess(
-                                            @io.reactivex.rxjava3.annotations.NonNull Boolean aBoolean) {
-                                        if (!isNavigatedOut) {
-                                            navController.navigate(
-                                                    R.id.navigation_action_sign_first_loading_to_sign_in_loading);
-                                            isNavigatedOut = true;
+                        @Override
+                        public void onSuccess(
+                                @io.reactivex.rxjava3.annotations.NonNull Boolean aBoolean) {
+                            mViewModel.checkInternetConnection()
+                                    .flatMap(ic -> mViewModel.checkServerConnection())
+                                    .flatMap(sc -> mViewModel.loadDatabase())
+                                    .flatMap(d -> mViewModel.autoSignIn())
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new SingleObserver<>() {
+                                        @Override
+                                        public void onSubscribe(
+                                                @io.reactivex.rxjava3.annotations.NonNull Disposable d) {
                                         }
-                                    }
 
-                                    @Override
-                                    public void onError(
-                                            @io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                                        if (e instanceof SignViewModelFailedException) {
+                                        @Override
+                                        public void onSuccess(
+                                                @io.reactivex.rxjava3.annotations.NonNull Boolean aBoolean) {
                                             if (!isNavigatedOut) {
                                                 navController.navigate(
-                                                        R.id.navigation_action_sign_first_loading_to_sign_in);
+                                                        R.id.navigation_action_sign_first_loading_to_sign_in_loading);
                                                 isNavigatedOut = true;
                                             }
-                                            return;
                                         }
-                                        if (e instanceof SignLoadingViewModelFailedException) {
-                                            mRetryButton.setVisibility(View.VISIBLE);
-                                            return;
+
+                                        @Override
+                                        public void onError(
+                                                @io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                                            if (e instanceof SignViewModelFailedException) {
+                                                if (!isNavigatedOut) {
+                                                    navController.navigate(
+                                                            R.id.navigation_action_sign_first_loading_to_sign_in);
+                                                    isNavigatedOut = true;
+                                                }
+                                                return;
+                                            }
+                                            if (e instanceof SignLoadingViewModelFailedException) {
+                                                mRetryButton.setVisibility(View.VISIBLE);
+                                                return;
+                                            }
+                                            if (!(e instanceof SignLoadingViewModelBlockedException)) {
+                                                ToastProvider.showShort(requireActivity(),
+                                                        e.getMessage());
+                                                mViewModel.postErrorStageMessage(
+                                                        StringsProvider.getString(
+                                                                R.string.loading_stage_failure));
+                                            }
                                         }
-                                        if (!(e instanceof SignLoadingViewModelBlockedException)) {
-                                            ToastProvider.showShort(requireActivity(),
-                                                    e.getMessage());
-                                            mViewModel.postErrorStageMessage(
-                                                    StringsProvider.getString(
-                                                            R.string.loading_stage_failure));
-                                        }
-                                    }
-                                });
-                    }
-                    @Override
-                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                    }
-                });
+                                    });
+                        }
+
+                        @Override
+                        public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        }
+                    });
+        }
     }
 
     private void checkAndRequestAwaitedPermissions() {

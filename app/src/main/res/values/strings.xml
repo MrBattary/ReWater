@@ -98,11 +98,11 @@
     <string name="loading_stage_permissions">Checking the available permissions.</string>
     <string name="loading_stage_permissions_failure">The application cannot work correctly due to the lack of necessary permissions. Please give the app the necessary permissions.</string>
     <string name="loading_stage_internet_connection">Checking the Internet connection</string>
-    <string name="loading_stage_internet_connection_failure">Unable to connect to the internet, please check your internet connection and restart the application.</string>
+    <string name="loading_stage_internet_connection_failure">Unable to connect to the internet, please check your internet connection and retry again.</string>
     <string name="loading_stage_server_connection">Checking the connection to the server.</string>
-    <string name="loading_stage_server_connection_failure">Unable to connect to the server, please restart the application.</string>
+    <string name="loading_stage_server_connection_failure">Unable to connect to the server, please retry again or come back later.</string>
     <string name="loading_stage_database_connection">Connecting to the database.</string>
-    <string name="loading_stage_database_connection_failure">The connection to the internal database could not be established, please try to reinstall the application.</string>
+    <string name="loading_stage_database_connection_failure">The connection to the internal database is required but could not be established, please try to reinstall the application.</string>
     <string name="loading_stage_auto_login">Uploading user data.</string>
     <string name="loading_stage_repository_installation">Establishing a connection with the repositories.</string>
     <string name="loading_stage_repository_installation_failure">Failed to establish connections with repositories, please restart the application.</string>
