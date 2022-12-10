@@ -61,7 +61,10 @@ public class SettingsFragment extends Fragment {
                         StringsProvider.getString(R.string.button_exit),
                         StringsProvider.getString(R.string.button_cancel)
                 ),
-                (dialogInterface, i) -> ActivityGate.finishApplication(requireActivity()),
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    ActivityGate.finishApplication(requireActivity());
+                },
                 (dialogInterface, i) -> dialogInterface.dismiss()
         );
         mShutdownDialog = new TwoChoicesWarningDialog(requireContext(),
@@ -72,7 +75,10 @@ public class SettingsFragment extends Fragment {
                         StringsProvider.getString(R.string.button_shutdown),
                         StringsProvider.getString(R.string.button_cancel)
                 ),
-                (dialogInterface, i) -> ActivityGate.finishApplication(requireActivity()),
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    ActivityGate.shutdownApplication(requireActivity());
+                },
                 (dialogInterface, i) -> dialogInterface.dismiss()
         );
     }

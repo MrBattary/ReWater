@@ -114,7 +114,7 @@ public class HttpGate implements IHttpGate {
         try {
             return mOkHttpClient.newCall(request).execute();
         } catch (IOException e) {
-            mStatus.notifyInternetNotAccessible();
+            mStatus.notifyServerNotAccessible();
             throw new HttpGateFailureException();
         }
     }

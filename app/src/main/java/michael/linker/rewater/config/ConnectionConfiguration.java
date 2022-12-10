@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import com.polidea.rxandroidble3.RxBleClient;
 
+import java.util.concurrent.TimeUnit;
+
 import me.aflak.bluetooth.Bluetooth;
 import michael.linker.rewater.core.App;
 import okhttp3.OkHttpClient;
@@ -36,7 +38,9 @@ public class ConnectionConfiguration {
 
     public static OkHttpClient getOkHttpClient() {
         if (sOkHttpClient == null) {
-            sOkHttpClient = new OkHttpClient();
+            sOkHttpClient = new OkHttpClient.Builder()
+                    .connectTimeout(1, TimeUnit.SECONDS)
+                    .build();
         }
         return sOkHttpClient;
     }

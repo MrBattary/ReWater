@@ -10,19 +10,18 @@ import michael.linker.rewater.R;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
 
 public class NoneChoiceInfoDialog implements IDialog {
-    private final MaterialAlertDialogBuilder mDialogBuilder;
     private final AlertDialog mAlertDialog;
 
     public NoneChoiceInfoDialog(
             final Context fragmentContext,
             final NoneChoiceDialogModel dialogModel) {
-        mDialogBuilder = new MaterialAlertDialogBuilder(fragmentContext,
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(fragmentContext,
                 R.style.MaterialInfoDialogStyle);
-        mDialogBuilder.setIcon(dialogModel.getIconDrawable());
-        mDialogBuilder.setTitle(dialogModel.getTitle());
-        mDialogBuilder.setMessage(dialogModel.getMessage());
-        mDialogBuilder.setCancelable(false);
-        mAlertDialog = mDialogBuilder.create();
+        dialogBuilder.setIcon(dialogModel.getIconDrawable());
+        dialogBuilder.setTitle(dialogModel.getTitle());
+        dialogBuilder.setMessage(dialogModel.getMessage());
+        dialogBuilder.setCancelable(false);
+        mAlertDialog = dialogBuilder.create();
     }
 
     @Override

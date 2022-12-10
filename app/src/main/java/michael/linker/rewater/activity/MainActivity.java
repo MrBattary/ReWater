@@ -107,7 +107,10 @@ public class MainActivity extends AppCompatActivity {
                         StringsProvider.getString(R.string.button_exit),
                         StringsProvider.getString(R.string.button_cancel)
                 ),
-                (dialogInterface, i) -> ActivityGate.finishApplication(this),
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    ActivityGate.finishApplication(this);
+                },
                 (dialogInterface, i) -> dialogInterface.dismiss()
         );
         mInternetLostDialog = new TwoChoicesWarningDialog(this,
@@ -118,14 +121,11 @@ public class MainActivity extends AppCompatActivity {
                         StringsProvider.getString(R.string.button_reconnect),
                         StringsProvider.getString(R.string.button_exit)
                 ),
-                (dialogInterface, i) -> Single.fromCallable(() -> mApi.pingInternet())
-                        .doOnSuccess(b -> dialogInterface.dismiss())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(b -> {
-                        }, e -> {
-                        }),
-                (dialogInterface, i) -> ActivityGate.finishApplication(this)
+                (dialogInterface, i) -> checkIfInternetIsAccessible(),
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    ActivityGate.finishApplication(this);
+                }
         );
         mServerLostDialog = new TwoChoicesWarningDialog(this,
                 new TwoChoicesDialogModel(
@@ -135,27 +135,72 @@ public class MainActivity extends AppCompatActivity {
                         StringsProvider.getString(R.string.button_reconnect),
                         StringsProvider.getString(R.string.button_exit)
                 ),
-                (dialogInterface, i) -> Single.fromCallable(() -> mApi.pingServer())
-                        .doOnSuccess(b -> dialogInterface.dismiss())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(b -> {
-                        }, e -> {
-                        }),
-                (dialogInterface, i) -> ActivityGate.finishApplication(this)
+                (dialogInterface, i) -> checkIfServerIsAccessible(),
+                (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    ActivityGate.finishApplication(this);
+                }
         );
     }
 
     private void observeStatus() {
-        mHttpGate.getStatusObserver().isInternetAccessible().observe(this, isConnected -> {
-            if (!isConnected) {
-                mInternetLostDialog.show();
-            }
-        });
         mHttpGate.getStatusObserver().isServerAccessible().observe(this, isConnected -> {
             if (!isConnected) {
                 mServerLostDialog.show();
+                mInternetLostDialog.dismiss();
+            } else {
+                mServerLostDialog.dismiss();
             }
         });
+        mHttpGate.getStatusObserver().isInternetAccessible().observe(this, isConnected -> {
+            if (!isConnected) {
+                mInternetLostDialog.show();
+                mServerLostDialog.dismiss();
+            } else {
+                mInternetLostDialog.dismiss();
+            }
+        });
+    }
+
+    private void checkIfServerIsAccessible() {
+        Single.fromCallable(() -> mApi.pingServer())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(b -> {
+                    if (!b) {
+                        Single.fromCallable(() -> mApi.pingInternet())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(b2 -> {
+                                    if(!b2) {
+                                        mServerLostDialog.dismiss();
+                                        mInternetLostDialog.show();
+                                    }
+                                }, e -> {
+                                });
+                    }
+                }, e -> {
+                });
+    }
+
+    private void checkIfInternetIsAccessible() {
+        Single.fromCallable(() -> mApi.pingInternet())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(b -> {
+                    if(b) {
+                        Single.fromCallable(() -> mApi.pingServer())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(b2 -> {
+                                    if(!b2) {
+                                        mInternetLostDialog.dismiss();
+                                        mServerLostDialog.show();
+                                    }
+                                }, e -> {
+                                });
+                    }
+                }, e -> {
+                });
     }
 }

@@ -13,7 +13,7 @@ public class CommonApi {
         mHttpGate = HttpGateProvider.getHttpGate();
     }
 
-    public boolean pingInternet() throws FailureHttpException {
+    public boolean pingInternet() throws HttpGateFailureException, FailureHttpException {
         try {
             mHttpGate.get(
                     HttpUrl.Builder(HttpUrl.Protocol.HTTP)
@@ -27,7 +27,7 @@ public class CommonApi {
         }
     }
 
-    public boolean pingServer() throws FailureHttpException {
+    public boolean pingServer() throws HttpGateFailureException, FailureHttpException {
         try {
             mHttpGate.getWithSettings(HttpUrl.Group.NETWORKS.toString()).close();
             mHttpGate.getStatusObserver().notifyServerAccessible();
