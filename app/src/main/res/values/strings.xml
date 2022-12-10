@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReWater</string>
+    <string name="app_name" translatable="false">ReWater</string>
 
     <!-- Navigation bar. -->
     <string name="navigation_title_home">Home</string>
@@ -7,6 +7,7 @@
     <string name="navigation_title_devices">Devices</string>
     <string name="navigation_title_profile">Profile</string>
     <string name="navigation_title_settings">Settings</string>
+    <string name="navigation_title_settings_license">License</string>
     <string name="navigation_title_devices_add_options">Ways to add</string>
     <string name="navigation_title_devices_add_pair_new">Pair a new device</string>
     <string name="navigation_title_devices_add_pair_new_ble_device">Choose device</string>
@@ -122,6 +123,19 @@
     <string name="bluetooth_device_info">Device name: %1$s\nDevice MAC: %2$s</string>
     <string name="bluetooth_failure_transmit">The data could not be transmitted because the Bluetooth connection is not established.</string>
     <string name="manual_watering_failure_overflow">The soil moisture sensor shows a high value, additional permission is required for watering.</string>
+    <string name="license">Copyright © 2022 Michael Linker\n\nPermission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning</string>
@@ -129,6 +143,7 @@
     <string name="title_error">Error</string>
     <string name="title_loading">Loading</string>
     <string name="title_exit">Exit</string>
+    <string name="title_shutdown">Shutdown</string>
 
     <!-- Dialogs. -->
     <string name="dialog_delete_network">You are going to delete this network. After this action, all watering schedules from this network will be erased. Are you sure?</string>
@@ -144,6 +159,7 @@
     <string name="dialog_manual_watering_confirmation_1">Are you sure you want to do a\n</string>
     <string name="dialog_manual_watering_confirmation_2">\ watering?</string>
     <string name="dialog_exit">Are you sure you want to exit the app?</string>
+    <string name="dialog_shutdown">Are you sure you want to completely shutdown the app? In the future, you will need more time to start the application.</string>
     <string name="dialog_bluetooth_turn_on_to_pair">During the pairing of the new device, Bluetooth is required to be turned on, after pairing it can be turned off. Turn on Bluetooth?</string>
     <string name="dialog_bluetooth_connecting_in_progress">We are establishing a connection with the device, please wait, it won\'t take much time.</string>
     <string name="dialog_internet_connection_lost">The internet connection is lost. The application cannot work without the Internet. Please turn on the Internet.</string>
@@ -178,9 +194,11 @@
     <string name="button_sign_up">Sign up</string>
     <string name="button_sign_out">Sign out</string>
     <string name="button_exit">Exit</string>
+    <string name="button_shutdown">Shutdown</string>
     <string name="button_retry">Retry</string>
     <string name="button_restore_password">Forgot password?</string>
     <string name="button_reconnect">Reconnect</string>
+    <string name="button_license">License</string>
 
     <!-- Descriptions. -->
     <string name="description_back_button">Back to the previous screen</string>

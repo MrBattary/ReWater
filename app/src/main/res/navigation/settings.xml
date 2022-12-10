@@ -9,5 +9,21 @@
         android:id="@+id/navigation_settings"
         android:name="michael.linker.rewater.ui.advanced.settings.view.SettingsFragment"
         android:label="@string/navigation_title_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/navigation_action_settings_to_settings_license"
+            app:destination="@id/navigation_settings_license"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/navigation_settings"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_settings_license"
+        android:name="michael.linker.rewater.ui.advanced.settings.view.SettingsLicenseFragment"
+        android:label="@string/navigation_title_settings_license"
+        tools:layout="@layout/fragment_settings_license" />
 </navigation>

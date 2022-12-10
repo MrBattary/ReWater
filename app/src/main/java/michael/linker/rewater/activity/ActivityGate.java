@@ -34,6 +34,17 @@ public class ActivityGate {
         activity.finishAndRemoveTask();
     }
 
+    /**
+     * After executing the function, the activity will be closed and all allocated memory will be
+     * freed, connection to the database will be closed and so on.
+     *
+     * @param activity active activity
+     */
+    public static void shutdownApplication(final Activity activity) {
+        activity.finishAffinity();
+        System.exit(0);
+    }
+
     private static void moveToActivity(final Activity activity, final Intent intent) {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

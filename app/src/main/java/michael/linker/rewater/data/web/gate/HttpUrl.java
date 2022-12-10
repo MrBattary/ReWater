@@ -52,7 +52,7 @@ public class HttpUrl {
 
         private static final String GOOGLE_URL = "/google.com";
         public static final String ANDROID_LOCAL_URL = "/10.0.2.2";
-        public static final String LOCAL_URL = "/192.168.0.205";
+        public static final String LOCAL_URL = "/192.168.0.3";
         public static final String API_URL = "/api";
 
         static {

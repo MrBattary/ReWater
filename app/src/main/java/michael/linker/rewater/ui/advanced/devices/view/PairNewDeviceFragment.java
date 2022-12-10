@@ -244,7 +244,7 @@ public class PairNewDeviceFragment extends Fragment {
                     l -> {
                         // TODO (ML): Should raise error if device already paired
                         // TODO (ML): STUB DEVICE SEND KEY START
-                        mViewModel.sendProvidedDeviceHardwareId("STUB");
+                        mViewModel.sendProvidedDeviceHardwareId("40302010");
                         // TODO (ML): STUB DEVICE SEND KEY END
                         /*try {
                             mBluetoothViewModel.sendKey(
