@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import michael.linker.rewater.R;
+import michael.linker.rewater.data.res.StringsProvider;
+
 public final class HashFunction {
     public static final HashFunction SHA_512;
     public static final HashFunction SHA_256;
@@ -27,7 +30,8 @@ public final class HashFunction {
         if (hashFunction == SHA_512) {
             return DigestUtils.sha512Hex(msg);
         }
-        throw new SecurityHashFunctionException("Hash function implementation not found!");
+        throw new SecurityHashFunctionException(
+                StringsProvider.getString(R.string.security_failure_hash_impl_was_not_found));
     }
 
     public String getHashMethodName() {

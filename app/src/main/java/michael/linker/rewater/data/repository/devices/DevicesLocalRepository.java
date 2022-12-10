@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import michael.linker.rewater.R;
 import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.local.stub.IDevicesData;
 import michael.linker.rewater.data.local.stub.INetworksData;
@@ -21,6 +22,7 @@ import michael.linker.rewater.data.repository.devices.model.CreateDeviceReposito
 import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.ManualWateringDeviceRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceRepositoryModel;
+import michael.linker.rewater.data.res.StringsProvider;
 
 public class DevicesLocalRepository implements IDevicesRepository {
     private final INetworksData mNetworksData;
@@ -113,8 +115,9 @@ public class DevicesLocalRepository implements IDevicesRepository {
             throws DevicesRepositoryNotFoundException {
         final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(deviceId);
         if (dataDeviceModel == null) {
-            throw new DevicesRepositoryNotFoundException(
-                    "Requested device with id: " + deviceId + " was not found!");
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    deviceId));
         }
 
         IdNameModel parentScheduleIdNameModel = new IdNameModel(null, null);
@@ -162,9 +165,9 @@ public class DevicesLocalRepository implements IDevicesRepository {
             throws DevicesRepositoryNotFoundException {
         final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(deviceId);
         if (dataDeviceModel == null) {
-            throw new DevicesRepositoryNotFoundException(
-                    "Requested device with id: " + deviceId + " was not found!"
-            );
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    deviceId));
         }
 
         String oldScheduleId = mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(deviceId);
@@ -216,9 +219,9 @@ public class DevicesLocalRepository implements IDevicesRepository {
             throws DevicesRepositoryNotFoundException, DevicesRepositoryFailedException {
         final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(deviceId);
         if (dataDeviceModel == null) {
-            throw new DevicesRepositoryNotFoundException(
-                    "Requested device with id: " + deviceId + " was not found!"
-            );
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    deviceId));
         }
         // Request to the server
     }

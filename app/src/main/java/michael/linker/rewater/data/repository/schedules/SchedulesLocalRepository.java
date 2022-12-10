@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import michael.linker.rewater.R;
 import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.local.stub.IDevicesData;
 import michael.linker.rewater.data.local.stub.ISchedulesData;
@@ -13,6 +14,7 @@ import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceWithoutParentsRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
+import michael.linker.rewater.data.res.StringsProvider;
 
 public class SchedulesLocalRepository implements ISchedulesRepository {
     private final ISchedulesData mSchedulesData;
@@ -106,8 +108,9 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
             throws SchedulesRepositoryNotFoundException {
         final FullScheduleModel scheduleModel = mSchedulesData.getScheduleById(scheduleId);
         if (scheduleModel == null) {
-            throw new SchedulesRepositoryNotFoundException(
-                    "Requested schedule with id: " + scheduleId + " was not found!");
+            throw new SchedulesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_schedule_not_found),
+                    scheduleId));
         }
         final List<String> scheduleDeviceIdList =
                 mScheduleToDevicesDataLink.getRightEntityIdListByLeftEntityId(
@@ -147,8 +150,9 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
         for (String alreadyExistScheduleId : existScheduleIdList) {
             if (mSchedulesData.getScheduleById(alreadyExistScheduleId)
                     .getName().equals(model.getName())) {
-                throw new SchedulesRepositoryAlreadyExistsException(
-                        "Schedule with name: " + model.getName() + " already exists!");
+                throw new SchedulesRepositoryAlreadyExistsException(String.format(
+                        StringsProvider.getString(R.string.internal_repository_schedule_not_found),
+                        model.getName()));
             }
         }
 
@@ -169,8 +173,9 @@ public class SchedulesLocalRepository implements ISchedulesRepository {
     public void updateSchedule(String scheduleId, CreateOrUpdateScheduleRepositoryModel model)
             throws SchedulesRepositoryNotFoundException {
         if (mSchedulesData.getScheduleById(scheduleId) == null) {
-            throw new SchedulesRepositoryNotFoundException(
-                    "Requested schedule with id: " + scheduleId + " was not found!");
+            throw new SchedulesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_schedule_not_found),
+                    scheduleId));
         }
 
         mSchedulesData.updateSchedule(scheduleId, new FullScheduleModel(

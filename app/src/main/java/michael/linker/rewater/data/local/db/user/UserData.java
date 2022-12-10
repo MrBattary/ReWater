@@ -1,5 +1,6 @@
 package michael.linker.rewater.data.local.db.user;
 
+import michael.linker.rewater.R;
 import michael.linker.rewater.config.DatabaseConfiguration;
 import michael.linker.rewater.data.local.db.AppDatabase;
 import michael.linker.rewater.data.local.db.user.entity.AuthToken;
@@ -9,6 +10,7 @@ import michael.linker.rewater.data.local.db.user.model.UserAuthTokenDataModel;
 import michael.linker.rewater.data.local.db.user.model.UserDataModel;
 import michael.linker.rewater.data.local.db.user.model.UserSessionTokenDataModel;
 import michael.linker.rewater.data.local.db.user.model.UserTokensDataModel;
+import michael.linker.rewater.data.res.StringsProvider;
 
 public class UserData implements IUserData {
     private final AppDatabase mDatabase;
@@ -73,8 +75,10 @@ public class UserData implements IUserData {
             user.active = true;
             mDatabase.userDao().update(user);
         } else {
-            throw new UserDataNotFoundException(
-                    "The user with username: " + username + " was not found");
+            throw new UserDataNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_db_user_not_found),
+                    username
+            ));
         }
     }
 
@@ -122,7 +126,8 @@ public class UserData implements IUserData {
                     userSessionToken.validUntil
             );
         } else {
-            throw new UserDataNotFoundException("Active user was not found");
+            throw new UserDataNotFoundException(
+                    StringsProvider.getString(R.string.internal_db_user_active_not_found));
         }
     }
 
@@ -132,14 +137,16 @@ public class UserData implements IUserData {
         if (authToken != null) {
             return new UserAuthTokenDataModel(authToken.token);
         } else {
-            throw new UserDataNotFoundException("Active user was not found");
+            throw new UserDataNotFoundException(
+                    StringsProvider.getString(R.string.internal_db_user_active_not_found));
         }
     }
 
     private User getActiveUser() throws UserDataNotFoundException {
         final User activeUser = mDatabase.userDao().findActive();
         if (activeUser == null) {
-            throw new UserDataNotFoundException("Active user was not found");
+            throw new UserDataNotFoundException(
+                    StringsProvider.getString(R.string.internal_db_user_active_not_found));
         }
         return activeUser;
     }

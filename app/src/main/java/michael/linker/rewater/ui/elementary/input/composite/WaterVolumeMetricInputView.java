@@ -72,7 +72,7 @@ public class WaterVolumeMetricInputView implements ICustomView, IFocusable {
             return new WaterVolumeMetricModel(litres, millilitres);
         }
         throw new InputNotAllowedException(
-                "Could not get the entered values from the water volume input!");
+                StringsProvider.getString(R.string.input_error_water_volume));
     }
 
     @Override

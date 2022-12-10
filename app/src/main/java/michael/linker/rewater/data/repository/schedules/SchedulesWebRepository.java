@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import michael.linker.rewater.R;
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
+import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.data.web.api.schedules.SchedulesApi;
 import michael.linker.rewater.data.web.api.schedules.request.CreateScheduleRequest;
 import michael.linker.rewater.data.web.api.schedules.request.UpdateScheduleRequest;
@@ -48,8 +50,9 @@ public class SchedulesWebRepository implements ISchedulesRepository {
         try {
             return new ScheduleRepositoryModel(mApi.getScheduleById(scheduleId));
         } catch (NotFoundHttpException e) {
-            throw new SchedulesRepositoryNotFoundException(
-                    "Requested schedule with id: " + scheduleId + " was not found!");
+            throw new SchedulesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_schedule_not_found),
+                    scheduleId));
         }
     }
 
@@ -59,8 +62,9 @@ public class SchedulesWebRepository implements ISchedulesRepository {
         try {
             mApi.createSchedule(new CreateScheduleRequest(networkId, model));
         } catch (BadRequestHttpException e) {
-            throw new SchedulesRepositoryAlreadyExistsException(
-                    "Schedule with name: " + model.getName() + " already exists!");
+            throw new SchedulesRepositoryAlreadyExistsException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_schedule_already_exists),
+                    model.getName()));
         }
     }
 
@@ -70,8 +74,9 @@ public class SchedulesWebRepository implements ISchedulesRepository {
         try {
             mApi.updateSchedule(scheduleId, new UpdateScheduleRequest(model));
         } catch (NotFoundHttpException e) {
-            throw new SchedulesRepositoryNotFoundException(
-                    "Requested schedule with id: " + scheduleId + " was not found!");
+            throw new SchedulesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_schedule_not_found),
+                    scheduleId));
         }
     }
 

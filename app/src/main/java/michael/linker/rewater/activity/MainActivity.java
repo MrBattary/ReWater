@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = activity.getSupportFragmentManager().findFragmentById(
                 R.id.main_navigation_host_fragment);
         if (!(fragment instanceof NavHostFragment)) {
-            throw new RuntimeException(
-                    "Activity " + this + " does not have a NavHostFragment");
+            throw new RuntimeException();
         }
         return ((NavHostFragment) fragment).getNavController();
     }

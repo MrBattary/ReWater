@@ -57,6 +57,7 @@
     <string name="input_error_password_digit">The password must contain at least one digit.</string>
     <string name="input_error_password_lower_case">The password must contain at least one lower case character.</string>
     <string name="input_error_password_upper_case">The password must contain at least one upper case character.</string>
+    <string name="input_error_water_volume">Could not get the entered values from the water volume input!</string>
 
     <!-- Units of measurement. -->
     <string name="unit_mouths_short">m</string>
@@ -67,8 +68,11 @@
     <string name="unit_millilitres_short">ml</string>
 
     <!-- Texts. -->
-    <string name="placeholder_global_short">!Lorem ipsum vivamus.!</string>
-    <string name="placeholder_global_medium">!Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.!</string>
+    <string name="placeholder_global_short">[NOT PRODUCTION] Lorem ipsum vivamus. [NOT PRODUCTION]</string>
+    <string name="placeholder_global_medium">[NOT PRODUCTION] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet. [NOT PRODUCTION]</string>
+    <string name="placeholder_emptiness">There\'s nothing here</string>
+    <string name="placeholder_emptiness_temporary">There\'s nothing here yet</string>
+    <string name="placeholder_emptiness_invitation">It\'s kind of empty here</string>
     <string name="placeholder_username">Username</string>
     <string name="parent_schedule_not_found">No schedule set</string>
     <string name="parent_network_not_found">No network set</string>
@@ -136,6 +140,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.</string>
+    <string name="security_failure_hash_impl_was_not_found">Hash function implementation not found!</string>
+    <string name="watering_history_header">Recent watering events</string>
+    <string name="watering_history_empty">No recent watering events found</string>
+    <string name="watering_history_event_success">Watering is successful</string>
+    <string name="watering_history_event_partially_success">Watering is partially successful</string>
+    <string name="watering_history_event_failure">Watering is not successful</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning</string>
@@ -219,4 +229,15 @@ SOFTWARE.</string>
     <string name="description_profile_icon">User icon</string>
     <string name="description_app_logo">A plant in a smart pot</string>
     <string name="description_app_name">ReWater</string>
+
+    <!-- Internal error messages. -->
+    <string name="internal_repository_device_not_found">Requested device with id: %1$s was not found!</string>
+    <string name="internal_repository_device_hardware_not_found">Requested device with hardware id: %1$s was not found!</string>
+    <string name="internal_repository_device_already_exists">"Device with name: %1$s already exists!</string>
+    <string name="internal_repository_network_not_found">Requested network with id: %1$s was not found!</string>
+    <string name="internal_repository_network_already_exists">"Network with name: %1$s already exists!</string>
+    <string name="internal_repository_schedule_not_found">Requested schedule with id: %1$s was not found!</string>
+    <string name="internal_repository_schedule_already_exists">Schedule with name: %1$s already exists!</string>
+    <string name="internal_db_user_not_found">The user with username: %1$s was not found!</string>
+    <string name="internal_db_user_active_not_found">Active user was not found!</string>
 </resources>

@@ -8,9 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
+import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.data.web.api.networks.NetworksApi;
 import michael.linker.rewater.data.web.api.networks.request.CreateOrUpdateNetworkRequest;
 import michael.linker.rewater.data.web.gate.exceptions.group.ClientErrorException;
@@ -65,8 +67,10 @@ public class NetworksWebRepository implements INetworksRepository {
         try {
             return new NetworkRepositoryModel(mApi.getNetworkById(id));
         } catch (NotFoundHttpException e) {
-            throw new NetworksRepositoryNotFoundException(
-                    "Requested network with id: " + id + " was not found!");
+            throw new NetworksRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_network_not_found),
+                    id
+            ));
         }
     }
 
@@ -76,8 +80,10 @@ public class NetworksWebRepository implements INetworksRepository {
         try {
             mApi.createNetwork(new CreateOrUpdateNetworkRequest(model));
         } catch (BadRequestHttpException e) {
-            throw new NetworksRepositoryAlreadyExistsException(
-                    "Network with heading: " + model.getName() + " already exists!");
+            throw new NetworksRepositoryAlreadyExistsException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_network_already_exists),
+                    model.getName()
+            ));
         }
     }
 
@@ -87,8 +93,10 @@ public class NetworksWebRepository implements INetworksRepository {
         try {
             mApi.updateNetwork(id, new CreateOrUpdateNetworkRequest(model));
         } catch (NotFoundHttpException e) {
-            throw new NetworksRepositoryNotFoundException(
-                    "Requested network with id: " + id + " was not found and can't be updated!");
+            throw new NetworksRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_network_not_found),
+                    id
+            ));
         }
     }
 

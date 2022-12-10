@@ -43,8 +43,9 @@ public class DevicesWebRepository implements IDevicesRepository {
         try {
             return new DeviceRepositoryModel(mApi.getDeviceById(deviceId));
         } catch (NotFoundHttpException e) {
-            throw new DevicesRepositoryNotFoundException(
-                    "Requested device with id: " + deviceId + " was not found!");
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    deviceId));
         }
     }
 
@@ -54,14 +55,15 @@ public class DevicesWebRepository implements IDevicesRepository {
         try {
             return new DeviceRepositoryModel(mApi.getDeviceByHardwareId(hardwareId));
         } catch (NotFoundHttpException e) {
-            throw new DevicesRepositoryNotFoundException(
-                    "Requested device with hardware id: " + hardwareId + " was not found!");
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    hardwareId));
         }
     }
 
     @Override
     public void removeDevice(String deviceId) {
-            mApi.deleteDevice(deviceId);
+        mApi.deleteDevice(deviceId);
     }
 
     @Override
@@ -70,8 +72,9 @@ public class DevicesWebRepository implements IDevicesRepository {
         try {
             mApi.updateDevice(deviceId, new UpdateDeviceRequest(model));
         } catch (NotFoundHttpException e) {
-            throw new DevicesRepositoryNotFoundException(
-                    "Requested device with id: " + deviceId + " was not found!");
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    deviceId));
         }
     }
 
@@ -81,8 +84,9 @@ public class DevicesWebRepository implements IDevicesRepository {
         try {
             mApi.createDevice(new CreateDeviceRequest(model));
         } catch (BadRequestHttpException e) {
-            throw new DevicesRepositoryAlreadyExistsException(
-                    "Device with name: " + model.getName() + " already exists!");
+            throw new DevicesRepositoryAlreadyExistsException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_already_exists),
+                    model.getName()));
         }
     }
 
@@ -92,8 +96,9 @@ public class DevicesWebRepository implements IDevicesRepository {
         try {
             mApi.manualWatering(deviceId, new ManualWateringDeviceRequest(model));
         } catch (NotFoundHttpException e) {
-            throw new DevicesRepositoryNotFoundException(
-                    "Requested device with id: " + deviceId + " was not found!");
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    deviceId));
         } catch (BadRequestHttpException e) {
             throw new DevicesRepositoryFailedException(
                     StringsProvider.getString(R.string.manual_watering_failure_overflow));
