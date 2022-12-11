@@ -2,6 +2,15 @@ plugins {
     id 'com.android.application'
 }
 
+def ServerMode = "michael.linker.rewater.config.BuildConfiguration.Server"
+def ServerProtocol = "michael.linker.rewater.config.BuildConfiguration.ServerProtocol"
+def BluetoothMode = "michael.linker.rewater.config.BuildConfiguration.Bluetooth"
+// Dev
+def AndroidDevServerAddress = "\"/10.0.2.2\""
+def DevServerAddress = "\"/192.168.0.3\""
+// Prod
+def ProdServerAddress = "\"/rewater.local\""
+
 android {
     compileSdk 32
 
@@ -9,14 +18,25 @@ android {
         applicationId "michael.linker.rewater"
         minSdk 29
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        versionCode 168
+        versionName "0.3.168"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.LOCAL"
+            buildConfigField ServerProtocol, "SERVER_PROTOCOL", "${ServerProtocol}.HTTP"
+            buildConfigField "String", "SERVER_ADDRESS", AndroidDevServerAddress
+            buildConfigField BluetoothMode, "BLUETOOTH_MODE", "${BluetoothMode}.STUB"
+        }
         release {
+            buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.GLOBAL"
+            buildConfigField ServerProtocol, "SERVER_PROTOCOL", "${ServerProtocol}.HTTP"
+            buildConfigField "String", "SERVER_ADDRESS", ProdServerAddress
+            buildConfigField BluetoothMode, "BLUETOOTH_MODE", "${BluetoothMode}.PROD"
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

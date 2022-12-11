@@ -21,10 +21,9 @@ public class HttpGate implements IHttpGate {
     private final HttpGateStatusObserver mStatus;
     private HttpGateSettings mSettings;
 
-    protected HttpGate(final HttpGateSettings settings) {
+    protected HttpGate() {
         mOkHttpClient = ConnectionConfiguration.getOkHttpClient();
         mStatus = new HttpGateStatusObserver();
-        mSettings = settings;
     }
 
     @Override

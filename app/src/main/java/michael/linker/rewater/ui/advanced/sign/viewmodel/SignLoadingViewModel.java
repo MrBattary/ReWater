@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import io.reactivex.rxjava3.core.Single;
 import michael.linker.rewater.R;
+import michael.linker.rewater.config.BuildConfiguration;
 import michael.linker.rewater.config.DatabaseConfiguration;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.config.StubDataConfiguration;
@@ -71,10 +72,12 @@ public class SignLoadingViewModel extends ViewModel {
 
     public Single<Boolean> checkServerConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
-                    if (!mCommonApi.pingServer()) {
-                        this.setErrorStageMessageAndThrowException(
-                                R.string.loading_stage_server_connection_failure);
-                        return false;
+                    if (BuildConfiguration.getServerMode() == BuildConfiguration.Server.GLOBAL) {
+                        if (!mCommonApi.pingServer()) {
+                            this.setErrorStageMessageAndThrowException(
+                                    R.string.loading_stage_server_connection_failure);
+                            return false;
+                        }
                     }
                     return true;
                 })

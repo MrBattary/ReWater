@@ -24,6 +24,7 @@ import com.google.android.material.button.MaterialButton;
 
 import me.aflak.bluetooth.interfaces.DeviceCallback;
 import michael.linker.rewater.R;
+import michael.linker.rewater.config.BuildConfiguration;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.ColorsProvider;
 import michael.linker.rewater.data.res.DrawablesProvider;
@@ -33,7 +34,9 @@ import michael.linker.rewater.ui.advanced.devices.enums.AddPairNewDeviceLook;
 import michael.linker.rewater.ui.advanced.devices.enums.UiRequestStatus;
 import michael.linker.rewater.ui.advanced.devices.model.BluetoothDeviceUiModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceUiRequest;
+import michael.linker.rewater.ui.advanced.devices.model.bluetooth.BluetoothDeviceKeyApiModel;
 import michael.linker.rewater.ui.advanced.devices.model.bluetooth.BluetoothDeviceKeyResponseApiModel;
+import michael.linker.rewater.ui.advanced.devices.model.bluetooth.BluetoothDeviceNetworkApiModel;
 import michael.linker.rewater.ui.advanced.devices.model.bluetooth.BluetoothDeviceNetworkResponseApiModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.PairNewDeviceBluetoothViewModel;
@@ -59,6 +62,13 @@ public class PairNewDeviceFragment extends Fragment {
     private PairNewDeviceViewModel mViewModel;
     private DevicesViewModel mParentViewModel;
     private PairNewDeviceBluetoothViewModel mBluetoothViewModel;
+
+    private static final BuildConfiguration.Bluetooth BLUETOOTH_MODE =
+            BuildConfiguration.getBluetoothMode();
+    private static final BuildConfiguration.Bluetooth MODE_STUB =
+            BuildConfiguration.Bluetooth.STUB;
+    private static final BuildConfiguration.Bluetooth MODE_PROD =
+            BuildConfiguration.Bluetooth.PROD;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -220,14 +230,19 @@ public class PairNewDeviceFragment extends Fragment {
             if (look == AddPairNewDeviceLook.BLUETOOTH) {
                 Navigation.findNavController(view).navigateUp();
             } else {
-                /*// TODO (ML): STUB DEVICE DISCONNECT START
-                if (look == AddPairNewDeviceLook.NETWORK || look == AddPairNewDeviceLook.ACCESS) {
-                    mBluetoothViewModel.setConnectableBluetoothDevice(null);
-                    mBluetoothViewModel.setBluetoothDeviceData(null);
+                if (BLUETOOTH_MODE == MODE_STUB) {
+                    // STUB DEVICE DISCONNECT
+                    if (look == AddPairNewDeviceLook.NETWORK
+                            || look == AddPairNewDeviceLook.ACCESS) {
+                        mBluetoothViewModel.setConnectableBluetoothDevice(null);
+                        mBluetoothViewModel.setBluetoothDeviceData(null);
+                    }
                 }
-                // TODO (ML): STUB DEVICE DISCONNECT END*/
-                if (look == AddPairNewDeviceLook.NETWORK || look == AddPairNewDeviceLook.ACCESS) {
-                    mBluetoothViewModel.disconnectFromDevice();
+                if (BLUETOOTH_MODE == MODE_PROD) {
+                    if (look == AddPairNewDeviceLook.NETWORK
+                            || look == AddPairNewDeviceLook.ACCESS) {
+                        mBluetoothViewModel.disconnectFromDevice();
+                    }
                 }
                 mViewModel.previousLook();
             }
@@ -242,36 +257,42 @@ public class PairNewDeviceFragment extends Fragment {
         if (look == AddPairNewDeviceLook.ACCESS) {
             mNextButton.setOnClickListener(
                     l -> {
-                        // TODO (ML): Should raise error if device already paired
-                        // TODO (ML): STUB DEVICE SEND KEY START
-                        mViewModel.sendProvidedDeviceHardwareId("40302010");
-                        // TODO (ML): STUB DEVICE SEND KEY END
-                        /*try {
-                            mBluetoothViewModel.sendKey(
-                                    new BluetoothDeviceKeyApiModel(
-                                            mAccessKeyInput.getPasswordHash()));
-                        } catch (PairNewDeviceViewModelNotFoundException e) {
-                            ToastProvider.showShort(requireContext(),
-                                    StringsProvider.getString(
-                                            R.string.bluetooth_failure_transmit));
-                        }*/
+                        if (BLUETOOTH_MODE == MODE_STUB) {
+                            // STUB DEVICE SEND KEY START
+                            mViewModel.sendProvidedDeviceHardwareId("40302010");
+                        }
+                        if (BLUETOOTH_MODE == MODE_PROD) {
+                            try {
+                                mBluetoothViewModel.sendKey(
+                                        new BluetoothDeviceKeyApiModel(
+                                                mAccessKeyInput.getPasswordHash()));
+                            } catch (PairNewDeviceViewModelNotFoundException e) {
+                                ToastProvider.showShort(requireContext(),
+                                        StringsProvider.getString(
+                                                R.string.bluetooth_failure_transmit));
+                            }
+                        }
                     });
         }
         if (look == AddPairNewDeviceLook.NETWORK) {
             mNextButton.setOnClickListener(
                     l -> {
-                        // TODO (ML): STUB DEVICE SEND NETWORK SETTINGS START
-                        mViewModel.setNetworkDataUpdated();
-                        // TODO (ML): STUB DEVICE SEND NETWORK SETTINGS END
-                        /*try {
+                        if (BLUETOOTH_MODE == MODE_STUB) {
+                            // STUB DEVICE SEND NETWORK SETTINGS START
                             // TODO (ML): Require data from fields
-                            mBluetoothViewModel.sendNetworkSettings(
-                                    new BluetoothDeviceNetworkApiModel());
-                        } catch (PairNewDeviceViewModelNotFoundException e) {
-                            ToastProvider.showShort(requireContext(),
-                                    StringsProvider.getString(
-                                            R.string.bluetooth_failure_transmit));
-                        }*/
+                            mViewModel.setNetworkDataUpdated();
+                        }
+                        if (BLUETOOTH_MODE == MODE_PROD) {
+                            try {
+                                // TODO (ML): Require data from fields
+                                mBluetoothViewModel.sendNetworkSettings(
+                                        new BluetoothDeviceNetworkApiModel());
+                            } catch (PairNewDeviceViewModelNotFoundException e) {
+                                ToastProvider.showShort(requireContext(),
+                                        StringsProvider.getString(
+                                                R.string.bluetooth_failure_transmit));
+                            }
+                        }
                     });
         }
         if (look == AddPairNewDeviceLook.FINISH) {
@@ -344,21 +365,25 @@ public class PairNewDeviceFragment extends Fragment {
         super.onStart();
         mBluetoothViewModel.onStart();
         final BluetoothDevice bluetoothDevice = mBluetoothViewModel.getConnectableBluetoothDevice();
-        // TODO (ML): STUB DEVICE CONNECT START
-        if (bluetoothDevice != null) {
-            mDeviceConnectionDialog.show();
-            mBluetoothViewModel.setBluetoothDeviceData(
-                    new BluetoothDeviceUiModel(
-                            bluetoothDevice.getName(),
-                            bluetoothDevice.getAddress()));
-            mViewModel.setConnectedToDevice();
-            mDeviceConnectionDialog.dismiss();
+        if (BLUETOOTH_MODE == MODE_STUB) {
+            // STUB DEVICE CONNECT
+            if (bluetoothDevice != null) {
+                mDeviceConnectionDialog.show();
+                mBluetoothViewModel.setBluetoothDeviceData(
+                        new BluetoothDeviceUiModel(
+                                bluetoothDevice.getName(),
+                                bluetoothDevice.getAddress()));
+                mViewModel.setConnectedToDevice();
+                mDeviceConnectionDialog.dismiss();
+            }
+
         }
-        // TODO (ML): STUB DEVICE CONNECT END
-        /*if (bluetoothDevice != null && !mBluetoothViewModel.isConnectedToDevice()) {
-            mDeviceConnectionDialog.show();
-            mBluetoothViewModel.connectToDevice(bluetoothDevice);
-        }*/
+        if (BLUETOOTH_MODE == MODE_PROD) {
+            if (bluetoothDevice != null && !mBluetoothViewModel.isConnectedToDevice()) {
+                mDeviceConnectionDialog.show();
+                mBluetoothViewModel.connectToDevice(bluetoothDevice);
+            }
+        }
     }
 
     @Override

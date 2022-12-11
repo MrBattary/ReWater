@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import michael.linker.rewater.config.BuildConfiguration;
+
 public class HttpUrl {
     public static ProtocolBuilder Builder(Protocol protocol) {
         return new ProtocolBuilder(protocol.mProtocol);
@@ -51,8 +53,7 @@ public class HttpUrl {
         public static Core CORE;
 
         private static final String GOOGLE_URL = "/google.com";
-        public static final String ANDROID_LOCAL_URL = "/10.0.2.2";
-        public static final String LOCAL_URL = "/192.168.0.3";
+        public static final String SERVER_URL = BuildConfiguration.getServerAddress();
         public static final String API_URL = "/api";
 
         static {
