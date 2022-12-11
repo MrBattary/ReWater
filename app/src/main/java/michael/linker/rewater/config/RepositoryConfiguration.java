@@ -3,6 +3,9 @@ package michael.linker.rewater.config;
 import michael.linker.rewater.data.repository.devices.DevicesLocalRepository;
 import michael.linker.rewater.data.repository.devices.DevicesWebRepository;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
+import michael.linker.rewater.data.repository.history.HistoryLocalRepository;
+import michael.linker.rewater.data.repository.history.HistoryWebRepository;
+import michael.linker.rewater.data.repository.history.IHistoryRepository;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.NetworksLocalRepository;
 import michael.linker.rewater.data.repository.networks.NetworksWebRepository;
@@ -21,6 +24,7 @@ public class RepositoryConfiguration {
     private static IDevicesRepository sDevicesRepository;
     private static ISchedulesRepository sSchedulesRepository;
     private static IUsersRepository sUserRepository;
+    private static IHistoryRepository sHistoryRepository;
 
     public static INetworksRepository getNetworksRepository() {
         if (sNetworksRepository == null) {
@@ -69,5 +73,17 @@ public class RepositoryConfiguration {
             }
         }
         return sUserRepository;
+    }
+
+    public static IHistoryRepository getHistoryRepository() {
+        if (sHistoryRepository == null) {
+            if (SERVER_MODE == MODE_LOCAL) {
+                sHistoryRepository = new HistoryLocalRepository();
+            }
+            if (SERVER_MODE == MODE_GLOBAL) {
+                sHistoryRepository = new HistoryWebRepository();
+            }
+        }
+        return sHistoryRepository;
     }
 }

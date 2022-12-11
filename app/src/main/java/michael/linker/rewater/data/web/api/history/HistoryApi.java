@@ -29,7 +29,7 @@ public class HistoryApi {
         mGson = new Gson();
     }
 
-    List<GetNetworkScheduleHistoryResponse> getAllHistory(PageSizeCommonRequest request) {
+    public List<GetNetworkScheduleHistoryResponse> getAllHistory(PageSizeCommonRequest request) {
         try {
             Response response = mHttpGate.getWithSettings(GROUP.toString() +
                     HttpUrl.Group.NETWORKS.toString() +
@@ -50,7 +50,7 @@ public class HistoryApi {
         }
     }
 
-    List<GetNetworkHistoryResponse> getNetworkHistory(
+    public List<GetNetworkHistoryResponse> getNetworkHistory(
             String networkId,
             PageSizeCommonRequest request) {
         try {
@@ -74,7 +74,7 @@ public class HistoryApi {
         }
     }
 
-    List<GetScheduleHistoryResponse> getScheduleHistory(
+    public List<GetScheduleHistoryResponse> getScheduleHistory(
             String scheduleId,
             PageSizeCommonRequest request) {
         try {
@@ -98,7 +98,7 @@ public class HistoryApi {
         }
     }
 
-    List<GetNetworkScheduleHistoryResponse> getDeviceHistory(
+    public List<GetNetworkScheduleHistoryResponse> getDeviceHistory(
             String deviceId,
             PageSizeCommonRequest request) {
         try {
