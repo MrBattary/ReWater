@@ -1,6 +1,5 @@
 package michael.linker.rewater.ui.advanced.devices.view;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import michael.linker.rewater.config.ConnectionConfiguration;
 import michael.linker.rewater.core.connection.bluetooth.Bluetooth;
 import michael.linker.rewater.core.connection.bluetooth.BluetoothFailedException;
 import michael.linker.rewater.core.connection.bluetooth.BluetoothNotFoundException;
-import michael.linker.rewater.data.res.ColorsProvider;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesConfirmDialog;
@@ -42,12 +40,6 @@ public class AddDeviceOptionsFragment extends Fragment {
         this.initFields(view);
         this.initButtons(view);
         this.initDialogs(view);
-
-        // Disable the mAlreadyPaired button
-        mAlreadyPairedButton.setEnabled(false);
-        mAlreadyPairedButton.setTextColor(ColorsProvider.getColor(R.color.text_disabled));
-        mAlreadyPairedButton.setBackgroundTintList(
-                ColorStateList.valueOf(ColorsProvider.getColor(R.color.background_disabled)));
     }
 
     private void initFields(final View view) {

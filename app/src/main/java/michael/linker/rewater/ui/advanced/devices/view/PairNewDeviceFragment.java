@@ -46,7 +46,9 @@ import michael.linker.rewater.ui.elementary.dialog.IDialog;
 import michael.linker.rewater.ui.elementary.dialog.none.NoneChoiceDialogModel;
 import michael.linker.rewater.ui.elementary.dialog.none.NoneChoiceInfoDialog;
 import michael.linker.rewater.ui.elementary.input.text.IPasswordTextInputView;
+import michael.linker.rewater.ui.elementary.input.text.ITextInputView;
 import michael.linker.rewater.ui.elementary.input.text.PasswordTextInputView;
+import michael.linker.rewater.ui.elementary.input.text.TextInputView;
 import michael.linker.rewater.ui.elementary.text.status.IStatusStyledTextView;
 import michael.linker.rewater.ui.elementary.text.status.StatusStyledColoredTextView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
@@ -54,7 +56,8 @@ import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 public class PairNewDeviceFragment extends Fragment {
     private ViewGroup mBluetoothView, mAccessView, mNetworkView;
     private TextView mConnectedDeviceData;
-    private IPasswordTextInputView mAccessKeyInput;
+    private ITextInputView mWifiSsidInput;
+    private IPasswordTextInputView mAccessKeyInput, mWifiPasswordInput;
     private IStatusStyledTextView mStatusStyledMessage;
     private IDialog mDeviceConnectionDialog;
     private MaterialButton mPairButton, mNextButton, mBackButton, mCancelButton;
@@ -107,6 +110,14 @@ public class PairNewDeviceFragment extends Fragment {
                 view.findViewById(R.id.add_device_pair_new_access_key_input));
         mStatusStyledMessage = new StatusStyledColoredTextView(
                 view.findViewById(R.id.add_device_pair_new_message));
+        mWifiSsidInput = new TextInputView(
+                view.findViewById(R.id.add_device_pair_new_network_input_wifi_ssid),
+                view.findViewById(R.id.add_device_pair_new_network_input_wifi_ssid_input)
+        );
+        mWifiPasswordInput = new PasswordTextInputView(
+                view.findViewById(R.id.add_device_pair_new_network_input_wifi_password),
+                view.findViewById(R.id.add_device_pair_new_network_input_wifi_password_input)
+        );
 
         mPairButton = view.findViewById(R.id.add_device_pair_new_bluetooth_pair_button);
         mNextButton = view.findViewById(R.id.add_device_pair_new_control_next_button);
@@ -279,14 +290,20 @@ public class PairNewDeviceFragment extends Fragment {
                     l -> {
                         if (BLUETOOTH_MODE == MODE_STUB) {
                             // STUB DEVICE SEND NETWORK SETTINGS START
-                            // TODO (ML): Require data from fields
-                            mViewModel.setNetworkDataUpdated();
+                            if (mWifiSsidInput.getText().length() > 0 &&
+                                    mWifiPasswordInput.getPasswordAsPlainText().length() > 8) {
+                                mViewModel.setNetworkDataUpdated();
+                            } else {
+                                mViewModel.setNetworkDataNotUpdated();
+                            }
                         }
                         if (BLUETOOTH_MODE == MODE_PROD) {
                             try {
-                                // TODO (ML): Require data from fields
                                 mBluetoothViewModel.sendNetworkSettings(
-                                        new BluetoothDeviceNetworkApiModel());
+                                        new BluetoothDeviceNetworkApiModel(
+                                                mWifiSsidInput.getText(),
+                                                mWifiPasswordInput.getPasswordAsPlainText()
+                                        ));
                             } catch (PairNewDeviceViewModelNotFoundException e) {
                                 ToastProvider.showShort(requireContext(),
                                         StringsProvider.getString(

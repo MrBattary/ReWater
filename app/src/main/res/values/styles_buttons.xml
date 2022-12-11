@@ -25,6 +25,12 @@
         <item name="cornerRadius">@dimen/button_corner_radius</item>
     </style>
 
+    <style name="RegularButtonStyle.Disabled" parent="RegularButtonStyle">
+        <item name="enabled">false</item>
+        <item name="android:backgroundTint">@color/background_disabled</item>
+        <item name="android:textColor">@color/text_disabled</item>
+    </style>
+
     <!-- The param 'strokeColor' is required! -->
     <style name="OutlinedButtonStyle" parent="RegularButtonStyle">
         <item name="strokeWidth">@dimen/button_stroke_width</item>

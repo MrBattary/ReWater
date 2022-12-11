@@ -12,16 +12,16 @@
     <string name="navigation_title_devices_add_pair_new">Сопряжение нового устройства</string>
     <string name="navigation_title_devices_add_pair_new_ble_device">Выбор устройства</string>
     <string name="navigation_title_devices_add_already_paired">Добавление сопряженного устройства</string>
-    <string name="navigation_title_devices_info">Информация об устройства</string>
+    <string name="navigation_title_devices_info">Информация о расписании</string>
     <string name="navigation_title_devices_manual_watering">Ручной полив</string>
-    <string name="navigation_title_devices_edit">Редактировать устройство</string>
+    <string name="navigation_title_devices_edit">Редактирование устройства</string>
     <string name="navigation_title_devices_schedules">Выбор расписания</string>
     <string name="navigation_title_devices_add">Новое устройство</string>
     <string name="navigation_title_networks_add">Новая сеть</string>
-    <string name="navigation_title_networks_edit">Редактировать сеть</string>
+    <string name="navigation_title_networks_edit">Редактирование сети</string>
     <string name="navigation_title_schedules">Графики</string>
     <string name="navigation_title_schedules_add">Создать расписание</string>
-    <string name="navigation_title_schedules_edit">Редактировать расписание</string>
+    <string name="navigation_title_schedules_edit">Редактирование расписания</string>
     <string name="navigation_title_schedules_devices">Прикрепить устройства</string>
     <string name="navigation_title_sign_in">Вход</string>
     <string name="navigation_title_sign_up">Регистрация</string>
@@ -40,6 +40,8 @@
     <string name="input_hint_email">Почта</string>
     <string name="input_hint_username_or_email">Имя пользователя или почта</string>
     <string name="input_hint_password">Пароль</string>
+    <string name="input_hint_wifi_ssid">Имя Wi-Fi сети (SSID)</string>
+    <string name="input_hint_wifi_password">Пароль Wi-Fi сети</string>
     <string name="input_error_days">В качестве значения дней принимаются только целые числа от 0 до 99!</string>
     <string name="input_error_hours">В качестве значения часов принимаются только целые числа от 0 до 23!</string>
     <string name="input_error_minutes">В качестве значения минут принимаются только целые числа от 0 до 59!</string>
@@ -83,9 +85,10 @@
     <string name="pair_device_connect_failure">Ошибка при установлении Bluetooth-подключения.</string>
     <string name="pair_device_access_success">Доступ к устройству получен.</string>
     <string name="pair_device_access_failure">Ошибка при получении доступа к устройству.</string>
+    <string name="pair_device_network_or">ИЛИ</string>
     <string name="pair_device_network_success">Настройки сети устройства обновлены.</string>
     <string name="pair_device_network_failure">Не удалось обновить настройки сети. Проверьте корректность введенных данных.</string>
-    <string name="pair_device_success">Соединение установлено. Осталось настроить устройство. Нажмите "Далее" чтобы продолжить.</string>
+    <string name="pair_device_success">Сопряжение устройства было успешно завершено. Осталось настроить устройство. Нажмите "Далее" чтобы продолжить.</string>
     <string name="status_battery_fine">Высокий уровень заряда батареи</string>
     <string name="status_battery_warning">Средний уровень заряда батареи</string>
     <string name="status_battery_defect">Низкий уровень заряда батареи</string>
@@ -180,14 +183,14 @@
     <string name="button_cancel">Отмена</string>
     <string name="button_detach_schedule">Открепить расписание</string>
     <string name="button_attach_schedule">Прикрепить расписание</string>
-    <string name="button_attach_devices">Подключить устройства</string>
+    <string name="button_attach_devices">Прикрепить устройство</string>
     <string name="button_devices_add_pair">Подключить</string>
-    <string name="button_devices_add_pair_new">Подключить новое устройство</string>
+    <string name="button_devices_add_pair_new">Сопряжение нового устройства</string>
     <string name="button_devices_add_pair_connection_established">Соединение установлено</string>
     <string name="button_devices_add_already_paired">Добавить уже сопряженное</string>
     <string name="button_manual_watering">Ручой полив</string>
     <string name="button_force_watering">Полить все-равно</string>
-    <string name="button_water">Вода</string>
+    <string name="button_water">Полить</string>
     <string name="button_sign_in">Войти</string>
     <string name="button_sign_up">Зарегистрироваться</string>
     <string name="button_sign_out">Выйти</string>
@@ -197,6 +200,7 @@
     <string name="button_restore_password">Забыли пароль?</string>
     <string name="button_reconnect">Переподключиться</string>
     <string name="button_license">Лицензия</string>
+    <string name="button_devices_add_pair_new_saved_wifi">Выберете Wi-Fi сеть</string>
 
     <!-- Descriptions. -->
     <string name="description_back_button">Назад</string>

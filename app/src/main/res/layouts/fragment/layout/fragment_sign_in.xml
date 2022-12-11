@@ -96,7 +96,7 @@
                     style="@style/EditTextPasswordStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nextFocusForward="@+id/sign_in_sign_in_button"
+                    android:nextFocusDown="@+id/sign_in_sign_in_button"
                     android:hint="@string/input_hint_password"
                     android:importantForAutofill="no" />
             </com.google.android.material.textfield.TextInputLayout>

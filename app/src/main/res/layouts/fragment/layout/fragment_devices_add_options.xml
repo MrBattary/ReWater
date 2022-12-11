@@ -19,7 +19,7 @@
 
     <Button
         android:id="@+id/add_device_options_already_paired_button"
-        style="@style/RegularButtonStyle"
+        style="@style/RegularButtonStyle.Disabled"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_device_options_pair_new_button"
