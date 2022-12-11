@@ -1,0 +1,231 @@
+<resources>
+    <string name="app_name" translatable="false">ReWater</string>
+
+    <!-- Navigation bar. -->
+    <string name="navigation_title_home">Главная</string>
+    <string name="navigation_title_networks">Сети</string>
+    <string name="navigation_title_devices">Устройства</string>
+    <string name="navigation_title_profile">Профили</string>
+    <string name="navigation_title_settings">Настройки</string>
+    <string name="navigation_title_settings_license">Лицензия</string>
+    <string name="navigation_title_devices_add_options">Способы добавления</string>
+    <string name="navigation_title_devices_add_pair_new">Сопряжение нового устройства</string>
+    <string name="navigation_title_devices_add_pair_new_ble_device">Выбор устройства</string>
+    <string name="navigation_title_devices_add_already_paired">Добавление сопряженного устройства</string>
+    <string name="navigation_title_devices_info">Информация об устройства</string>
+    <string name="navigation_title_devices_manual_watering">Ручной полив</string>
+    <string name="navigation_title_devices_edit">Редактировать устройство</string>
+    <string name="navigation_title_devices_schedules">Выбор расписания</string>
+    <string name="navigation_title_devices_add">Новое устройство</string>
+    <string name="navigation_title_networks_add">Новая сеть</string>
+    <string name="navigation_title_networks_edit">Редактировать сеть</string>
+    <string name="navigation_title_schedules">Графики</string>
+    <string name="navigation_title_schedules_add">Создать расписание</string>
+    <string name="navigation_title_schedules_edit">Редактировать расписание</string>
+    <string name="navigation_title_schedules_devices">Прикрепить устройства</string>
+    <string name="navigation_title_sign_in">Вход</string>
+    <string name="navigation_title_sign_up">Регистрация</string>
+    <string name="navigation_title_sign_loading">Загрузка</string>
+
+    <!-- Inputs. -->
+    <string name="input_hint_name">Имя</string>
+    <string name="input_hint_key">Ключ</string>
+    <string name="input_hint_litres">Литры</string>
+    <string name="input_hint_millilitres">Миллилитры</string>
+    <string name="input_hint_description">Описание</string>
+    <string name="input_hint_days">Дни</string>
+    <string name="input_hint_hours">Часы</string>
+    <string name="input_hint_minutes">Минуты</string>
+    <string name="input_hint_username">Имя пользователя</string>
+    <string name="input_hint_email">Почта</string>
+    <string name="input_hint_username_or_email">Имя пользователя или почта</string>
+    <string name="input_hint_password">Пароль</string>
+    <string name="input_error_days">В качестве значения дней принимаются только целые числа от 0 до 99!</string>
+    <string name="input_error_hours">В качестве значения часов принимаются только целые числа от 0 до 23!</string>
+    <string name="input_error_minutes">В качестве значения минут принимаются только целые числа от 0 до 59!</string>
+    <string name="input_error_litres">В качестве значения литров принимаются только целые числа от 0 до 99!</string>
+    <string name="input_error_millilitres">В качестве значения миллилитров принимаются только целые числа от 0 до 999!</string>
+    <string name="input_error_heading_taken">Такое имя уже занято!</string>
+    <string name="input_error_heading_overflow">Слишком длинное имя!</string>
+    <string name="input_error_heading_lack">Слишком короткое имя!</string>
+    <string name="input_error_key_overflow">Значения ключа слишком длинное!</string>
+    <string name="input_error_description_overflow">Описание слишком длинное!</string>
+    <string name="input_error_number_not_found">Пожалуйста, введите целое значение!</string>
+    <string name="input_error_username_lack">Имя пользователя слишком короткое!</string>
+    <string name="input_error_password_min_length">Длина пароля должна быть больше или равна 6 символам.</string>
+    <string name="input_error_password_no_whitespace">Пароль не должен содержать пробелы.</string>
+    <string name="input_error_password_digit">Пароль должен содержать как минимум одно число.</string>
+    <string name="input_error_password_lower_case">Пароль должен содержать как минимум одну прописную букву.</string>
+    <string name="input_error_password_upper_case">Пароль должен содержать как минимум одну заглавную букву.</string>
+    <string name="input_error_water_volume">Ошибка при получении значений от датчика уровня воды.</string>
+
+    <!-- Units of measurement. -->
+    <string name="unit_mouths_short">мес</string>
+    <string name="unit_days_short">д</string>
+    <string name="unit_hours_short">ч</string>
+    <string name="unit_minutes_short">мин</string>
+    <string name="unit_litres_short">л</string>
+    <string name="unit_millilitres_short">мл</string>
+
+    <!-- Texts. -->
+    <string name="placeholder_global_short">[NOT PRODUCTION] Lorem ipsum vivamus. [NOT PRODUCTION]</string>
+    <string name="placeholder_global_medium">[NOT PRODUCTION] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet. [NOT PRODUCTION]</string>
+    <string name="placeholder_emptiness">Тут ничего нет</string>
+    <string name="placeholder_emptiness_temporary">Тут пока ничего нет</string>
+    <string name="placeholder_emptiness_invitation">Тут вроде как пусто</string>
+    <string name="placeholder_username">Имя пользователя</string>
+    <string name="parent_schedule_not_found">Нет установленных расписаний</string>
+    <string name="parent_network_not_found">Нет установленных сетей</string>
+    <string name="schedule_information">Информация о расписании:</string>
+    <string name="schedule_each">каждые</string>
+    <string name="list_selected">выбран</string>
+    <string name="pair_device_connect_success">Bluetooth-соединение успешно установлено.</string>
+    <string name="pair_device_connect_failure">Ошибка при установлении Bluetooth-подключения.</string>
+    <string name="pair_device_access_success">Доступ к устройству получен.</string>
+    <string name="pair_device_access_failure">Ошибка при получении доступа к устройству.</string>
+    <string name="pair_device_network_success">Настройки сети устройства обновлены.</string>
+    <string name="pair_device_network_failure">Не удалось обновить настройки сети. Проверьте корректность введенных данных.</string>
+    <string name="pair_device_success">Соединение установлено. Осталось настроить устройство. Нажмите "Далее" чтобы продолжить.</string>
+    <string name="status_battery_fine">Высокий уровень заряда батареи</string>
+    <string name="status_battery_warning">Средний уровень заряда батареи</string>
+    <string name="status_battery_defect">Низкий уровень заряда батареи</string>
+    <string name="status_water_fine">Высокий уровень запаса воды</string>
+    <string name="status_water_warning">Средний уровень запаса воды</string>
+    <string name="status_water_defect">Низкий уровень запаса воды</string>
+    <string name="status_undefined">Состояние не определено</string>
+    <string name="heading_attached_devices">Прикрепленные устройства:</string>
+    <string name="home_greeting">Здравствуйте,</string>
+    <string name="sign_in_failure">Неправильное имя пользователя или пароль.</string>
+    <string name="sign_up_failure_username_used">Это имя пользователя уже занято.</string>
+    <string name="sign_up_failure_email_used">Пользователь с таким адресом почты уже существует.</string>
+    <string name="sign_failure_auth_token_not_accepted">Токен авторизации отклонен.</string>
+    <string name="loading_stage_permissions">Загрузка привелегий…</string>
+    <string name="loading_stage_permissions_failure">Приложений работает некорректно из-за отсутствия необходимых привелегий. Пожалуйста, выдайте приложению требуемые привелегии через "Настройки".</string>
+    <string name="loading_stage_internet_connection">Проверка интернет-соединения.</string>
+    <string name="loading_stage_internet_connection_failure">Нет соединения с интернетом.</string>
+    <string name="loading_stage_server_connection">Проверка соединения с сервером.</string>
+    <string name="loading_stage_server_connection_failure">Нет соединения с сервером.</string>
+    <string name="loading_stage_database_connection">Подключение к базе данных.</string>
+    <string name="loading_stage_database_connection_failure">Требуемое подключение к внутренней базе данных не было установлено. Пожалуйста, переустановите приложение.</string>
+    <string name="loading_stage_auto_login">Загрузка данных пользователя.</string>
+    <string name="loading_stage_repository_installation">Установка соединения с репозиторием.</string>
+    <string name="loading_stage_repository_installation_failure">Не удается подключиться к репозиториям. Пожалуйста, перезапустите приложение.</string>
+    <string name="loading_stage_data_installation">Зарузка данных.</string>
+    <string name="loading_stage_data_installation_failure">Ошибка при загрузке данных. Пожалуйста, перезапустите приложение.</string>
+    <string name="loading_stage_failure">Произошла ошибка при загрузке. Пожалуйста, перезапустите приложение. Если данная ошибка не исчезнет, переустановите приложение.</string>
+    <string name="bluetooth_failure_device_not_support">Это устройство не поддерживает Bluetooth. Пожалуйста, установите приложение на устройство с Bluetooth.</string>
+    <string name="bluetooth_failure_permission_not_found">Приложение не имеет прав доступа к Bluetooth. Пожалуйста, разрешите приложению управлять Bluetooth, выдав соответствющие права.</string>
+    <string name="bluetooth_failure_permission_location_not_found">Приложение не имеет доступа к геолокации. Пожалуйста, разрешите приложению пользоваться геолокацией.</string>
+    <string name="bluetooth_failure_permission_location_services_not_found">Приложение не имеет полного доступа к геолокации, пожалуйста, предоставьте приложению полные права геолокации.</string>
+    <string name="bluetooth_failure_turned_off">Bluetooth отключен, хотя ожидалось, что он включен. Пожалуйста, включите Bluetooth и попробуйте снова.</string>
+    <string name="bluetooth_failure_turn_on">Произошла неизвестная ошибка при запуске Bluetooth.</string>
+    <string name="bluetooth_failure_scan">Произошла неизвестная ошибка при поиске устройств через Bluetooth.</string>
+    <string name="bluetooth_connect">Установка соединения с устройством…</string>
+    <string name="bluetooth_failure_connect">При подключении к выбранному устройству произошла неизвестная ошибка.</string>
+    <string name="bluetooth_scan">Поиск устройств…</string>
+    <string name="bluetooth_scan_finished">Поиск устройств завершен.</string>
+    <string name="bluetooth_device_info">Имя устройства: %1$s\nMAC-адрес устройства: %2$s</string>
+    <string name="bluetooth_failure_transmit">Данные не могут быть переданы, поскольку Bluetooth-соединение не установлено.</string>
+    <string name="manual_watering_failure_overflow">Наблюдается повышенная влажность почвы, для полива требуется подтверждение пользователя.</string>
+    <string name="license">Copyright © 2022 Michael Linker\n\nДанная лицензия разрешает лицам, получившим копию данного программного обеспечения и сопутствующей документации (в дальнейшем именуемыми «Программное обеспечение»), безвозмездно использовать Программное обеспечение без ограничений, включая неограниченное право на использование, копирование, изменение, слияние, публикацию, распространение, сублицензирование и/или продажу копий Программного обеспечения, а также лицам, которым предоставляется данное Программное обеспечение, при соблюдении следующих условий:\n\nУказанное выше уведомление об авторском праве и данные условия должны быть включены во все копии или значимые части данного Программного обеспечения.\n\nДАННОЕ ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ ПРЕДОСТАВЛЯЕТСЯ «КАК ЕСТЬ», БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, ЯВНО ВЫРАЖЕННЫХ ИЛИ ПОДРАЗУМЕВАЕМЫХ, ВКЛЮЧАЯ ГАРАНТИИ ТОВАРНОЙ ПРИГОДНОСТИ, СООТВЕТСТВИЯ ПО ЕГО КОНКРЕТНОМУ НАЗНАЧЕНИЮ И ОТСУТСТВИЯ НАРУШЕНИЙ, НО НЕ ОГРАНИЧИВАЯСЬ ИМИ. НИ В КАКОМ СЛУЧАЕ АВТОРЫ ИЛИ ПРАВООБЛАДАТЕЛИ НЕ НЕСУТ ОТВЕТСТВЕННОСТИ ПО КАКИМ-ЛИБО ИСКАМ, ЗА УЩЕРБ ИЛИ ПО ИНЫМ ТРЕБОВАНИЯМ, В ТОМ ЧИСЛЕ, ПРИ ДЕЙСТВИИ КОНТРАКТА, ДЕЛИКТЕ ИЛИ ИНОЙ СИТУАЦИИ, ВОЗНИКШИМ ИЗ-ЗА ИСПОЛЬЗОВАНИЯ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ ИЛИ ИНЫХ ДЕЙСТВИЙ С ПРОГРАММНЫМ ОБЕСПЕЧЕНИЕМ.</string>
+    <string name="security_failure_hash_impl_was_not_found">Хэш функция не найдена!</string>
+    <string name="watering_history_header">Прошедшие события</string>
+    <string name="watering_history_empty">Нет прошедших событий</string>
+    <string name="watering_history_event_success">Полив успешно завершен</string>
+    <string name="watering_history_event_partially_success">Полив завершен частично</string>
+    <string name="watering_history_event_failure">Полив не был завершен</string>
+
+    <!-- Titles. -->
+    <string name="title_warning">Внимание</string>
+    <string name="title_attention">Внимание</string>
+    <string name="title_error">Ошибка</string>
+    <string name="title_loading">Загрузка</string>
+    <string name="title_exit">Выход</string>
+    <string name="title_shutdown">Завершение работы</string>
+
+    <!-- Dialogs. -->
+    <string name="dialog_delete_network">Вы собираетесь удалить сеть. Все расписания полива в этой сети будут удалены. Вы уверены?</string>
+    <string name="dialog_delete_device">Вы собираетесь удалить устройство. Вы не сможете им управлять и оно исчезнет из вашего списка устройств. Однако, вы можете добавить его снова в будущем. Вы уверены?</string>
+    <string name="dialog_delete_schedule">Вы собираетесь удалить расписание. Все работающие по этому расписание устройста перестанут работать. Вы уверены?</string>
+    <string name="dialog_no_attached_schedule_on_save">Если вы сохраните устройство без расписания, автоматический полив не будет производиться.</string>
+    <string name="dialog_no_attached_schedule_on_add">Если вы добавите устройство без расписания, автоматический полив не будет производиться. Однако, вы можете добавить расписание в будущем через настройки.</string>
+    <string name="dialog_insufficient_volume">Слишком маленький объем воды для ручного полива, объем должен быть больше10 мл.</string>
+    <string name="dialog_insufficient_volume_or_period">Слишком маленькие значения объема воды или периода полива. Объем воды должен быть больше 10мл, а период полива больше 1 минуты.</string>
+    <string name="dialog_no_attached_devices_on_save">Если вы сохраните это расписание без прикрепленных устройств, автоматический полив не будет производиться.</string>
+    <string name="dialog_no_attached_devices_on_create">Если вы создадите это расписание без прикрепленных устройств, автоматический полив не будет производиться. Однако, вы можете добавить устройства в будущем через настройки.</string>
+    <string name="dialog_manual_watering_overflow">Датчики показывают повышенную влажность. Вы уверены, что хотите продолжить полив?</string>
+    <string name="dialog_manual_watering_confirmation_1">Вы уверены, что хотите произвести\n</string>
+    <string name="dialog_manual_watering_confirmation_2">\ полив?</string>
+    <string name="dialog_exit">Выйти из приложения?</string>
+    <string name="dialog_shutdown">Вы уверены, что хотите полностью завершить работу приложения? В будущем запуск приложения может занять больше времени.</string>
+    <string name="dialog_bluetooth_turn_on_to_pair">На время подключения нового устройства, требуется включить Bluetooth. После подключения Bluetooth можно будет отключить. Включить Bluetooth?</string>
+    <string name="dialog_bluetooth_connecting_in_progress">Установка соединения с устройством. Пожалуйста, подождите.</string>
+    <string name="dialog_internet_connection_lost">Соединение с интернетом прервано. Приложение не может работать без соединения с сетью Интернет.</string>
+    <string name="dialog_server_connection_lost">Соединение с серером прервано. Приложение не может работать без соединения с сервером.</string>
+
+
+    <!-- Buttons. -->
+    <string name="button_settings">Настройки</string>
+    <string name="button_create">Создать</string>
+    <string name="button_create_anyway">Все равно создать</string>
+    <string name="button_add">Добавить</string>
+    <string name="button_add_anyway">Все равно добавить</string>
+    <string name="button_save">Сохранить</string>
+    <string name="button_save_anyway">Все равно сохранить</string>
+    <string name="button_next">Далее</string>
+    <string name="button_back">Назад</string>
+    <string name="button_ok">ОК</string>
+    <string name="button_turn_on">Включить</string>
+    <string name="button_delete">Удалить</string>
+    <string name="button_cancel">Отмена</string>
+    <string name="button_detach_schedule">Открепить расписание</string>
+    <string name="button_attach_schedule">Прикрепить расписание</string>
+    <string name="button_attach_devices">Подключить устройства</string>
+    <string name="button_devices_add_pair">Подключить</string>
+    <string name="button_devices_add_pair_new">Подключить новое устройство</string>
+    <string name="button_devices_add_pair_connection_established">Соединение установлено</string>
+    <string name="button_devices_add_already_paired">Добавить уже сопряженное</string>
+    <string name="button_manual_watering">Ручой полив</string>
+    <string name="button_force_watering">Полить все-равно</string>
+    <string name="button_water">Вода</string>
+    <string name="button_sign_in">Войти</string>
+    <string name="button_sign_up">Зарегистрироваться</string>
+    <string name="button_sign_out">Выйти</string>
+    <string name="button_exit">Выход</string>
+    <string name="button_shutdown">Завершение работы</string>
+    <string name="button_retry">Попробовать снова</string>
+    <string name="button_restore_password">Забыли пароль?</string>
+    <string name="button_reconnect">Переподключиться</string>
+    <string name="button_license">Лицензия</string>
+
+    <!-- Descriptions. -->
+    <string name="description_back_button">Назад</string>
+    <string name="description_positive_button">ОК</string>
+    <string name="description_add_button">Добавить</string>
+    <string name="description_remove_button">Удалить</string>
+    <string name="description_overall_status">Статус</string>
+    <string name="description_water_status">Уровень воды</string>
+    <string name="description_battery_status">Уровень заряда</string>
+    <string name="description_expand_or_loose_card_button">Развернуть или свернуть карту</string>
+    <string name="description_expand_card_button">Развернуть карту</string>
+    <string name="description_detach_device_button">Отключить устройство</string>
+    <string name="description_loose_card_button">Свернуть карту</string>
+    <string name="description_networks_add_fab">Добавить сеть</string>
+    <string name="description_devices_add_fab">Добавить устройство</string>
+    <string name="description_parent_schedule_or_network_icon">Иконка родителя</string>
+    <string name="description_sign_logo">Логотип ReWater</string>
+    <string name="description_profile_icon">Иконка пользователя</string>
+    <string name="description_app_logo">Растение в умном горшке</string>
+    <string name="description_app_name" translatable="false">ReWater</string>
+
+    <!-- Internal error messages. -->
+    <string name="internal_repository_device_not_found">Устройство с id: %1$s не обнаружено!</string>
+    <string name="internal_repository_device_hardware_not_found">Устройство с hardware id: %1$s не обнаружено!</string>
+    <string name="internal_repository_device_already_exists">"Устройство %1$s уже существует!</string>
+    <string name="internal_repository_network_not_found">Сеть с id: %1$s не найдена!</string>
+    <string name="internal_repository_network_already_exists">"Сеть %1$s уже существует!</string>
+    <string name="internal_repository_schedule_not_found">Запрашиваемое расписание с id: %1$s не найдено!</string>
+    <string name="internal_repository_schedule_already_exists">Расписание %1$s уже существует!</string>
+    <string name="internal_db_user_not_found">Пользователь %1$s не найден!</string>
+    <string name="internal_db_user_active_not_found">Действующий пользователь не найден!</string>
+</resources>
