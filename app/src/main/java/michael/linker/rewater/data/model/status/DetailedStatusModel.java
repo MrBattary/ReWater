@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import michael.linker.rewater.data.web.api.part.StatusPart;
+import michael.linker.rewater.data.web.api.common.part.StatusPart;
 
 public class DetailedStatusModel {
     private final Status mWater;

@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.web.api.part;
+package michael.linker.rewater.data.web.api.common.part;
 
 public class StatusPart {
     private final String water;

@@ -14,7 +14,7 @@ import michael.linker.rewater.data.repository.user.UsersRepositoryAccessDeniedEx
 import michael.linker.rewater.data.repository.user.UsersRepositoryNotFoundException;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.core.permission.PermissionManager;
-import michael.linker.rewater.data.web.api.CommonApi;
+import michael.linker.rewater.data.web.api.common.CommonApi;
 
 public class SignLoadingViewModel extends ViewModel {
     private final CommonApi mCommonApi;

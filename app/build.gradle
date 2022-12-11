@@ -18,8 +18,8 @@ android {
         applicationId "michael.linker.rewater"
         minSdk 29
         targetSdk 32
-        versionCode 169
-        versionName "0.3.169"
+        versionCode 170
+        versionName "0.3.170"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

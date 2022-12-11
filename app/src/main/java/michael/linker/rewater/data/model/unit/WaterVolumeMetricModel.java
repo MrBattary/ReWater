@@ -2,7 +2,7 @@ package michael.linker.rewater.data.model.unit;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.data.web.api.part.VolumePart;
+import michael.linker.rewater.data.web.api.common.part.VolumePart;
 
 public class WaterVolumeMetricModel implements IUnit {
     private static final int MIN_WATERING_VOLUME_IN_ML = 10;

@@ -1,7 +1,7 @@
 package michael.linker.rewater.data.web.api.devices.request;
 
 import michael.linker.rewater.data.repository.devices.model.ManualWateringDeviceRepositoryModel;
-import michael.linker.rewater.data.web.api.part.VolumePart;
+import michael.linker.rewater.data.web.api.common.part.VolumePart;
 
 public class ManualWateringDeviceRequest extends VolumePart {
 

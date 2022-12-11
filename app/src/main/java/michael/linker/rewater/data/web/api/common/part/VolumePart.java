@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.web.api.part;
+package michael.linker.rewater.data.web.api.common.part;
 
 import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 

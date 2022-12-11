@@ -49,7 +49,6 @@ public class DevicesApi {
                 return mGson.fromJson(responseBody.charStream(), deviceListType);
             }
         } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
             return new ArrayList<>();
         } catch (FailureHttpException e) {
             return new ArrayList<>();
@@ -74,7 +73,6 @@ public class DevicesApi {
                 return mGson.fromJson(responseBody.charStream(), deviceListType);
             }
         } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
             return new ArrayList<>();
         } catch (FailureHttpException e) {
             return new ArrayList<>();
@@ -95,7 +93,6 @@ public class DevicesApi {
                 return mGson.fromJson(responseBody.charStream(), GetDeviceResponse.class);
             }
         } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
             throw new NotFoundHttpException();
 
         } catch (FailureHttpException e) {
@@ -118,7 +115,6 @@ public class DevicesApi {
                 return mGson.fromJson(responseBody.charStream(), GetDeviceResponse.class);
             }
         } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
             throw new NotFoundHttpException();
 
         } catch (FailureHttpException e) {
@@ -129,10 +125,7 @@ public class DevicesApi {
     public void createDevice(final CreateDeviceRequest request) throws BadRequestHttpException {
         try {
             mHttpGate.postWithSettings(GROUP.toString(), mGson.toJson(request)).close();
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            throw new BadRequestHttpException();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             throw new BadRequestHttpException();
         }
     }
@@ -141,10 +134,7 @@ public class DevicesApi {
             throws NotFoundHttpException {
         try {
             mHttpGate.putWithSettings(GROUP.toString() + deviceId, mGson.toJson(request)).close();
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            throw new NotFoundHttpException();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             throw new NotFoundHttpException();
         }
     }
@@ -152,9 +142,7 @@ public class DevicesApi {
     public void deleteDevice(final String deviceId) throws FailureHttpException {
         try {
             mHttpGate.deleteWithSettings(GROUP.toString() + deviceId).close();
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-        } catch (FailureHttpException ignored) {
+        } catch (HttpGateFailureException | FailureHttpException ignored) {
         }
     }
 
@@ -163,7 +151,6 @@ public class DevicesApi {
         try {
             mHttpGate.postWithSettings(GROUP.toString() + deviceId, mGson.toJson(request)).close();
         } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
             throw new NotFoundHttpException();
         } catch (FailureHttpException e) {
             if (e instanceof BadRequestHttpException) {

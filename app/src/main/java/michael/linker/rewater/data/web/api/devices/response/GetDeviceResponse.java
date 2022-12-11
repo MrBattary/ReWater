@@ -1,7 +1,7 @@
 package michael.linker.rewater.data.web.api.devices.response;
 
-import michael.linker.rewater.data.web.api.part.IdNamePart;
-import michael.linker.rewater.data.web.api.part.StatusPart;
+import michael.linker.rewater.data.web.api.common.part.IdNamePart;
+import michael.linker.rewater.data.web.api.common.part.StatusPart;
 
 public class GetDeviceResponse {
     private final String id;

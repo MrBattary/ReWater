@@ -3,8 +3,8 @@ package michael.linker.rewater.data.web.api.schedules.request;
 import java.util.List;
 
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
-import michael.linker.rewater.data.web.api.part.PeriodPart;
-import michael.linker.rewater.data.web.api.part.VolumePart;
+import michael.linker.rewater.data.web.api.common.part.PeriodPart;
+import michael.linker.rewater.data.web.api.common.part.VolumePart;
 
 public class UpdateScheduleRequest {
     private final String name;

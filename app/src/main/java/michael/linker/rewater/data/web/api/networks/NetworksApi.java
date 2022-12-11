@@ -37,10 +37,7 @@ public class NetworksApi {
             try (ResponseBody responseBody = response.body()) {
                 return mGson.fromJson(responseBody.charStream(), networksListType);
             }
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            return new ArrayList<>();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             return new ArrayList<>();
         }
     }
@@ -51,10 +48,7 @@ public class NetworksApi {
             try (ResponseBody responseBody = response.body()) {
                 return mGson.fromJson(responseBody.charStream(), GetNetworkResponse.class);
             }
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            throw new NotFoundHttpException();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             throw new NotFoundHttpException();
         }
     }
@@ -63,10 +57,7 @@ public class NetworksApi {
             throws BadRequestHttpException {
         try {
             mHttpGate.postWithSettings(GROUP.toString(), mGson.toJson(request)).close();
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            throw new BadRequestHttpException();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             throw new BadRequestHttpException();
         }
     }
@@ -75,10 +66,7 @@ public class NetworksApi {
             throws NotFoundHttpException {
         try {
             mHttpGate.putWithSettings(GROUP.toString() + networkId, mGson.toJson(request)).close();
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            throw new NotFoundHttpException();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             throw new NotFoundHttpException();
         }
     }
@@ -86,9 +74,7 @@ public class NetworksApi {
     public void deleteNetworkById(final String networkId) {
         try {
             mHttpGate.deleteWithSettings(GROUP.toString() + networkId).close();
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-        } catch (FailureHttpException ignored) {
+        } catch (HttpGateFailureException | FailureHttpException ignored) {
         }
     }
 }

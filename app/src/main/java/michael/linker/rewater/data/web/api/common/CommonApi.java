@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.web.api;
+package michael.linker.rewater.data.web.api.common;
 
 import michael.linker.rewater.data.web.gate.HttpGateFailureException;
 import michael.linker.rewater.data.web.gate.HttpGateProvider;

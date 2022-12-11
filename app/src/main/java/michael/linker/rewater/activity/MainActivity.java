@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.data.web.api.CommonApi;
+import michael.linker.rewater.data.web.api.common.CommonApi;
 import michael.linker.rewater.data.web.gate.HttpGateProvider;
 import michael.linker.rewater.data.web.gate.IHttpGate;
 import michael.linker.rewater.databinding.ActivityMainBinding;

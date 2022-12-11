@@ -1,6 +1,6 @@
 package michael.linker.rewater.data.web.api.schedules.response;
 
-import michael.linker.rewater.data.web.api.part.StatusPart;
+import michael.linker.rewater.data.web.api.common.part.StatusPart;
 
 public class GetScheduleDeviceResponsePart {
     private final String id;

@@ -2,8 +2,8 @@ package michael.linker.rewater.data.web.api.schedules.response;
 
 import java.util.List;
 
-import michael.linker.rewater.data.web.api.part.PeriodPart;
-import michael.linker.rewater.data.web.api.part.VolumePart;
+import michael.linker.rewater.data.web.api.common.part.PeriodPart;
+import michael.linker.rewater.data.web.api.common.part.VolumePart;
 
 public class GetScheduleResponse {
     private final String id;

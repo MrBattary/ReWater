@@ -1,6 +1,6 @@
 package michael.linker.rewater.data.model;
 
-import michael.linker.rewater.data.web.api.part.IdNamePart;
+import michael.linker.rewater.data.web.api.common.part.IdNamePart;
 
 /**
  * General model for the "id" and "name" fields

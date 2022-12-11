@@ -38,10 +38,7 @@ public class SchedulesApi {
             try (ResponseBody responseBody = response.body()) {
                 return mGson.fromJson(responseBody.charStream(), scheduleListType);
             }
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            return new ArrayList<>();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             return new ArrayList<>();
         }
     }
@@ -59,10 +56,7 @@ public class SchedulesApi {
             try (ResponseBody responseBody = response.body()) {
                 return mGson.fromJson(responseBody.charStream(), scheduleListType);
             }
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            return new ArrayList<>();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             return new ArrayList<>();
         }
     }
@@ -75,10 +69,7 @@ public class SchedulesApi {
             try (ResponseBody responseBody = response.body()) {
                 return mGson.fromJson(responseBody.charStream(), GetScheduleResponse.class);
             }
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            throw new NotFoundHttpException();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             throw new NotFoundHttpException();
         }
     }
@@ -86,10 +77,7 @@ public class SchedulesApi {
     public void createSchedule(final CreateScheduleRequest request) throws BadRequestHttpException {
         try {
             mHttpGate.postWithSettings(GROUP.toString(), mGson.toJson(request)).close();
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            throw new BadRequestHttpException();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             throw new BadRequestHttpException();
         }
     }
@@ -98,10 +86,7 @@ public class SchedulesApi {
             throws NotFoundHttpException {
         try {
             mHttpGate.putWithSettings(GROUP.toString() + scheduleId, mGson.toJson(request)).close();
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-            throw new NotFoundHttpException();
-        } catch (FailureHttpException e) {
+        } catch (HttpGateFailureException | FailureHttpException e) {
             throw new NotFoundHttpException();
         }
     }
@@ -109,9 +94,7 @@ public class SchedulesApi {
     public void deleteSchedule(final String scheduleId) {
         try {
             mHttpGate.deleteWithSettings(GROUP.toString() + scheduleId).close();
-        } catch (HttpGateFailureException e) {
-            mHttpGate.getStatusObserver().notifyInternetNotAccessible();
-        } catch (FailureHttpException ignored) {
+        } catch (HttpGateFailureException | FailureHttpException ignored) {
         }
     }
 }
