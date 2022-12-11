@@ -113,15 +113,18 @@ public class HttpUrl {
         public static final Group NETWORKS;
         public static final Group SCHEDULES;
         public static final Group DEVICES;
+        public static final Group HISTORY;
 
         private static final String NETWORKS_GROUP = "/networks";
         private static final String SCHEDULES_GROUP = "/schedules";
         private static final String DEVICES_GROUP = "/devices";
+        private static final String HISTORY_GROUP = "/history";
 
         static {
             NETWORKS = new Group(NETWORKS_GROUP);
             SCHEDULES = new Group(SCHEDULES_GROUP);
             DEVICES = new Group(DEVICES_GROUP);
+            HISTORY = new Group(HISTORY_GROUP);
         }
 
         protected final String mGroup;
@@ -195,12 +198,16 @@ public class HttpUrl {
             public static final Param DEVICE_HARDCODED_ID;
             public static final Param DEVICES_FULL_INFO;
             public static final Param DEVICES_ATTACHABLE;
+            public static final Param PAGE;
+            public static final Param SIZE;
 
             private static final String NETWORK_ID_PARAM = "network_id";
             private static final String DEVICE_ID_PARAM = "device_id";
             private static final String DEVICE_HARDCODED_ID_PARAM = "hardcoded_id";
             private static final String DEVICES_FULL_INFO_PARAM = "full_info";
             private static final String DEVICES_ATTACHABLE_PARAM = "attachable";
+            private static final String PAGE_PARAM = "page";
+            private static final String SIZE_PARAM = "size";
 
             static {
                 NETWORK_ID = new Param(NETWORK_ID_PARAM);
@@ -208,6 +215,8 @@ public class HttpUrl {
                 DEVICE_HARDCODED_ID = new Param(DEVICE_HARDCODED_ID_PARAM);
                 DEVICES_FULL_INFO = new Param(DEVICES_FULL_INFO_PARAM);
                 DEVICES_ATTACHABLE = new Param(DEVICES_ATTACHABLE_PARAM);
+                PAGE = new Param(PAGE_PARAM);
+                SIZE = new Param(SIZE_PARAM);
             }
 
             private final String mParam;
