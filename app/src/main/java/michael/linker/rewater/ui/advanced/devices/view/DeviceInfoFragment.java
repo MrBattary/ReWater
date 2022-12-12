@@ -89,8 +89,10 @@ public class DeviceInfoFragment extends Fragment {
             mParentScheduleView.setParentEntity(scheduleModel.getName());
             mParentScheduleInfoView.setWaterVolumeInfo(scheduleModel.getVolume());
             mParentScheduleInfoView.setWateringPeriodInfo(scheduleModel.getPeriod());
+            mParentScheduleInfoView.setVisibility(View.VISIBLE);
         } else {
             mParentScheduleView.clearParentEntity();
+            mParentScheduleInfoView.setVisibility(View.GONE);
         }
     }
 

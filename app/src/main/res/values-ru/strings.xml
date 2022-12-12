@@ -74,8 +74,8 @@
     <string name="placeholder_emptiness_temporary">Тут пока ничего нет</string>
     <string name="placeholder_emptiness_invitation">Тут вроде как пусто</string>
     <string name="placeholder_username">Имя пользователя</string>
-    <string name="parent_schedule_not_found">Нет установленных расписаний</string>
-    <string name="parent_network_not_found">Нет установленных сетей</string>
+    <string name="parent_schedule_not_found">Нет установленного расписания</string>
+    <string name="parent_network_not_found">Нет установленной сети</string>
     <string name="schedule_information">Информация о расписании:</string>
     <string name="schedule_each">каждые</string>
     <string name="list_selected">выбран</string>

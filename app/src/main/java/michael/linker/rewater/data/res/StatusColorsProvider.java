@@ -55,18 +55,4 @@ public class StatusColorsProvider {
         }
         return color;
     }
-
-    /**
-     * Get background color ID associated with the provided history status.
-     *
-     * @param status status
-     * @return ID of the background color in the res
-     */
-    public static Integer getBackgroundColorForHistoryStatus(final HistoryStatus status) {
-        final Integer color = HISTORY_STATUS_BACKGROUND_COLOR_MAP.get(status);
-        if (color == null) {
-            return UNDEFINED_COLOR;
-        }
-        return color;
-    }
 }

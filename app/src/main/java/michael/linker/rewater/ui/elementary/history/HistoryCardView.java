@@ -2,13 +2,12 @@ package michael.linker.rewater.ui.elementary.history;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.cardview.widget.CardView;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.HistoryStatus;
-import michael.linker.rewater.data.res.StatusColorsProvider;
+import michael.linker.rewater.data.res.StatusDrawablesProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.elementary.ICustomView;
 import michael.linker.rewater.ui.elementary.history.model.HistoryCardDateTimeBaseModel;
@@ -18,7 +17,7 @@ import michael.linker.rewater.ui.elementary.text.parententity.ParentEntityView;
 
 public class HistoryCardView implements ICustomView {
     private View mRootView;
-    private CardView mCardView;
+    private LinearLayout mCardBackground;
     private ViewGroup mParentsView;
     private TextView mScheduleView, mDateTimeView;
     private ParentEntityView mNetworkView;
@@ -51,7 +50,7 @@ public class HistoryCardView implements ICustomView {
 
         if (model instanceof HistoryCardNetworkScheduleDateTimeModel) {
             mNetworkView.setText(
-                    ((HistoryCardNetworkScheduleDateTimeModel) model).getScheduleName());
+                    ((HistoryCardNetworkScheduleDateTimeModel) model).getNetworkName());
             mNetworkView.setVisibility(View.VISIBLE);
         }
     }
@@ -68,7 +67,7 @@ public class HistoryCardView implements ICustomView {
 
     private void initViews(View rootView) {
         mRootView = rootView;
-        mCardView = rootView.findViewById(R.id.history_event_card);
+        mCardBackground = rootView.findViewById(R.id.history_event_card_background);
         mParentsView = rootView.findViewById(R.id.history_card_parents);
         mScheduleView = rootView.findViewById(R.id.history_card_parents_schedule);
         mDateTimeView = rootView.findViewById(R.id.history_card_date_time);
@@ -78,7 +77,7 @@ public class HistoryCardView implements ICustomView {
     }
 
     private void setCardBackgroundColor(HistoryStatus historyStatus) {
-        mCardView.setCardBackgroundColor(
-                StatusColorsProvider.getBackgroundColorForHistoryStatus(historyStatus));
+        mCardBackground.setBackground(
+                StatusDrawablesProvider.getBackgroundForHistoryStatus(historyStatus));
     }
 }
