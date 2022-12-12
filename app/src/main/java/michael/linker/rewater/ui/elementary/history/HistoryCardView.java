@@ -23,22 +23,37 @@ public class HistoryCardView implements ICustomView {
     private TextView mScheduleView, mDateTimeView;
     private ParentEntityView mNetworkView;
 
-    public HistoryCardView(View rootView, HistoryCardDateTimeBaseModel model) {
+    public HistoryCardView(View rootView) {
         this.initViews(rootView);
-        this.setCardBackgroundColor(model.getHistoryStatus());
-        this.initCardContent(model);
+
     }
 
-    public HistoryCardView(View rootView, HistoryCardScheduleDateTimeModel model) {
-        this.initViews(rootView);
+    /**
+     * Set card content and adapt it's view.
+     *
+     * @param model HistoryCardDateTimeBaseModel
+     *              OR
+     *              HistoryCardScheduleDateTimeModel
+     *              OR
+     *              HistoryCardNetworkScheduleDateTimeModel
+     */
+    public void setCardContent(HistoryCardDateTimeBaseModel model) {
         this.setCardBackgroundColor(model.getHistoryStatus());
-        this.initCardContent(model);
-    }
+        mDateTimeView.setText(model.getTime());
+        mParentsView.setVisibility(View.GONE);
 
-    public HistoryCardView(View rootView, HistoryCardNetworkScheduleDateTimeModel model) {
-        this.initViews(rootView);
-        this.setCardBackgroundColor(model.getHistoryStatus());
-        this.initCardContent(model);
+        if (model instanceof HistoryCardScheduleDateTimeModel) {
+            mScheduleView.setText(
+                    ((HistoryCardNetworkScheduleDateTimeModel) model).getScheduleName());
+            mParentsView.setVisibility(View.VISIBLE);
+            mNetworkView.setVisibility(View.GONE);
+        }
+
+        if (model instanceof HistoryCardNetworkScheduleDateTimeModel) {
+            mNetworkView.setParentEntity(
+                    ((HistoryCardNetworkScheduleDateTimeModel) model).getScheduleName());
+            mNetworkView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -65,23 +80,5 @@ public class HistoryCardView implements ICustomView {
     private void setCardBackgroundColor(HistoryStatus historyStatus) {
         mCardView.setCardBackgroundColor(
                 StatusColorsProvider.getBackgroundColorForHistoryStatus(historyStatus));
-    }
-
-    private void initCardContent(HistoryCardDateTimeBaseModel model) {
-        mDateTimeView.setText(model.getTime());
-        mParentsView.setVisibility(View.GONE);
-
-        if (model instanceof HistoryCardScheduleDateTimeModel) {
-            mScheduleView.setText(
-                    ((HistoryCardNetworkScheduleDateTimeModel) model).getScheduleName());
-            mParentsView.setVisibility(View.VISIBLE);
-            mNetworkView.setVisibility(View.GONE);
-        }
-
-        if (model instanceof HistoryCardNetworkScheduleDateTimeModel) {
-            mNetworkView.setParentEntity(
-                    ((HistoryCardNetworkScheduleDateTimeModel) model).getScheduleName());
-            mNetworkView.setVisibility(View.VISIBLE);
-        }
     }
 }
