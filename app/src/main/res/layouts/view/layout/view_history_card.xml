@@ -14,21 +14,21 @@
         app:cardCornerRadius="@dimen/card_corner_radius">
 
         <RelativeLayout
-            android:id="@+id/history_event_card_content"
+            android:id="@+id/history_card_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
             android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small">
 
             <RelativeLayout
-                android:id="@+id/history_event_parents_names"
+                android:id="@+id/history_card_parents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="@dimen/fragment_content_vertical_spacing_small">
 
                 <TextView
-                    android:id="@+id/history_event_parents_schedule"
+                    android:id="@+id/history_card_parents_schedule"
                     style="@style/CustomTextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -37,20 +37,20 @@
                     android:text="@string/placeholder_global_medium" />
 
                 <include
-                    android:id="@+id/history_event_parents_network"
+                    android:id="@+id/history_card_parents_network"
                     layout="@layout/view_parent_entity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@id/history_event_parents_schedule" />
+                    android:layout_below="@id/history_card_parents_schedule" />
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/history_event_time"
+                android:id="@+id/history_card_date_time"
                 style="@style/CustomTextSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/history_event_parents_names"
+                android:layout_below="@id/history_card_parents"
                 android:text="@string/placeholder_date_time" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

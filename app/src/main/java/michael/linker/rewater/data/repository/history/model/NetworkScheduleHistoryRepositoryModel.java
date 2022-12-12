@@ -1,6 +1,7 @@
 package michael.linker.rewater.data.repository.history.model;
 
 import michael.linker.rewater.data.model.IdNameModel;
+import michael.linker.rewater.data.model.status.HistoryStatus;
 import michael.linker.rewater.data.web.api.history.response.GetNetworkScheduleHistoryResponse;
 
 public class NetworkScheduleHistoryRepositoryModel {

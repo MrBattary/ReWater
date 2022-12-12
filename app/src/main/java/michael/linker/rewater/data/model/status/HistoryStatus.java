@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.repository.history.model;
+package michael.linker.rewater.data.model.status;
 
 import java.util.Map;
 

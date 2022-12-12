@@ -2,7 +2,7 @@ package michael.linker.rewater.ui.advanced.home.model;
 
 import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.repository.history.model.NetworkScheduleHistoryRepositoryModel;
-import michael.linker.rewater.data.repository.history.model.HistoryStatus;
+import michael.linker.rewater.data.model.status.HistoryStatus;
 
 public class HomeHistoryUiModel {
     private final String mTime;
@@ -15,5 +15,21 @@ public class HomeHistoryUiModel {
         mNetworkIdName = repositoryModel.getNetworkIdName();
         mScheduleIdName = repositoryModel.getScheduleIdName();
         mHistoryStatus = repositoryModel.getHistoryStatus();
+    }
+
+    public String getTime() {
+        return mTime;
+    }
+
+    public IdNameModel getNetworkIdName() {
+        return mNetworkIdName;
+    }
+
+    public IdNameModel getScheduleIdName() {
+        return mScheduleIdName;
+    }
+
+    public HistoryStatus getHistoryStatus() {
+        return mHistoryStatus;
     }
 }
