@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/history_event"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/fragment_content_vertical_spacing_small"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/history_event_parents_names"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/history_event_status">
+
+        <TextView
+            android:id="@+id/history_event_parents_schedule"
+            style="@style/CustomTextSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/placeholder_global_short" />
+
+        <include
+            android:id="@+id/history_event_parents_network"
+            layout="@layout/view_parent_entity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/history_event_parents_schedule" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/history_event_time"
+        style="@style/CustomTextSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/placeholder_date_time" />
+
+    <TextView
+        android:id="@+id/history_event_status"
+        style="@style/CustomTextSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@id/history_event_time"
+        android:text="@string/watering_history_event_partially_success" />
+</RelativeLayout>

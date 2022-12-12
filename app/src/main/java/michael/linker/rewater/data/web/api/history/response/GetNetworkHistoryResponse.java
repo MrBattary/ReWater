@@ -9,7 +9,6 @@ public class GetNetworkHistoryResponse {
 
     public GetNetworkHistoryResponse(
             String time,
-            IdNamePart network,
             IdNamePart schedule,
             Integer status) {
         this.time = time;

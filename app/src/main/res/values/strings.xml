@@ -70,8 +70,9 @@
     <string name="unit_millilitres_short">ml</string>
 
     <!-- Texts. -->
-    <string name="placeholder_global_short">[NOT PRODUCTION] Lorem ipsum vivamus. [NOT PRODUCTION]</string>
-    <string name="placeholder_global_medium">[NOT PRODUCTION] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet. [NOT PRODUCTION]</string>
+    <string name="placeholder_global_short" translatable="false">[NOT PRODUCTION] Lorem ipsum vivamus. [NOT PRODUCTION]</string>
+    <string name="placeholder_global_medium" translatable="false">[NOT PRODUCTION] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet. [NOT PRODUCTION]</string>
+    <string name="placeholder_date_time" translatable="false">yyyy-MM-dd hh:mm</string>
     <string name="placeholder_emptiness">There\'s nothing here</string>
     <string name="placeholder_emptiness_temporary">There\'s nothing here yet</string>
     <string name="placeholder_emptiness_invitation">It\'s kind of empty here</string>
@@ -144,7 +145,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.</string>
     <string name="security_failure_hash_impl_was_not_found">Hash function implementation not found!</string>
-    <string name="watering_history_header">Recent watering events</string>
+    <string name="watering_history_header">Recent watering events:</string>
     <string name="watering_history_empty">No recent watering events found</string>
     <string name="watering_history_event_success">Watering is successful</string>
     <string name="watering_history_event_partially_success">Watering is partially successful</string>

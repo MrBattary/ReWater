@@ -16,7 +16,7 @@ import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
 import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
 import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
 import michael.linker.rewater.data.model.IdNameModel;
-import michael.linker.rewater.data.repository.history.model.HistoryNetworkHistoryRepositoryModel;
+import michael.linker.rewater.data.repository.history.model.NetworkScheduleHistoryRepositoryModel;
 import michael.linker.rewater.data.web.api.common.request.PageSizeCommonRequest;
 
 public class HistoryLocalRepository implements IHistoryRepository {
@@ -37,8 +37,8 @@ public class HistoryLocalRepository implements IHistoryRepository {
     }
 
     @Override
-    public List<HistoryNetworkHistoryRepositoryModel> getAllHistory(PageSizeCommonRequest request) {
-        List<HistoryNetworkHistoryRepositoryModel> historyList = new ArrayList<>();
+    public List<NetworkScheduleHistoryRepositoryModel> getAllHistory(PageSizeCommonRequest request) {
+        List<NetworkScheduleHistoryRepositoryModel> historyList = new ArrayList<>();
 
         final List<String> networksIdList = mNetworkToSchedulesDataLink.getLeftEntityIdList();
         for (int i = 0; i < request.getSize(); i++) {
@@ -54,16 +54,15 @@ public class HistoryLocalRepository implements IHistoryRepository {
             final String randomScheduleId = schedulesIdList.get(
                     mRand.nextInt(schedulesIdList.size()));
 
-            SimpleDateFormat randomDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss",
+            SimpleDateFormat randomDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm",
                     Locale.getDefault());
             int year = randBetween(2022, 2022);
             int month = randBetween(0, 11);
             int hour = randBetween(0, 23);
             int min = randBetween(0, 59);
-            int sec = randBetween(0, 59);
             GregorianCalendar gc = new GregorianCalendar(year, month, 1);
             int day = randBetween(1, gc.getActualMaximum(Calendar.DAY_OF_MONTH));
-            gc.set(year, month, day, hour, min, sec);
+            gc.set(year, month, day, hour, min);
 
 
             final FullNetworkModel randomNetworkModel = mNetworksData.getNetworkById(
@@ -71,7 +70,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
             final FullScheduleModel randomScheduleModel =
                     mSchedulesData.getScheduleById(randomScheduleId);
 
-            historyList.add(new HistoryNetworkHistoryRepositoryModel(
+            historyList.add(new NetworkScheduleHistoryRepositoryModel(
                     randomDateTime.format(gc.getTime()),
                     new IdNameModel(randomNetworkId, randomNetworkModel.getName()),
                     new IdNameModel(randomScheduleId, randomScheduleModel.getName()),

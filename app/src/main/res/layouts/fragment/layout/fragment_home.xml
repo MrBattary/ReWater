@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home"
     android:layout_width="match_parent"
@@ -33,4 +34,31 @@
             android:text="@string/placeholder_username" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/home_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_greeting"
+        android:layout_marginHorizontal="@dimen/fragment_content_horizontal_spacing"
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small">
+
+        <TextView
+            android:id="@+id/home_history_header"
+            style="@style/CustomTextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/watering_history_header" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_history_events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_history_header"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            app:layoutManager="LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/view_history_event" />
+    </RelativeLayout>
 </RelativeLayout>
