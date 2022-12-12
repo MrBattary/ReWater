@@ -31,7 +31,7 @@ public class HomeHistoryItemAdapter extends
     @Override
     public HomeHistoryItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View adapterLayout = LayoutInflater.from(mContext)
-                .inflate(R.layout.view_devices_card, parent, false);
+                .inflate(R.layout.view_history_card, parent, false);
         return new HomeHistoryItemViewHolder(adapterLayout);
     }
 

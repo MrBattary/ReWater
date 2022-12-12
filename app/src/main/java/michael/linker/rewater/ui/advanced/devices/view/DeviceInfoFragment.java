@@ -23,8 +23,8 @@ import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
-import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
-import michael.linker.rewater.ui.elementary.parententity.ParentScheduleInfoView;
+import michael.linker.rewater.ui.elementary.text.parententity.ParentEntityView;
+import michael.linker.rewater.ui.elementary.text.parententity.ParentScheduleInfoView;
 import michael.linker.rewater.ui.elementary.status.DetailDescribedStatusView;
 
 public class DeviceInfoFragment extends Fragment {

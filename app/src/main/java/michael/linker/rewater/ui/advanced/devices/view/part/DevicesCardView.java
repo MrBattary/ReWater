@@ -17,7 +17,7 @@ import michael.linker.rewater.ui.advanced.devices.model.DeviceCardUiModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
-import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
+import michael.linker.rewater.ui.elementary.text.parententity.ParentEntityView;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 

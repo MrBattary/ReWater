@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.elementary.parententity;
+package michael.linker.rewater.ui.elementary.text.parententity;
 
 import android.content.res.ColorStateList;
 import android.view.View;
@@ -9,8 +9,9 @@ import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.StatusColorsProvider;
 import michael.linker.rewater.ui.elementary.ICustomView;
+import michael.linker.rewater.ui.elementary.text.IText;
 
-public class ParentEntityView implements ICustomView {
+public class ParentEntityView implements ICustomView, IText {
     private final View mView;
     private final ImageView mImageView;
     private final TextView mTextView;
@@ -48,5 +49,10 @@ public class ParentEntityView implements ICustomView {
     @Override
     public View getViewInstance() {
         return mView;
+    }
+
+    @Override
+    public void setText(String text) {
+        mTextView.setText(text);
     }
 }

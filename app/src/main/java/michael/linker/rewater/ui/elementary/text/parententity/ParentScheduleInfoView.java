@@ -1,4 +1,4 @@
-package michael.linker.rewater.ui.elementary.parententity;
+package michael.linker.rewater.ui.elementary.text.parententity;
 
 import android.view.View;
 import android.view.ViewGroup;

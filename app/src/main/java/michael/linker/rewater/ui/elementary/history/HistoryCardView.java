@@ -14,7 +14,7 @@ import michael.linker.rewater.ui.elementary.ICustomView;
 import michael.linker.rewater.ui.elementary.history.model.HistoryCardDateTimeBaseModel;
 import michael.linker.rewater.ui.elementary.history.model.HistoryCardNetworkScheduleDateTimeModel;
 import michael.linker.rewater.ui.elementary.history.model.HistoryCardScheduleDateTimeModel;
-import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
+import michael.linker.rewater.ui.elementary.text.parententity.ParentEntityView;
 
 public class HistoryCardView implements ICustomView {
     private View mRootView;
@@ -50,7 +50,7 @@ public class HistoryCardView implements ICustomView {
         }
 
         if (model instanceof HistoryCardNetworkScheduleDateTimeModel) {
-            mNetworkView.setParentEntity(
+            mNetworkView.setText(
                     ((HistoryCardNetworkScheduleDateTimeModel) model).getScheduleName());
             mNetworkView.setVisibility(View.VISIBLE);
         }

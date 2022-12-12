@@ -32,8 +32,8 @@ import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.FocusableTextInputView;
 import michael.linker.rewater.ui.elementary.input.text.IFocusableTextInputView;
-import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
-import michael.linker.rewater.ui.elementary.parententity.ParentScheduleInfoView;
+import michael.linker.rewater.ui.elementary.text.parententity.ParentEntityView;
+import michael.linker.rewater.ui.elementary.text.parententity.ParentScheduleInfoView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class AddDeviceFragment extends Fragment {

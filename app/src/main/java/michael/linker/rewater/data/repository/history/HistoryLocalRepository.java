@@ -1,7 +1,6 @@
 package michael.linker.rewater.data.repository.history;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -37,7 +36,8 @@ public class HistoryLocalRepository implements IHistoryRepository {
     }
 
     @Override
-    public List<NetworkScheduleHistoryRepositoryModel> getAllHistory(PageSizeCommonRequest request) {
+    public List<NetworkScheduleHistoryRepositoryModel> getAllHistory(
+            PageSizeCommonRequest request) {
         List<NetworkScheduleHistoryRepositoryModel> historyList = new ArrayList<>();
 
         final List<String> networksIdList = mNetworkToSchedulesDataLink.getLeftEntityIdList();
@@ -48,12 +48,10 @@ public class HistoryLocalRepository implements IHistoryRepository {
                 schedulesIdList =
                         mNetworkToSchedulesDataLink.getRightEntityIdListByLeftEntityId(
                                 randomNetworkId);
-            } while (schedulesIdList.size() > 0);
+            } while (schedulesIdList.size() == 0);
 
-            final LocalTime randomTime = LocalTime.MIN.minusSeconds(mRand.nextInt());
             final String randomScheduleId = schedulesIdList.get(
                     mRand.nextInt(schedulesIdList.size()));
-
             SimpleDateFormat randomDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm",
                     Locale.getDefault());
             int year = randBetween(2022, 2022);
