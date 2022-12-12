@@ -23,11 +23,11 @@
     </style>
 
     <style name="MaterialAlertDialogStyle.Positive" parent="TextButton">
-        <item name="android:textColor">@color/positive_color</item>
+        <item name="android:textColor">@color/positive</item>
     </style>
 
     <style name="MaterialAlertDialogStyle.Negative" parent="TextButton">
-        <item name="android:textColor">@color/negative_color</item>
+        <item name="android:textColor">@color/negative</item>
     </style>
 
     <style name="MaterialAlertDialogStyle.Title" parent="MaterialAlertDialog.Material3.Title.Text">

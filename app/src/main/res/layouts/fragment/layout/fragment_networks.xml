@@ -28,5 +28,5 @@
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/background_tertiary"
         app:fabSize="normal"
-        app:tint="@color/positive_color" />
+        app:tint="@color/positive" />
 </FrameLayout>

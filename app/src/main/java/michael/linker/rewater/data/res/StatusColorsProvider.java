@@ -10,9 +10,9 @@ public class StatusColorsProvider {
     private static final Integer UNDEFINED_COLOR = ColorsProvider.getColor(R.color.white);
 
     static {
-        STATUS_INTEGER_MAP = Map.of(Status.OK, ColorsProvider.getColor(R.color.positive_color),
-                Status.WARNING, ColorsProvider.getColor(R.color.warning_color),
-                Status.DEFECT, ColorsProvider.getColor(R.color.negative_color),
+        STATUS_INTEGER_MAP = Map.of(Status.OK, ColorsProvider.getColor(R.color.positive),
+                Status.WARNING, ColorsProvider.getColor(R.color.warning),
+                Status.DEFECT, ColorsProvider.getColor(R.color.negative),
                 Status.UNDEFINED, UNDEFINED_COLOR);
     }
 

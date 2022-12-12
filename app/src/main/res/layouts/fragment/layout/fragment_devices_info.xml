@@ -35,7 +35,7 @@
             android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
             android:text="@string/button_back"
             app:icon="@drawable/ic_right_arrow"
-            app:iconTint="@color/negative_color" />
+            app:iconTint="@color/negative" />
 
         <RelativeLayout
             android:id="@+id/device_info_parents"

@@ -358,7 +358,7 @@ public class PairNewDeviceFragment extends Fragment {
         button.setBackgroundTintList(
                 ColorStateList.valueOf(ColorsProvider.getColor(R.color.background_secondary)));
         button.setStrokeColor(
-                ColorStateList.valueOf(ColorsProvider.getColor(R.color.positive_color)));
+                ColorStateList.valueOf(ColorsProvider.getColor(R.color.positive)));
     }
 
     private void setNextButtonActionStyle() {

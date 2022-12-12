@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_exit"
             app:icon="@drawable/ic_exit"
-            app:iconTint="@color/negative_color" />
+            app:iconTint="@color/negative" />
 
         <Button
             android:id="@+id/settings_shutdown_button"
@@ -51,7 +51,7 @@
             android:layout_below="@id/settings_exit_button"
             android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small"
             android:text="@string/button_shutdown"
-            app:strokeColor="@color/negative_color" />
+            app:strokeColor="@color/negative" />
     </RelativeLayout>
 
 </RelativeLayout>

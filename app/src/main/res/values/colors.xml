@@ -17,7 +17,10 @@
     <color name="background_secondary">#353535</color>
     <color name="background_tertiary">#454545</color>
     <color name="background_quaternary">#656565</color>
-    <color name="positive_color">#20c04d</color>
-    <color name="warning_color">#f3dc06</color>
-    <color name="negative_color">#fb0505</color>
+    <color name="positive">#20c04d</color>
+    <color name="background_positive">#237339</color>
+    <color name="warning">#f3dc06</color>
+    <color name="background_warning">#9E8F00</color>
+    <color name="negative">#fb0505</color>
+    <color name="background_negative">#901515</color>
 </resources>
