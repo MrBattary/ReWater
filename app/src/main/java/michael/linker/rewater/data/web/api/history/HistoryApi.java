@@ -29,7 +29,7 @@ public class HistoryApi {
         mGson = new Gson();
     }
 
-    public List<GetNetworkScheduleHistoryResponse> getAllHistory(PageSizeCommonRequest request) {
+    public List<GetNetworkScheduleHistoryResponse> getConsolidatedHistory(PageSizeCommonRequest request) {
         try {
             Response response = mHttpGate.getWithSettings(GROUP.toString() +
                     HttpUrl.Group.NETWORKS.toString() +

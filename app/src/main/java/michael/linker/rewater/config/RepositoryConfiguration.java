@@ -78,7 +78,10 @@ public class RepositoryConfiguration {
     public static IHistoryRepository getHistoryRepository() {
         if (sHistoryRepository == null) {
             if (SERVER_MODE == MODE_LOCAL) {
-                sHistoryRepository = new HistoryLocalRepository();
+                sHistoryRepository = new HistoryLocalRepository(
+                        new HistoryLocalRepository.GenerationConfig(
+                                12, 20
+                        ));
             }
             if (SERVER_MODE == MODE_GLOBAL) {
                 sHistoryRepository = new HistoryWebRepository();

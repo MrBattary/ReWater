@@ -45,7 +45,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void requireHistoryUpdate(PageSizeCommonRequest request) {
-        Single.fromCallable(() -> mHistoryRepository.getAllHistory(request))
+        Single.fromCallable(() -> mHistoryRepository.getConsolidatedHistory(request))
                 .doOnSuccess(historyEventList ->
                         mHistoryList.postValue(
                                 historyEventList.stream()

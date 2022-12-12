@@ -8,10 +8,10 @@ import michael.linker.rewater.data.web.api.common.request.PageSizeCommonRequest;
 public interface IHistoryRepository {
 
     /**
-     * Getting a list of all history events in all networks.
+     * Getting a consolidated list of history events in all networks.
      *
      * @param request page size request
      * @return the list of history models in it or empty list
      */
-    List<NetworkScheduleHistoryRepositoryModel> getAllHistory(PageSizeCommonRequest request);
+    List<NetworkScheduleHistoryRepositoryModel> getConsolidatedHistory(PageSizeCommonRequest request);
 }

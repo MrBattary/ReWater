@@ -23,25 +23,63 @@ public class HistoryLocalRepository implements IHistoryRepository {
 
     private final INetworksData mNetworksData;
     private final ISchedulesData mSchedulesData;
-
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
 
-    public HistoryLocalRepository() {
+    private final List<NetworkScheduleHistoryRepositoryModel>
+            mGeneratedConsolidatedHistoryEventsList;
+
+    public HistoryLocalRepository(GenerationConfig config) {
         mRand = new Random();
 
         mNetworksData = StubDataConfiguration.getNetworksData();
         mSchedulesData = StubDataConfiguration.getSchedulesData();
-
         mNetworkToSchedulesDataLink = StubDataConfiguration.getNetworkToSchedulesDataLink();
+
+        mGeneratedConsolidatedHistoryEventsList = generateConsolidatedHistoryEvents(
+                config.getConsolidatedHistoryEventsNumber());
     }
 
     @Override
-    public List<NetworkScheduleHistoryRepositoryModel> getAllHistory(
+    public List<NetworkScheduleHistoryRepositoryModel> getConsolidatedHistory(
             PageSizeCommonRequest request) {
         List<NetworkScheduleHistoryRepositoryModel> historyList = new ArrayList<>();
 
+        final int requestSize = request.getPage() * request.getSize();
+
+        for (int i = requestSize; i < requestSize + request.getSize(); i++) {
+            if (i < mGeneratedConsolidatedHistoryEventsList.size()) {
+                historyList.add(mGeneratedConsolidatedHistoryEventsList.get(i));
+            } else {
+                break;
+            }
+        }
+
+        return historyList;
+    }
+
+    public static class GenerationConfig {
+        private final int mConsolidatedHistoryEventsNumber, mDevicesHistoryEventsNumber;
+
+        public GenerationConfig(int consolidatedHistorySize, int devicesHistory) {
+            mConsolidatedHistoryEventsNumber = consolidatedHistorySize;
+            mDevicesHistoryEventsNumber = devicesHistory;
+        }
+
+        public int getConsolidatedHistoryEventsNumber() {
+            return mConsolidatedHistoryEventsNumber;
+        }
+
+        public int getDevicesHistoryEventsNumber() {
+            return mDevicesHistoryEventsNumber;
+        }
+    }
+
+    private List<NetworkScheduleHistoryRepositoryModel> generateConsolidatedHistoryEvents(
+            int generationSize) {
+        List<NetworkScheduleHistoryRepositoryModel> historyList = new ArrayList<>();
+
         final List<String> networksIdList = mNetworkToSchedulesDataLink.getLeftEntityIdList();
-        for (int i = 0; i < request.getSize(); i++) {
+        for (int i = 0; i < generationSize; i++) {
             final String randomNetworkId = networksIdList.get(mRand.nextInt(networksIdList.size()));
             List<String> schedulesIdList;
             do {
@@ -55,7 +93,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
             SimpleDateFormat randomDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm",
                     Locale.getDefault());
             int year = randBetween(2022, 2022);
-            int month = randBetween(0, 11);
+            int month = randBetween(0, 12);
             int hour = randBetween(0, 23);
             int min = randBetween(0, 59);
             GregorianCalendar gc = new GregorianCalendar(year, month, 1);

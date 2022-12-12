@@ -15,8 +15,8 @@ public class HistoryWebRepository implements IHistoryRepository {
     }
 
     @Override
-    public List<NetworkScheduleHistoryRepositoryModel> getAllHistory(PageSizeCommonRequest request) {
-        return mApi.getAllHistory(request).stream()
+    public List<NetworkScheduleHistoryRepositoryModel> getConsolidatedHistory(PageSizeCommonRequest request) {
+        return mApi.getConsolidatedHistory(request).stream()
                 .map(NetworkScheduleHistoryRepositoryModel::new)
                 .collect(Collectors.toList());
     }

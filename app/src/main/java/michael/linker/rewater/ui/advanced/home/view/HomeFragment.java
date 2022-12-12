@@ -23,7 +23,7 @@ import michael.linker.rewater.ui.advanced.home.viewmodel.HomeViewModel;
 
 public class HomeFragment extends Fragment {
     private static final PageSizeCommonRequest
-            HOME_HISTORY_PAGINATION_REQUEST = new PageSizeCommonRequest(1, 5);
+            HOME_HISTORY_PAGINATION_REQUEST = new PageSizeCommonRequest(0, 5);
     private TextView mUsernameTextView;
     private RecyclerView mHistoryEventsRecyclerView;
     private HomeViewModel mViewModel;
