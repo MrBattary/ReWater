@@ -20,13 +20,17 @@ import michael.linker.rewater.R;
 import michael.linker.rewater.data.web.api.common.request.PageSizeCommonRequest;
 import michael.linker.rewater.ui.advanced.home.adapter.HomeHistoryItemAdapter;
 import michael.linker.rewater.ui.advanced.home.viewmodel.HomeViewModel;
+import michael.linker.rewater.ui.elementary.chart.CustomPieChart;
+import michael.linker.rewater.ui.elementary.chart.PieChartLookModel;
 
 public class HomeFragment extends Fragment {
     private static final PageSizeCommonRequest
             HOME_HISTORY_PAGINATION_REQUEST = new PageSizeCommonRequest(0, 5);
     private TextView mUsernameTextView;
-    private ViewGroup mHistoryEventsNotFoundPlaceholder;
+    private ViewGroup mHistoryEventsNotFoundPlaceholder, a;
+    private CustomPieChart mNetworksPieChart, mDevicesPieChart;
     private RecyclerView mHistoryEventsRecyclerView;
+
     private HomeViewModel mViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,6 +53,14 @@ public class HomeFragment extends Fragment {
 
     private void initFields(final View view) {
         mUsernameTextView = view.findViewById(R.id.home_greeting_username);
+        a = view.findViewById(R.id.home_charts);
+        mNetworksPieChart = new CustomPieChart(
+                view.findViewById(R.id.home_charts_networks),
+                new PieChartLookModel(
+                        R.string.chart_networks_placeholder,
+                        R.string.chart_networks_center_text
+                )
+        );
         mHistoryEventsNotFoundPlaceholder = view.findViewById(R.id.home_history_events_not_found);
         mHistoryEventsRecyclerView = view.findViewById(R.id.home_history_events);
     }

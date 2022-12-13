@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import michael.linker.rewater.data.model.status.Status;
-import michael.linker.rewater.data.res.StatusColorsProvider;
+import michael.linker.rewater.data.res.status.StatusColorsProvider;
 
 public class StatusStyledColoredTextView implements IStatusStyledTextView {
     private final TextView mTextView;

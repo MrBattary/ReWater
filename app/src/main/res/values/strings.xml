@@ -150,6 +150,10 @@ SOFTWARE.</string>
     <string name="watering_history_event_success">Watering is successful</string>
     <string name="watering_history_event_partially_success">Watering is partially successful</string>
     <string name="watering_history_event_failure">Watering is not successful</string>
+    <string name="chart_networks_center_text">Network\nstatuses</string>
+    <string name="chart_networks_placeholder">No networks found for the chart diagram</string>
+    <string name="chart_devices_center_text">Devices\nstatuses</string>
+    <string name="chart_devices_placeholder">No devices found for the chart diagram</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning</string>

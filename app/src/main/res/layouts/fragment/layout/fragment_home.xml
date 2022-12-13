@@ -9,7 +9,8 @@
     <RelativeLayout
         android:id="@+id/home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
         tools:context=".ui.advanced.home.view.HomeFragment">
 
         <RelativeLayout
@@ -17,7 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
             android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small">
 
             <TextView
@@ -40,11 +40,35 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/home_charts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_greeting"
+            android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/home_charts_networks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/home_charts_devices"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/home_charts_networks"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/home_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/home_greeting"
-            android:layout_marginHorizontal="@dimen/fragment_content_horizontal_spacing"
+            android:layout_below="@id/home_charts"
             android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small">
 
             <TextView

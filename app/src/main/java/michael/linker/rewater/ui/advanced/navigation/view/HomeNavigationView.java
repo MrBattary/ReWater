@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.res.DimensionsProvider;
-import michael.linker.rewater.data.res.StatusDrawablesProvider;
+import michael.linker.rewater.data.res.status.StatusDrawablesProvider;
 import michael.linker.rewater.databinding.ActivityMainBinding;
 import michael.linker.rewater.ui.advanced.navigation.viewmodel.HomeNavigationViewModel;
 

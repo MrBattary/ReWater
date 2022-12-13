@@ -1,10 +1,11 @@
-package michael.linker.rewater.data.res;
+package michael.linker.rewater.data.res.status;
 
 import java.util.Map;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.HistoryStatus;
 import michael.linker.rewater.data.model.status.Status;
+import michael.linker.rewater.data.res.ColorsProvider;
 
 public class StatusColorsProvider {
     private static final Map<Status, Integer> STATUS_COLOR_MAP;

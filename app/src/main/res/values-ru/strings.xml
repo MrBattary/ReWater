@@ -133,6 +133,10 @@
     <string name="watering_history_event_success">Полив успешно завершен</string>
     <string name="watering_history_event_partially_success">Полив завершен частично</string>
     <string name="watering_history_event_failure">Полив не был завершен</string>
+    <string name="chart_networks_center_text">Состояния\nсетей</string>
+    <string name="chart_networks_placeholder">Не найдены сети для построения диаграммы</string>
+    <string name="chart_devices_center_text">Состояния\nустройств</string>
+    <string name="chart_devices_placeholder">Не найдены устройства для построения диаграммы</string>
 
     <!-- Titles. -->
     <string name="title_warning">Внимание</string>

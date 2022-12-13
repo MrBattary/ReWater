@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.HistoryStatus;
-import michael.linker.rewater.data.res.StatusDrawablesProvider;
+import michael.linker.rewater.data.res.status.StatusDrawablesProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.elementary.ICustomView;
 import michael.linker.rewater.ui.elementary.history.model.HistoryCardDateTimeBaseModel;

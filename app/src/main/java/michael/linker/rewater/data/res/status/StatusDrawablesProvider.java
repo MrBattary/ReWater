@@ -1,4 +1,4 @@
-package michael.linker.rewater.data.res;
+package michael.linker.rewater.data.res.status;
 
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
@@ -8,6 +8,7 @@ import java.util.Map;
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.HistoryStatus;
 import michael.linker.rewater.data.model.status.Status;
+import michael.linker.rewater.data.res.DrawablesProvider;
 
 public class StatusDrawablesProvider {
     private static final Map<Status, VectorDrawable> ENERGY_STATUS_ICONS_MAP;
