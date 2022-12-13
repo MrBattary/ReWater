@@ -18,15 +18,15 @@ android {
         applicationId "michael.linker.rewater"
         minSdk 29
         targetSdk 32
-        versionCode 170
-        versionName "0.3.170"
+        versionCode 180
+        versionName "0.3.180"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         debug {
-            buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.LOCAL"
+            buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.GLOBAL"
             buildConfigField ServerProtocol, "SERVER_PROTOCOL", "${ServerProtocol}.HTTP"
             buildConfigField "String", "SERVER_ADDRESS", AndroidDevServerAddress
             buildConfigField BluetoothMode, "BLUETOOTH_MODE", "${BluetoothMode}.STUB"

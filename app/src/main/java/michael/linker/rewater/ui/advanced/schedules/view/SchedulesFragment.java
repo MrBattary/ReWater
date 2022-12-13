@@ -73,10 +73,19 @@ public class SchedulesFragment extends Fragment {
         transition.addChangeBoundsTarget(view.findViewById(R.id.schedules));
         transition.addChangeBoundsTarget(view.findViewById(R.id.schedules_recycler_view));
 
+        ViewGroup mSchedulesNotFound = view.findViewById(R.id.schedules_not_found);
+
         mViewModel.getScheduleList().observe(getViewLifecycleOwner(), list -> {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(
-                    new SchedulesItemAdapter(getContext(), mChildViewModel, list, transition));
+            if (list.size() > 0) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(
+                        new SchedulesItemAdapter(getContext(), mChildViewModel, list, transition));
+                recyclerView.setVisibility(View.VISIBLE);
+                mSchedulesNotFound.setVisibility(View.GONE);
+            } else {
+                recyclerView.setVisibility(View.GONE);
+                mSchedulesNotFound.setVisibility(View.VISIBLE);
+            }
         });
     }
 

@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">ReWater</string>
-
     <!-- Navigation bar. -->
     <string name="navigation_title_home">Главная</string>
     <string name="navigation_title_networks">Сети</string>
@@ -72,7 +70,7 @@
     <!-- Texts. -->
     <string name="placeholder_emptiness">Тут ничего нет</string>
     <string name="placeholder_emptiness_temporary">Тут пока ничего нет</string>
-    <string name="placeholder_emptiness_invitation">Тут вроде как пусто</string>
+    <string name="placeholder_emptiness_invitation">Давайте исправим это!</string>
     <string name="placeholder_username">Имя пользователя</string>
     <string name="parent_schedule_not_found">Нет установленного расписания</string>
     <string name="parent_network_not_found">Нет установленной сети</string>
@@ -218,7 +216,8 @@
     <string name="description_sign_logo">Логотип ReWater</string>
     <string name="description_profile_icon">Иконка пользователя</string>
     <string name="description_app_logo">Растение в умном горшке</string>
-    <string name="description_app_name" translatable="false">ReWater</string>
+    <string name="description_emptiness_icon">Пустой список</string>
+    <string name="description_emptiness_invitation_icon">Указатель на кнопку добавить, которая ниже</string>
 
     <!-- Internal error messages. -->
     <string name="internal_repository_device_not_found">Устройство с id: %1$s не обнаружено!</string>

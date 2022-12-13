@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/not_found_invitation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/not_found_invitation_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/not_found_invitation_text"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/description_emptiness_icon"
+        android:src="@drawable/ic_arrow_downward" />
+
+    <TextView
+        android:id="@+id/not_found_invitation_text"
+        style="@style/CustomTextLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/placeholder_emptiness_invitation"
+        android:textColor="@color/text_tertiary" />
+</RelativeLayout>

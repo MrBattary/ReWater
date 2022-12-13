@@ -30,8 +30,8 @@ import michael.linker.rewater.ui.advanced.schedules.viewmodel.UpdateScheduleView
 
 public class ScheduleDevicesFragment extends Fragment {
     private ListView mListView;
+    private ViewGroup mDevicesNotFoundView;
     private ArrayAdapter<UnattachedDeviceItemModel> mAdapter;
-
     private UpdateScheduleViewModel mParentViewModel;
 
     @Override
@@ -51,16 +51,26 @@ public class ScheduleDevicesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = view.findViewById(R.id.schedules_devices_list);
+        mDevicesNotFoundView = view.findViewById(R.id.schedules_devices_not_found);
         mParentViewModel.getUnattachedDeviceList().observe(getViewLifecycleOwner(),
                 unattachedDevices -> {
-                    List<UnattachedDeviceItemModel> scheduleListItemModels = new ArrayList<>();
-                    for (DeviceIdNameUiModel uiModel : unattachedDevices) {
-                        scheduleListItemModels.add(new UnattachedDeviceItemModel(uiModel));
+                    if (unattachedDevices.size() > 0) {
+
+                        List<UnattachedDeviceItemModel> scheduleListItemModels = new ArrayList<>();
+                        for (DeviceIdNameUiModel uiModel : unattachedDevices) {
+                            scheduleListItemModels.add(new UnattachedDeviceItemModel(uiModel));
+                        }
+                        mAdapter = new ArrayAdapter<>(requireContext(),
+                                R.layout.view_custom_list_item_multiple_choise,
+                                scheduleListItemModels);
+                        mListView.setAdapter(mAdapter);
+
+                        mListView.setVisibility(View.VISIBLE);
+                        mDevicesNotFoundView.setVisibility(View.GONE);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mDevicesNotFoundView.setVisibility(View.VISIBLE);
                     }
-                    mAdapter = new ArrayAdapter<>(requireContext(),
-                            R.layout.view_custom_list_item_multiple_choise,
-                            scheduleListItemModels);
-                    mListView.setAdapter(mAdapter);
                 });
 
         this.addMenuProvider(view);

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:id="@+id/home"
         android:layout_width="match_parent"
@@ -57,13 +58,22 @@
                 android:id="@+id/home_history_events"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small"
                 android:layout_below="@id/home_history_header"
+                android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small"
                 android:clipToPadding="false"
                 android:scrollbars="vertical"
                 app:layoutManager="LinearLayoutManager"
                 tools:itemCount="3"
                 tools:listitem="@layout/view_history_card" />
+
+            <include
+                android:id="@+id/home_history_events_not_found"
+                layout="@layout/view_placeholder_not_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/home_history_header"
+                android:layout_centerInParent="true"
+                android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small" />
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

@@ -75,7 +75,7 @@
     <string name="placeholder_date_time" translatable="false">yyyy-MM-dd hh:mm</string>
     <string name="placeholder_emptiness">There\'s nothing here</string>
     <string name="placeholder_emptiness_temporary">There\'s nothing here yet</string>
-    <string name="placeholder_emptiness_invitation">It\'s kind of empty here</string>
+    <string name="placeholder_emptiness_invitation">Let\'s fix this!</string>
     <string name="placeholder_username">Username</string>
     <string name="parent_schedule_not_found">No schedule set</string>
     <string name="parent_network_not_found">No network set</string>
@@ -234,6 +234,8 @@ SOFTWARE.</string>
     <string name="description_profile_icon">User icon</string>
     <string name="description_app_logo">A plant in a smart pot</string>
     <string name="description_app_name" translatable="false">ReWater</string>
+    <string name="description_emptiness_icon">Empty list</string>
+    <string name="description_emptiness_invitation_icon">A pointer to the add button, which is below</string>
 
     <!-- Internal error messages. -->
     <string name="internal_repository_device_not_found">Requested device with id: %1$s was not found!</string>

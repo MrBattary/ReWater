@@ -25,6 +25,7 @@ public class HomeFragment extends Fragment {
     private static final PageSizeCommonRequest
             HOME_HISTORY_PAGINATION_REQUEST = new PageSizeCommonRequest(0, 5);
     private TextView mUsernameTextView;
+    private ViewGroup mHistoryEventsNotFoundPlaceholder;
     private RecyclerView mHistoryEventsRecyclerView;
     private HomeViewModel mViewModel;
 
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment {
 
     private void initFields(final View view) {
         mUsernameTextView = view.findViewById(R.id.home_greeting_username);
+        mHistoryEventsNotFoundPlaceholder = view.findViewById(R.id.home_history_events_not_found);
         mHistoryEventsRecyclerView = view.findViewById(R.id.home_history_events);
     }
 
@@ -55,9 +57,17 @@ public class HomeFragment extends Fragment {
         mViewModel.getProfileModel().observe(getViewLifecycleOwner(),
                 model -> mUsernameTextView.setText(model.getUsername()));
         mViewModel.getHistoryList().observe(getViewLifecycleOwner(), historyModels -> {
-            mHistoryEventsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            mHistoryEventsRecyclerView.swapAdapter(
-                    new HomeHistoryItemAdapter(requireContext(), historyModels), false);
+            if (historyModels.size() > 0) {
+                mHistoryEventsRecyclerView.setLayoutManager(
+                        new LinearLayoutManager(requireContext()));
+                mHistoryEventsRecyclerView.swapAdapter(
+                        new HomeHistoryItemAdapter(requireContext(), historyModels), false);
+                mHistoryEventsRecyclerView.setVisibility(View.VISIBLE);
+                mHistoryEventsNotFoundPlaceholder.setVisibility(View.GONE);
+            } else {
+                mHistoryEventsRecyclerView.setVisibility(View.GONE);
+                mHistoryEventsNotFoundPlaceholder.setVisibility(View.VISIBLE);
+            }
         });
     }
 

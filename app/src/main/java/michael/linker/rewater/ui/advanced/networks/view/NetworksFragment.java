@@ -60,10 +60,19 @@ public class NetworksFragment extends Fragment {
         transition.addChangeBoundsTarget(view.findViewById(R.id.networks));
         transition.addChangeBoundsTarget(view.findViewById(R.id.networks_recycler_view));
 
+        ViewGroup mNetworksNotFound = view.findViewById(R.id.networks_not_found);
+
         mViewModel.getCompactNetworkModels().observe(getViewLifecycleOwner(), list -> {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(
-                    new NetworksItemAdapter(getContext(), mViewModel, mLinkViewModel, list, transition));
+            if(list.size() > 0) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(
+                        new NetworksItemAdapter(getContext(), mViewModel, mLinkViewModel, list, transition));
+                recyclerView.setVisibility(View.VISIBLE);
+                mNetworksNotFound.setVisibility(View.GONE);
+            } else {
+                recyclerView.setVisibility(View.GONE);
+                mNetworksNotFound.setVisibility(View.VISIBLE);
+            }
         });
 
         initAddFloatingActionButton(view);

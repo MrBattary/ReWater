@@ -32,6 +32,7 @@ import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class ScheduleListDeviceFragment extends Fragment {
     private ListView mListView;
+    private ViewGroup mSchedulesNotFoundView;
     private ArrayAdapter<ScheduleListItemModel> mAdapter;
     private DevicesViewModel mViewModel;
 
@@ -50,16 +51,26 @@ public class ScheduleListDeviceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = view.findViewById(R.id.devices_schedules_list);
+        mSchedulesNotFoundView = view.findViewById(R.id.devices_schedules_not_found);
+
         mViewModel.getSchedulesModels().observe(getViewLifecycleOwner(),
                 compactScheduleModels -> {
-                    List<ScheduleListItemModel> scheduleListItemModels = new ArrayList<>();
-                    for (ScheduleUiModel model : compactScheduleModels) {
-                        scheduleListItemModels.add(new ScheduleListItemModel(model));
+                    if (compactScheduleModels.size() > 0) {
+                        List<ScheduleListItemModel> scheduleListItemModels = new ArrayList<>();
+                        for (ScheduleUiModel model : compactScheduleModels) {
+                            scheduleListItemModels.add(new ScheduleListItemModel(model));
+                        }
+                        mAdapter = new ArrayAdapter<>(requireContext(),
+                                R.layout.view_custom_list_item_multiple_choise,
+                                scheduleListItemModels);
+                        mListView.setAdapter(mAdapter);
+
+                        mListView.setVisibility(View.VISIBLE);
+                        mSchedulesNotFoundView.setVisibility(View.GONE);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mSchedulesNotFoundView.setVisibility(View.VISIBLE);
                     }
-                    mAdapter = new ArrayAdapter<>(requireContext(),
-                            R.layout.view_custom_list_item_multiple_choise,
-                            scheduleListItemModels);
-                    mListView.setAdapter(mAdapter);
                 });
 
         this.addMenuProvider(view);
