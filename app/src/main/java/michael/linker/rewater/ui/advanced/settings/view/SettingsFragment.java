@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.activity.ActivityGate;
+import michael.linker.rewater.config.BuildConfiguration;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
@@ -21,6 +23,7 @@ import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 
 public class SettingsFragment extends Fragment {
+    private TextView mAppInfoTextView;
     private MaterialButton mLicenseButton, mExitButton, mShutdownButton;
     private IDialog mExitDialog, mShutdownDialog;
 
@@ -35,14 +38,24 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.initFields(view);
+        this.initFieldsData();
         this.initDialogs();
         this.initButtons(view);
     }
 
     private void initFields(final View view) {
+        mAppInfoTextView = view.findViewById(R.id.settings_app_info);
         mLicenseButton = view.findViewById(R.id.settings_license_button);
         mExitButton = view.findViewById(R.id.settings_exit_button);
         mShutdownButton = view.findViewById(R.id.settings_shutdown_button);
+    }
+
+    private void initFieldsData() {
+        mAppInfoTextView.setText(
+                String.format("%s%s%s",
+                        StringsProvider.getString(R.string.app_name),
+                        " ",
+                        BuildConfiguration.getVersionName()));
     }
 
     private void initButtons(final View view) {

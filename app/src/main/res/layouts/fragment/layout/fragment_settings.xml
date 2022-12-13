@@ -7,11 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.advanced.settings.view.SettingsFragment">
 
+    <TextView
+        android:id="@+id/settings_app_info"
+        style="@style/CustomTextMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/app_name"
+        android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
+        android:layout_marginTop="@dimen/fragment_content_vertical_spacing"/>
+
     <RelativeLayout
         android:id="@+id/settings_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/settings_app_info"
         android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
         android:layout_marginVertical="@dimen/fragment_content_vertical_spacing">
 
