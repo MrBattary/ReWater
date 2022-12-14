@@ -18,8 +18,8 @@ android {
         applicationId "michael.linker.rewater"
         minSdk 29
         targetSdk 32
-        versionCode 186
-        versionName "0.3.186"
+        versionCode 187
+        versionName "0.5.187"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,10 +32,10 @@ android {
             buildConfigField BluetoothMode, "BLUETOOTH_MODE", "${BluetoothMode}.STUB"
         }
         release {
-            buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.LOCAL"
+            buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.GLOBAL"
             buildConfigField ServerProtocol, "SERVER_PROTOCOL", "${ServerProtocol}.HTTP"
-            buildConfigField "String", "SERVER_ADDRESS", AndroidDevServerAddress
-            buildConfigField BluetoothMode, "BLUETOOTH_MODE", "${BluetoothMode}.STUB"
+            buildConfigField "String", "SERVER_ADDRESS", ProdServerAddress
+            buildConfigField BluetoothMode, "BLUETOOTH_MODE", "${BluetoothMode}.PROD"
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
