@@ -3,30 +3,24 @@ package michael.linker.rewater.data.res.status;
 import java.util.Map;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.model.status.HistoryStatus;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.ColorsProvider;
 
 public class StatusColorsProvider {
     private static final Map<Status, Integer> STATUS_COLOR_MAP;
     private static final Map<Status, Integer> STATUS_BACKGROUND_COLOR_MAP;
-    private static final Map<HistoryStatus, Integer> HISTORY_STATUS_BACKGROUND_COLOR_MAP;
-    private static final Integer UNDEFINED_COLOR = ColorsProvider.getColor(R.color.white);
+    private static final Integer UNDEFINED_COLOR = ColorsProvider.getColor(R.color.undefined);
 
     static {
-        STATUS_COLOR_MAP = Map.of(Status.OK, ColorsProvider.getColor(R.color.positive),
-                Status.WARNING, ColorsProvider.getColor(R.color.warning),
-                Status.DEFECT, ColorsProvider.getColor(R.color.negative),
+        STATUS_COLOR_MAP = Map.of(Status.OK, ColorsProvider.getColor(R.color.positive_primary),
+                Status.WARNING, ColorsProvider.getColor(R.color.warning_primary),
+                Status.DEFECT, ColorsProvider.getColor(R.color.negative_primary),
                 Status.UNDEFINED, UNDEFINED_COLOR);
         STATUS_BACKGROUND_COLOR_MAP = Map.of(
-                Status.OK, ColorsProvider.getColor(R.color.background_positive),
-                Status.WARNING, ColorsProvider.getColor(R.color.background_warning),
-                Status.DEFECT, ColorsProvider.getColor(R.color.background_negative),
+                Status.OK, ColorsProvider.getColor(R.color.positive_secondary),
+                Status.WARNING, ColorsProvider.getColor(R.color.warning_secondary),
+                Status.DEFECT, ColorsProvider.getColor(R.color.negative_secondary),
                 Status.UNDEFINED, UNDEFINED_COLOR);
-        HISTORY_STATUS_BACKGROUND_COLOR_MAP = Map.of(
-                HistoryStatus.SUCCESS, ColorsProvider.getColor(R.color.background_positive),
-                HistoryStatus.ERROR, ColorsProvider.getColor(R.color.background_negative)
-        );
     }
 
     /**

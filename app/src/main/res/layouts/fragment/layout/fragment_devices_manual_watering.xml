@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_water"
             app:icon="@drawable/ic_manual_watering"
-            app:iconTint="@color/positive"
+            app:iconTint="@color/positive_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_cancel"
             app:icon="@drawable/ic_cancel"
-            app:iconTint="@color/negative"
+            app:iconTint="@color/negative_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

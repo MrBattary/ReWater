@@ -17,18 +17,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import michael.linker.rewater.R;
+import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.data.web.api.common.request.PageSizeCommonRequest;
 import michael.linker.rewater.ui.advanced.home.adapter.HomeHistoryItemAdapter;
 import michael.linker.rewater.ui.advanced.home.viewmodel.HomeViewModel;
-import michael.linker.rewater.ui.elementary.chart.CustomPieChart;
-import michael.linker.rewater.ui.elementary.chart.PieChartLookModel;
+import michael.linker.rewater.ui.elementary.chart.IChart;
+import michael.linker.rewater.ui.elementary.chart.StatusPieChart;
+import michael.linker.rewater.ui.elementary.chart.model.PieChartLookModel;
+import michael.linker.rewater.ui.elementary.chart.model.PieChartStatusDataModel;
 
 public class HomeFragment extends Fragment {
     private static final PageSizeCommonRequest
             HOME_HISTORY_PAGINATION_REQUEST = new PageSizeCommonRequest(0, 5);
     private TextView mUsernameTextView;
-    private ViewGroup mHistoryEventsNotFoundPlaceholder, a;
-    private CustomPieChart mNetworksPieChart, mDevicesPieChart;
+    private ViewGroup mHistoryEventsNotFoundPlaceholder;
+    private IChart<PieChartStatusDataModel> mNetworksPieChart, mDevicesPieChart;
     private RecyclerView mHistoryEventsRecyclerView;
 
     private HomeViewModel mViewModel;
@@ -53,13 +56,13 @@ public class HomeFragment extends Fragment {
 
     private void initFields(final View view) {
         mUsernameTextView = view.findViewById(R.id.home_greeting_username);
-        a = view.findViewById(R.id.home_charts);
-        mNetworksPieChart = new CustomPieChart(
+        mNetworksPieChart = new StatusPieChart(
                 view.findViewById(R.id.home_charts_networks),
-                new PieChartLookModel(
-                        R.string.chart_networks_placeholder,
-                        R.string.chart_networks_center_text
-                )
+                new PieChartLookModel(R.string.chart_networks_placeholder)
+        );
+        mDevicesPieChart = new StatusPieChart(
+                view.findViewById(R.id.home_charts_devices),
+                new PieChartLookModel(R.string.chart_devices_placeholder)
         );
         mHistoryEventsNotFoundPlaceholder = view.findViewById(R.id.home_history_events_not_found);
         mHistoryEventsRecyclerView = view.findViewById(R.id.home_history_events);
@@ -81,12 +84,24 @@ public class HomeFragment extends Fragment {
                 mHistoryEventsNotFoundPlaceholder.setVisibility(View.VISIBLE);
             }
         });
+        mViewModel.getNetworkStatusChartDataModel().observe(getViewLifecycleOwner(),
+                chartData -> mNetworksPieChart.setDataModel(new PieChartStatusDataModel(
+                        StringsProvider.getString(R.string.chart_networks_center_text),
+                        chartData
+                )));
+        mViewModel.getDeviceStatusChartDataModel().observe(getViewLifecycleOwner(),
+                chartData -> mDevicesPieChart.setDataModel(new PieChartStatusDataModel(
+                        StringsProvider.getString(R.string.chart_devices_center_text),
+                        chartData
+                )));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mViewModel.requireProfileUpdate();
+        mViewModel.requireNetworksUpdate();
+        mViewModel.requireDevicesUpdate();
         mViewModel.requireHistoryUpdate(HOME_HISTORY_PAGINATION_REQUEST);
     }
 }

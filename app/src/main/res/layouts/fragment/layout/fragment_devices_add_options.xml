@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:text="@string/button_devices_add_pair_new"
-        android:textColor="@color/positive" />
+        android:textColor="@color/positive_primary" />
 
     <Button
         android:id="@+id/add_device_options_already_paired_button"
@@ -36,6 +36,6 @@
         android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
         android:text="@string/button_cancel"
         app:icon="@drawable/ic_cancel"
-        app:iconTint="@color/negative" />
+        app:iconTint="@color/negative_primary" />
 
 </RelativeLayout>

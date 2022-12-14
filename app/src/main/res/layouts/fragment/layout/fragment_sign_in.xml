@@ -37,7 +37,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/button_sign_in"
             app:icon="@drawable/ic_sign_in"
-            app:iconTint="@color/positive" />
+            app:iconTint="@color/positive_primary" />
 
         <RelativeLayout
             android:id="@+id/sign_in_logo"

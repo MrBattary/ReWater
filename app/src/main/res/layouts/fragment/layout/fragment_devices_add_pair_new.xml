@@ -29,8 +29,8 @@
                 android:layout_below="@id/add_device_pair_new_bluetooth_device_data"
                 android:text="@string/button_devices_add_pair"
                 app:icon="@drawable/ic_bluetooth_pair"
-                app:iconTint="@color/positive"
-                app:strokeColor="@color/positive" />
+                app:iconTint="@color/positive_primary"
+                app:strokeColor="@color/positive_primary" />
 
             <TextView
                 android:id="@+id/add_device_pair_new_bluetooth_device_data"
@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_next"
             app:icon="@drawable/ic_left_arrow"
-            app:iconTint="@color/positive"
+            app:iconTint="@color/positive_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -168,7 +168,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_back"
             app:icon="@drawable/ic_right_arrow"
-            app:iconTint="@color/negative"
+            app:iconTint="@color/negative_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -180,7 +180,7 @@
             android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
             android:text="@string/button_cancel"
             app:icon="@drawable/ic_cancel"
-            app:iconTint="@color/negative"
+            app:iconTint="@color/negative_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_device_pair_new_control_back_button" />
