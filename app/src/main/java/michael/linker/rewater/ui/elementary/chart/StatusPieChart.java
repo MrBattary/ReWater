@@ -31,6 +31,13 @@ public class StatusPieChart extends CirclePieChart implements IChart<PieChartSta
 
     @Override
     public void setDataModel(PieChartStatusDataModel dataModel) {
+        final int edgeSize =
+                ((DimensionsProvider.getDisplayMetrics().widthPixels
+                        - (2 * DimensionsProvider.getDimensionValue(R.dimen.card_horizontal_spacing))
+                        - (2 * DimensionsProvider.getDimensionValue(R.dimen.chart_horizontal_margin)))
+                );
+        mChart.setMinimumHeight(edgeSize);
+
         mChart.setCenterText(dataModel.getStatusDataName());
 
         List<PieEntry> entries = new ArrayList<>();

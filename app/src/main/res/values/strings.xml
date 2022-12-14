@@ -154,6 +154,9 @@ SOFTWARE.</string>
     <string name="chart_networks_placeholder">No networks found for the chart diagram</string>
     <string name="chart_devices_center_text">Devices\nstatuses</string>
     <string name="chart_devices_placeholder">No devices found for the chart diagram</string>
+    <string name="summary_status_fine">Everything is all right</string>
+    <string name="summary_status_warning">Your attention is required</string>
+    <string name="summary_status_defect">A failure has occurred</string>
 
     <!-- Titles. -->
     <string name="title_warning">Warning</string>

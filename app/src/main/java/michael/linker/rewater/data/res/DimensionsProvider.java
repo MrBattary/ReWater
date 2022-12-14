@@ -15,7 +15,7 @@ public class DimensionsProvider {
      * @param id resource ID
      * @return resource value
      */
-    public static int getDp(final int id) {
+    public static int getDimensionValue(final int id) {
         return (int) RESOURCES.getDimension(id);
     }
 

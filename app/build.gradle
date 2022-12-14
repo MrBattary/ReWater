@@ -26,7 +26,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.LOCAL"
+            buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.GLOBAL"
             buildConfigField ServerProtocol, "SERVER_PROTOCOL", "${ServerProtocol}.HTTP"
             buildConfigField "String", "SERVER_ADDRESS", AndroidDevServerAddress
             buildConfigField BluetoothMode, "BLUETOOTH_MODE", "${BluetoothMode}.STUB"

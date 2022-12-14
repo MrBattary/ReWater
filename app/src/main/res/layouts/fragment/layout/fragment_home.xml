@@ -37,6 +37,15 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/home_greeting_heading"
                 android:text="@string/placeholder_username" />
+
+            <TextView
+                android:id="@+id/home_greeting_summary_status"
+                style="@style/CustomTextLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/home_greeting_username"
+                android:text="@string/summary_status_fine" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -46,27 +55,63 @@
             android:layout_below="@id/home_greeting"
             android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small">
 
-            <com.github.mikephil.charting.charts.PieChart
+            <RelativeLayout
                 android:id="@+id/home_charts_networks"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <com.github.mikephil.charting.charts.PieChart
+                <TextView
+                    android:id="@+id/home_charts_networks_not_found"
+                    style="@style/CustomTextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="@dimen/chart_horizontal_margin"
+                    android:text="@string/chart_networks_placeholder"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_tertiary" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/home_charts_networks_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/home_charts_devices"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/home_charts_networks"
-                android:layout_marginTop="@dimen/fragment_content_vertical_spacing" />
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing">
+
+                <TextView
+                    android:id="@+id/home_charts_devices_not_found"
+                    style="@style/CustomTextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="@dimen/chart_horizontal_margin"
+                    android:text="@string/chart_devices_placeholder"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_tertiary" />
+
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/home_charts_devices_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/home_history"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/home_charts"
             android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small">

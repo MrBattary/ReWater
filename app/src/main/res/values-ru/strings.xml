@@ -137,6 +137,9 @@
     <string name="chart_networks_placeholder">Не найдены сети для построения диаграммы</string>
     <string name="chart_devices_center_text">Состояния\nустройств</string>
     <string name="chart_devices_placeholder">Не найдены устройства для построения диаграммы</string>
+    <string name="summary_status_fine">Все в полном порядке</string>
+    <string name="summary_status_warning">Требуется ваше внимание</string>
+    <string name="summary_status_defect">Произошел критический сбой</string>
 
     <!-- Titles. -->
     <string name="title_warning">Внимание</string>

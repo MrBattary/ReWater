@@ -41,4 +41,8 @@ public class HomeStatusChartDataUiModel {
     public Integer getUndefinedAmount() {
         return mUndefinedAmount;
     }
+
+    public Integer getDataSize() {
+        return mFineAmount + mWarningAmount + mFailureAmount + mUndefinedAmount;
+    }
 }

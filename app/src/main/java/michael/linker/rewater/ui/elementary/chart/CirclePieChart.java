@@ -20,19 +20,13 @@ class CirclePieChart implements ICustomView {
 
     protected CirclePieChart(final View view) {
         mChart = (PieChart) view;
-        final int edgeSize =
-                ((DimensionsProvider.getDisplayMetrics().widthPixels
-                        - (2 * DimensionsProvider.getDp(R.dimen.card_horizontal_spacing))
-                        - (2 * DimensionsProvider.getDp(R.dimen.chart_horizontal_margin)))
-                );
-        mChart.setMinimumHeight(edgeSize);
 
         mChart.setDrawHoleEnabled(true);
         mChart.setHoleColor(ColorsProvider.getColor(R.color.background_primary));
 
         Paint p = mChart.getPaint(Chart.PAINT_INFO);
-        p.setTextSize(DimensionsProvider.getSpExtracted(R.dimen.font_size_medium));
-        p.setColor(ColorsProvider.getColor(R.color.text_primary));
+        p.setTextSize(DimensionsProvider.getDimensionValue(R.dimen.font_size_small));
+        p.setColor(ColorsProvider.getColor(R.color.text_tertiary));
 
         mChart.setTransparentCircleColor(ColorsProvider.getColor(R.color.background_primary));
         mChart.setTransparentCircleAlpha(110);
