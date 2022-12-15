@@ -37,7 +37,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/button_sign_in"
             app:icon="@drawable/ic_sign_in"
-            app:iconTint="@color/positive_color" />
+            app:iconTint="@color/positive_primary" />
 
         <RelativeLayout
             android:id="@+id/sign_in_logo"
@@ -96,7 +96,7 @@
                     style="@style/EditTextPasswordStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nextFocusForward="@+id/sign_in_sign_in_button"
+                    android:nextFocusDown="@+id/sign_in_sign_in_button"
                     android:hint="@string/input_hint_password"
                     android:importantForAutofill="no" />
             </com.google.android.material.textfield.TextInputLayout>

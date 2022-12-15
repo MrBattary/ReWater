@@ -131,10 +131,10 @@ public class EditNetworkFragment extends Fragment {
                 ),
                 (dialogInterface, i) -> {
                     mViewModel.removeNetwork(networkId);
-                    dialogInterface.cancel();
+                    dialogInterface.dismiss();
                     Navigation.findNavController(view).navigateUp();
                 },
-                (dialogInterface, i) -> dialogInterface.cancel()
+                (dialogInterface, i) -> dialogInterface.dismiss()
         );
     }
 }

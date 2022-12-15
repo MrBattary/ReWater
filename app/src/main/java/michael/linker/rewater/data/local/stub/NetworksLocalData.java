@@ -13,29 +13,20 @@ public class NetworksLocalData implements INetworksData {
     public NetworksLocalData() {
         mFullNetworkModels = new LinkedList<>();
         mFullNetworkModels.add(new FullNetworkModel(
-                "9feefdbe-f35a-4ccb-93dc-0baf6955805b", "First network",
+                "9feefdbe-f35a-4ccb-93dc-0baf6955805b", "Home network",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at dignissim ligula."
                         + " Duis ornare interdum lacus ullamcorper porta. Duis elementum."));
         mFullNetworkModels.add(new FullNetworkModel(
-                "b70c023b-2016-4583-8d7c-daf4c9e7f979", "Second network",
+                "b70c023b-2016-4583-8d7c-daf4c9e7f979", "Summer cottage",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus dictum."));
         mFullNetworkModels.add(new FullNetworkModel(
-                "7f9dd006-59b8-4e86-bc31-01528652a601", "Third network",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt placerat"
-                        + " dui nec euismod. Integer."));
-        mFullNetworkModels.add(new FullNetworkModel(
-                "ea84ab3c-0c54-436e-a710-e87d7592e490", "Fourth network",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut vulputate felis"
-                        + ". Praesent et luctus."));
-        mFullNetworkModels.add(new FullNetworkModel(
-                "6d9b41d7-f009-4c55-94ea-02ab5c0baa7c", "Fifth network",
-                null));
-        mFullNetworkModels.add(new FullNetworkModel(
-                "ca23b691-2141-4395-b560-c79d6d71ff46",
-                "Sixth network very very very very very long name",
+                "7f9dd006-59b8-4e86-bc31-01528652a601", "My workplace",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dolor mauris, "
                         + "scelerisque at faucibus non, malesuada ut est. Fusce aliquam, leo nec "
                         + "vulputate ornare, neque sapien suscipit est, ut leo."));
+        mFullNetworkModels.add(new FullNetworkModel(
+                "ae84ab3c-0c54-436e-a710-e87d7592e490", "Emptiness network",
+                ""));
     }
 
     @Override

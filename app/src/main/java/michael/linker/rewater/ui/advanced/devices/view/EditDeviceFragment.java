@@ -19,12 +19,12 @@ import com.google.android.material.button.MaterialButton;
 import java.util.List;
 
 import michael.linker.rewater.R;
+import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.data.res.IntegersProvider;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
-import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 import michael.linker.rewater.ui.elementary.dialog.IDialog;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
@@ -32,8 +32,8 @@ import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.text.FocusableTextInputView;
 import michael.linker.rewater.ui.elementary.input.text.IFocusableTextInputView;
-import michael.linker.rewater.ui.elementary.parententity.ParentEntityView;
-import michael.linker.rewater.ui.elementary.parententity.ParentScheduleInfoView;
+import michael.linker.rewater.ui.elementary.text.parententity.ParentEntityView;
+import michael.linker.rewater.ui.elementary.text.parententity.ParentScheduleInfoView;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class EditDeviceFragment extends Fragment {
@@ -72,7 +72,7 @@ public class EditDeviceFragment extends Fragment {
             this.initButtons(view, m);
             this.initParentArea(m);
         });
-        mViewModel.getParentNetworkModel().observe(getViewLifecycleOwner(),
+        mViewModel.getParentNetworkIdNameModel().observe(getViewLifecycleOwner(),
                 this::initParentNetworkData);
     }
 
@@ -138,7 +138,7 @@ public class EditDeviceFragment extends Fragment {
         }
     }
 
-    private void initParentNetworkData(final NetworkUiModel networkModel) {
+    private void initParentNetworkData(final IdNameModel networkModel) {
         if (networkModel != null) {
             mParentNetworkView.setParentEntity(networkModel.getName());
         } else {
@@ -157,10 +157,10 @@ public class EditDeviceFragment extends Fragment {
                 ),
                 (dialogInterface, i) -> {
                     mViewModel.removeDevice();
-                    dialogInterface.cancel();
+                    dialogInterface.dismiss();
                     Navigation.findNavController(view).navigateUp();
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
 
         mOnNoScheduleSaveDialog = new TwoChoicesWarningDialog(requireContext(),
                 new TwoChoicesDialogModel(
@@ -179,7 +179,7 @@ public class EditDeviceFragment extends Fragment {
                     } catch (InputNotAllowedException ignored) {
                     }
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 
     private void initButtons(final View view, final ScheduleUiModel scheduleModel) {

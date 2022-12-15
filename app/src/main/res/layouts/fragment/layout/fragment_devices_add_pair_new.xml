@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="@dimen/fragment_content_horizontal_spacing"
     android:paddingVertical="@dimen/fragment_content_vertical_spacing"
-    tools:context=".ui.advanced.devices.view.AddPairNewDeviceFragment">
+    tools:context=".ui.advanced.devices.view.PairNewDeviceFragment">
 
     <RelativeLayout
         android:id="@+id/add_device_pair_new_wrapper"
@@ -26,20 +26,19 @@
                 style="@style/OutlinedButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_device_pair_new_bluetooth_todo"
-                android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
+                android:layout_below="@id/add_device_pair_new_bluetooth_device_data"
                 android:text="@string/button_devices_add_pair"
                 app:icon="@drawable/ic_bluetooth_pair"
-                app:iconTint="@color/positive_color"
-                app:strokeColor="@color/positive_color" />
+                app:iconTint="@color/positive_primary"
+                app:strokeColor="@color/positive_primary" />
 
             <TextView
-                android:id="@+id/add_device_pair_new_bluetooth_todo"
-                style="@style/CustomText"
+                android:id="@+id/add_device_pair_new_bluetooth_device_data"
+                style="@style/CustomTextMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="TODO:HERE SHOULD BE DRAGONS" />
+                android:layout_marginBottom="@dimen/fragment_content_vertical_spacing"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -73,14 +72,65 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/add_device_pair_new_access">
 
+            <Button
+                android:id="@+id/add_device_pair_new_network_select_wifi_button"
+                style="@style/RegularButtonStyle.Disabled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add_device_pair_new_network_or"
+                android:text="@string/button_devices_add_pair_new_saved_wifi"
+                app:icon="@drawable/ic_wifi"
+                app:iconTint="@color/text_secondary"/>
+
             <TextView
-                android:id="@+id/add_device_pair_new_network_todo"
-                style="@style/CustomText"
+                android:id="@+id/add_device_pair_new_network_or"
+                style="@style/CustomTextMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/add_device_pair_new_network_input_wifi_password"
                 android:layout_centerHorizontal="true"
-                android:text="TODO:HERE SHOULD BE DRAGONS" />
+                android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small"
+                android:text="@string/pair_device_network_or" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_device_pair_new_network_input_wifi_ssid"
+                style="@style/TextInputErrorLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_device_pair_new_network_input_wifi_ssid_input"
+                    style="@style/EditTextNormalStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/input_hint_wifi_ssid"
+                    android:importantForAutofill="no"
+                    android:nextFocusDown="@+id/add_device_pair_new_network_input_wifi_password" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_device_pair_new_network_input_wifi_password"
+                style="@style/TextInputPasswordStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/add_device_pair_new_network_input_wifi_ssid">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_device_pair_new_network_input_wifi_password_input"
+                    style="@style/EditTextPasswordStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/input_hint_wifi_password"
+                    android:importantForAutofill="no"
+                    android:nextFocusDown="@+id/add_device_pair_new_control_next_button" />
+            </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
+
     </RelativeLayout>
 
     <TextView
@@ -107,7 +157,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_next"
             app:icon="@drawable/ic_left_arrow"
-            app:iconTint="@color/positive_color"
+            app:iconTint="@color/positive_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,7 +168,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_back"
             app:icon="@drawable/ic_right_arrow"
-            app:iconTint="@color/negative_color"
+            app:iconTint="@color/negative_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -130,7 +180,7 @@
             android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
             android:text="@string/button_cancel"
             app:icon="@drawable/ic_cancel"
-            app:iconTint="@color/negative_color"
+            app:iconTint="@color/negative_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_device_pair_new_control_back_button" />

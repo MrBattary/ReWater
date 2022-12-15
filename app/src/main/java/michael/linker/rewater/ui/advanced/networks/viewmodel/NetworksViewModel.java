@@ -7,10 +7,11 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
-import michael.linker.rewater.data.repository.networks.NetworksRepositoryAlreadyExistsException;
-import michael.linker.rewater.data.repository.networks.NetworksRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
 import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
@@ -48,50 +49,79 @@ public class NetworksViewModel extends ViewModel {
     }
 
     public void setEditableNetworkId(final String id) throws NetworksViewModelFailedException {
-        try {
-            final NetworkRepositoryModel model = mNetworksRepository.getNetworkById(id);
-            mEditableNetworkModel.setValue(new NetworkUiModel(model));
-            mEditableNetworkId.setValue(id);
-        } catch (NetworksRepositoryNotFoundException e) {
-            throw new NetworksViewModelFailedException(e.getMessage());
-        }
+        Single.fromCallable(() -> mNetworksRepository.getNetworkById(id))
+                .doOnSuccess(model -> {
+                    mEditableNetworkModel.postValue(new NetworkUiModel(model));
+                    mEditableNetworkId.postValue(id);
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(m -> {
+                }, e -> {
+                    throw new NetworksViewModelFailedException(e.getMessage());
+                });
     }
 
     public void updateNetwork(final String id, final CreateOrUpdateNetworkRepositoryModel model)
             throws NetworksViewModelFailedException {
-        try {
-            mNetworksRepository.updateNetwork(id, model);
-            this.updateListsFromRepositories();
-        } catch (NetworksRepositoryNotFoundException e) {
-            throw new NetworksViewModelFailedException(e.getMessage());
-        }
+        Single.fromCallable(() -> {
+                    mNetworksRepository.updateNetwork(id, model);
+                    return true;
+                })
+                .doOnSuccess(b -> this.updateListsFromRepositories())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(m -> {
+                }, e -> {
+                    throw new NetworksViewModelFailedException(e.getMessage());
+                });
     }
 
     public void removeNetwork(final String id) {
-        mNetworksRepository.removeNetwork(id);
-        this.updateListsFromRepositories();
+        Single.fromCallable(() -> {
+                    mNetworksRepository.removeNetwork(id);
+                    return true;
+                })
+                .doOnSuccess(b -> this.updateListsFromRepositories())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void addNetwork(final CreateOrUpdateNetworkRepositoryModel model) {
-        try {
-            mNetworksRepository.addNetwork(model);
-            this.updateListsFromRepositories();
-        } catch (NetworksRepositoryAlreadyExistsException e) {
-            throw new NetworksViewModelFailedException(e.getMessage());
-        }
+        Single.fromCallable(() -> {
+                    mNetworksRepository.addNetwork(model);
+                    return true;
+                })
+                .doOnSuccess(b -> this.updateListsFromRepositories())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(m -> {
+                }, e -> {
+                    throw new NetworksViewModelFailedException(e.getMessage());
+                });
     }
 
     public void updateListsFromRepositories() {
-        mNetworksRepository.updateNetworkList();
-        final List<NetworkRepositoryModel> networkRepositoryModelList =
-                mNetworksRepository.getNetworkList();
-        mCompactNetworkModels.setValue(
-                networkRepositoryModelList.stream()
-                        .map(NetworkUiModel::new)
-                        .collect(Collectors.toList()));
-        mAlreadyTakenNetworkNames.setValue(
-                networkRepositoryModelList.stream()
-                        .map(NetworkRepositoryModel::getName)
-                        .collect(Collectors.toList()));
+        Single.fromCallable(() -> {
+                    mNetworksRepository.updateNetworkList();
+                    return true;
+                })
+                .doOnSuccess(
+                        b -> {
+                            final List<NetworkRepositoryModel> networkRepositoryModelList =
+                                    mNetworksRepository.getNetworkList();
+                            mCompactNetworkModels.postValue(
+                                    networkRepositoryModelList.stream()
+                                            .map(NetworkUiModel::new)
+                                            .collect(Collectors.toList()));
+                            mAlreadyTakenNetworkNames.postValue(
+                                    networkRepositoryModelList.stream()
+                                            .map(NetworkRepositoryModel::getName)
+                                            .collect(Collectors.toList()));
+                        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }

@@ -6,17 +6,23 @@ import androidx.lifecycle.ViewModel;
 
 import io.reactivex.rxjava3.core.Single;
 import michael.linker.rewater.R;
+import michael.linker.rewater.config.BuildConfiguration;
 import michael.linker.rewater.config.DatabaseConfiguration;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.repository.user.UsersRepositoryAccessDeniedException;
 import michael.linker.rewater.data.repository.user.UsersRepositoryNotFoundException;
 import michael.linker.rewater.data.res.StringsProvider;
+import michael.linker.rewater.core.permission.PermissionManager;
+import michael.linker.rewater.data.web.api.common.CommonApi;
 
 public class SignLoadingViewModel extends ViewModel {
+    private final CommonApi mCommonApi;
     private final MutableLiveData<String> stageMessage, errorStageMessage;
 
     public SignLoadingViewModel() {
+        mCommonApi = new CommonApi();
+
         stageMessage = new MutableLiveData<>();
         errorStageMessage = new MutableLiveData<>();
     }
@@ -37,32 +43,43 @@ public class SignLoadingViewModel extends ViewModel {
         return errorStageMessage;
     }
 
-    // TODO (ML): Add the internet connection check
+    public Single<Boolean> checkPermissions() throws SignLoadingViewModelFailedException {
+        return Single.fromCallable(() -> {
+            if (PermissionManager.getAwaitedPermissions().size() > 0) {
+                this.setErrorStageMessage(
+                        R.string.loading_stage_permissions_failure);
+                throw new SignLoadingViewModelBlockedException(
+                        StringsProvider.getString(R.string.loading_stage_permissions_failure));
+            }
+            return true;
+        }).doOnSuccess(b -> stageMessage.postValue(
+                StringsProvider.getString(R.string.loading_stage_internet_connection)));
+    }
+
     public Single<Boolean> checkInternetConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
-                    try {
-                        return true;
-                    } catch (RuntimeException e) {
+                    if (!mCommonApi.pingInternet()) {
                         this.setErrorStageMessageAndThrowException(
                                 R.string.loading_stage_internet_connection_failure);
                         return false;
                     }
+                    return true;
                 })
                 .doOnSuccess(b -> stageMessage.postValue(
                         StringsProvider.getString(R.string.loading_stage_server_connection)));
-
     }
 
-    // TODO (ML): Add the server connection check
+
     public Single<Boolean> checkServerConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
-                    try {
-                        return true;
-                    } catch (RuntimeException e) {
-                        this.setErrorStageMessageAndThrowException(
-                                R.string.loading_stage_server_connection_failure);
-                        return false;
+                    if (BuildConfiguration.getServerMode() == BuildConfiguration.Server.GLOBAL) {
+                        if (!mCommonApi.pingServer()) {
+                            this.setErrorStageMessageAndThrowException(
+                                    R.string.loading_stage_server_connection_failure);
+                            return false;
+                        }
                     }
+                    return true;
                 })
                 .doOnSuccess(b -> stageMessage.postValue(
                         StringsProvider.getString(R.string.loading_stage_database_connection)));
@@ -130,6 +147,11 @@ public class SignLoadingViewModel extends ViewModel {
                 return false;
             }
         });
+    }
+
+    private void setErrorStageMessage(final int rId) {
+        final String errorMsg = StringsProvider.getString(rId);
+        errorStageMessage.postValue(errorMsg);
     }
 
     private void setErrorStageMessageAndThrowException(final int rId)

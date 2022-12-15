@@ -1,6 +1,5 @@
 package michael.linker.rewater.ui.advanced.devices.view;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +14,19 @@ import androidx.navigation.Navigation;
 import com.google.android.material.button.MaterialButton;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.res.ColorsProvider;
+import michael.linker.rewater.config.ConnectionConfiguration;
+import michael.linker.rewater.core.connection.bluetooth.Bluetooth;
+import michael.linker.rewater.core.connection.bluetooth.BluetoothFailedException;
+import michael.linker.rewater.core.connection.bluetooth.BluetoothNotFoundException;
+import michael.linker.rewater.data.res.DrawablesProvider;
+import michael.linker.rewater.data.res.StringsProvider;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesConfirmDialog;
+import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
+import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class AddDeviceOptionsFragment extends Fragment {
     private MaterialButton mPairNewButton, mAlreadyPairedButton, mCancelButton;
+    private TwoChoicesConfirmDialog mTurnOnBluetoothDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -31,11 +39,7 @@ public class AddDeviceOptionsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         this.initFields(view);
         this.initButtons(view);
-
-        // Disable the mAlreadyPaired button
-        mAlreadyPairedButton.setEnabled(false);
-        mAlreadyPairedButton.setTextColor(ColorsProvider.getColor(R.color.text_disabled));
-        mAlreadyPairedButton.setBackgroundTintList(ColorStateList.valueOf(ColorsProvider.getColor(R.color.background_disabled)));
+        this.initDialogs(view);
     }
 
     private void initFields(final View view) {
@@ -46,9 +50,37 @@ public class AddDeviceOptionsFragment extends Fragment {
 
     private void initButtons(final View view) {
         NavController navController = Navigation.findNavController(view);
-        mPairNewButton.setOnClickListener(l -> navController.navigate(
-                R.id.navigation_action_devices_add_options_to_devices_add_pair_new));
+        mPairNewButton.setOnClickListener(l -> {
+            if (Bluetooth.isBluetoothEnabled()) {
+                ConnectionConfiguration.buildBluetooth(requireActivity());
+                navController.navigate(
+                        R.id.navigation_action_devices_add_options_to_devices_add_pair_new);
+            } else {
+                mTurnOnBluetoothDialog.show();
+            }
+        });
         mCancelButton.setOnClickListener(
                 l -> navController.popBackStack(R.id.navigation_devices_add_options, true));
+    }
+
+    private void initDialogs(final View view) {
+        mTurnOnBluetoothDialog = new TwoChoicesConfirmDialog(requireContext(),
+                new TwoChoicesDialogModel(
+                        DrawablesProvider.getDrawable(R.drawable.ic_warning),
+                        StringsProvider.getString(R.string.title_warning),
+                        StringsProvider.getString(R.string.dialog_bluetooth_turn_on_to_pair),
+                        StringsProvider.getString(R.string.button_turn_on),
+                        StringsProvider.getString(R.string.button_cancel)),
+                (dialogInterface, i) -> {
+                    try {
+                        Bluetooth.enableBluetooth();
+                        ConnectionConfiguration.buildBluetooth(requireActivity());
+                        Navigation.findNavController(view).navigate(
+                                R.id.navigation_action_devices_add_options_to_devices_add_pair_new);
+                    } catch (BluetoothFailedException | BluetoothNotFoundException e) {
+                        ToastProvider.showLong(requireContext(), e.getLocalizedMessage());
+                    }
+                },
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 }

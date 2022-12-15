@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/history_event"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/history_event_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/card_vertical_spacing"
+        app:cardCornerRadius="@dimen/card_corner_radius">
+
+        <LinearLayout
+            android:id="@+id/history_event_card_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shp_background_history_success"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:id="@+id/history_card_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
+                android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small"
+                tools:ignore="UselessParent">
+
+                <RelativeLayout
+                    android:id="@+id/history_card_parents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="@dimen/fragment_content_vertical_spacing_small">
+
+                    <TextView
+                        android:id="@+id/history_card_parents_schedule"
+                        style="@style/CustomTextSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/placeholder_global_medium" />
+
+                    <include
+                        android:id="@+id/history_card_parents_network"
+                        layout="@layout/view_parent_entity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@id/history_card_parents_schedule" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/history_card_date_time"
+                    style="@style/CustomTextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/history_card_parents"
+                    android:text="@string/placeholder_date_time" />
+            </RelativeLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

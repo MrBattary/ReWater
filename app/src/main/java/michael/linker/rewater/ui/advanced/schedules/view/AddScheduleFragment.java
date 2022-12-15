@@ -158,7 +158,7 @@ public class AddScheduleFragment extends Fragment {
                                 R.string.dialog_insufficient_volume_or_period),
                         StringsProvider.getString(R.string.button_ok)
                 ),
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
 
         mNoAttachedDevicesDialog = new TwoChoicesWarningDialog(requireContext(),
                 new TwoChoicesDialogModel(
@@ -176,7 +176,7 @@ public class AddScheduleFragment extends Fragment {
                         ToastProvider.showShort(requireContext(), e.getMessage());
                     }
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 
     private void initButtons(final View view) {

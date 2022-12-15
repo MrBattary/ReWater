@@ -10,14 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.data.model.unit.WaterVolumeMetricModel;
 import michael.linker.rewater.data.model.unit.WateringPeriodModel;
 import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
-import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryAlreadyExistsException;
-import michael.linker.rewater.data.repository.schedules.SchedulesRepositoryNotFoundException;
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceIdNameUiModel;
@@ -50,7 +51,6 @@ public class UpdateScheduleViewModel extends ViewModel {
 
         mUnattachedDeviceList = new MutableLiveData<>();
         mAttachedDeviceList = new MutableLiveData<>();
-
     }
 
     public MutableLiveData<String> getScheduleName() {
@@ -128,30 +128,32 @@ public class UpdateScheduleViewModel extends ViewModel {
 
     public void setScheduleIdAndRefreshViewModel(final String scheduleId)
             throws SchedulesViewModelFailedException {
-        try {
-            final ScheduleRepositoryModel scheduleRepositoryModel =
-                    mSchedulesRepository.getScheduleById(scheduleId);
-
-            mParentNetworkId = null;
-            mScheduleId = scheduleRepositoryModel.getId();
-            mScheduleName.setValue(scheduleRepositoryModel.getName());
-            mDays.setValue(scheduleRepositoryModel.getPeriod().getDays());
-            mHours.setValue(scheduleRepositoryModel.getPeriod().getHours());
-            mMinutes.setValue(scheduleRepositoryModel.getPeriod().getMinutes());
-            mLitres.setValue(scheduleRepositoryModel.getVolume().getLitres());
-            mMillilitres.setValue(scheduleRepositoryModel.getVolume().getMillilitres());
-            mAttachedDeviceList.setValue(
-                    scheduleRepositoryModel.getDeviceModels().stream()
-                            .map(deviceModel ->
-                                    new DeviceIdNameUiModel(
-                                            deviceModel.getId(),
-                                            deviceModel.getName()))
-                            .collect(Collectors.toList())
-            );
-            this.updateListsFromRepositories();
-        } catch (SchedulesRepositoryNotFoundException e) {
-            throw new SchedulesViewModelFailedException(e);
-        }
+        Single.fromCallable(() -> mSchedulesRepository.getScheduleById(scheduleId))
+                .doOnSuccess(schedule -> {
+                    mParentNetworkId = null;
+                    mScheduleId = schedule.getId();
+                    mScheduleName.postValue(schedule.getName());
+                    mDays.postValue(schedule.getPeriod().getDays());
+                    mHours.postValue(schedule.getPeriod().getHours());
+                    mMinutes.postValue(schedule.getPeriod().getMinutes());
+                    mLitres.postValue(schedule.getVolume().getLitres());
+                    mMillilitres.postValue(schedule.getVolume().getMillilitres());
+                    mAttachedDeviceList.postValue(
+                            schedule.getDeviceModels().stream()
+                                    .map(deviceModel ->
+                                            new DeviceIdNameUiModel(
+                                                    deviceModel.getId(),
+                                                    deviceModel.getName()))
+                                    .collect(Collectors.toList())
+                    );
+                    this.updateListsFromRepositories();
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(m -> {
+                }, e -> {
+                    throw new SchedulesViewModelFailedException(e);
+                });
     }
 
     public void attachMultipleDevicesToSchedule(final List<String> deviceIdList) {
@@ -228,37 +230,52 @@ public class UpdateScheduleViewModel extends ViewModel {
     }
 
     public void commitAndCreateSchedule() throws SchedulesViewModelFailedException {
-        try {
-            mSchedulesRepository.createSchedule(
-                    mParentNetworkId,
-                    this.buildCreateOrUpdateScheduleRepositoryModel());
-            this.updateListsFromRepositories();
-        } catch (SchedulesRepositoryAlreadyExistsException e) {
-            throw new SchedulesViewModelFailedException(e);
-        }
+        Single.fromCallable(() -> {
+                    mSchedulesRepository.createSchedule(
+                            mParentNetworkId,
+                            this.buildCreateOrUpdateScheduleRepositoryModel());
+                    return true;
+                })
+                .doOnSuccess(b -> this.updateListsFromRepositories())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(m -> {
+                }, e -> {
+                    throw new SchedulesViewModelFailedException(e);
+                });
     }
 
     public void commitAndUpdateSchedule() throws SchedulesViewModelFailedException {
-        try {
-            mSchedulesRepository.updateSchedule(
-                    mScheduleId,
-                    this.buildCreateOrUpdateScheduleRepositoryModel());
-            this.updateListsFromRepositories();
-        } catch (SchedulesRepositoryAlreadyExistsException e) {
-            throw new SchedulesViewModelFailedException(e);
-        }
+        Single.fromCallable(() -> {
+                    mSchedulesRepository.updateSchedule(
+                            mScheduleId,
+                            this.buildCreateOrUpdateScheduleRepositoryModel());
+                    return true;
+                })
+                .doOnSuccess(b -> this.updateListsFromRepositories())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(m -> {
+                }, e -> {
+                    throw new SchedulesViewModelFailedException(e);
+                });
     }
 
     public void commitAndDeleteSchedule() {
-        mSchedulesRepository.removeSchedule(mScheduleId);
-        this.updateListsFromRepositories();
+        Single.fromCallable(() -> {
+                    mSchedulesRepository.removeSchedule(mScheduleId);
+                    return true;
+                })
+                .doOnSuccess(b -> this.updateListsFromRepositories())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     private CreateOrUpdateScheduleRepositoryModel buildCreateOrUpdateScheduleRepositoryModel() {
         return new CreateOrUpdateScheduleRepositoryModel(
                 mScheduleName.getValue(),
-                new WateringPeriodModel(mDays.getValue(), mHours.getValue(),
-                        mMinutes.getValue()),
+                new WateringPeriodModel(mDays.getValue(), mHours.getValue(), mMinutes.getValue()),
                 new WaterVolumeMetricModel(mLitres.getValue(), mMillilitres.getValue()),
                 mAttachedDeviceList.getValue().stream()
                         .map(DeviceIdNameUiModel::getId)
@@ -268,16 +285,36 @@ public class UpdateScheduleViewModel extends ViewModel {
 
 
     public void updateListsFromRepositories() {
-        mNetworksRepository.updateNetworkList();
-        mUnattachedDeviceList.setValue(mDevicesRepository.getDeviceAttachList().stream()
-                .map(deviceModel ->
-                        new DeviceIdNameUiModel(
-                                deviceModel.getId(),
-                                deviceModel.getName()))
-                .collect(Collectors.toList()));
-        mAlreadyTakenSchedulesNames.setValue(
-                mSchedulesRepository.getScheduleWithNetworkList().stream()
-                        .map(model -> model.getScheduleIdNameModel().getName())
-                        .collect(Collectors.toList()));
+        Single.fromCallable(() -> {
+                    mNetworksRepository.updateNetworkList();
+                    return true;
+                })
+                .doOnSuccess(
+                        b -> {
+                            Single.fromCallable(mDevicesRepository::getDeviceAttachList)
+                                    .doOnSuccess(deviceRepositoryModels ->
+                                            mUnattachedDeviceList.postValue(
+                                                    deviceRepositoryModels.stream()
+                                                            .map(DeviceIdNameUiModel::new)
+                                                            .collect(Collectors.toList())))
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe();
+
+                            Single.fromCallable(mSchedulesRepository::getAllSchedules)
+                                    .doOnSuccess(scheduleRepositoryModels ->
+                                            mAlreadyTakenSchedulesNames.postValue(
+                                                    scheduleRepositoryModels.stream()
+                                                            .map(ScheduleRepositoryModel::getName)
+                                                            .collect(Collectors.toList())
+                                            )
+                                    )
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe();
+                        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }

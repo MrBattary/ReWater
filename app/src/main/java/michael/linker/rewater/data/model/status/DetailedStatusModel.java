@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import michael.linker.rewater.data.web.api.common.part.StatusPart;
+
 public class DetailedStatusModel {
     private final Status mWater;
     private final Status mBattery;
@@ -11,6 +13,11 @@ public class DetailedStatusModel {
     public DetailedStatusModel(final Status water, final Status battery) {
         this.mWater = water;
         this.mBattery = battery;
+    }
+
+    public DetailedStatusModel(final StatusPart statusPart) {
+        mWater = Status.valueOf(statusPart.getWater());
+        mBattery = Status.valueOf(statusPart.getBattery());
     }
 
     public Status getWater() {

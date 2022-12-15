@@ -1,36 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.advanced.home.view.HomeFragment">
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/home_greeting"
-        android:layout_width="wrap_content"
+        android:id="@+id/home"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
-        android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small">
+        tools:context=".ui.advanced.home.view.HomeFragment">
 
-        <TextView
-            android:id="@+id/home_greeting_heading"
-            style="@style/CustomTextLarge"
+        <RelativeLayout
+            android:id="@+id/home_greeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/home_greeting" />
+            android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small">
 
-        <TextView
-            android:id="@+id/home_greeting_username"
-            style="@style/CustomTextLarge"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/home_greeting_heading"
+                style="@style/CustomTextLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/home_greeting" />
+
+            <TextView
+                android:id="@+id/home_greeting_username"
+                style="@style/CustomTextLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/home_greeting_heading"
+                android:text="@string/placeholder_username" />
+
+            <TextView
+                android:id="@+id/home_greeting_summary_status"
+                style="@style/CustomTextLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/home_greeting_username"
+                android:text="@string/summary_status_fine" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/home_charts"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/home_greeting_heading"
-            android:text="@string/placeholder_username" />
+            android:layout_below="@id/home_greeting"
+            android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small">
+
+            <RelativeLayout
+                android:id="@+id/home_charts_networks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/home_charts_networks_not_found"
+                    style="@style/CustomTextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="@dimen/chart_horizontal_margin"
+                    android:text="@string/chart_networks_placeholder"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_tertiary" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/home_charts_networks_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/home_charts_devices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/home_charts_networks"
+                android:layout_marginTop="@dimen/fragment_content_vertical_spacing">
+
+                <TextView
+                    android:id="@+id/home_charts_devices_not_found"
+                    style="@style/CustomTextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="@dimen/chart_horizontal_margin"
+                    android:text="@string/chart_devices_placeholder"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_tertiary" />
+
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/home_charts_devices_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/home_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_charts"
+            android:layout_marginTop="@dimen/fragment_content_vertical_spacing_small">
+
+            <TextView
+                android:id="@+id/home_history_header"
+                style="@style/CustomTextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/watering_history_header" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_history_events"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/home_history_header"
+                android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                app:layoutManager="LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/view_history_card" />
+
+            <include
+                android:id="@+id/home_history_events_not_found"
+                layout="@layout/view_placeholder_not_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/home_history_header"
+                android:layout_centerInParent="true"
+                android:layout_marginVertical="@dimen/fragment_content_vertical_spacing_small" />
+        </RelativeLayout>
     </RelativeLayout>
-
-</RelativeLayout>
+</ScrollView>

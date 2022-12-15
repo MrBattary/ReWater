@@ -25,13 +25,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import michael.linker.rewater.R;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkIdNameRepositoryModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModel;
 import michael.linker.rewater.ui.advanced.devices.viewmodel.DevicesViewModelFailedException;
+import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 
 public class ScheduleListDeviceFragment extends Fragment {
     private ListView mListView;
+    private ViewGroup mSchedulesNotFoundView;
     private ArrayAdapter<ScheduleListItemModel> mAdapter;
     private DevicesViewModel mViewModel;
 
@@ -50,16 +51,26 @@ public class ScheduleListDeviceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = view.findViewById(R.id.devices_schedules_list);
-        mViewModel.getScheduleWithNetworkModels().observe(getViewLifecycleOwner(),
+        mSchedulesNotFoundView = view.findViewById(R.id.devices_schedules_not_found);
+
+        mViewModel.getSchedulesModels().observe(getViewLifecycleOwner(),
                 compactScheduleModels -> {
-                    List<ScheduleListItemModel> scheduleListItemModels = new ArrayList<>();
-                    for (ScheduleWithNetworkIdNameRepositoryModel model : compactScheduleModels) {
-                        scheduleListItemModels.add(new ScheduleListItemModel(model));
+                    if (compactScheduleModels.size() > 0) {
+                        List<ScheduleListItemModel> scheduleListItemModels = new ArrayList<>();
+                        for (ScheduleUiModel model : compactScheduleModels) {
+                            scheduleListItemModels.add(new ScheduleListItemModel(model));
+                        }
+                        mAdapter = new ArrayAdapter<>(requireContext(),
+                                R.layout.view_custom_list_item_multiple_choise,
+                                scheduleListItemModels);
+                        mListView.setAdapter(mAdapter);
+
+                        mListView.setVisibility(View.VISIBLE);
+                        mSchedulesNotFoundView.setVisibility(View.GONE);
+                    } else {
+                        mListView.setVisibility(View.GONE);
+                        mSchedulesNotFoundView.setVisibility(View.VISIBLE);
                     }
-                    mAdapter = new ArrayAdapter<>(requireContext(),
-                            R.layout.view_custom_list_item_multiple_choise,
-                            scheduleListItemModels);
-                    mListView.setAdapter(mAdapter);
                 });
 
         this.addMenuProvider(view);
@@ -81,7 +92,7 @@ public class ScheduleListDeviceFragment extends Fragment {
                                     (ScheduleListItemModel) mListView.getItemAtPosition(i);
                             try {
                                 mViewModel.attachParentsByScheduleId(
-                                        chosenSchedule.getId(),
+                                        chosenSchedule.getScheduleId(),
                                         chosenSchedule.getNetworkId());
                                 Navigation.findNavController(view).navigateUp();
                             } catch (DevicesViewModelFailedException e) {
@@ -99,10 +110,10 @@ public class ScheduleListDeviceFragment extends Fragment {
     private static class ScheduleListItemModel {
         private final String mScheduleId, mScheduleName, mNetworkId;
 
-        public ScheduleListItemModel(final ScheduleWithNetworkIdNameRepositoryModel model) {
-            mScheduleId = model.getScheduleIdNameModel().getId();
-            mScheduleName = model.getScheduleIdNameModel().getName();
-            mNetworkId = model.getParentNetworkIdNameModel().getId();
+        public ScheduleListItemModel(final ScheduleUiModel model) {
+            mScheduleId = model.getId();
+            mScheduleName = model.getName();
+            mNetworkId = model.getParentNetworkId();
         }
 
         @NonNull
@@ -111,7 +122,7 @@ public class ScheduleListDeviceFragment extends Fragment {
             return mScheduleName;
         }
 
-        public String getId() {
+        public String getScheduleId() {
             return mScheduleId;
         }
 

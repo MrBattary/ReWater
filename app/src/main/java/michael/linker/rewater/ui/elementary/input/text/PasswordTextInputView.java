@@ -62,6 +62,11 @@ public class PasswordTextInputView implements IPasswordTextInputView {
     }
 
     @Override
+    public String getPasswordAsPlainText() {
+        return this.getText();
+    }
+
+    @Override
     public String validateAndGetPasswordHash() throws InputNotAllowedException {
         final String passwordPlainText = this.getText();
         if (passwordPlainText.length() < sPASSWORD_POLICY_LENGTH) {

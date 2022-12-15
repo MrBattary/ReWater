@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import michael.linker.rewater.R;
 import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.local.stub.IDevicesData;
 import michael.linker.rewater.data.local.stub.INetworksData;
@@ -18,9 +19,10 @@ import michael.linker.rewater.data.model.IdNameModel;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.repository.devices.model.CreateDeviceRepositoryModel;
-import michael.linker.rewater.data.repository.devices.model.DeviceIdNameRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
+import michael.linker.rewater.data.repository.devices.model.ManualWateringDeviceRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceRepositoryModel;
+import michael.linker.rewater.data.res.StringsProvider;
 
 public class DevicesLocalRepository implements IDevicesRepository {
     private final INetworksData mNetworksData;
@@ -76,8 +78,8 @@ public class DevicesLocalRepository implements IDevicesRepository {
     }
 
     @Override
-    public List<DeviceIdNameRepositoryModel> getDeviceAttachList() {
-        final List<DeviceIdNameRepositoryModel> deviceModels = new ArrayList<>();
+    public List<DeviceRepositoryModel> getDeviceAttachList() {
+        final List<DeviceRepositoryModel> deviceModels = new ArrayList<>();
         final List<FullDeviceModel> dataDeviceModelList =
                 mDevicesData.getDevicesList();
         final List<String> unattachedDeviceIdList = dataDeviceModelList.stream()
@@ -95,9 +97,12 @@ public class DevicesLocalRepository implements IDevicesRepository {
         for (String unattachedDeviceId : unattachedDeviceIdList) {
             final FullDeviceModel deviceModel = mDevicesData.getDeviceById(unattachedDeviceId);
             deviceModels.add(
-                    new DeviceIdNameRepositoryModel(
+                    new DeviceRepositoryModel(
                             deviceModel.getId(),
-                            deviceModel.getName()
+                            deviceModel.getName(),
+                            null,
+                            null,
+                            deviceModel.getStatus()
                     )
             );
         }
@@ -106,12 +111,13 @@ public class DevicesLocalRepository implements IDevicesRepository {
     }
 
     @Override
-    public DeviceRepositoryModel getDeviceById(final String id)
+    public DeviceRepositoryModel getDeviceById(final String deviceId)
             throws DevicesRepositoryNotFoundException {
-        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(id);
+        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(deviceId);
         if (dataDeviceModel == null) {
-            throw new DevicesRepositoryNotFoundException(
-                    "Requested device with id: " + id + " was not found!");
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    deviceId));
         }
 
         IdNameModel parentScheduleIdNameModel = new IdNameModel(null, null);
@@ -155,26 +161,26 @@ public class DevicesLocalRepository implements IDevicesRepository {
     }
 
     @Override
-    public void updateDevice(String id, UpdateDeviceRepositoryModel model)
+    public void updateDevice(String deviceId, UpdateDeviceRepositoryModel model)
             throws DevicesRepositoryNotFoundException {
-        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(id);
+        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(deviceId);
         if (dataDeviceModel == null) {
-            throw new DevicesRepositoryNotFoundException(
-                    "Requested device with id: " + id + " was not found and can't be updated!"
-            );
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    deviceId));
         }
 
-        String oldScheduleId = mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(id);
+        String oldScheduleId = mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(deviceId);
 
         final String newScheduleId = model.getScheduleId();
         if (!Objects.equals(oldScheduleId, newScheduleId)) {
-            mScheduleToDevicesDataLink.removeRightEntityId(id);
+            mScheduleToDevicesDataLink.removeRightEntityId(deviceId);
             if (newScheduleId != null) {
-                mScheduleToDevicesDataLink.addDataLink(newScheduleId, id);
+                mScheduleToDevicesDataLink.addDataLink(newScheduleId, deviceId);
             }
         }
-        mDevicesData.updateDevice(id, new FullDeviceModel(
-                id,
+        mDevicesData.updateDevice(deviceId, new FullDeviceModel(
+                deviceId,
                 model.getName(),
                 dataDeviceModel.getStatus())
         );
@@ -206,5 +212,17 @@ public class DevicesLocalRepository implements IDevicesRepository {
         if (model.getScheduleId() != null) {
             mScheduleToDevicesDataLink.addDataLink(model.getScheduleId(), newDeviceUuid);
         }
+    }
+
+    @Override
+    public void manualWatering(String deviceId, ManualWateringDeviceRepositoryModel model)
+            throws DevicesRepositoryNotFoundException, DevicesRepositoryFailedException {
+        final FullDeviceModel dataDeviceModel = mDevicesData.getDeviceById(deviceId);
+        if (dataDeviceModel == null) {
+            throw new DevicesRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_device_not_found),
+                    deviceId));
+        }
+        // Request to the server
     }
 }

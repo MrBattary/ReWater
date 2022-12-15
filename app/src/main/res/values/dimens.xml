@@ -40,4 +40,7 @@
     <!-- Sign in/up dimensions. -->
     <dimen name="sign_input_margin">30dp</dimen>
     <dimen name="sign_top_right_corner_button_margin">5dp</dimen>
+
+    <!-- Chart dimensions. -->
+    <dimen name="chart_horizontal_margin">40dp</dimen>
 </resources>

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import michael.linker.rewater.R;
 import michael.linker.rewater.config.StubDataConfiguration;
 import michael.linker.rewater.data.local.stub.IDevicesData;
 import michael.linker.rewater.data.local.stub.INetworksData;
@@ -18,6 +19,7 @@ import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
+import michael.linker.rewater.data.res.StringsProvider;
 
 public class NetworksLocalRepository implements INetworksRepository {
     private final INetworksData mNetworksData;
@@ -80,8 +82,10 @@ public class NetworksLocalRepository implements INetworksRepository {
             throws NetworksRepositoryNotFoundException {
         final FullNetworkModel networkModel = mNetworksData.getNetworkById(id);
         if (networkModel == null) {
-            throw new NetworksRepositoryNotFoundException(
-                    "Requested network with id: " + id + " was not found!");
+            throw new NetworksRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_network_not_found),
+                    id
+            ));
         }
 
         List<String> scheduleInsideNetworkIdList =
@@ -135,13 +139,15 @@ public class NetworksLocalRepository implements INetworksRepository {
                 .stream()
                 .map(FullNetworkModel::getName)
                 .collect(Collectors.toList());
-        if (alreadyUsedNames.contains(model.getHeading())) {
-            throw new NetworksRepositoryAlreadyExistsException(
-                    "Network with heading: " + model.getHeading() + " already exists!");
+        if (alreadyUsedNames.contains(model.getName())) {
+            throw new NetworksRepositoryAlreadyExistsException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_network_already_exists),
+                    model.getName()
+            ));
         }
         mNetworksData.addNetwork(
                 new FullNetworkModel(
-                        null, model.getHeading(), model.getDescription()
+                        null, model.getName(), model.getDescription()
                 ));
     }
 
@@ -150,13 +156,15 @@ public class NetworksLocalRepository implements INetworksRepository {
             throws NetworksRepositoryNotFoundException {
         final FullNetworkModel dataNetworkModel = mNetworksData.getNetworkById(id);
         if (dataNetworkModel == null) {
-            throw new NetworksRepositoryNotFoundException(
-                    "Requested network with id: " + id + " was not found and can't be updated!");
+            throw new NetworksRepositoryNotFoundException(String.format(
+                    StringsProvider.getString(R.string.internal_repository_network_not_found),
+                    id
+            ));
         }
         mNetworksData.updateNetwork(id,
                 new FullNetworkModel(
                         dataNetworkModel.getId(),
-                        model.getHeading(),
+                        model.getName(),
                         model.getDescription()));
     }
 

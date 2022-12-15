@@ -23,11 +23,16 @@ public class TwoChoicesConfirmDialog implements IDialog {
         mDialogBuilder.setMessage(dialogModel.getMessage());
         mDialogBuilder.setNegativeButton(dialogModel.getAcceptButtonText(), acceptListener);
         mDialogBuilder.setPositiveButton(dialogModel.getRejectButtonText(), rejectListener);
+        mDialogBuilder.setCancelable(false);
         mDialogBuilder.create();
     }
 
     @Override
     public void show() {
         mDialogBuilder.show();
+    }
+
+    @Override
+    public void dismiss() {
     }
 }

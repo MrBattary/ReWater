@@ -31,8 +31,7 @@ import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesDialogModel;
 import michael.linker.rewater.ui.elementary.dialog.two.TwoChoicesWarningDialog;
 import michael.linker.rewater.ui.elementary.input.InputNotAllowedException;
 import michael.linker.rewater.ui.elementary.input.composite.WaterVolumeMetricInputView;
-import michael.linker.rewater.ui.elementary.toast.ToastProvider;
-import michael.linker.rewater.util.LiveDataUtils;
+import michael.linker.rewater.util.livedata.LiveDataUtils;
 
 public class DeviceManualWateringFragment extends Fragment {
     private WaterVolumeMetricInputView mWaterVolumeMetricInputView;
@@ -117,14 +116,14 @@ public class DeviceManualWateringFragment extends Fragment {
                 ),
                 (dialogInterface, i) -> {
                     try {
-                        mViewModel.waterWithProvidedModel();
+                        mViewModel.wateringWithProvidedModel();
                         Navigation.findNavController(view).navigateUp();
                     } catch (DevicesViewModelFailedException e) {
                         mForceWateringDialog.show();
                     } catch (InputNotAllowedException ignored) {
                     }
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 
     private void initDialogs(final View view) {
@@ -135,7 +134,7 @@ public class DeviceManualWateringFragment extends Fragment {
                         StringsProvider.getString(R.string.dialog_insufficient_volume),
                         StringsProvider.getString(R.string.button_ok)
                 ),
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
 
         mForceWateringDialog = new TwoChoicesWarningDialog(requireContext(),
                 new TwoChoicesDialogModel(
@@ -146,14 +145,10 @@ public class DeviceManualWateringFragment extends Fragment {
                         StringsProvider.getString(R.string.button_cancel)
                 ),
                 (dialogInterface, i) -> {
-                    try {
-                        mViewModel.forceWaterWithProvidedModel();
-                        Navigation.findNavController(view).navigateUp();
-                    } catch (DevicesViewModelFailedException e) {
-                        ToastProvider.showShort(requireContext(), e.getMessage());
-                    }
+                    mViewModel.forceWateringWithProvidedModel();
+                    Navigation.findNavController(view).navigateUp();
                 },
-                (dialogInterface, i) -> dialogInterface.cancel());
+                (dialogInterface, i) -> dialogInterface.dismiss());
     }
 
     private void initButtons(final View view) {

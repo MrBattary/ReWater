@@ -54,10 +54,19 @@ public class DevicesFragment extends Fragment {
         transition.addChangeBoundsTarget(view.findViewById(R.id.devices));
         transition.addChangeBoundsTarget(view.findViewById(R.id.devices_recycler_view));
 
+        ViewGroup mDevicesNotFound = view.findViewById(R.id.devices_not_found);
+
         mViewModel.getDeviceCardModels().observe(getViewLifecycleOwner(), list -> {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(
-                    new DevicesItemAdapter(getContext(), mViewModel, list, transition));
+            if (list.size() > 0) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(
+                        new DevicesItemAdapter(getContext(), mViewModel, list, transition));
+                recyclerView.setVisibility(View.VISIBLE);
+                mDevicesNotFound.setVisibility(View.GONE);
+            } else {
+                recyclerView.setVisibility(View.GONE);
+                mDevicesNotFound.setVisibility(View.VISIBLE);
+            }
         });
 
         initAddFloatingActionButton(view);

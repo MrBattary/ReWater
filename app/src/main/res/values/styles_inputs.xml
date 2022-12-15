@@ -17,23 +17,23 @@
     <style name="TextInputCounterLayoutStyle" parent="TextInputLayoutParentStyle">
         <item name="counterEnabled">true</item>
         <item name="counterTextColor">@color/text_secondary</item>
-        <item name="counterOverflowTextColor">@color/negative_color</item>
+        <item name="counterOverflowTextColor">@color/negative_primary</item>
     </style>
 
     <!-- The param 'counterMaxLength' is required! -->
     <style name="TextInputCounterAndErrorLayoutStyle" parent="TextInputCounterLayoutStyle">
         <item name="errorEnabled">true</item>
-        <item name="errorTextColor">@color/negative_color</item>
+        <item name="errorTextColor">@color/negative_primary</item>
     </style>
 
     <style name="TextInputErrorLayoutStyle" parent="TextInputLayoutParentStyle">
         <item name="errorEnabled">true</item>
-        <item name="errorTextColor">@color/negative_color</item>
+        <item name="errorTextColor">@color/negative_primary</item>
     </style>
 
     <style name="TextInputPasswordErrorLayoutStyle" parent="TextInputPasswordStyle">
         <item name="errorEnabled">true</item>
-        <item name="errorTextColor">@color/negative_color</item>
+        <item name="errorTextColor">@color/negative_primary</item>
     </style>
 
 

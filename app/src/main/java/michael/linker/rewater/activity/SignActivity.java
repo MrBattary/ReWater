@@ -39,7 +39,7 @@ public class SignActivity extends AppCompatActivity {
                         StringsProvider.getString(R.string.button_cancel)
                 ),
                 (dialogInterface, i) -> ActivityGate.finishApplication(this),
-                (dialogInterface, i) -> dialogInterface.cancel()
+                (dialogInterface, i) -> dialogInterface.dismiss()
         );
     }
 }

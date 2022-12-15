@@ -60,8 +60,8 @@
                     android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
                     android:text="@string/button_detach_schedule"
                     app:icon="@drawable/ic_detach"
-                    app:iconTint="@color/negative_color"
-                    app:strokeColor="@color/negative_color" />
+                    app:iconTint="@color/negative_primary"
+                    app:strokeColor="@color/negative_primary" />
 
                 <include
                     android:id="@+id/add_device_schedule_information"
@@ -86,8 +86,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/button_attach_schedule"
                     app:icon="@drawable/ic_add"
-                    app:iconTint="@color/positive_color"
-                    app:strokeColor="@color/positive_color" />
+                    app:iconTint="@color/positive_primary"
+                    app:strokeColor="@color/positive_primary" />
             </RelativeLayout>
         </RelativeLayout>
 
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/button_add"
                 app:icon="@drawable/ic_positive"
-                app:iconTint="@color/positive_color"
+                app:iconTint="@color/positive_primary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/button_back"
                 app:icon="@drawable/ic_right_arrow"
-                app:iconTint="@color/negative_color"
+                app:iconTint="@color/negative_primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -129,7 +129,7 @@
                 android:layout_marginTop="@dimen/fragment_content_vertical_spacing"
                 android:text="@string/button_cancel"
                 app:icon="@drawable/ic_cancel"
-                app:iconTint="@color/negative_color"
+                app:iconTint="@color/negative_primary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/add_device_back_button" />

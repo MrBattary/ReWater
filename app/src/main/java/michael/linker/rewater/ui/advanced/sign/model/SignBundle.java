@@ -2,7 +2,7 @@ package michael.linker.rewater.ui.advanced.sign.model;
 
 import android.os.Bundle;
 
-import michael.linker.rewater.util.IBundle;
+import michael.linker.rewater.util.communication.IBundle;
 
 public class SignBundle implements IBundle<SignUiModel> {
     private static final String KEY_USERNAME = "SignBundle_mUsername";

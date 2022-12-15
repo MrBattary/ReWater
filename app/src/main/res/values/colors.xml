@@ -10,14 +10,19 @@
 
     <color name="text_primary">#e0e0e0</color>
     <color name="text_secondary">#b5b5b5</color>
-    <color name="text_disabled">#707070</color>
+    <color name="text_tertiary">#8C8C8C</color>
+    <color name="text_disabled">#6E6E6E</color>
     <color name="background_disabled">#303030</color>
     <color name="background_select">#606060</color>
     <color name="background_primary">#252525</color>
     <color name="background_secondary">#353535</color>
     <color name="background_tertiary">#454545</color>
     <color name="background_quaternary">#656565</color>
-    <color name="positive_color">#20c04d</color>
-    <color name="warning_color">#f3dc06</color>
-    <color name="negative_color">#fb0505</color>
+    <color name="positive_primary">#20c04d</color>
+    <color name="positive_secondary">#237339</color>
+    <color name="warning_primary">#f3dc06</color>
+    <color name="warning_secondary">#9E8F00</color>
+    <color name="negative_primary">#fb0505</color>
+    <color name="negative_secondary">#901515</color>
+    <color name="undefined">#787878</color>
 </resources>

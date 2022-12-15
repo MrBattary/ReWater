@@ -1,20 +1,20 @@
 package michael.linker.rewater.data.repository.networks.model;
 
 public class CreateOrUpdateNetworkRepositoryModel {
-    private final String heading, description;
+    private final String mName, mDescription;
 
     public CreateOrUpdateNetworkRepositoryModel(
-            final String heading,
+            final String name,
             final String description) {
-        this.heading = heading;
-        this.description = description;
+        this.mName = name;
+        this.mDescription = description;
     }
 
-    public String getHeading() {
-        return heading;
+    public String getName() {
+        return mName;
     }
 
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 }

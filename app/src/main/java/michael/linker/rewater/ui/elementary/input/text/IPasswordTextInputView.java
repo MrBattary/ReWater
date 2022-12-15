@@ -8,9 +8,17 @@ public interface IPasswordTextInputView extends IInputView, IFocusable {
     /**
      * Get the password hash.
      *
-     * @return hashed password the text input
+     * @return hashed password from the text input
      */
     String getPasswordHash();
+
+    /**
+     * Get the password as plain text.
+     * Should be used only when encrypted channel provided.
+     *
+     * @return password as plain text from the text input
+     */
+    String getPasswordAsPlainText();
 
     /**
      * Get a password hash that matches the password policy.

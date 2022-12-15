@@ -4,15 +4,14 @@ import java.util.List;
 
 import michael.linker.rewater.data.repository.schedules.model.CreateOrUpdateScheduleRepositoryModel;
 import michael.linker.rewater.data.repository.schedules.model.ScheduleRepositoryModel;
-import michael.linker.rewater.data.repository.schedules.model.ScheduleWithNetworkIdNameRepositoryModel;
 
 public interface ISchedulesRepository {
     /**
-     * Get a list of all the schedules that the device can attach to.
+     * Get a list of the all schedules.
      *
-     * @return the list of schedules ID-name models in it
+     * @return the list of all schedules models or an empty list
      */
-    List<ScheduleWithNetworkIdNameRepositoryModel> getScheduleWithNetworkList();
+    List<ScheduleRepositoryModel> getAllSchedules();
 
     /**
      * Get a list of the all schedules by parent network ID.
@@ -25,11 +24,12 @@ public interface ISchedulesRepository {
     /**
      * Get specific schedule by it's ID.
      *
-     * @param id ID of the schedule
+     * @param scheduleId ID of the schedule
      * @return model of the required schedule
      * @throws SchedulesRepositoryNotFoundException if schedule with provided ID does not exist
      */
-    ScheduleRepositoryModel getScheduleById(String id) throws SchedulesRepositoryNotFoundException;
+    ScheduleRepositoryModel getScheduleById(String scheduleId)
+            throws SchedulesRepositoryNotFoundException;
 
     /**
      * Create specific schedule in the specific network using repository model.

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReWater</string>
+    <string name="app_name" translatable="false">ReWater</string>
 
     <!-- Navigation bar. -->
     <string name="navigation_title_home">Home</string>
@@ -7,16 +7,18 @@
     <string name="navigation_title_devices">Devices</string>
     <string name="navigation_title_profile">Profile</string>
     <string name="navigation_title_settings">Settings</string>
+    <string name="navigation_title_settings_license">License</string>
     <string name="navigation_title_devices_add_options">Ways to add</string>
     <string name="navigation_title_devices_add_pair_new">Pair a new device</string>
+    <string name="navigation_title_devices_add_pair_new_ble_device">Choose device</string>
     <string name="navigation_title_devices_add_already_paired">Add the already paired</string>
     <string name="navigation_title_devices_info">Device info</string>
     <string name="navigation_title_devices_manual_watering">Manual watering</string>
     <string name="navigation_title_devices_edit">Edit device</string>
     <string name="navigation_title_devices_schedules">Choose schedule</string>
+    <string name="navigation_title_devices_add">Setup new device</string>
     <string name="navigation_title_networks_add">Add new network</string>
     <string name="navigation_title_networks_edit">Edit network</string>
-    <string name="navigation_title_devices_add">Setup new device</string>
     <string name="navigation_title_schedules">Schedules</string>
     <string name="navigation_title_schedules_add">Create schedule</string>
     <string name="navigation_title_schedules_edit">Edit schedule</string>
@@ -38,6 +40,8 @@
     <string name="input_hint_email">Email</string>
     <string name="input_hint_username_or_email">Username or Email</string>
     <string name="input_hint_password">Password</string>
+    <string name="input_hint_wifi_ssid">Wi-Fi network name (SSID)</string>
+    <string name="input_hint_wifi_password">Wi-Fi network password</string>
     <string name="input_error_days">The value of days must be an integer from 0 to 99!</string>
     <string name="input_error_hours">The value of hours must be an integer from 0 to 23!</string>
     <string name="input_error_minutes">The value of minutes must be an integer from 0 to 59!</string>
@@ -55,6 +59,7 @@
     <string name="input_error_password_digit">The password must contain at least one digit.</string>
     <string name="input_error_password_lower_case">The password must contain at least one lower case character.</string>
     <string name="input_error_password_upper_case">The password must contain at least one upper case character.</string>
+    <string name="input_error_water_volume">Could not get the entered values from the water volume input!</string>
 
     <!-- Units of measurement. -->
     <string name="unit_mouths_short">m</string>
@@ -65,8 +70,12 @@
     <string name="unit_millilitres_short">ml</string>
 
     <!-- Texts. -->
-    <string name="placeholder_global_short">!Lorem ipsum vivamus.!</string>
-    <string name="placeholder_global_medium">!Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet.!</string>
+    <string name="placeholder_global_short" translatable="false">[NOT PRODUCTION] Lorem ipsum vivamus. [NOT PRODUCTION]</string>
+    <string name="placeholder_global_medium" translatable="false">[NOT PRODUCTION] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et laoreet. [NOT PRODUCTION]</string>
+    <string name="placeholder_date_time" translatable="false">yyyy-MM-dd hh:mm</string>
+    <string name="placeholder_emptiness">There\'s nothing here</string>
+    <string name="placeholder_emptiness_temporary">There\'s nothing here yet</string>
+    <string name="placeholder_emptiness_invitation">Let\'s fix this!</string>
     <string name="placeholder_username">Username</string>
     <string name="parent_schedule_not_found">No schedule set</string>
     <string name="parent_network_not_found">No network set</string>
@@ -77,6 +86,7 @@
     <string name="pair_device_connect_failure">Unable to connect to the device via Bluetooth connection.</string>
     <string name="pair_device_access_success">Access to the device configuration was obtained successfully.</string>
     <string name="pair_device_access_failure">The device could not be accessed.</string>
+    <string name="pair_device_network_or">OR</string>
     <string name="pair_device_network_success">The device\'s network settings have been successfully updated.</string>
     <string name="pair_device_network_failure">The device failed to update the network settings. Check the correctness of the entered data.</string>
     <string name="pair_device_success">The device pairing has been successfully completed. Now it remains to setup your new device. To continue, click "next".</string>
@@ -93,22 +103,68 @@
     <string name="sign_up_failure_username_used">The username is already taken.</string>
     <string name="sign_up_failure_email_used">The user with this email is already registered.</string>
     <string name="sign_failure_auth_token_not_accepted">The authorization token is not accepted.</string>
-    <string name="loading_stage_internet_connection">Checking the Internet connection</string>
-    <string name="loading_stage_internet_connection_failure">Unable to connect to the internet, please check your internet connection and restart the application.</string>
-    <string name="loading_stage_server_connection">Checking the connection to the server</string>
-    <string name="loading_stage_server_connection_failure">Unable to connect to the server, please restart the application.</string>
-    <string name="loading_stage_database_connection">Connecting to the database</string>
-    <string name="loading_stage_database_connection_failure">The connection to the internal database could not be established, please try to reinstall the application.</string>
+    <string name="loading_stage_permissions">Checking the available permissions.</string>
+    <string name="loading_stage_permissions_failure">The application cannot work correctly due to the lack of necessary permissions. Please give the app the necessary permissions.</string>
+    <string name="loading_stage_internet_connection">Checking the Internet connection.</string>
+    <string name="loading_stage_internet_connection_failure">Unable to connect to the internet, please check your internet connection and retry again.</string>
+    <string name="loading_stage_server_connection">Checking the connection to the server.</string>
+    <string name="loading_stage_server_connection_failure">Unable to connect to the server, please retry again or come back later.</string>
+    <string name="loading_stage_database_connection">Connecting to the database.</string>
+    <string name="loading_stage_database_connection_failure">The connection to the internal database is required but could not be established, please try to reinstall the application.</string>
     <string name="loading_stage_auto_login">Uploading user data.</string>
     <string name="loading_stage_repository_installation">Establishing a connection with the repositories.</string>
     <string name="loading_stage_repository_installation_failure">Failed to establish connections with repositories, please restart the application.</string>
     <string name="loading_stage_data_installation">Uploading internal data.</string>
     <string name="loading_stage_data_installation_failure">Failed to upload internal data, please restart the application.</string>
-    <string name="loading_stage_failure">An error occurred during the download. Try restarting the application, if the error continues to appear, then reinstall the application.</string>
+    <string name="loading_stage_failure">An error occurred during the loading. Try restarting the application, if the error continues to appear, then reinstall the application.</string>
+    <string name="bluetooth_failure_device_not_support">This device does not support Bluetooth. Please install the application on a device with a Bluetooth module.</string>
+    <string name="bluetooth_failure_permission_not_found">The application does not have permissions to control Bluetooth. Please give the app permissions to control Bluetooth.</string>
+    <string name="bluetooth_failure_permission_location_not_found">The application does not have location permissions, therefore it cannot search and connect to devices via Bluetooth. Please give the app location permissions.</string>
+    <string name="bluetooth_failure_permission_location_services_not_found">The application does not have full location permissions, therefore it cannot search any devices via Bluetooth. Please give the app full location permissions.</string>
+    <string name="bluetooth_failure_turned_off">Bluetooth is turned off, although it was expected that it was turned on. Please turn on Bluetooth and try again.</string>
+    <string name="bluetooth_failure_turn_on">An unexpected error occurred while turning on the Bluetooth.</string>
+    <string name="bluetooth_failure_scan">An unexpected error occurred while searching devices via Bluetooth.</string>
+    <string name="bluetooth_connect">Establishing a connection with device </string>
+    <string name="bluetooth_failure_connect">An unexpected error occurred when connecting the selected device. </string>
+    <string name="bluetooth_scan">Searching devices…</string>
+    <string name="bluetooth_scan_finished">Device search completed.</string>
+    <string name="bluetooth_device_info">Device name: %1$s\nDevice MAC: %2$s</string>
+    <string name="bluetooth_failure_transmit">The data could not be transmitted because the Bluetooth connection is not established.</string>
+    <string name="manual_watering_failure_overflow">The soil moisture sensor shows a high value, additional permission is required for watering.</string>
+    <string name="license">Copyright © 2022 Michael Linker\n\nPermission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</string>
+    <string name="security_failure_hash_impl_was_not_found">Hash function implementation not found!</string>
+    <string name="watering_history_header">Recent watering events:</string>
+    <string name="watering_history_empty">No recent watering events found</string>
+    <string name="watering_history_event_success">Watering is successful</string>
+    <string name="watering_history_event_partially_success">Watering is partially successful</string>
+    <string name="watering_history_event_failure">Watering is not successful</string>
+    <string name="chart_networks_center_text">Network\nstatuses</string>
+    <string name="chart_networks_placeholder">No networks found for the chart diagram</string>
+    <string name="chart_devices_center_text">Devices\nstatuses</string>
+    <string name="chart_devices_placeholder">No devices found for the chart diagram</string>
+    <string name="summary_status_fine">Everything is all right</string>
+    <string name="summary_status_warning">Your attention is required</string>
+    <string name="summary_status_defect">A failure has occurred</string>
 
     <!-- Titles. -->
-    <string name="title_warning">Warning!</string>
+    <string name="title_warning">Warning</string>
+    <string name="title_attention">Attention</string>
+    <string name="title_error">Error</string>
+    <string name="title_loading">Loading</string>
     <string name="title_exit">Exit</string>
+    <string name="title_shutdown">Shutdown</string>
 
     <!-- Dialogs. -->
     <string name="dialog_delete_network">You are going to delete this network. After this action, all watering schedules from this network will be erased. Are you sure?</string>
@@ -124,6 +180,12 @@
     <string name="dialog_manual_watering_confirmation_1">Are you sure you want to do a\n</string>
     <string name="dialog_manual_watering_confirmation_2">\ watering?</string>
     <string name="dialog_exit">Are you sure you want to exit the app?</string>
+    <string name="dialog_shutdown">Are you sure you want to completely shutdown the app? In the future, you will need more time to start the application.</string>
+    <string name="dialog_bluetooth_turn_on_to_pair">During the pairing of the new device, Bluetooth is required to be turned on, after pairing it can be turned off. Turn on Bluetooth?</string>
+    <string name="dialog_bluetooth_connecting_in_progress">We are establishing a connection with the device, please wait, it won\'t take much time.</string>
+    <string name="dialog_internet_connection_lost">The internet connection is lost. The application cannot work without the Internet. Please turn on the Internet.</string>
+    <string name="dialog_server_connection_lost">The connection to the server is lost. The application cannot work without a connection to the server.</string>
+
 
     <!-- Buttons. -->
     <string name="button_settings">Settings</string>
@@ -136,6 +198,7 @@
     <string name="button_next">Next</string>
     <string name="button_back">Back</string>
     <string name="button_ok">OK</string>
+    <string name="button_turn_on">Turn on</string>
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_detach_schedule">Detach schedule</string>
@@ -152,8 +215,12 @@
     <string name="button_sign_up">Sign up</string>
     <string name="button_sign_out">Sign out</string>
     <string name="button_exit">Exit</string>
+    <string name="button_shutdown">Shutdown</string>
     <string name="button_retry">Retry</string>
     <string name="button_restore_password">Forgot password?</string>
+    <string name="button_reconnect">Reconnect</string>
+    <string name="button_license">License</string>
+    <string name="button_devices_add_pair_new_saved_wifi">Select a Wi-Fi network</string>
 
     <!-- Descriptions. -->
     <string name="description_back_button">Back to the previous screen</string>
@@ -173,5 +240,18 @@
     <string name="description_sign_logo">ReWater app logo</string>
     <string name="description_profile_icon">User icon</string>
     <string name="description_app_logo">A plant in a smart pot</string>
-    <string name="description_app_name">ReWater</string>
+    <string name="description_app_name" translatable="false">ReWater</string>
+    <string name="description_emptiness_icon">Empty list</string>
+    <string name="description_emptiness_invitation_icon">A pointer to the add button, which is below</string>
+
+    <!-- Internal error messages. -->
+    <string name="internal_repository_device_not_found">Requested device with id: %1$s was not found!</string>
+    <string name="internal_repository_device_hardware_not_found">Requested device with hardware id: %1$s was not found!</string>
+    <string name="internal_repository_device_already_exists">"Device with name: %1$s already exists!</string>
+    <string name="internal_repository_network_not_found">Requested network with id: %1$s was not found!</string>
+    <string name="internal_repository_network_already_exists">"Network with name: %1$s already exists!</string>
+    <string name="internal_repository_schedule_not_found">Requested schedule with id: %1$s was not found!</string>
+    <string name="internal_repository_schedule_already_exists">Schedule with name: %1$s already exists!</string>
+    <string name="internal_db_user_not_found">The user with username: %1$s was not found!</string>
+    <string name="internal_db_user_active_not_found">Active user was not found!</string>
 </resources>

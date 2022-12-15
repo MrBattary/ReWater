@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.R;
 import michael.linker.rewater.activity.ActivityGate;
+import michael.linker.rewater.config.BuildConfiguration;
 import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.StringsProvider;
 import michael.linker.rewater.ui.advanced.sign.viewmodel.SignLoadingViewModel;
@@ -31,6 +33,7 @@ import michael.linker.rewater.ui.elementary.toast.ToastProvider;
 public class SignInLoadingFragment extends Fragment {
     private IStatusStyledTextView mStageTextView;
     private MaterialButton mRetryButton;
+    private TextView mVersionTextView;
 
     private SignLoadingViewModel mViewModel;
 
@@ -67,6 +70,9 @@ public class SignInLoadingFragment extends Fragment {
                 m -> mStageTextView.setText(m, Status.DEFECT));
         mViewModel.setInitStageMessage(
                 StringsProvider.getString(R.string.loading_stage_repository_installation));
+
+        mVersionTextView = view.findViewById(R.id.sign_loading_app_version);
+        mVersionTextView.setText(BuildConfiguration.getVersionName());
 
         mRetryButton = view.findViewById(R.id.sign_loading_retry_button);
         mRetryButton.setOnClickListener(l -> this.loadUserData());

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import michael.linker.rewater.R;
 import michael.linker.rewater.data.model.status.Status;
-import michael.linker.rewater.data.res.StatusColorsProvider;
+import michael.linker.rewater.data.res.status.StatusColorsProvider;
 import michael.linker.rewater.data.model.status.DetailedStatusModel;
 import michael.linker.rewater.ui.elementary.ICustomView;
 

@@ -28,6 +28,12 @@
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/background_tertiary"
         app:fabSize="normal"
-        app:tint="@color/positive_color" />
+        app:tint="@color/positive_primary" />
 
+    <include
+        android:id="@+id/devices_not_found"
+        layout="@layout/view_placeholder_not_found_big_with_invitation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 </FrameLayout>

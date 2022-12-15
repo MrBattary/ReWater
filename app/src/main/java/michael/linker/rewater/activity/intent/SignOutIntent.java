@@ -2,7 +2,7 @@ package michael.linker.rewater.activity.intent;
 
 import android.content.Intent;
 
-import michael.linker.rewater.util.IIntent;
+import michael.linker.rewater.util.communication.IIntent;
 
 public class SignOutIntent implements IIntent<SignOutIntentModel> {
     public static final Boolean EXPECTED_SIGN_OUT = true;

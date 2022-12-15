@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -12,7 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_gravity="center_vertical"
         android:contentDescription="@string/description_parent_schedule_or_network_icon"
-        android:src="@drawable/ic_pointing_arrow_neutral" />
+        android:src="@drawable/ic_pointing_arrow_neutral"
+        app:tint="@color/text_primary" />
 
     <TextView
         android:id="@+id/parent_entity_text"
