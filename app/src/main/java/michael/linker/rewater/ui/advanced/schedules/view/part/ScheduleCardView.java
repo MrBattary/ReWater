@@ -32,7 +32,7 @@ public class ScheduleCardView {
     private final ImageButton mExpandOrLooseButton;
     private final ViewGroup mHiddenContent;
     private final RecyclerView mAttachedDevicesRecyclerView;
-    private final Button mSettingsButton;
+    private final Button mSettingsButton, mHistoryButton;
     private final IOrderedTransition mTransition;
     private ScheduleUiModel mDataModel;
 
@@ -53,6 +53,7 @@ public class ScheduleCardView {
         mHiddenContent = view.findViewById(R.id.schedule_card_hidden_content);
         mAttachedDevicesRecyclerView = view.findViewById(R.id.schedule_card_devices);
         mSettingsButton = view.findViewById(R.id.schedule_card_settings_button);
+        mHistoryButton = view.findViewById(R.id.schedule_card_history_button);
         mTransition = transition;
 
         transition.addChangeBoundsTarget(view);
@@ -88,6 +89,7 @@ public class ScheduleCardView {
     private void initButtonsLogic(final UpdateScheduleViewModel childViewModel) {
         initExpandOrLooseButtonLogic();
         initSettingsButtonLogic(childViewModel);
+        initHistoryButtonLogic();
     }
 
     private void initExpandOrLooseButtonLogic() {
@@ -110,6 +112,11 @@ public class ScheduleCardView {
         });
     }
 
+    private void initHistoryButtonLogic() {
+        // TODO: History button logic
+        mHistoryButton.setOnClickListener(l -> {});
+    }
+
     private void initTransitionTargets() {
         // Permanent content
         mTransition.addChangeBoundsTarget(mCardView);
@@ -119,6 +126,7 @@ public class ScheduleCardView {
         // Hidden content
         mTransition.addChangeBoundsTarget(mHiddenContent);
         mTransition.addFadeTarget(mSettingsButton);
+        mTransition.addFadeTarget(mHistoryButton);
         mTransition.addFadeTarget(mPeriod);
         mTransition.addFadeTarget(mVolume);
         mTransition.addFadeTarget(mAttachedDevicesRecyclerView);
@@ -129,6 +137,7 @@ public class ScheduleCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_expand));
         mCombinedStatusView.displayCompact();
         mSettingsButton.setVisibility(View.GONE);
+        mHistoryButton.setVisibility(View.GONE);
         mPeriod.setVisibility(View.GONE);
         mVolume.setVisibility(View.GONE);
         mAttachedDevicesRecyclerView.setVisibility(View.GONE);
@@ -140,6 +149,7 @@ public class ScheduleCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_loose));
         mCombinedStatusView.displayDetailed();
         mSettingsButton.setVisibility(View.VISIBLE);
+        mHistoryButton.setVisibility(View.VISIBLE);
         mPeriod.setVisibility(View.VISIBLE);
         mVolume.setVisibility(View.VISIBLE);
         mAttachedDevicesRecyclerView.setVisibility(View.VISIBLE);

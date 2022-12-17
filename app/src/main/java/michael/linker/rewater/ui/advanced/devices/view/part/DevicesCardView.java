@@ -28,7 +28,7 @@ public class DevicesCardView {
     private final ParentEntityView mParentScheduleView, mParentNetworkView;
     private final CombinedStatusView mCombinedStatusView;
     private final ImageButton mExpandOrLooseButton;
-    private final Button mSettingsButton;
+    private final Button mSettingsButton, mHistoryButton;
     private final View mHiddenContent;
     private final IOrderedTransition mTransition;
     private String mId;
@@ -51,6 +51,7 @@ public class DevicesCardView {
                 view.findViewById(R.id.devices_card_combined_status));
         mExpandOrLooseButton = view.findViewById(R.id.devices_card_expand_or_loose_button);
         mSettingsButton = view.findViewById(R.id.devices_card_settings_button);
+        mHistoryButton = view.findViewById(R.id.devices_card_history_button);
         mHiddenContent = view.findViewById(R.id.devices_card_hidden_content);
         mTransition = transition;
 
@@ -82,6 +83,7 @@ public class DevicesCardView {
     private void initButtonsLogic(final DevicesViewModel parentViewModel) {
         initExpandOrLooseButtonLogic();
         initSettingsButtonLogic(parentViewModel);
+        initHistoryButtonLogic();
     }
 
     private void initOnClickForCard(final DevicesViewModel parentViewModel) {
@@ -120,6 +122,11 @@ public class DevicesCardView {
         });
     }
 
+    private void initHistoryButtonLogic() {
+        // TODO: History button logic
+        mHistoryButton.setOnClickListener(l -> {});
+    }
+
     private void initTransitionTargets() {
         // Permanent content
         mTransition.addChangeBoundsTarget(mCardView);
@@ -129,6 +136,7 @@ public class DevicesCardView {
         // Hidden content
         mTransition.addChangeBoundsTarget(mHiddenContent);
         mTransition.addFadeTarget(mSettingsButton);
+        mTransition.addFadeTarget(mHistoryButton);
         mTransition.addFadeTarget(mParentScheduleView.getViewInstance());
         mTransition.addFadeTarget(mParentNetworkView.getViewInstance());
     }
@@ -138,6 +146,7 @@ public class DevicesCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_expand));
         mCombinedStatusView.displayCompact();
         mSettingsButton.setVisibility(View.GONE);
+        mHistoryButton.setVisibility(View.GONE);
         mParentScheduleView.setVisibility(View.GONE);
         mParentNetworkView.setVisibility(View.GONE);
         mHiddenContent.setVisibility(View.GONE);
@@ -148,6 +157,7 @@ public class DevicesCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_loose));
         mCombinedStatusView.displayDetailed();
         mSettingsButton.setVisibility(View.VISIBLE);
+        mHistoryButton.setVisibility(View.VISIBLE);
         mParentScheduleView.setVisibility(View.VISIBLE);
         mParentNetworkView.setVisibility(View.VISIBLE);
         mHiddenContent.setVisibility(View.VISIBLE);
