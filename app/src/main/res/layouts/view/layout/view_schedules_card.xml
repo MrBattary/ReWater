@@ -80,7 +80,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/schedule_card_content_permanent"
-                android:layout_marginEnd="@dimen/card_horizontal_spacing"
                 android:visibility="visible">
 
                 <Button
@@ -98,12 +97,27 @@
                     android:text="@string/button_settings"
                     app:icon="@drawable/ic_settings" />
 
+                <Button
+                    android:id="@+id/schedule_card_history_button"
+                    style="@style/RightBottomCornerRoundButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/schedule_card_devices"
+                    android:layout_marginBottom="@dimen/card_bottom_button_negative_margin"
+                    android:layout_marginTop="@dimen/card_content_vertical_spacing"
+                    android:backgroundTint="@color/background_secondary"
+                    android:paddingHorizontal="@dimen/card_horizontal_spacing"
+                    android:paddingVertical="@dimen/card_vertical_spacing"
+                    android:text="@string/button_history"
+                    app:icon="@drawable/ic_history" />
+
                 <RelativeLayout
                     android:id="@+id/schedule_card_information"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="@dimen/card_horizontal_spacing">
+                    android:layout_marginHorizontal="@dimen/card_horizontal_spacing">
 
                     <TextView
                         android:id="@+id/schedule_card_period"
@@ -128,12 +142,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/schedule_card_information"
-                    android:layout_marginStart="@dimen/card_horizontal_spacing"
+                    android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
                     android:layout_marginTop="@dimen/card_content_vertical_spacing"
                     android:clipToPadding="false"
                     android:scrollbars="vertical"
                     app:layoutManager="LinearLayoutManager"
-                    tools:itemCount="2"
+                    tools:itemCount="1"
                     tools:listitem="@layout/view_schedule_devices_card" />
             </RelativeLayout>
         </RelativeLayout>

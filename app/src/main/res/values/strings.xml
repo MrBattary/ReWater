@@ -220,6 +220,7 @@ SOFTWARE.</string>
     <string name="button_restore_password">Forgot password?</string>
     <string name="button_reconnect">Reconnect</string>
     <string name="button_license">License</string>
+    <string name="button_history">History</string>
     <string name="button_devices_add_pair_new_saved_wifi">Select a Wi-Fi network</string>
 
     <!-- Descriptions. -->

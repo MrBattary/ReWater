@@ -203,6 +203,7 @@
     <string name="button_restore_password">Забыли пароль?</string>
     <string name="button_reconnect">Переподключиться</string>
     <string name="button_license">Лицензия</string>
+    <string name="button_history">История</string>
     <string name="button_devices_add_pair_new_saved_wifi">Выберете Wi-Fi сеть</string>
 
     <!-- Descriptions. -->
