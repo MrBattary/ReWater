@@ -15,7 +15,9 @@ import michael.linker.rewater.data.local.stub.links.IOneToManyDataLink;
 import michael.linker.rewater.data.local.stub.model.FullNetworkModel;
 import michael.linker.rewater.data.local.stub.model.FullScheduleModel;
 import michael.linker.rewater.data.model.IdNameModel;
+import michael.linker.rewater.data.repository.history.model.NetworkHistoryRepositoryModel;
 import michael.linker.rewater.data.repository.history.model.NetworkScheduleHistoryRepositoryModel;
+import michael.linker.rewater.data.repository.history.model.ScheduleHistoryRepositoryModel;
 import michael.linker.rewater.data.web.api.common.request.PageSizeCommonRequest;
 
 public class HistoryLocalRepository implements IHistoryRepository {
@@ -24,6 +26,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
     private final INetworksData mNetworksData;
     private final ISchedulesData mSchedulesData;
     private final IOneToManyDataLink mNetworkToSchedulesDataLink;
+    private final IOneToManyDataLink mScheduleToDevicesDataLink;
 
     private final List<NetworkScheduleHistoryRepositoryModel>
             mGeneratedConsolidatedHistoryEventsList;
@@ -34,9 +37,11 @@ public class HistoryLocalRepository implements IHistoryRepository {
         mNetworksData = StubDataConfiguration.getNetworksData();
         mSchedulesData = StubDataConfiguration.getSchedulesData();
         mNetworkToSchedulesDataLink = StubDataConfiguration.getNetworkToSchedulesDataLink();
+        mScheduleToDevicesDataLink = StubDataConfiguration.getScheduleToDevicesDataLink();
 
         mGeneratedConsolidatedHistoryEventsList = generateConsolidatedHistoryEvents(
-                config.getConsolidatedHistoryEventsNumber());
+                config.getConsolidatedHistoryEventsNumber()
+                        + config.getDevicesHistoryEventsNumber());
     }
 
     @Override
@@ -51,6 +56,62 @@ public class HistoryLocalRepository implements IHistoryRepository {
                 historyList.add(mGeneratedConsolidatedHistoryEventsList.get(i));
             } else {
                 break;
+            }
+        }
+
+        return historyList;
+    }
+
+    @Override
+    public List<NetworkHistoryRepositoryModel> getNetworkHistory(String networkId,
+            PageSizeCommonRequest request) {
+        List<NetworkHistoryRepositoryModel> historyList = new ArrayList<>();
+
+        final int requestSize = request.getPage() * request.getSize();
+
+        for (NetworkScheduleHistoryRepositoryModel generatedModel :
+                mGeneratedConsolidatedHistoryEventsList) {
+            if (networkId.equals(generatedModel.getNetworkIdName().getId())
+                    && historyList.size() < requestSize) {
+                historyList.add(new NetworkHistoryRepositoryModel(generatedModel));
+            }
+        }
+
+        return historyList;
+    }
+
+    @Override
+    public List<ScheduleHistoryRepositoryModel> getScheduleHistory(String scheduleId,
+            PageSizeCommonRequest request) {
+        List<ScheduleHistoryRepositoryModel> historyList = new ArrayList<>();
+
+        final int requestSize = request.getPage() * request.getSize();
+
+        for (NetworkScheduleHistoryRepositoryModel generatedModel :
+                mGeneratedConsolidatedHistoryEventsList) {
+            if (scheduleId.equals(generatedModel.getScheduleIdName().getId())
+                    && historyList.size() < requestSize) {
+                historyList.add(new ScheduleHistoryRepositoryModel(generatedModel));
+            }
+        }
+
+        return historyList;
+    }
+
+    @Override
+    public List<NetworkScheduleHistoryRepositoryModel> getDeviceHistory(String deviceId,
+            PageSizeCommonRequest request) {
+        List<NetworkScheduleHistoryRepositoryModel> historyList = new ArrayList<>();
+        final String scheduleId =
+                mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(deviceId);
+
+        final int requestSize = request.getPage() * request.getSize();
+
+        for (NetworkScheduleHistoryRepositoryModel generatedModel :
+                mGeneratedConsolidatedHistoryEventsList) {
+            if (scheduleId.equals(generatedModel.getScheduleIdName().getId())
+                    && historyList.size() < requestSize) {
+                historyList.add(generatedModel);
             }
         }
 
