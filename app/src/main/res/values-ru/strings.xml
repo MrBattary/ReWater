@@ -17,6 +17,7 @@
     <string name="navigation_title_devices_add">Новое устройство</string>
     <string name="navigation_title_networks_add">Новая сеть</string>
     <string name="navigation_title_networks_edit">Редактирование сети</string>
+    <string name="navigation_title_networks_history">История сети</string>
     <string name="navigation_title_schedules">Графики</string>
     <string name="navigation_title_schedules_add">Создать расписание</string>
     <string name="navigation_title_schedules_edit">Редактирование расписания</string>

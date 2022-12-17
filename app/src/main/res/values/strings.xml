@@ -19,6 +19,7 @@
     <string name="navigation_title_devices_add">Setup new device</string>
     <string name="navigation_title_networks_add">Add new network</string>
     <string name="navigation_title_networks_edit">Edit network</string>
+    <string name="navigation_title_networks_history">Network history</string>
     <string name="navigation_title_schedules">Schedules</string>
     <string name="navigation_title_schedules_add">Create schedule</string>
     <string name="navigation_title_schedules_edit">Edit schedule</string>

@@ -70,7 +70,7 @@ public class NetworksCardView {
     private void initButtonsLogic(final NetworksViewModel parentViewModel) {
         initExpandOrLooseButtonLogic();
         initSettingsButtonLogic(parentViewModel);
-        initHistoryButtonLogic();
+        initHistoryButtonLogic(parentViewModel);
     }
 
     private void initExpandOrLooseButtonLogic() {
@@ -97,9 +97,12 @@ public class NetworksCardView {
         });
     }
 
-    private void initHistoryButtonLogic() {
-        // TODO: History button logic
-        mHistoryButton.setOnClickListener(l -> {});
+    private void initHistoryButtonLogic(final NetworksViewModel parentViewModel) {
+        mHistoryButton.setOnClickListener(l -> {
+            parentViewModel.setHistoryNetworkId(mNetworkRepositoryModel.getId());
+            Navigation.findNavController(mCardView).navigate(
+                    R.id.navigation_action_networks_to_networks_history);
+        });
     }
 
     private void initTransitionTargets() {
@@ -118,7 +121,7 @@ public class NetworksCardView {
     private void initOnClickForCard() {
         mCardView.setOnClickListener(l -> {
                     mLinkViewModel.setParentNetworkIdName(new IdNameModel(
-                                    mNetworkRepositoryModel.getId(), mNetworkRepositoryModel.getName()));
+                            mNetworkRepositoryModel.getId(), mNetworkRepositoryModel.getName()));
                     Navigation.findNavController(mCardView).navigate(
                             R.id.navigation_action_networks_add_to_schedules);
                 }

@@ -11,24 +11,32 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import michael.linker.rewater.config.RepositoryConfiguration;
+import michael.linker.rewater.data.repository.history.IHistoryRepository;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.networks.model.CreateOrUpdateNetworkRepositoryModel;
 import michael.linker.rewater.data.repository.networks.model.NetworkRepositoryModel;
+import michael.linker.rewater.data.web.api.common.request.PageSizeCommonRequest;
+import michael.linker.rewater.ui.advanced.networks.model.NetworkHistoryUiModel;
 import michael.linker.rewater.ui.advanced.networks.model.NetworkUiModel;
 
 public class NetworksViewModel extends ViewModel {
     private final INetworksRepository mNetworksRepository;
+    private final IHistoryRepository mHistoryRepository;
     private final MutableLiveData<List<NetworkUiModel>> mCompactNetworkModels;
     private final MutableLiveData<List<String>> mAlreadyTakenNetworkNames;
     private final MutableLiveData<String> mEditableNetworkId;
     private final MutableLiveData<NetworkUiModel> mEditableNetworkModel;
+    private final MutableLiveData<List<NetworkHistoryUiModel>> mNetworkHistoryList;
 
     public NetworksViewModel() {
         mNetworksRepository = RepositoryConfiguration.getNetworksRepository();
+        mHistoryRepository = RepositoryConfiguration.getHistoryRepository();
+
         mCompactNetworkModels = new MutableLiveData<>();
         mAlreadyTakenNetworkNames = new MutableLiveData<>();
         mEditableNetworkId = new MutableLiveData<>();
         mEditableNetworkModel = new MutableLiveData<>();
+        mNetworkHistoryList = new MutableLiveData<>();
         this.updateListsFromRepositories();
     }
 
@@ -48,6 +56,10 @@ public class NetworksViewModel extends ViewModel {
         return mEditableNetworkId;
     }
 
+    public MutableLiveData<List<NetworkHistoryUiModel>> getNetworkHistoryList() {
+        return mNetworkHistoryList;
+    }
+
     public void setEditableNetworkId(final String id) throws NetworksViewModelFailedException {
         Single.fromCallable(() -> mNetworksRepository.getNetworkById(id))
                 .doOnSuccess(model -> {
@@ -60,6 +72,18 @@ public class NetworksViewModel extends ViewModel {
                 }, e -> {
                     throw new NetworksViewModelFailedException(e.getMessage());
                 });
+    }
+
+    public void setHistoryNetworkId(final String id)
+            throws NetworksViewModelFailedException {
+        Single.fromCallable(() -> mHistoryRepository.getNetworkHistory(id,
+                        new PageSizeCommonRequest(0, 20)))
+                .doOnSuccess(historyModels -> mNetworkHistoryList.postValue(historyModels.stream().
+                        map(NetworkHistoryUiModel::new)
+                        .collect(Collectors.toList())))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void updateNetwork(final String id, final CreateOrUpdateNetworkRepositoryModel model)

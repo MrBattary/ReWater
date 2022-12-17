@@ -40,8 +40,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
         mScheduleToDevicesDataLink = StubDataConfiguration.getScheduleToDevicesDataLink();
 
         mGeneratedConsolidatedHistoryEventsList = generateConsolidatedHistoryEvents(
-                config.getConsolidatedHistoryEventsNumber()
-                        + config.getDevicesHistoryEventsNumber());
+                config.getConsolidatedHistoryEventsNumber());
     }
 
     @Override
@@ -67,7 +66,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
             PageSizeCommonRequest request) {
         List<NetworkHistoryRepositoryModel> historyList = new ArrayList<>();
 
-        final int requestSize = request.getPage() * request.getSize();
+        final int requestSize = request.getPage() * request.getSize() + request.getSize();
 
         for (NetworkScheduleHistoryRepositoryModel generatedModel :
                 mGeneratedConsolidatedHistoryEventsList) {
@@ -85,7 +84,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
             PageSizeCommonRequest request) {
         List<ScheduleHistoryRepositoryModel> historyList = new ArrayList<>();
 
-        final int requestSize = request.getPage() * request.getSize();
+        final int requestSize = request.getPage() * request.getSize() + request.getSize();
 
         for (NetworkScheduleHistoryRepositoryModel generatedModel :
                 mGeneratedConsolidatedHistoryEventsList) {
@@ -105,7 +104,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
         final String scheduleId =
                 mScheduleToDevicesDataLink.getLeftEntityIdByRightEntityId(deviceId);
 
-        final int requestSize = request.getPage() * request.getSize();
+        final int requestSize = request.getPage() * request.getSize() + request.getSize();
 
         for (NetworkScheduleHistoryRepositoryModel generatedModel :
                 mGeneratedConsolidatedHistoryEventsList) {
