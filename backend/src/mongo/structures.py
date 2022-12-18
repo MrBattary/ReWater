@@ -1,15 +1,23 @@
+from enum import IntEnum
+
 from typing import Optional
 from dataclasses import asdict, dataclass, field
 
-
-@dataclass
+"""
 class MongoAddress:
+    _id: str
     IP: str
     deviceHardcodedId: str
+"""
+
+
+@dataclass
+class MongoDocument:
+    _id: Optional[str]
 
     @classmethod
-    def from_dict(cls, raw_data: dict) -> "MongoAddress":
-        _ = str(raw_data.pop("_id", ""))
+    def from_dict(cls, raw_data: dict) -> "MongoDocument":
+        raw_data["_id"] = str(raw_data["_id"])
         return cls(**raw_data)
 
     def to_dict(self) -> dict:
@@ -17,45 +25,33 @@ class MongoAddress:
 
 
 @dataclass
-class MongoDevice:
-    id: str
-    deviceHardcodedId: str
-    name: str
+class MongoDevice(MongoDocument):
+    deviceHardcodedId: Optional[str]
+    name: Optional[str]
     parentScheduleId: Optional[str]
     parentNetworkId: Optional[str]
     water: str = "UNDEFINED"
     battery: str = "UNDEFINED"
 
-    @classmethod
-    def from_dict(cls, raw_data: dict) -> "MongoDevice":
-        id = str(raw_data.pop("_id", ""))
-        raw_id = str(raw_data.pop("id", ""))
-        return cls(id=id, **raw_data)
-
-    def to_dict(self) -> dict:
-        return asdict(self)
+    def is_empty(self) -> bool:
+        return (
+            self._id is None
+            and self.deviceHardcodedId is None
+            and self.name is None
+            and self.parentNetworkId is None
+            and self.parentScheduleId is None
+        )
 
 
 @dataclass
-class MongoNetwork:
-    id: str
+class MongoNetwork(MongoDocument):
     name: str
     description: str
     deviceIds: list[str] = field(default_factory=list)
 
-    @classmethod
-    def from_dict(cls, raw_data: dict) -> "MongoDevice":
-        id = str(raw_data.pop("_id", ""))
-        raw_id = str(raw_data.pop("id", ""))
-        return cls(id=id, **raw_data)
-
-    def to_dict(self) -> dict:
-        return asdict(self)
-
 
 @dataclass
-class MongoSchedule:
-    id: str
+class MongoSchedule(MongoDocument):
     name: str
     networkId: str
     days: int
@@ -65,11 +61,11 @@ class MongoSchedule:
     mliters: int
     deviceIds: list[str] = field(default_factory=list)
 
-    @classmethod
-    def from_dict(cls, raw_data: dict) -> "MongoSchedule":
-        id = str(raw_data.pop("_id", ""))
-        raw_id = str(raw_data.pop("id", ""))
-        return cls(id=id, **raw_data)
 
-    def to_dict(self) -> dict:
-        return asdict(self)
+@dataclass
+class MongoHistory(MongoDocument):
+    time: str
+    deviceId: str
+    networkId: str
+    scheduleId: str
+    status: int

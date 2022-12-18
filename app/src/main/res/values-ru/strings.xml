@@ -15,12 +15,15 @@
     <string name="navigation_title_devices_edit">Редактирование устройства</string>
     <string name="navigation_title_devices_schedules">Выбор расписания</string>
     <string name="navigation_title_devices_add">Новое устройство</string>
+    <string name="navigation_title_devices_history">История устройства</string>
     <string name="navigation_title_networks_add">Новая сеть</string>
     <string name="navigation_title_networks_edit">Редактирование сети</string>
+    <string name="navigation_title_networks_history">История сети</string>
     <string name="navigation_title_schedules">Графики</string>
     <string name="navigation_title_schedules_add">Создать расписание</string>
     <string name="navigation_title_schedules_edit">Редактирование расписания</string>
     <string name="navigation_title_schedules_devices">Прикрепить устройства</string>
+    <string name="navigation_title_schedules_history">История расписания</string>
     <string name="navigation_title_sign_in">Вход</string>
     <string name="navigation_title_sign_up">Регистрация</string>
     <string name="navigation_title_sign_loading">Загрузка</string>
@@ -203,6 +206,7 @@
     <string name="button_restore_password">Забыли пароль?</string>
     <string name="button_reconnect">Переподключиться</string>
     <string name="button_license">Лицензия</string>
+    <string name="button_history">История</string>
     <string name="button_devices_add_pair_new_saved_wifi">Выберете Wi-Fi сеть</string>
 
     <!-- Descriptions. -->

@@ -15,8 +15,13 @@ public final class IdNameModel {
     }
 
     public IdNameModel(IdNamePart responsePart) {
-        mId = responsePart.getId();
-        mName = responsePart.getName();
+        if (responsePart == null) {
+            mId = null;
+            mName = null;
+        } else {
+            mId = responsePart.getId();
+            mName = responsePart.getName();
+        }
     }
 
     public String getId() {

@@ -103,7 +103,7 @@ public class PairNewDeviceViewModel extends ViewModel {
     }
 
     public void sendProvidedDeviceHardwareId(final String hardwareId) {
-        Single.fromCallable(() -> mDevicesRepository.getDeviceByHardware(hardwareId))
+        Single.fromCallable(() -> mDevicesRepository.getDeviceByHardwareId(hardwareId))
                 .doOnSuccess(device -> {
                     // Parent schedule always null
                     mDeviceAfterPairingUiModel.postValue(

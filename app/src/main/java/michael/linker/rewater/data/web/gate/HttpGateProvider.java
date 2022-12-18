@@ -8,13 +8,13 @@ public class HttpGateProvider {
     public static IHttpGate getHttpGate() {
         if (sHttpGate == null) {
             sHttpGate = new HttpGate();
-            final HttpUrl.Core core = new HttpUrl.Core(
-                    HttpUrl.Core.SERVER_URL + HttpUrl.Core.API_URL);
             if (BuildConfiguration.getServerProtocol() == BuildConfiguration.ServerProtocol.HTTP) {
-                sHttpGate.setNewSettings(new HttpGateSettings(HttpUrl.Protocol.HTTP, core));
+                sHttpGate.setNewSettings(
+                        new HttpGateSettings(HttpUrl.Protocol.HTTP, HttpUrl.Core.CORE));
             }
             if (BuildConfiguration.getServerProtocol() == BuildConfiguration.ServerProtocol.HTTPS) {
-                sHttpGate.setNewSettings(new HttpGateSettings(HttpUrl.Protocol.HTTPS, core));
+                sHttpGate.setNewSettings(
+                        new HttpGateSettings(HttpUrl.Protocol.HTTPS, HttpUrl.Core.CORE));
             }
         }
         return sHttpGate;

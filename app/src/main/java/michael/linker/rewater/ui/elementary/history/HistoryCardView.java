@@ -43,7 +43,7 @@ public class HistoryCardView implements ICustomView {
 
         if (model instanceof HistoryCardScheduleDateTimeModel) {
             mScheduleView.setText(
-                    ((HistoryCardNetworkScheduleDateTimeModel) model).getScheduleName());
+                    ((HistoryCardScheduleDateTimeModel) model).getScheduleName());
             mParentsView.setVisibility(View.VISIBLE);
             mNetworkView.setVisibility(View.GONE);
         }

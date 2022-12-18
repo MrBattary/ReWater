@@ -17,12 +17,15 @@
     <string name="navigation_title_devices_edit">Edit device</string>
     <string name="navigation_title_devices_schedules">Choose schedule</string>
     <string name="navigation_title_devices_add">Setup new device</string>
+    <string name="navigation_title_devices_history">Device history</string>
     <string name="navigation_title_networks_add">Add new network</string>
     <string name="navigation_title_networks_edit">Edit network</string>
+    <string name="navigation_title_networks_history">Network history</string>
     <string name="navigation_title_schedules">Schedules</string>
     <string name="navigation_title_schedules_add">Create schedule</string>
     <string name="navigation_title_schedules_edit">Edit schedule</string>
     <string name="navigation_title_schedules_devices">Attach devices</string>
+    <string name="navigation_title_schedules_history">Schedule history</string>
     <string name="navigation_title_sign_in">Sign In</string>
     <string name="navigation_title_sign_up">Sign Up</string>
     <string name="navigation_title_sign_loading">Loading</string>
@@ -220,6 +223,7 @@ SOFTWARE.</string>
     <string name="button_restore_password">Forgot password?</string>
     <string name="button_reconnect">Reconnect</string>
     <string name="button_license">License</string>
+    <string name="button_history">History</string>
     <string name="button_devices_add_pair_new_saved_wifi">Select a Wi-Fi network</string>
 
     <!-- Descriptions. -->

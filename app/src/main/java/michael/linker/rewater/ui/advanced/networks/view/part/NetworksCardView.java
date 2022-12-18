@@ -27,7 +27,7 @@ public class NetworksCardView {
     private final TextView mDescription;
     private final CombinedStatusView mCombinedStatusView;
     private final ImageButton mExpandOrLooseButton;
-    private final Button mSettingsButton;
+    private final Button mSettingsButton, mHistoryButton;
     private final View mHiddenContent;
     private final IOrderedTransition mTransition;
     private final NetworksDevicesLinkViewModel mLinkViewModel;
@@ -47,6 +47,7 @@ public class NetworksCardView {
                 view.findViewById(R.id.networks_card_combined_status));
         mExpandOrLooseButton = view.findViewById(R.id.networks_card_expand_or_loose_button);
         mSettingsButton = view.findViewById(R.id.networks_card_settings_button);
+        mHistoryButton = view.findViewById(R.id.networks_card_history_button);
         mHiddenContent = view.findViewById(R.id.networks_card_hidden_content);
         mLinkViewModel = linkViewModel;
         mTransition = transition;
@@ -69,6 +70,7 @@ public class NetworksCardView {
     private void initButtonsLogic(final NetworksViewModel parentViewModel) {
         initExpandOrLooseButtonLogic();
         initSettingsButtonLogic(parentViewModel);
+        initHistoryButtonLogic(parentViewModel);
     }
 
     private void initExpandOrLooseButtonLogic() {
@@ -95,6 +97,14 @@ public class NetworksCardView {
         });
     }
 
+    private void initHistoryButtonLogic(final NetworksViewModel parentViewModel) {
+        mHistoryButton.setOnClickListener(l -> {
+            parentViewModel.setHistoryNetworkId(mNetworkRepositoryModel.getId());
+            Navigation.findNavController(mCardView).navigate(
+                    R.id.navigation_action_networks_to_networks_history);
+        });
+    }
+
     private void initTransitionTargets() {
         // Permanent content
         mTransition.addChangeBoundsTarget(mCardView);
@@ -104,13 +114,14 @@ public class NetworksCardView {
         // Hidden content
         mTransition.addChangeBoundsTarget(mHiddenContent);
         mTransition.addFadeTarget(mSettingsButton);
+        mTransition.addFadeTarget(mHistoryButton);
         mTransition.addFadeTarget(mDescription);
     }
 
     private void initOnClickForCard() {
         mCardView.setOnClickListener(l -> {
                     mLinkViewModel.setParentNetworkIdName(new IdNameModel(
-                                    mNetworkRepositoryModel.getId(), mNetworkRepositoryModel.getName()));
+                            mNetworkRepositoryModel.getId(), mNetworkRepositoryModel.getName()));
                     Navigation.findNavController(mCardView).navigate(
                             R.id.navigation_action_networks_add_to_schedules);
                 }
@@ -122,6 +133,7 @@ public class NetworksCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_expand));
         mCombinedStatusView.displayCompact();
         mSettingsButton.setVisibility(View.GONE);
+        mHistoryButton.setVisibility(View.GONE);
         mDescription.setVisibility(View.GONE);
         mHiddenContent.setVisibility(View.GONE);
     }
@@ -131,6 +143,7 @@ public class NetworksCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_loose));
         mCombinedStatusView.displayDetailed();
         mSettingsButton.setVisibility(View.VISIBLE);
+        mHistoryButton.setVisibility(View.VISIBLE);
         mDescription.setVisibility(View.VISIBLE);
         this.setGoneIfNoTextInTextView(mDescription);
         mHiddenContent.setVisibility(View.VISIBLE);

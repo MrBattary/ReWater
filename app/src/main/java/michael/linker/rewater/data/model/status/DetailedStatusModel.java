@@ -16,8 +16,13 @@ public class DetailedStatusModel {
     }
 
     public DetailedStatusModel(final StatusPart statusPart) {
-        mWater = Status.valueOf(statusPart.getWater());
-        mBattery = Status.valueOf(statusPart.getBattery());
+        if (statusPart == null) {
+            mWater = Status.UNDEFINED;
+            mBattery = Status.UNDEFINED;
+        } else {
+            mWater = Status.valueOf(statusPart.getWater());
+            mBattery = Status.valueOf(statusPart.getBattery());
+        }
     }
 
     public Status getWater() {

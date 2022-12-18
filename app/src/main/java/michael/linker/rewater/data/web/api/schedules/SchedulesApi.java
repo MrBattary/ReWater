@@ -65,7 +65,7 @@ public class SchedulesApi {
             throws NotFoundHttpException {
         try {
             Response response = mHttpGate.getWithSettings(
-                    GROUP.toString() + scheduleId);
+                    GROUP.toString() + "/" + scheduleId);
             try (ResponseBody responseBody = response.body()) {
                 return mGson.fromJson(responseBody.charStream(), GetScheduleResponse.class);
             }
@@ -85,7 +85,8 @@ public class SchedulesApi {
     public void updateSchedule(final String scheduleId, final UpdateScheduleRequest request)
             throws NotFoundHttpException {
         try {
-            mHttpGate.putWithSettings(GROUP.toString() + scheduleId, mGson.toJson(request)).close();
+            mHttpGate.putWithSettings(GROUP.toString() + "/" + scheduleId,
+                    mGson.toJson(request)).close();
         } catch (HttpGateFailureException | FailureHttpException e) {
             throw new NotFoundHttpException();
         }
@@ -93,7 +94,7 @@ public class SchedulesApi {
 
     public void deleteSchedule(final String scheduleId) {
         try {
-            mHttpGate.deleteWithSettings(GROUP.toString() + scheduleId).close();
+            mHttpGate.deleteWithSettings(GROUP.toString() + "/" + scheduleId).close();
         } catch (HttpGateFailureException | FailureHttpException ignored) {
         }
     }

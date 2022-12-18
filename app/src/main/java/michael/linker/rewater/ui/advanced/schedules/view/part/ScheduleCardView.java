@@ -20,6 +20,7 @@ import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.ui.advanced.schedules.adapter.ScheduleDevicesItemAdapter;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
+import michael.linker.rewater.ui.advanced.schedules.viewmodel.SchedulesViewModel;
 import michael.linker.rewater.ui.advanced.schedules.viewmodel.UpdateScheduleViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
@@ -32,13 +33,14 @@ public class ScheduleCardView {
     private final ImageButton mExpandOrLooseButton;
     private final ViewGroup mHiddenContent;
     private final RecyclerView mAttachedDevicesRecyclerView;
-    private final Button mSettingsButton;
+    private final Button mSettingsButton, mHistoryButton;
     private final IOrderedTransition mTransition;
     private ScheduleUiModel mDataModel;
 
     public ScheduleCardView(
             final Context context,
             final View view,
+            final SchedulesViewModel viewModel,
             final UpdateScheduleViewModel childViewModel,
             final IOrderedTransition transition
     ) {
@@ -53,12 +55,13 @@ public class ScheduleCardView {
         mHiddenContent = view.findViewById(R.id.schedule_card_hidden_content);
         mAttachedDevicesRecyclerView = view.findViewById(R.id.schedule_card_devices);
         mSettingsButton = view.findViewById(R.id.schedule_card_settings_button);
+        mHistoryButton = view.findViewById(R.id.schedule_card_history_button);
         mTransition = transition;
 
         transition.addChangeBoundsTarget(view);
         this.initTransitionTargets();
         this.setCompactView();
-        this.initButtonsLogic(childViewModel);
+        this.initButtonsLogic(viewModel, childViewModel);
     }
 
     public void setUiModel(final ScheduleUiModel model) {
@@ -85,9 +88,12 @@ public class ScheduleCardView {
                 new DetailedStatusModel(waterWorstStatus, batteryWorstStatus));
     }
 
-    private void initButtonsLogic(final UpdateScheduleViewModel childViewModel) {
+    private void initButtonsLogic(
+            final SchedulesViewModel viewModel,
+            final UpdateScheduleViewModel childViewModel) {
         initExpandOrLooseButtonLogic();
         initSettingsButtonLogic(childViewModel);
+        initHistoryButtonLogic(viewModel);
     }
 
     private void initExpandOrLooseButtonLogic() {
@@ -110,6 +116,14 @@ public class ScheduleCardView {
         });
     }
 
+    private void initHistoryButtonLogic(final SchedulesViewModel viewModel) {
+        mHistoryButton.setOnClickListener(l -> {
+            viewModel.setHistoryScheduleId(mDataModel.getId());
+            Navigation.findNavController(mCardView).navigate(
+                    R.id.navigation_action_schedules_to_schedules_history);
+        });
+    }
+
     private void initTransitionTargets() {
         // Permanent content
         mTransition.addChangeBoundsTarget(mCardView);
@@ -119,6 +133,7 @@ public class ScheduleCardView {
         // Hidden content
         mTransition.addChangeBoundsTarget(mHiddenContent);
         mTransition.addFadeTarget(mSettingsButton);
+        mTransition.addFadeTarget(mHistoryButton);
         mTransition.addFadeTarget(mPeriod);
         mTransition.addFadeTarget(mVolume);
         mTransition.addFadeTarget(mAttachedDevicesRecyclerView);
@@ -129,6 +144,7 @@ public class ScheduleCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_expand));
         mCombinedStatusView.displayCompact();
         mSettingsButton.setVisibility(View.GONE);
+        mHistoryButton.setVisibility(View.GONE);
         mPeriod.setVisibility(View.GONE);
         mVolume.setVisibility(View.GONE);
         mAttachedDevicesRecyclerView.setVisibility(View.GONE);
@@ -140,6 +156,7 @@ public class ScheduleCardView {
                 DrawablesProvider.getDrawable(R.drawable.ic_button_loose));
         mCombinedStatusView.displayDetailed();
         mSettingsButton.setVisibility(View.VISIBLE);
+        mHistoryButton.setVisibility(View.VISIBLE);
         mPeriod.setVisibility(View.VISIBLE);
         mVolume.setVisibility(View.VISIBLE);
         mAttachedDevicesRecyclerView.setVisibility(View.VISIBLE);

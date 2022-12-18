@@ -80,7 +80,7 @@ public class RepositoryConfiguration {
             if (SERVER_MODE == MODE_LOCAL) {
                 sHistoryRepository = new HistoryLocalRepository(
                         new HistoryLocalRepository.GenerationConfig(
-                                12, 20
+                                30, 10
                         ));
             }
             if (SERVER_MODE == MODE_GLOBAL) {

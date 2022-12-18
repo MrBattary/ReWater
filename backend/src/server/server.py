@@ -1,11 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from .endpoints import (
-    devices_router,
-    networks_router,
-    schedules_router,
-)
+from .endpoints import addr_router, dev_router, hist_router, net_router, sch_router
 from . import environments as env, services
 from .handlers import EXCEPTION_HANDLERS
 from mongo import MongoDriver
@@ -25,10 +21,18 @@ def get_service_app() -> FastAPI:
     app = FastAPI(
         title="Control Server",
         exception_handlers=EXCEPTION_HANDLERS,
-        openapi_tags=[{"name": "networks"}, {"name": "schedules"}, {"name": "devices"}],
+        openapi_tags=[
+            {"name": "history"},
+            {"name": "service"},
+            {"name": "networks"},
+            {"name": "schedules"},
+            {"name": "devices"},
+        ],
     )
-    app.include_router(devices_router)
-    app.include_router(networks_router)
-    app.include_router(schedules_router)
+    app.include_router(addr_router)
+    app.include_router(dev_router)
+    app.include_router(hist_router)
+    app.include_router(net_router)
+    app.include_router(sch_router)
 
     return app
