@@ -20,6 +20,7 @@ import michael.linker.rewater.data.model.status.Status;
 import michael.linker.rewater.data.res.DrawablesProvider;
 import michael.linker.rewater.ui.advanced.schedules.adapter.ScheduleDevicesItemAdapter;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
+import michael.linker.rewater.ui.advanced.schedules.viewmodel.SchedulesViewModel;
 import michael.linker.rewater.ui.advanced.schedules.viewmodel.UpdateScheduleViewModel;
 import michael.linker.rewater.ui.animation.transition.IOrderedTransition;
 import michael.linker.rewater.ui.elementary.status.CombinedStatusView;
@@ -39,6 +40,7 @@ public class ScheduleCardView {
     public ScheduleCardView(
             final Context context,
             final View view,
+            final SchedulesViewModel viewModel,
             final UpdateScheduleViewModel childViewModel,
             final IOrderedTransition transition
     ) {
@@ -59,7 +61,7 @@ public class ScheduleCardView {
         transition.addChangeBoundsTarget(view);
         this.initTransitionTargets();
         this.setCompactView();
-        this.initButtonsLogic(childViewModel);
+        this.initButtonsLogic(viewModel, childViewModel);
     }
 
     public void setUiModel(final ScheduleUiModel model) {
@@ -86,10 +88,12 @@ public class ScheduleCardView {
                 new DetailedStatusModel(waterWorstStatus, batteryWorstStatus));
     }
 
-    private void initButtonsLogic(final UpdateScheduleViewModel childViewModel) {
+    private void initButtonsLogic(
+            final SchedulesViewModel viewModel,
+            final UpdateScheduleViewModel childViewModel) {
         initExpandOrLooseButtonLogic();
         initSettingsButtonLogic(childViewModel);
-        initHistoryButtonLogic();
+        initHistoryButtonLogic(viewModel);
     }
 
     private void initExpandOrLooseButtonLogic() {
@@ -112,9 +116,12 @@ public class ScheduleCardView {
         });
     }
 
-    private void initHistoryButtonLogic() {
-        // TODO: History button logic
-        mHistoryButton.setOnClickListener(l -> {});
+    private void initHistoryButtonLogic(final SchedulesViewModel viewModel) {
+        mHistoryButton.setOnClickListener(l -> {
+            viewModel.setHistoryScheduleId(mDataModel.getId());
+            Navigation.findNavController(mCardView).navigate(
+                    R.id.navigation_action_schedules_to_schedules_history);
+        });
     }
 
     private void initTransitionTargets() {

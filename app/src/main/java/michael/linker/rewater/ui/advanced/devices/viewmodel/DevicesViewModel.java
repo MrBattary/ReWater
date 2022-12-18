@@ -18,16 +18,21 @@ import michael.linker.rewater.data.repository.devices.IDevicesRepository;
 import michael.linker.rewater.data.repository.devices.model.CreateDeviceRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.DeviceRepositoryModel;
 import michael.linker.rewater.data.repository.devices.model.UpdateDeviceRepositoryModel;
+import michael.linker.rewater.data.repository.history.IHistoryRepository;
 import michael.linker.rewater.data.repository.networks.INetworksRepository;
 import michael.linker.rewater.data.repository.schedules.ISchedulesRepository;
+import michael.linker.rewater.data.web.api.common.request.PageSizeCommonRequest;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceAfterPairingUiModel;
 import michael.linker.rewater.ui.advanced.devices.model.DeviceCardUiModel;
+import michael.linker.rewater.ui.advanced.devices.model.DeviceHistoryUiModel;
+import michael.linker.rewater.ui.advanced.networks.viewmodel.NetworksViewModelFailedException;
 import michael.linker.rewater.ui.advanced.schedules.model.ScheduleUiModel;
 
 public class DevicesViewModel extends ViewModel {
     private final IDevicesRepository mDevicesRepository;
     private final ISchedulesRepository mSchedulesRepository;
     private final INetworksRepository mNetworksRepository;
+    private final IHistoryRepository mHistoryRepository;
 
     private final MutableLiveData<List<DeviceCardUiModel>> mDeviceCardModels;
     private final MutableLiveData<List<ScheduleUiModel>> mSchedulesModels;
@@ -39,11 +44,13 @@ public class DevicesViewModel extends ViewModel {
     private final MutableLiveData<DetailedStatusModel> mDeviceStatus;
     private final MutableLiveData<ScheduleUiModel> mParentScheduleModel;
     private final MutableLiveData<IdNameModel> mParentNetworkModel;
+    private final MutableLiveData<List<DeviceHistoryUiModel>> mDeviceHistoryUiModels;
 
     public DevicesViewModel() {
         mDevicesRepository = RepositoryConfiguration.getDevicesRepository();
         mNetworksRepository = RepositoryConfiguration.getNetworksRepository();
         mSchedulesRepository = RepositoryConfiguration.getSchedulesRepository();
+        mHistoryRepository = RepositoryConfiguration.getHistoryRepository();
 
         mDeviceCardModels = new MutableLiveData<>();
         mSchedulesModels = new MutableLiveData<>();
@@ -55,6 +62,8 @@ public class DevicesViewModel extends ViewModel {
 
         mParentNetworkModel = new MutableLiveData<>();
         mParentScheduleModel = new MutableLiveData<>();
+
+        mDeviceHistoryUiModels = new MutableLiveData<>();
         this.updateListsFromRepositories();
     }
 
@@ -92,6 +101,23 @@ public class DevicesViewModel extends ViewModel {
 
     public LiveData<IdNameModel> getParentNetworkIdNameModel() {
         return mParentNetworkModel;
+    }
+
+    public LiveData<List<DeviceHistoryUiModel>> getDeviceHistoryUiModels() {
+        return mDeviceHistoryUiModels;
+    }
+
+    public void setHistoryDeviceId(final String id)
+            throws NetworksViewModelFailedException {
+        Single.fromCallable(() -> mHistoryRepository.getDeviceHistory(id,
+                        new PageSizeCommonRequest(0, 20)))
+                .doOnSuccess(
+                        historyModels -> mDeviceHistoryUiModels.postValue(historyModels.stream().
+                                map(DeviceHistoryUiModel::new)
+                                .collect(Collectors.toList())))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 
     public void setDeviceId(final String deviceId)

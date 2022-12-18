@@ -24,6 +24,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/navigation_action_schedules_to_schedules_history"
+            app:destination="@id/navigation_schedules_history"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -83,6 +90,20 @@
         <action
             android:id="@+id/navigation_action_schedules_devices_to_schedules_edit"
             app:destination="@id/navigation_schedules_edit"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_schedules_history"
+        android:name="michael.linker.rewater.ui.advanced.schedules.view.SchedulesHistoryFragment"
+        android:label="@string/navigation_title_schedules_history"
+        tools:layout="@layout/fragment_history_list">
+        <action
+            android:id="@+id/navigation_action_schedules_history_to_schedules"
+            app:destination="@id/navigation_schedules"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"

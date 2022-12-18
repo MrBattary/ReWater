@@ -79,7 +79,12 @@ public class SchedulesFragment extends Fragment {
             if (list.size() > 0) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(
-                        new SchedulesItemAdapter(getContext(), mChildViewModel, list, transition));
+                        new SchedulesItemAdapter(
+                                getContext(),
+                                mViewModel,
+                                mChildViewModel,
+                                list,
+                                transition));
                 recyclerView.setVisibility(View.VISIBLE);
                 mSchedulesNotFound.setVisibility(View.GONE);
             } else {

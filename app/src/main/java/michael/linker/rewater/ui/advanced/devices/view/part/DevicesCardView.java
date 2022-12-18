@@ -83,7 +83,7 @@ public class DevicesCardView {
     private void initButtonsLogic(final DevicesViewModel parentViewModel) {
         initExpandOrLooseButtonLogic();
         initSettingsButtonLogic(parentViewModel);
-        initHistoryButtonLogic();
+        initHistoryButtonLogic(parentViewModel);
     }
 
     private void initOnClickForCard(final DevicesViewModel parentViewModel) {
@@ -122,9 +122,12 @@ public class DevicesCardView {
         });
     }
 
-    private void initHistoryButtonLogic() {
-        // TODO: History button logic
-        mHistoryButton.setOnClickListener(l -> {});
+    private void initHistoryButtonLogic(final DevicesViewModel parentViewModel) {
+        mHistoryButton.setOnClickListener(l -> {
+            parentViewModel.setHistoryDeviceId(mId);
+            Navigation.findNavController(mCardView).navigate(
+                    R.id.navigation_action_devices_to_devices_history);
+        });
     }
 
     private void initTransitionTargets() {
