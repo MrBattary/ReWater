@@ -82,7 +82,7 @@ public class DevicesApi {
     public GetDeviceResponse getDeviceById(final String deviceId) throws NotFoundHttpException {
         try {
             Response response = mHttpGate.getWithSettings(
-                    GROUP.toString() + deviceId
+                    GROUP.toString() + "/" + deviceId
                             + new HttpUrl.Query()
                             .addQueryParameter(
                                     HttpUrl.Query.Param.DEVICE_HARDCODED_ID,
@@ -133,7 +133,8 @@ public class DevicesApi {
     public void updateDevice(final String deviceId, final UpdateDeviceRequest request)
             throws NotFoundHttpException {
         try {
-            mHttpGate.putWithSettings(GROUP.toString() + deviceId, mGson.toJson(request)).close();
+            mHttpGate.putWithSettings(GROUP.toString() + "/" + deviceId,
+                    mGson.toJson(request)).close();
         } catch (HttpGateFailureException | FailureHttpException e) {
             throw new NotFoundHttpException();
         }
@@ -141,7 +142,7 @@ public class DevicesApi {
 
     public void deleteDevice(final String deviceId) throws FailureHttpException {
         try {
-            mHttpGate.deleteWithSettings(GROUP.toString() + deviceId).close();
+            mHttpGate.deleteWithSettings(GROUP.toString() + "/" + deviceId).close();
         } catch (HttpGateFailureException | FailureHttpException ignored) {
         }
     }
@@ -149,7 +150,8 @@ public class DevicesApi {
     public void manualWatering(final String deviceId, final ManualWateringDeviceRequest request)
             throws NotFoundHttpException, BadRequestHttpException {
         try {
-            mHttpGate.postWithSettings(GROUP.toString() + deviceId, mGson.toJson(request)).close();
+            mHttpGate.postWithSettings(GROUP.toString() + "/" + deviceId,
+                    mGson.toJson(request)).close();
         } catch (HttpGateFailureException e) {
             throw new NotFoundHttpException();
         } catch (FailureHttpException e) {

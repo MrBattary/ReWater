@@ -39,7 +39,7 @@ public interface IDevicesRepository {
      * @throws DevicesRepositoryNotFoundException if the device with the provided hardware ID
      *                                            does not exist or cannot be accessed
      */
-    DeviceRepositoryModel getDeviceByHardware(String hardwareId)
+    DeviceRepositoryModel getDeviceByHardwareId(String hardwareId)
             throws DevicesRepositoryNotFoundException;
 
     /**

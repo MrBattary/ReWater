@@ -187,7 +187,7 @@ public class DevicesLocalRepository implements IDevicesRepository {
     }
 
     @Override
-    public DeviceRepositoryModel getDeviceByHardware(final String hardwareId)
+    public DeviceRepositoryModel getDeviceByHardwareId(final String hardwareId)
             throws DevicesRepositoryNotFoundException {
         // TODO Request to the server
         return new DeviceRepositoryModel(null, null, null, null, null);

@@ -70,7 +70,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
 
         for (NetworkScheduleHistoryRepositoryModel generatedModel :
                 mGeneratedConsolidatedHistoryEventsList) {
-            if (networkId.equals(generatedModel.getNetworkIdName().getId())
+            if (generatedModel.getNetworkIdName().getId().equals(networkId)
                     && historyList.size() < requestSize) {
                 historyList.add(new NetworkHistoryRepositoryModel(generatedModel));
             }
@@ -88,7 +88,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
 
         for (NetworkScheduleHistoryRepositoryModel generatedModel :
                 mGeneratedConsolidatedHistoryEventsList) {
-            if (scheduleId.equals(generatedModel.getScheduleIdName().getId())
+            if (generatedModel.getScheduleIdName().getId().equals(scheduleId)
                     && historyList.size() < requestSize) {
                 historyList.add(new ScheduleHistoryRepositoryModel(generatedModel));
             }
@@ -108,7 +108,7 @@ public class HistoryLocalRepository implements IHistoryRepository {
 
         for (NetworkScheduleHistoryRepositoryModel generatedModel :
                 mGeneratedConsolidatedHistoryEventsList) {
-            if (scheduleId.equals(generatedModel.getScheduleIdName().getId())
+            if (generatedModel.getScheduleIdName().getId().equals(scheduleId)
                     && historyList.size() < requestSize) {
                 historyList.add(generatedModel);
             }

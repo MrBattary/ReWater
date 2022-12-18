@@ -15,8 +15,20 @@ public class BuildConfiguration {
         return BuildConfig.SERVER_PROTOCOL;
     }
 
+    public static String getPingAddress() {
+        return BuildConfig.PING_ADDRESS;
+    }
+
     public static String getServerAddress() {
         return BuildConfig.SERVER_ADDRESS;
+    }
+
+    public static Boolean isInternetHealthCheckEnabled() {
+        return BuildConfig.HEALTHCHECK_INTERNET;
+    }
+
+    public static Boolean isServerHealthCheckEnabled() {
+        return BuildConfig.HEALTHCHECK_SERVER;
     }
 
     public static Bluetooth getBluetoothMode() {

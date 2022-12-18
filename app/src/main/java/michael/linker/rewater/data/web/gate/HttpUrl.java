@@ -49,15 +49,16 @@ public class HttpUrl {
     }
 
     public static class Core {
-        public static final Core GOOGLE;
-        public static Core CORE;
+        public static final Core PING;
+        public static final Core CORE;
 
-        private static final String GOOGLE_URL = "/google.com";
+        private static final String PING_URL = BuildConfiguration.getPingAddress();
         public static final String SERVER_URL = BuildConfiguration.getServerAddress();
         public static final String API_URL = "/api";
 
         static {
-            GOOGLE = new Core(GOOGLE_URL);
+            PING = new Core(PING_URL);
+            CORE = new Core(SERVER_URL + API_URL);
         }
 
         protected final String mCore;

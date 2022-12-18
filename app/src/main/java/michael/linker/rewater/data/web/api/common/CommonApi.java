@@ -1,5 +1,6 @@
 package michael.linker.rewater.data.web.api.common;
 
+import michael.linker.rewater.config.BuildConfiguration;
 import michael.linker.rewater.data.web.gate.HttpGateFailureException;
 import michael.linker.rewater.data.web.gate.HttpGateProvider;
 import michael.linker.rewater.data.web.gate.HttpUrl;
@@ -15,10 +16,12 @@ public class CommonApi {
 
     public boolean pingInternet() throws HttpGateFailureException, FailureHttpException {
         try {
-            mHttpGate.get(
-                    HttpUrl.Builder(HttpUrl.Protocol.HTTP)
-                            .addCore(HttpUrl.Core.GOOGLE).buildUrl()
-            ).close();
+            if (BuildConfiguration.isInternetHealthCheckEnabled()) {
+                mHttpGate.get(
+                        HttpUrl.Builder(HttpUrl.Protocol.HTTP)
+                                .addCore(HttpUrl.Core.PING).buildUrl()
+                ).close();
+            }
             mHttpGate.getStatusObserver().notifyInternetAccessible();
             return true;
         } catch (HttpGateFailureException | FailureHttpException e) {
@@ -29,7 +32,9 @@ public class CommonApi {
 
     public boolean pingServer() throws HttpGateFailureException, FailureHttpException {
         try {
-            mHttpGate.getWithSettings(HttpUrl.Group.NETWORKS.toString()).close();
+            if (BuildConfiguration.isServerHealthCheckEnabled()) {
+                mHttpGate.getWithSettings(HttpUrl.Group.NETWORKS.toString()).close();
+            }
             mHttpGate.getStatusObserver().notifyServerAccessible();
             return true;
         } catch (HttpGateFailureException | FailureHttpException e) {

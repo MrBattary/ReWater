@@ -44,7 +44,7 @@ public class NetworksApi {
 
     public GetNetworkResponse getNetworkById(final String networkId) throws NotFoundHttpException {
         try {
-            Response response = mHttpGate.getWithSettings(GROUP.toString() + networkId);
+            Response response = mHttpGate.getWithSettings(GROUP.toString() + "/" + networkId);
             try (ResponseBody responseBody = response.body()) {
                 return mGson.fromJson(responseBody.charStream(), GetNetworkResponse.class);
             }
@@ -65,7 +65,8 @@ public class NetworksApi {
     public void updateNetwork(final String networkId, final CreateOrUpdateNetworkRequest request)
             throws NotFoundHttpException {
         try {
-            mHttpGate.putWithSettings(GROUP.toString() + networkId, mGson.toJson(request)).close();
+            mHttpGate.putWithSettings(GROUP.toString() + "/" + networkId,
+                    mGson.toJson(request)).close();
         } catch (HttpGateFailureException | FailureHttpException e) {
             throw new NotFoundHttpException();
         }
@@ -73,7 +74,7 @@ public class NetworksApi {
 
     public void deleteNetworkById(final String networkId) {
         try {
-            mHttpGate.deleteWithSettings(GROUP.toString() + networkId).close();
+            mHttpGate.deleteWithSettings(GROUP.toString() + "/" + networkId).close();
         } catch (HttpGateFailureException | FailureHttpException ignored) {
         }
     }

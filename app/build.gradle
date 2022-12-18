@@ -5,6 +5,7 @@ plugins {
 def ServerMode = "michael.linker.rewater.config.BuildConfiguration.Server"
 def ServerProtocol = "michael.linker.rewater.config.BuildConfiguration.ServerProtocol"
 def BluetoothMode = "michael.linker.rewater.config.BuildConfiguration.Bluetooth"
+def PingAddress = "\"/google.com\""
 // Dev
 def AndroidDevServerAddress = "\"/10.0.2.2\""
 def DevServerAddress = "\"/192.168.0.3\""
@@ -18,23 +19,29 @@ android {
         applicationId "michael.linker.rewater"
         minSdk 29
         targetSdk 32
-        versionCode 187
-        versionName "0.5.187"
+        versionCode 193
+        versionName "0.5.193"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         debug {
+            buildConfigField "Boolean", "HEALTHCHECK_INTERNET", "false"
+            buildConfigField "Boolean", "HEALTHCHECK_SERVER", "false"
             buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.LOCAL"
             buildConfigField ServerProtocol, "SERVER_PROTOCOL", "${ServerProtocol}.HTTP"
             buildConfigField "String", "SERVER_ADDRESS", AndroidDevServerAddress
+            buildConfigField "String", "PING_ADDRESS", PingAddress
             buildConfigField BluetoothMode, "BLUETOOTH_MODE", "${BluetoothMode}.STUB"
         }
         release {
+            buildConfigField "Boolean", "HEALTHCHECK_INTERNET", "true"
+            buildConfigField "Boolean", "HEALTHCHECK_SERVER", "true"
             buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.GLOBAL"
             buildConfigField ServerProtocol, "SERVER_PROTOCOL", "${ServerProtocol}.HTTP"
             buildConfigField "String", "SERVER_ADDRESS", ProdServerAddress
+            buildConfigField "String", "PING_ADDRESS", PingAddress
             buildConfigField BluetoothMode, "BLUETOOTH_MODE", "${BluetoothMode}.PROD"
 
             minifyEnabled false

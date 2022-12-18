@@ -50,7 +50,7 @@ public class DevicesWebRepository implements IDevicesRepository {
     }
 
     @Override
-    public DeviceRepositoryModel getDeviceByHardware(String hardwareId)
+    public DeviceRepositoryModel getDeviceByHardwareId(String hardwareId)
             throws DevicesRepositoryNotFoundException {
         try {
             return new DeviceRepositoryModel(mApi.getDeviceByHardwareId(hardwareId));
