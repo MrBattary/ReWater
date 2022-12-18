@@ -44,7 +44,7 @@
         android:id="@+id/navigation_networks_history"
         android:name="michael.linker.rewater.ui.advanced.networks.view.NetworksHistoryFragment"
         android:label="@string/navigation_title_networks_history"
-        tools:layout="@layout/fragment_networks_history">
+        tools:layout="@layout/fragment_history_list">
         <action
             android:id="@+id/navigation_action_networks_history_to_networks"
             app:destination="@id/navigation_networks"

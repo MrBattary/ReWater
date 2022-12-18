@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/networks_history"
+    android:id="@+id/history_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.advanced.networks.view.NetworksHistoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/networks_history_events"
+        android:id="@+id/history_list_events"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -18,7 +18,7 @@
         tools:listitem="@layout/view_history_card" />
 
     <include
-        android:id="@+id/networks_history_events_not_found"
+        android:id="@+id/history_list_events_not_found"
         layout="@layout/view_placeholder_not_found"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

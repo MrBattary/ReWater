@@ -10,6 +10,7 @@
         android:id="@+id/history_event_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/card_horizontal_spacing"
         android:layout_marginBottom="@dimen/card_vertical_spacing"
         app:cardCornerRadius="@dimen/card_corner_radius">
 

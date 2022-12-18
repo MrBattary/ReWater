@@ -32,7 +32,7 @@ public class NetworksHistoryFragment extends Fragment {
         ViewModelStoreOwner viewModelStoreOwner = navController.getViewModelStoreOwner(
                 R.id.root_navigation_networks);
         mViewModel = new ViewModelProvider(viewModelStoreOwner).get(NetworksViewModel.class);
-        return inflater.inflate(R.layout.fragment_networks_history, container, false);
+        return inflater.inflate(R.layout.fragment_history_list, container, false);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class NetworksHistoryFragment extends Fragment {
     }
 
     private void initFields(final View view) {
-        mHistoryEventsNotFoundPlaceholder = view.findViewById(R.id.networks_history_events_not_found);
-        mHistoryEventsRecyclerView = view.findViewById(R.id.networks_history_events);
+        mHistoryEventsNotFoundPlaceholder = view.findViewById(R.id.history_list_events_not_found);
+        mHistoryEventsRecyclerView = view.findViewById(R.id.history_list_events);
     }
 
     private void initFieldsData() {
