@@ -27,7 +27,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "Boolean", "HEALTHCHECK_INTERNET", "false"
+            buildConfigField "Boolean", "HEALTHCHECK_INTERNET", "true"
             buildConfigField "Boolean", "HEALTHCHECK_SERVER", "false"
             buildConfigField ServerMode, "SERVER_MODE", "${ServerMode}.LOCAL"
             buildConfigField ServerProtocol, "SERVER_PROTOCOL", "${ServerProtocol}.HTTP"

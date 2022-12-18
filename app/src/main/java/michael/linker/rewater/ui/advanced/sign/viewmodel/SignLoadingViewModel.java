@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel;
 
 import io.reactivex.rxjava3.core.Single;
 import michael.linker.rewater.R;
-import michael.linker.rewater.config.BuildConfiguration;
 import michael.linker.rewater.config.DatabaseConfiguration;
 import michael.linker.rewater.config.RepositoryConfiguration;
 import michael.linker.rewater.config.StubDataConfiguration;
+import michael.linker.rewater.core.permission.PermissionManager;
 import michael.linker.rewater.data.repository.user.UsersRepositoryAccessDeniedException;
 import michael.linker.rewater.data.repository.user.UsersRepositoryNotFoundException;
 import michael.linker.rewater.data.res.StringsProvider;
-import michael.linker.rewater.core.permission.PermissionManager;
 import michael.linker.rewater.data.web.api.common.CommonApi;
 
 public class SignLoadingViewModel extends ViewModel {
@@ -72,12 +71,10 @@ public class SignLoadingViewModel extends ViewModel {
 
     public Single<Boolean> checkServerConnection() throws SignLoadingViewModelFailedException {
         return Single.fromCallable(() -> {
-                    if (BuildConfiguration.getServerMode() == BuildConfiguration.Server.GLOBAL) {
-                        if (!mCommonApi.pingServer()) {
-                            this.setErrorStageMessageAndThrowException(
-                                    R.string.loading_stage_server_connection_failure);
-                            return false;
-                        }
+                    if (!mCommonApi.pingServer()) {
+                        this.setErrorStageMessageAndThrowException(
+                                R.string.loading_stage_server_connection_failure);
+                        return false;
                     }
                     return true;
                 })
